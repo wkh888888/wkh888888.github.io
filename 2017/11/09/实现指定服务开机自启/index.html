@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="不积跬步，无以至千里！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
-<meta property="og:url" content="http://example.com/about/index.html">
+  <meta name="description" content="本教程介绍在CentOS 7服务器上实现指定服务开机自启。1.用sh脚本实现启动服务vim itService-start.sh # 编辑脚本，内容如下： #!&#x2F;bin&#x2F;sh DIR&#x3D;$(cd “$(dirname “$0”)” &amp;&amp; pwd) # cd 到脚本所在的目录，并把路径赋值给DIR  classPath&#x3D;$DIR&#x2F;its">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 实现指定服务开机自启">
+<meta property="og:url" content="http://example.com/2017/11/09/%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/index.html">
 <meta property="og:site_name" content="吴哈哈与卢亲亲">
-<meta property="og:description" content="不积跬步，无以至千里！">
+<meta property="og:description" content="本教程介绍在CentOS 7服务器上实现指定服务开机自启。1.用sh脚本实现启动服务vim itService-start.sh # 编辑脚本，内容如下： #!&#x2F;bin&#x2F;sh DIR&#x3D;$(cd “$(dirname “$0”)” &amp;&amp; pwd) # cd 到脚本所在的目录，并把路径赋值给DIR  classPath&#x3D;$DIR&#x2F;its">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-01T14:49:45.000Z">
-<meta property="article:modified_time" content="2023-08-01T14:50:27.003Z">
+<meta property="article:published_time" content="2017-11-08T16:40:06.000Z">
+<meta property="article:modified_time" content="2023-08-01T15:59:10.569Z">
 <meta property="article:author" content="walker²⁰²³">
-<meta property="article:tag" content="吴哈哈,卢亲亲">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/about/">
+<link rel="canonical" href="http://example.com/2017/11/09/%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/">
 
 
 <script id="page-configurations">
@@ -41,13 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>关于我 | 吴哈哈与卢亲亲
-</title>
+  <title>Linux 实现指定服务开机自启 | 吴哈哈与卢亲亲</title>
   
 
 
@@ -160,43 +159,148 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/09/%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="walker²⁰²³">
+      <meta itemprop="description" content="不积跬步，无以至千里！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="吴哈哈与卢亲亲">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux 实现指定服务开机自启
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">关于我
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-<div class="post-meta">
+              <time title="创建时间：2017-11-09 00:40:06" itemprop="dateCreated datePublished" datetime="2017-11-09T00:40:06+08:00">2017-11-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-01 23:59:10" itemprop="dateModified" datetime="2023-08-01T23:59:10+08:00">2023-08-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本教程介绍在CentOS 7服务器上实现指定服务开机自启。<br>1.用sh脚本实现启动服务<br>vim itService-start.sh # 编辑脚本，内容如下：</p>
+<p>#!&#x2F;bin&#x2F;sh</p>
+<p>DIR&#x3D;$(cd “$(dirname “$0”)” &amp;&amp; pwd) # cd 到脚本所在的目录，并把路径赋值给DIR </p>
+<p>classPath&#x3D;$DIR&#x2F;itservice-0.1.jar # 把要运行的jar包赋值给classPath</p>
+<p>mainClass&#x3D;s.com.wkh.ItService # 把主函数入口赋值给classPath</p>
+<p>shLogPath&#x3D;$DIR&#x2F;sh_start.log # 把启动脚本日志赋值给shLogPath</p>
+<p>jps | grep ItService | awk “{print $1}” | xargs kill -9 &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 # 获取该服务的进程号并强制结束进程</p>
+<p>nohup java -cp “$classPath” “$mainClass” &gt;”$shLogPath” &amp; # 后台运行jar包</p>
+<p>jps # 显示当前所有java进程pid</p>
+<p>至此就可以用itService-start.sh启动该服务了。</p>
+<p>2.注册成一个系统服务<br>服务脚本必须存放在&#x2F;etc&#x2F;ini.d&#x2F;目录下；</p>
+<p>vim &#x2F;etc&#x2F;init.d&#x2F;itservice # 编辑脚本，内容如下：</p>
+<p>#!&#x2F;bin&#x2F;sh</p>
+<h3 id="BEGIN-INIT-INFO"><a href="#BEGIN-INIT-INFO" class="headerlink" title="BEGIN INIT INFO"></a>BEGIN INIT INFO</h3><h1 id="Provides-itservice"><a href="#Provides-itservice" class="headerlink" title="Provides:          itservice"></a>Provides:          itservice</h1><h1 id="Default-Start-2-3-4-5"><a href="#Default-Start-2-3-4-5" class="headerlink" title="Default-Start:    2 3 4 5"></a>Default-Start:    2 3 4 5</h1><h1 id="Default-Stop-0-1-6"><a href="#Default-Stop-0-1-6" class="headerlink" title="Default-Stop:      0 1 6"></a>Default-Stop:      0 1 6</h1><h1 id="Description-itservice"><a href="#Description-itservice" class="headerlink" title="Description:      itservice"></a>Description:      itservice</h1><h3 id="END-INIT-INFO"><a href="#END-INIT-INFO" class="headerlink" title="END INIT INFO"></a>END INIT INFO</h3><p>RETVAL&#x3D;0</p>
+<p>tdir&#x3D;&#x2F;root&#x2F;itService</p>
+<p>pidof&#x3D;<code>jps | grep ItService | awk &#39;&#123;print \$1&#125;&#39;</code></p>
+<p>case “$1” in</p>
+<p>start)</p>
+<p>if [ -z “$pidof” ];then</p>
+<p>echo “Starting ItService…”</p>
+<p>$tdir&#x2F;itService-start.sh</p>
+<p>else</p>
+<p>echo “ItService already running”</p>
+<p>fi</p>
+<p>RETVAL&#x3D;$?</p>
+<p>;;</p>
+<p>stop)</p>
+<p>echo “Stopping ItService…”</p>
+<p>[ -z “$pidof” ] &amp;&amp; echo “ItService not running…” || kill $pidof</p>
+<p>RETVAL&#x3D;$?</p>
+<p>;;</p>
+<p>restart)</p>
+<p>echo “Stopping ItService…”</p>
+<p>echo “Starting ItService…”</p>
+<p>$tdir&#x2F;itService-start.sh</p>
+<p>RETVAL&#x3D;$?</p>
+<p>;;</p>
+<p>status)</p>
+<p>[ -z “$pidof” ] &amp;&amp; echo “ItService not running…” || echo “ItService running with pid $pidof”</p>
+<p>RETVAL&#x3D;$?</p>
+<p>;;</p>
+<p>*)</p>
+<p>echo “Usage: &#x2F;etc&#x2F;init.d&#x2F;itservice {start|stop|restart|status}”</p>
+<p>RETVAL&#x3D;$?</p>
+<p>;;</p>
+<p>esac</p>
+<p>exit $RETVAL</p>
+<p>至此脚本写完，用chkconfig –add itservice注册成一个系统服务，此时服务会被在&#x2F;etc&#x2F;rc.d&#x2F;rcN.d中赋予K&#x2F;S入口，然后可以用service itservice start来启动了。</p>
+<p>3.用chkconfig设置开机自启<br>chkconfig –level 35 itservice on</p>
+<p>–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。</p>
+<p>等级0表示：表示关机</p>
+<p>等级1表示：单用户模式</p>
+<p>等级2表示：无网络连接的多用户命令行模式</p>
+<p>等级3表示：有网络连接的多用户命令行模式</p>
+<p>等级4表示：不可用</p>
+<p>等级5表示：带图形界面的多用户模式</p>
+<p>等级6表示：重新启动</p>
+<p>4.常见问题<br>1.sh没有执行权限，解决方案：chmod 700 itService-start.sh</p>
+<p>2.chkconfig –add servicename时遇到service xxx does not support chkconfig，解决方案：必须把下面两行注释放在&#x2F;etc&#x2F;init.d&#x2F;itservice文件靠前的注释中：</p>
+<h1 id="Default-Start-2-3-4-5-1"><a href="#Default-Start-2-3-4-5-1" class="headerlink" title="Default-Start:    2 3 4 5"></a>Default-Start:    2 3 4 5</h1><h1 id="Default-Stop-0-1-6-1"><a href="#Default-Stop-0-1-6-1" class="headerlink" title="Default-Stop:      0 1 6"></a>Default-Stop:      0 1 6</h1><p>PS: 不在脚本所在目录执行sh时要注意工作目录的问题。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/05/%E9%92%89%E9%92%89%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/" rel="next" title="钉钉接口开发入门">
+      钉钉接口开发入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -247,6 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#BEGIN-INIT-INFO"><span class="nav-number">1.</span> <span class="nav-text">BEGIN INIT INFO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Provides-itservice"><span class="nav-number"></span> <span class="nav-text">Provides:          itservice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Start-2-3-4-5"><span class="nav-number"></span> <span class="nav-text">Default-Start:    2 3 4 5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Stop-0-1-6"><span class="nav-number"></span> <span class="nav-text">Default-Stop:      0 1 6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Description-itservice"><span class="nav-number"></span> <span class="nav-text">Description:      itservice</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#END-INIT-INFO"><span class="nav-number">1.</span> <span class="nav-text">END INIT INFO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Start-2-3-4-5-1"><span class="nav-number"></span> <span class="nav-text">Default-Start:    2 3 4 5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Stop-0-1-6-1"><span class="nav-number"></span> <span class="nav-text">Default-Stop:      0 1 6</span></a></div>
       </div>
       <!--/noindex-->
 
