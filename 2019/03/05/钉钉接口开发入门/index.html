@@ -20,31 +20,33 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="个人网站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="吴哈哈与卢亲亲">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="需求背景：将一个A系统接入钉钉平台，供该企业内部员工使用等，实现移动化办公。主要需求：  可以使用钉钉通过扫描二维码的方式登录A系统 可以在A系统中共享钉钉的组织架构  技术调研思路：第一阶段：在钉钉官网查看开发者文档接入场景主要有四种：  企业内部开发 https:&#x2F;&#x2F;open-doc.dingtalk.com&#x2F;microapp&#x2F;bgb96b 第三方企业应用 https:&#x2F;&#x2F;open-doc.d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钉钉接口开发入门">
+<meta property="og:url" content="http://example.com/2019/03/05/%E9%92%89%E9%92%89%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="吴哈哈与卢亲亲">
-<meta property="og:description" content="个人网站">
+<meta property="og:description" content="需求背景：将一个A系统接入钉钉平台，供该企业内部员工使用等，实现移动化办公。主要需求：  可以使用钉钉通过扫描二维码的方式登录A系统 可以在A系统中共享钉钉的组织架构  技术调研思路：第一阶段：在钉钉官网查看开发者文档接入场景主要有四种：  企业内部开发 https:&#x2F;&#x2F;open-doc.dingtalk.com&#x2F;microapp&#x2F;bgb96b 第三方企业应用 https:&#x2F;&#x2F;open-doc.d">
 <meta property="og:locale">
+<meta property="article:published_time" content="2019-03-05T05:51:50.000Z">
+<meta property="article:modified_time" content="2023-08-01T15:34:51.592Z">
 <meta property="article:author" content="walker">
-<meta property="article:tag" content="吴哈哈,卢亲亲">
+<meta property="article:tag" content="钉钉">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2019/03/05/%E9%92%89%E9%92%89%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-Hans'
   };
 </script>
 
-  <title>吴哈哈与卢亲亲</title>
+  <title>钉钉接口开发入门 | 吴哈哈与卢亲亲</title>
   
 
 
@@ -143,109 +145,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/09/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="walker">
-      <meta itemprop="description" content="个人网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="吴哈哈与卢亲亲">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/09/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">Java线程池的坑</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-06-09 23:53:56" itemprop="dateCreated datePublished" datetime="2020-06-09T23:53:56+08:00">2020-06-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-08-01 23:32:48" itemprop="dateModified" datetime="2023-08-01T23:32:48+08:00">2023-08-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近在优化代码（把一个大任务变成使用多线程分批执行小任务），使用多线程首当其冲就是使用线程池，一般比较常用的就是Executors.newFixedThreadPool，毕竟有现成的就用是菜鸟的一贯风格，然而却不知道已经掉入坑中了。</p>
-<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>优化完代码后，自测是一个好的开发必做的事情，毕竟好的开发不应该让测试太劳累，首先来常规的边界值测试，把每一批执行的量设置为1，尽可能的模拟多批次，在某个界面操作完后，再次点其中操作特定的界面，发现卡在那里，前端等待后端响应。（内心os：我可真是个写bug小能手）</p>
-<h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>一般前端卡在那里，基本就是数据库连接池不用够用，java线程池被占满。</p>
-<ol>
-<li>首先排查是否是数据库连接池的问题，连接数据库show processlist一下，你想看的不想看的都能看到，发现都是sleep，睡得可香呢，不打扰，不打扰。</li>
-<li>接下来，矛头直指java线程池，为了方便排查，作为写外挂小能手的我，二话不说就写一个接口，用于查看线程池里的线程的情况，主要就是看activeCount和completedTaskCount。</li>
-</ol>
-<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>万事俱备，只等再来一次，解决问题的前提是复现问题，按照流程又来了一次，果不其然，又卡在那里了，看了一下我的接口，activeCount被占得死死的，小样你的锅跑不掉了。</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>Executors 是一个Java中的工具类。提供工厂方法来创建不同类型的线程池。newFiexedThreadPool(int Threads)：创建固定数目线程的线程池。<br>咋一看好像没毛病，JDK自身提供的构建线程池的方式，又用到了工厂模式、又有比较强的扩展性，重要的是用起来还比较方便，多重光环加身，让你无法说不。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lazy</span> <span class="keyword">val</span> threadPool = <span class="type">Executors</span>.newFixedThreadPool(<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-<p>创建一个固定大小的线程池就这么简单，省时省力省心。</p>
-<p>但是知人知面不知心，让我们进一步查看源码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a thread pool that reuses a fixed number of threads</span></span><br><span class="line"><span class="comment">     * operating off a shared unbounded queue.  At any point, at most</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@code</span> nThreads&#125; threads will be active processing tasks.</span></span><br><span class="line"><span class="comment">     * If additional tasks are submitted when all threads are active,</span></span><br><span class="line"><span class="comment">     * they will wait in the queue until a thread is available.</span></span><br><span class="line"><span class="comment">     * If any thread terminates due to a failure during execution</span></span><br><span class="line"><span class="comment">     * prior to shutdown, a new one will take its place if needed to</span></span><br><span class="line"><span class="comment">     * execute subsequent tasks.  The threads in the pool will exist</span></span><br><span class="line"><span class="comment">     * until it is explicitly &#123;<span class="doctag">@link</span> ExecutorService#shutdown shutdown&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nThreads the number of threads in the pool</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the newly created thread pool</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException if &#123;<span class="doctag">@code</span> nThreads &lt;= 0&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newFixedThreadPool</span><span class="params">(<span class="type">int</span> nThreads)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(nThreads, nThreads,</span><br><span class="line">                                      <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                      <span class="keyword">new</span> <span class="title class_">LinkedBlockingQueue</span>&lt;Runnable&gt;());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>LinkedBlockingQueue成功的引起了我的注意，这个是个啥玩意，点进去一看。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a &#123;<span class="doctag">@code</span> LinkedBlockingQueue&#125; with a capacity of</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> Integer#MAX_VALUE&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LinkedBlockingQueue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>(Integer.MAX_VALUE);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>Java中的BlockingQueue主要有两种实现，分别是ArrayBlockingQueue 和 LinkedBlockingQueue。</p>
-<p>ArrayBlockingQueue是一个用数组实现的有界阻塞队列，必须设置容量。</p>
-<p>LinkedBlockingQueue是一个用链表实现的有界阻塞队列，容量可以选择进行设置，不设置的话，将是一个无边界的阻塞队列，最大长度为Integer.MAX_VALUE。</p>
-<p>这里的问题就出在：不设置的话，将是一个无边界的阻塞队列，最大长度为Integer.MAX_VALUE。也就是说，如果我们不设置LinkedBlockingQueue的容量的话，其默认容量将会是Integer.MAX_VALUE。</p>
-<p>而newFixedThreadPool中创建LinkedBlockingQueue时，并未指定容量。此时，LinkedBlockingQueue就是一个无边界队列，对于一个无边界队列来说，是可以不断的向队列中加入任务的，这种情况下就有可能因为任务过多而导致内存溢出问题。</p>
-<p><em><strong>以上的是大坑，以下的是小坑</strong></em></p>
-<ul>
-<li><strong>任务提交后长时间没有执行</strong><br>任务进入了队列，线程还在执行之前的任务。本质原因是对线程和队列的优先级认识不深刻，有一种错觉以为是所有线程都忙的时候才进入任务队列。实际上相反，是队列满的时候才会新建线程（线程数大于core size时）。</li>
-<li><strong>线程池中线程执行任务中无故消失（从日志可以看出，任务并未完成，也没有抛出异常）</strong><br>一般情况下，代码中只会去捕捉RuntimeException，如果抛出Error则会导致线程退出，而异常信息又没有拿到。最佳的解决办法是给线程池设置UncaughtExceptionHandler</li>
-</ul>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>首先让我看其他三种创建线程池的方式：newSingleThreadExecutor、newCachedThreadPool、newScheduledThreadPool，要不就是无边界队列导致OOM，要不就是创建的最大线程数导致OOM，都有坑，只能自定义创建线程池了。写个方法方便使用。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 不使用系统自带的四个Executors，有坑，轻则线程中任务没有执行，重则OOM导致系统崩掉</span></span><br><span class="line"><span class="comment">    * 使用有边界队列，超出队列的情况返回给调用者执行</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param nThreads</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">newFixedThreadPool</span></span>(nThreads: <span class="type">Int</span>): <span class="type">ThreadPoolExecutor</span> = &#123;</span><br><span class="line">    <span class="keyword">new</span> <span class="type">ThreadPoolExecutor</span>(nThreads, nThreads, <span class="number">3</span>L, <span class="type">TimeUnit</span>.<span class="type">SECONDS</span>, <span class="keyword">new</span> <span class="type">ArrayBlockingQueue</span>(nThreads),</span><br><span class="line">      <span class="type">Executors</span>.defaultThreadFactory, <span class="keyword">new</span> <span class="type">ThreadPoolExecutor</span>.<span class="type">CallerRunsPolicy</span>)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>corePoolSize- 核心池大小。需要注意的是在初创建线程池时线程不会立即启动，直到有任务提交才开始启动线程并逐渐时线程数目达到corePoolSize。若想一开始就创建所有核心线程需调用prestartAllCoreThreads方法。</p>
-<p>maximumPoolSize-池中允许的最大线程数。需要注意的是当核心线程满且阻塞队列也满时才会判断当前线程数是否小于最大线程数，并决定是否创建新线程。</p>
-<p>keepAliveTime - 当线程数大于核心时，多于的空闲线程最多存活时间</p>
-<p>unit - keepAliveTime 参数的时间单位。</p>
-<p>workQueue - 当线程数目超过核心线程数时用于保存任务的队列。主要有3种类型的BlockingQueue可供选择：无界队列，有界队列和同步移交。从参数中可以看到，此队列仅保存实现Runnable接口的任务。 别看这个参数位置很靠后，但是真的很重要，有的坑就因这个参数而起，这些细节有必要仔细了解清楚。</p>
-<p>threadFactory - 执行程序创建新线程时使用的工厂。</p>
-<p>handler - 阻塞队列已满且线程数达到最大值时所采取的饱和策略。java默认提供了4种饱和策略的实现方式：中止、抛弃、抛弃最旧的、调用者运行。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不要使用系统自带的四个Executors，有坑，轻则线程中任务没有执行，重则OOM导致系统崩掉，使用自定义创建线程池，参数根据实际的场景设置。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/340f23001a65">Java线程池使用的注意事项</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-89-CcDnSLBYy3THmcLEdQ">深入源码分析Java线程池的实现原理</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32867181">一次Java线程池误用引发的血案和总结</a><br><a target="_blank" rel="noopener" href="https://www.hollischuang.com/archives/2888">Java中线程池，你真的会用吗？</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
@@ -261,10 +164,9 @@
       <meta itemprop="name" content="吴哈哈与卢亲亲">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/05/%E9%92%89%E9%92%89%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">钉钉接口开发入门</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          钉钉接口开发入门
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -294,7 +196,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h1><p>将一个A系统接入钉钉平台，供该企业内部员工使用等，实现移动化办公。<br>主要需求：</p>
+        <h1 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h1><p>将一个A系统接入钉钉平台，供该企业内部员工使用等，实现移动化办公。<br>主要需求：</p>
 <ol>
 <li>可以使用钉钉通过扫描二维码的方式登录A系统</li>
 <li>可以在A系统中共享钉钉的组织架构</li>
@@ -402,21 +304,33 @@ url里的参数需要换成第三方Web系统对应的参数。在钉钉用户�
 <p>JavaWeb开发<br>初步实现网站应用钉钉扫码登录：<a target="_blank" rel="noopener" href="https://blog.csdn.net/baofeidyz/article/details/59059379">https://blog.csdn.net/baofeidyz/article/details/59059379</a></p>
 <p>第三方网站通过 钉钉 扫描二维码登录&#x2F;免密码登录，获取手机号码、邮箱等信息：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6a61043c79c9">https://www.jianshu.com/p/6a61043c79c9</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/%E9%92%89%E9%92%89/" rel="tag"># 钉钉</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/09/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%9D%91/" rel="next" title="Java线程池的坑">
+      Java线程池的坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -469,6 +383,7 @@ url里的参数需要换成第三方Web系统对应的参数。在钉钉用户�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">需求背景：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">技术调研思路：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%9C%A8%E9%92%89%E9%92%89%E5%AE%98%E7%BD%91%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%8F%91%E8%80%85%E6%96%87%E6%A1%A3"><span class="nav-number">2.1.</span> <span class="nav-text">第一阶段：在钉钉官网查看开发者文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E9%80%89%E6%8B%A9%E5%8F%AF%E8%A1%8C%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">第二阶段：选择可行方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E5%BC%80%E5%8F%91"><span class="nav-number">2.2.1.</span> <span class="nav-text">企业内部开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">实现步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">开发应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BD%91%E7%AB%99"><span class="nav-number">3.3.</span> <span class="nav-text">扫码登录第三方网站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96appId%E5%8F%8AappSecret"><span class="nav-number">3.3.1.</span> <span class="nav-text">获取appId及appSecret</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="nav-number">3.3.2.</span> <span class="nav-text">构造扫码登录页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84"><span class="nav-number">3.4.</span> <span class="nav-text">同步组织架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">相关文档</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
