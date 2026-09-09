@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>微服务框架选型 · walker</title><meta name="description" content="对比 Lagom 与 Spring Cloud 技术栈，分析 Play/Lagom 和 Spring WebFlux/Spring MVC 的选型思路。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/microservice-framework-selection/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="微服务框架选型 · walker"><meta property="og:description" content="对比 Lagom 与 Spring Cloud 技术栈，分析 Play/Lagom 和 Spring WebFlux/Spring MVC 的选型思路。"><meta property="og:url" content="https://wkh888888.github.io/blog/microservice-framework-selection/"><meta property="og:image" content="https://wkh888888.github.io/og/microservice-framework-selection.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="微服务框架选型 · walker"><meta name="twitter:description" content="对比 Lagom 与 Spring Cloud 技术栈，分析 Play/Lagom 和 Spring WebFlux/Spring MVC 的选型思路。"><meta name="twitter:image" content="https://wkh888888.github.io/og/microservice-framework-selection.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">微服务 · 架构 · Java · Lagom · Spring</span><h1>微服务框架选型</h1><p>对比 Lagom 与 Spring Cloud 技术栈，分析 Play/Lagom 和 Spring WebFlux/Spring MVC 的选型思路。</p><div class="hero-meta"><span>发表于 2020-01-17</span><span>约 8 分钟</span><a class="tag" href="/tags/微服务/">微服务</a><a class="tag" href="/tags/架构/">架构</a><a class="tag" href="/tags/Java/">Java</a><a class="tag" href="/tags/Lagom/">Lagom</a><a class="tag" href="/tags/Spring/">Spring</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#需求背景">需求背景</a><a class="toc-l3" href="#主要需求">主要需求</a><a class="toc-l2" href="#现有技术组件">现有技术组件</a><a class="toc-l2" href="#reactive-简介">Reactive 简介</a><a class="toc-l2" href="#web-框架">Web 框架</a><a class="toc-l2" href="#微服务框架">微服务框架</a><a class="toc-l3" href="#lagomreactive">Lagom（Reactive）</a><a class="toc-l3" href="#spring-cloud生态成熟资料丰富">Spring Cloud（生态成熟，资料丰富）</a><a class="toc-l2" href="#选型组合">选型组合</a><a class="toc-l2" href="#vs-spring">vs Spring</a><a class="toc-l3" href="#lagom">Lagom</a><a class="toc-l3" href="#spring">Spring</a><a class="toc-l2" href="#spring-webflux-vs-spring-mvc">Spring WebFlux vs Spring MVC</a><a class="toc-l2" href="#结论">结论</a><a class="toc-l2" href="#参考资料">参考资料</a></aside><article class="card prose"><h2 id="需求背景">需求背景</h2>
+<p>随着业务发展，单体应用的缺点越来越明显：逻辑复杂、模块耦合、代码臃肿，改动难度大，版本迭代效率低下；一个进程承载全部业务逻辑，启动与重启耗时过长；错误隔离性差、可用性低，任何一个模块出错都可能拖垮整个系统；可伸缩性差，扩容只能整体扩容，无法对单个功能点单独扩；线上问题修复周期长，任何一次修复都要对整套应用做全面升级。</p>
+<p>将业务适度拆分、独立微服务化，已经迫在眉睫。</p>
+<h3 id="主要需求">主要需求</h3>
+<ol>
+<li>选择适合当前项目的微服务框架</li>
+<li>改动最小化</li>
+</ol>
+<h2 id="现有技术组件">现有技术组件</h2>
+<ul>
+<li>Akka HTTP、Akka、Slick（Lightbend 技术栈，前身为 Typesafe）</li>
+</ul>
+<p>Akka HTTP 是基于 Akka Streams 的 Reactive Streams 兼容工具包，提供了完全异步、无阻塞的服务端与客户端的 HTTP 栈。它的编程模型同时提供高级路由 DSL 与底层 API。虽然在底层使用了 Akka Actors 与 Actor 模型，但 API 对最终用户隐藏了这一点。</p>
+<p>Akka HTTP 是一组库，而非 Play、Lagom 那样的框架——与浏览器的交互也在其能力范围内，但那并非它的主要重心。Akka HTTP 的定位是集成层（而非应用核心）的灵活性。它内置了对 Akka Streams 与 Reactive Streams 流式 API 的支持，客户端 API 同样提供异步、非阻塞与流式能力。</p>
+<p>Akka 是基于 Actor、消息驱动的运行时，用于在 JVM 上管理并发、韧性与弹性，并对 Java 与 Scala 提供一等公民级别的支持。Akka 背后的编程模型基于 Actor 模型，而 Akka Streams 则基于 Reactive Streams，提供针对流数据优化过的模型。</p>
+<p>Akka 使用 Actor 模型简化并行处理、提升资源利用率，并提供集群能力，包括分片、无冲突复制数据类型（CRDTs）、gRPC、路由器等。它还包含 Akka Streams，用于支持带背压（backpressure）的流数据，以及 Alpakka——提供对接各类外部技术的 Akka Streams 端点。</p>
+<ul>
+<li><a href="/blog/slick-getting-started/">Slick 简介</a></li>
+</ul>
+<h2 id="reactive-简介">Reactive 简介</h2>
+<p>2014 年，Lightbend 联合创始人兼 CTO Jonas Bonér 与社区共同定义并阐述了 Reactive（响应式），即“响应式宣言（Reactive Manifesto）”，如今已有全球超过 24,000 人签名。该宣言已被业界广泛采纳，并有效提出了真正的云原生应用设计原则。</p>
+<p>响应式系统具备以下特质：</p>
+<ul>
+<li><strong>响应式（Responsive）</strong>：在任何情况下都基于用户与 API 交互提供即时反馈，保持高性能。</li>
+<li><strong>韧性（Resilient）</strong>：能自动恢复、修复自身，实现无缝的业务连续性。</li>
+<li><strong>弹性（Elastic）</strong>：能够按需在核心、节点、集群与 Pod 上灵活地伸缩。</li>
+</ul>
+<p>支撑“在高韧性之上兼具弹性”的基础设施原则是——系统应当：</p>
+<ul>
+<li><strong>消息驱动（Message Driven）</strong>：以并行、异步、无阻塞的方式处理消息，从而保证松耦合、隔离与位置透明。（换言之，服务可以运行在任何地方，并能在不感知对方物理位置的情况下彼此通信——这是云原生设计的关键。）</li>
+</ul>
+<h2 id="web-框架">Web 框架</h2>
+<ul>
+<li>Play（Reactive）</li>
+<li>Spring WebFlux（Reactive）</li>
+<li>Spring MVC（基于 Servlet API）</li>
+</ul>
+<h2 id="微服务框架">微服务框架</h2>
+<h3 id="lagomreactive">Lagom（Reactive）</h3>
+<p>Lagom 在瑞典语中意为“恰到好处”。微服务常被理解成“小型服务”，但 Lightbend 想强调的是：在构建基于微服务的系统时，最重要的不是服务的大小，而是找到服务之间正确的边界，使其与限界上下文（Bounded Context）、业务功能与隔离需求保持一致。因此，它非常适合以领域驱动设计（DDD）为重点的思维方式。</p>
+<p>遵循这一思路，有助于构建易于部署与管理的、可伸缩且有韧性的系统。Lightbend 的观点是：重点不应放在服务的大小上，而应是“大小合适”的服务，也就是 Lagom 尺寸的服务。Lagom 基于“响应式宣言”定义的响应式原则，为开发者提供了良好的默认值（safe by default），并在必要时允许偏离。</p>
+<p>Lagom 框架充当多个 Lightbend 框架的抽象层，由以下核心技术与框架组成：</p>
+<ul>
+<li>Scala</li>
+<li>Java</li>
+<li>Play Framework</li>
+<li>Akka 与 Akka Persistence</li>
+<li>sbt</li>
+<li>Cassandra</li>
+<li>Guice</li>
+<li>ConductR</li>
+</ul>
+<h4 id="核心概念">核心概念</h4>
+<ul>
+<li><a href="/blog/lagom-core-concepts-1/">Lagom 核心概念（一）</a></li>
+<li><a href="/blog/lagom-core-concepts-2/">Lagom 核心概念（二）</a></li>
+<li><a href="/blog/lagom-core-concepts-3/">Lagom 核心概念（三）</a></li>
+</ul>
+<h4 id="lagom-发展历程">Lagom 发展历程</h4>
+<h5 id="lagom-10-版本">Lagom 1.0 版本</h5>
+<p>Lagom 依赖 sbt 的某些特性，因此支持其他构建工具并不容易。虽然支持 Maven 或许可行，但仍需构建概念验证（PoC）来验证。</p>
+<p>据 Lightbend 的说法，Scala 的构建工具 sbt 为 Lagom 带来了许多便利：快速增量重编译、热代码重载、并行启停服务、自动注入配置默认值等。但在多数 Java 开发者眼中，sbt 是一道门槛——统治 Java 项目的主要是 Maven 与 Gradle（在较小程度上还有 Ant）。向 Lagom 这类微服务框架迁移本身已是相当大的转变，因此我们认为这可能会劝退 Java 开发者。把品牌从“偏 Scala 的公司”重塑为“更具 Java 意识的厂商”，正契合降低初期学习曲线的诉求，尤其对构建工具这类“细枝末节”而言。毕竟，提升采用率最重要的事，是让人们能轻松上手新技术。我们认为为 Maven 或 Gradle 提供集成会对采用率产生积极影响——尽管实现不易，但有助于说服 Java 开发者放下顾虑使用 Lagom。</p>
+<h5 id="lagom-11-版本">Lagom 1.1 版本</h5>
+<p>2016 年 9 月，Lightbend 发布了 Lagom 1.1，引入了 Maven 支持，包括在 Maven 中运行 Lagom 开发环境的能力。</p>
+<h5 id="lagom-12-版本">Lagom 1.2 版本</h5>
+<ul>
+<li>Message Broker API 与 Kafka 实现</li>
+<li>JDBC 支持</li>
+<li>通用读侧支持、分片支持与自动偏移量处理</li>
+</ul>
+<h5 id="lagom-13-版本">Lagom 1.3 版本</h5>
+<ul>
+<li>Scala API for Lagom</li>
+</ul>
+<h5 id="lagom-14-版本">Lagom 1.4 版本</h5>
+<ul>
+<li>Lagom 1.4 升级到 Play（2.6）与 Akka（2.5）的最新大版本。</li>
+<li>Akka HTTP 成为默认服务器引擎：Play 2.6 引入了以 Akka HTTP 替代 Netty 的新默认服务器引擎。</li>
+<li>Lagom 1.4 要求每个使用 Cassandra 持久化的服务配置三个键空间（keyspace）设置。</li>
+</ul>
+<h5 id="lagom-15-版本">Lagom 1.5 版本</h5>
+<ul>
+<li><strong>Akka Management</strong>：一套用于运维 Akka 驱动应用的工具，通过专用 HTTP 端口暴露路由，便于远程检查 Akka Actor 系统的状态。Lagom 开箱即用地提供了 Akka Management 的 HTTP 端口，并默认添加健康检查路由。你可以复用库提供的健康检查，也可以自行插入。例如 Lagom 利用集群状态判断节点是否健康（称为集群成员资格检查，由 Akka Cluster HTTP Management 库提供）。</li>
+<li><strong>gRPC</strong>：Lagom 1.5 引入跨服务 gRPC 通信支持。gRPC 是高性能的通用开源 RPC 框架。原有的基于 HTTP/JSON 的传输并未被移除，Lagom 只是新增了 gRPC，让用户可以选择暴露另一种传输方式，从而提升服务的采用率。Lagom 对 gRPC 的支持构建于 Play-gRPC 之上，并借助 Lagom 1.5 新增的 <code>additionalRouter</code> 能力实现（见下文）。</li>
+<li><strong>其他路由器</strong>：从 Lagom 1.5 起，你可以扩展服务暴露的路由。服务不再只暴露列出的调用，<code>Service.Descriptor</code> 还会通过 <code>additionalRouters</code> 提供所处理的端点。文档涵盖全部细节。其他路由器可以轻松扩展 Play 自身支持的 <code>Service.Descriptor</code> 能力，例如文件上传；官方还提供了一个详细的 Lagom 食谱介绍这种用例。</li>
+</ul>
+<h3 id="spring-cloud生态成熟资料丰富">Spring Cloud（生态成熟，资料丰富）</h3>
+<h2 id="选型组合">选型组合</h2>
+<ol>
+<li>Play + Lagom（Lightbend 技术栈）</li>
+<li>Spring WebFlux + Spring Cloud（Spring 技术栈）</li>
+<li>Spring MVC + Spring Cloud（Spring 技术栈）</li>
+</ol>
+<h2 id="vs-spring">vs Spring</h2>
+<h3 id="lagom">Lagom</h3>
+<p>在我看来，Lagom 的开发环境极大地提升了生产力——一条命令启动所有微服务，代码热重载，以及富有表现力的服务接口声明，都是 Lagom 高度重视开发者生产力的体现。</p>
+<p>建立良好的构建实践，正是 Lagom 响应式服务所看重的，例如默认异步通信、ES/CQRS 等。</p>
+<h3 id="spring">Spring</h3>
+<p>Spring 已存在十余年，随着 Spring Boot 与 Spring Cloud 的出现，趋势逐渐转向以独立应用作为微服务开发的基础。Spring 吸收了 Netflix OSS 的成果，同时提供了自己的组件，如 Spring Cloud Config 与 Spring Security。Netflix 与 Spring 技术栈提供了在生产环境构建与运行微服务所需的全部工具。</p>
+<p>外部化配置、开箱即用的服务注册仪表盘、断路器监控与分布式追踪、与 Eureka/Consul/Zookeeper 等服务注册表的集成、面向 Actuator 端点的生产级监控与指标能力、与 Maven/Gradle 等构建工具的集成，以及广泛的安全特性（包括即将与 Vault 的集成）——这些只是 Spring 所提供能力的一部分。</p>
+<p>鉴于 Lagom 仍处在发展期，将其与 Spring 栈做深入对比并不公平。我们希望 Lagom 能持续迈向更成熟的框架，并在各个层面真正具备替代 Spring 的实力。目前看到的第一步令人鼓舞，也希望他们能采纳我们对框架进一步发展的建议。很高兴看到更多微服务框架涌现，我们为 Lightbend 与 Spring 同台竞争点赞。</p>
+<h2 id="spring-webflux-vs-spring-mvc">Spring WebFlux vs Spring MVC</h2>
+<p>传统的 Spring MVC 基于 Servlet，是阻塞式的，每次请求由一个线程处理。</p>
+<p>Spring WebFlux 不依赖 Servlet API，可运行在 Netty 等网络服务器之上。它通过事件循环（Event Loop）模式，由单个线程以非阻塞方式处理事件；当遇到耗时任务时，Event Loop 绑定的线程会新起线程执行，完成后通知 Event Loop。</p>
+<p>相比 Servlet 的多线程处理方式，Spring WebFlux 在应对高并发请求时，借助异步 IO，能以少量且稳定的线程处理更高吞吐量的请求——尤其当请求处理因业务复杂或 IO 阻塞而耗时较长时，对比更加明显。</p>
+<h2 id="结论">结论</h2>
+<p>我们认为 Lagom 前景可观，一定会持续跟进。由于 Lagom 是一个 opinionated（强约定）框架，一切都能很好地融合在一起。Lagom 只是 Akka 与 Play 之上的一层薄封装，历经多年已相当成熟稳健。</p>
+<p>尽管仍有一些重要事项待解决，但我们相信可以得出结论：Lightbend 在认真倾听社区反馈，他们通过新功能持续改进 Lagom，并为开发者提供更好的体验。</p>
+<p>我们的建议是：密切关注 Lagom 的进展。</p>
+<p>如果你当前就需要一个几乎集成了所有功能的成熟框架，请选择 Spring。</p>
+<p>如果你的项目是传统 Web 项目，例如需要集成现有 Servlet 包做过滤拦截，推荐使用 Spring MVC + Spring Cloud；否则推荐 Spring WebFlux + Spring Cloud——响应式框架在性能与速度上更具优势。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://ordina-jworks.github.io/microservices/2016/04/22/Lagom-First-Impressions-and-Initial-Comparison-to-Spring-Cloud.html">LAGOM：与 Spring Cloud 的第一印象和初步比较</a></li>
+<li><a href="https://ordina-jworks.github.io/microservices/2017/02/01/Lagom-1-2.html">LAGOM 1.2：有哪些新功能？</a></li>
+<li><a href="https://www.lightbend.com/blog/lightbend-podcast-when-to-use-play-lagom-or-akka-http">Lightbend 播客：何时在项目中使用 Play、Lagom 或 Akka HTTP</a></li>
+<li><a href="https://www.zhihu.com/question/294282002?sort=created">Spring MVC 过时了吗？</a></li>
+<li><a href="https://www.jianshu.com/p/24f824b878d9">WebFlux 和 SpringMVC 性能对比</a></li>
+<li><a href="https://www.jianshu.com/p/Tozpp3">领域驱动设计 DDD 和 CQRS 落地</a></li>
+<li><a href="https://blog.csdn.net/liujianhuiouc/article/details/52711050">微服务的单体应用的优缺点对照</a></li>
+<li><a href="https://www.scala-sbt.org/1.x/docs/">sbt 参考手册</a></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/nacos-getting-started-1/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Nacos入门（一）</span></a><a class="post-nav-item post-nav-next" href="/blog/lagom-core-concepts-2/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Lagom核心概念(二)</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

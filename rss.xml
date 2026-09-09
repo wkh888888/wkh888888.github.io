@@ -14,6 +14,13 @@
       <description>记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。</description>
     </item>
     <item>
+      <title>GitLab 双 Remote 协作：pull upstream、push origin、再提 PR</title>
+      <link>https://wkh888888.github.io/blog/gitlab-fork-workflow/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/gitlab-fork-workflow/</guid>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+      <description>记录把 Astro 博客源码推上 GitLab 时踩到的几个坑——新仓自带无关的占位提交、受保护分支禁止 force push、以及 fork 模型下不应直推 upstream。附标准协作流程与速查命令。</description>
+    </item>
+    <item>
       <title>打造自己的智能体：从个人助手到&quot;数字分身&quot;</title>
       <link>https://wkh888888.github.io/blog/personal-agent-digital-twin/</link>
       <guid isPermaLink="true">https://wkh888888.github.io/blog/personal-agent-digital-twin/</guid>
@@ -28,6 +35,48 @@
       <description>从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。</description>
     </item>
     <item>
+      <title>Gitlab备份还原升级</title>
+      <link>https://wkh888888.github.io/blog/gitlab-backup-restore-upgrade/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/gitlab-backup-restore-upgrade/</guid>
+      <pubDate>Thu, 28 May 2020 00:00:00 GMT</pubDate>
+      <description>GitLab 备份、还原与离线升级的操作笔记，记录从 8.9.9 升到 10.7.7 的 RPM 升级路线与常见问题。</description>
+    </item>
+    <item>
+      <title>Nacos入门（一）</title>
+      <link>https://wkh888888.github.io/blog/nacos-getting-started-1/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/nacos-getting-started-1/</guid>
+      <pubDate>Fri, 22 May 2020 00:00:00 GMT</pubDate>
+      <description>Nacos 入门介绍：特性、优势、与 Eureka/apollo 对比，以及单机版快速启动和服务注册发现示例。</description>
+    </item>
+    <item>
+      <title>微服务框架选型</title>
+      <link>https://wkh888888.github.io/blog/microservice-framework-selection/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/microservice-framework-selection/</guid>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 GMT</pubDate>
+      <description>对比 Lagom 与 Spring Cloud 技术栈，分析 Play/Lagom 和 Spring WebFlux/Spring MVC 的选型思路。</description>
+    </item>
+    <item>
+      <title>Lagom核心概念(二)</title>
+      <link>https://wkh888888.github.io/blog/lagom-core-concepts-2/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/lagom-core-concepts-2/</guid>
+      <pubDate>Fri, 10 Jan 2020 00:00:00 GMT</pubDate>
+      <description>Lagom 服务间与服务内通信：同步调用、消息代理、Akka 远程处理、分布式发布订阅与服务网关。</description>
+    </item>
+    <item>
+      <title>Lagom核心概念(三)</title>
+      <link>https://wkh888888.github.io/blog/lagom-core-concepts-3/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/lagom-core-concepts-3/</guid>
+      <pubDate>Fri, 10 Jan 2020 00:00:00 GMT</pubDate>
+      <description>Lagom 服务注册与发现概念：服务注册表、客户端发现、服务器端发现与服务网关。</description>
+    </item>
+    <item>
+      <title>Lagom核心概念(一)</title>
+      <link>https://wkh888888.github.io/blog/lagom-core-concepts-1/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/lagom-core-concepts-1/</guid>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 GMT</pubDate>
+      <description>Lagom 响应式微服务框架 overview：设计理念、开发环境、持久化、API 概览与组件技术。</description>
+    </item>
+    <item>
       <title>钉钉接口开发入门</title>
       <link>https://wkh888888.github.io/blog/dingtalk-api-getting-started/</link>
       <guid isPermaLink="true">https://wkh888888.github.io/blog/dingtalk-api-getting-started/</guid>
@@ -35,11 +84,39 @@
       <description>把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。</description>
     </item>
     <item>
+      <title>SSO （Single Sign On）</title>
+      <link>https://wkh888888.github.io/blog/sso-single-sign-on/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/sso-single-sign-on/</guid>
+      <pubDate>Tue, 26 Feb 2019 00:00:00 GMT</pubDate>
+      <description>单点登录（SSO）基础概念与实现机制笔记：统一认证、ticket、Cookie、CAS 标准流程。</description>
+    </item>
+    <item>
+      <title>slick使用HikariCP</title>
+      <link>https://wkh888888.github.io/blog/slick-hikaricp/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/slick-hikaricp/</guid>
+      <pubDate>Fri, 22 Feb 2019 00:00:00 GMT</pubDate>
+      <description>在 Slick/Scala 项目中使用 HikariCP 连接池的配置、常用参数与注意事项。</description>
+    </item>
+    <item>
+      <title>slick小白入门</title>
+      <link>https://wkh888888.github.io/blog/slick-getting-started/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/slick-getting-started/</guid>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 GMT</pubDate>
+      <description>Slick 入门：FRM 介绍、代码生成、数据库配置与常用 CRUD 操作示例。</description>
+    </item>
+    <item>
       <title>Linux 实现指定服务开机自启</title>
       <link>https://wkh888888.github.io/blog/linux-service-autostart/</link>
       <guid isPermaLink="true">https://wkh888888.github.io/blog/linux-service-autostart/</guid>
       <pubDate>Thu, 09 Nov 2017 00:00:00 GMT</pubDate>
       <description>在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。</description>
+    </item>
+    <item>
+      <title>Linux centos7 tomcat安装</title>
+      <link>https://wkh888888.github.io/blog/linux-centos7-tomcat-install/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/linux-centos7-tomcat-install/</guid>
+      <pubDate>Wed, 11 Oct 2017 00:00:00 GMT</pubDate>
+      <description>CentOS 7 使用 yum 安装 Tomcat 7、目录结构与启停命令。</description>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lagom核心概念(一) · walker</title><meta name="description" content="Lagom 响应式微服务框架 overview：设计理念、开发环境、持久化、API 概览与组件技术。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/lagom-core-concepts-1/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Lagom核心概念(一) · walker"><meta property="og:description" content="Lagom 响应式微服务框架 overview：设计理念、开发环境、持久化、API 概览与组件技术。"><meta property="og:url" content="https://wkh888888.github.io/blog/lagom-core-concepts-1/"><meta property="og:image" content="https://wkh888888.github.io/og/lagom-core-concepts-1.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Lagom核心概念(一) · walker"><meta name="twitter:description" content="Lagom 响应式微服务框架 overview：设计理念、开发环境、持久化、API 概览与组件技术。"><meta name="twitter:image" content="https://wkh888888.github.io/og/lagom-core-concepts-1.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Lagom · 微服务 · Scala</span><h1>Lagom核心概念(一)</h1><p>Lagom 响应式微服务框架 overview：设计理念、开发环境、持久化、API 概览与组件技术。</p><div class="hero-meta"><span>发表于 2020-01-09</span><span>约 7 分钟</span><a class="tag" href="/tags/Lagom/">Lagom</a><a class="tag" href="/tags/微服务/">微服务</a><a class="tag" href="/tags/Scala/">Scala</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#lagom响应式微服务框架">Lagom：响应式微服务框架</a><a class="toc-l2" href="#lagom-概念概览">Lagom 概念概览</a><a class="toc-l2" href="#lagom-的设计理念">Lagom 的设计理念</a><a class="toc-l2" href="#在多语言系统中使用-lagom">在多语言系统中使用 Lagom</a><a class="toc-l2" href="#开发环境概览">开发环境概览</a><a class="toc-l2" href="#lagom-的构建理念">Lagom 的构建理念</a><a class="toc-l2" href="#组件技术">组件技术</a><a class="toc-l2" href="#api-概览">API 概览</a></aside><article class="card prose"><h2 id="lagom响应式微服务框架">Lagom：响应式微服务框架</h2>
+<p>Lagom 在瑞典语中意为“恰到好处、刚刚好”。微服务的核心，是创建“大小合适”的服务——既具备恰当的功能边界与隔离级别，又能支撑起可伸缩、有韧性的系统。</p>
+<p>Lagom 致力于让应用充分发挥“响应式宣言（Reactive Manifesto）“的潜力，同时提供高生产率的开发体验，以及无缝的生产部署能力。</p>
+<h2 id="lagom-概念概览">Lagom 概念概览</h2>
+<p>Lagom 框架提供了一整套从开发到部署的库与开发环境：</p>
+<ul>
+<li><strong>开发期</strong>：一条命令即可构建项目，并启动所有服务及配套的 Lagom 基础设施；代码改动会触发热重载。短短几分钟，你就能新建一个服务，或加入一个已有的 Lagom 开发团队。</li>
+<li><strong>语言</strong>：可以使用 Java 或 Scala 编写微服务。Lagom 让服务间的通信格外顺滑——服务定位、通信协议等细节都由框架透明处理，把便利性和生产率拉满。</li>
+<li><strong>持久化</strong>：Lagom 支持基于事件溯源（Event Sourcing）与 CQRS（命令查询职责分离）的持久化模式。</li>
+<li><strong>服务客户端</strong>：Lagom 会根据服务描述符（Service Descriptor）自动生成服务客户端，调用和测试端点变得异常简单。</li>
+</ul>
+<p><strong>部署</strong>：你可以选择任意平台，例如：</p>
+<ul>
+<li><strong>Kubernetes</strong>：用于自动化容器化应用部署、扩缩容与管理的开源系统。</li>
+<li><strong>DC/OS</strong>：由 Mesosphere 基于 Apache Mesos 分布式系统内核创建和维护的开源分布式操作系统。</li>
+<li>任意支持主机间私有网络的云环境或本地部署。</li>
+</ul>
+<p>设计高可伸缩、并且在意外故障下仍能保持韧性的微服务系统，是一件极其困难的事。没有 Lagom 这样的框架，你就得自己处理高度分布式系统里那些棘手的线程与并发问题。遵循 Lagom 的设计初衷，你可以规避大量此类陷阱，同时提升生产率。而且 Lagom 不要求你推倒重来——它允许你在现有约束内渐进式地采纳响应式架构。例如，你可以用它来：</p>
+<ul>
+<li>与遗留系统对接，或逐步替换单体应用的功能。</li>
+<li>用 Cassandra 做持久化，也可以选用你自己的数据库，或对接其他数据存储。（Lagom 的持久化 API 默认支持 Cassandra，因为它天然契合微服务系统所需的分片与读侧支持。）</li>
+</ul>
+<h2 id="lagom-的设计理念">Lagom 的设计理念</h2>
+<p>先看看 Jonas Bonér 在《Reactive Microservices Architecture：分布式系统的设计原则》中提出的响应式微服务的几项基本要求：</p>
+<ul>
+<li>“隔离是弹性与韧性的前提，服务边界之间必须采用异步通信……”</li>
+<li>“自治的服务只能通过公开其协议/API 来承诺自身行为。“以及”要让服务做到位置透明，它必须是可寻址的。”</li>
+<li>“每个微服务都必须对自身状态及其持久化负全责。”</li>
+</ul>
+<p>以下 Lagom 特性正是为了践行这些最佳实践：</p>
+<ul>
+<li><strong>默认异步</strong>：Lagom 的 API 把服务间通信当作一等公民，通过流式传输实现。所有 Lagom API 都基于 Akka Streams 的异步 IO 能力；Java API 使用 JDK 8 的 <code>CompletionStage</code> 表达异步计算，Scala API 使用 <code>Future</code>。</li>
+<li><strong>分布式持久化</strong>：相比传统的集中式数据库，Lagom 支持分布式持久化模式。我们鼓励（但不强制）采用基于事件的架构来做数据持久化。实体持久化的默认模式是事件溯源（ES）+ CQRS，详见「管理数据持久化」与「持久化实体」。</li>
+<li><strong>服务注册与发现</strong>：Lagom 提供了用于开发目的的服务注册表与服务网关实现，以及客户端/服务器端服务发现的内部管线，详见「注册和发现服务」。</li>
+</ul>
+<h2 id="在多语言系统中使用-lagom">在多语言系统中使用 Lagom</h2>
+<p>Lagom 并不要求你系统里的每个服务都是 Lagom 微服务。毕竟，采用微服务的一大优势，正是可以为每个服务务实选择最合适的语言与技术。Lagom 对标准通信协议的“地道”用法，加上它与“设计驱动 API”思路的天然契合，使它能很好地融入这种多语言系统。</p>
+<ul>
+<li>Lagom 服务调用映射到用于同步通信的标准 HTTP，以及用于流式传输与异步消息传递的 WebSocket。任何支持这些协议的语言或框架，都能轻松消费 Lagom 服务；反过来，Lagom 服务也能轻松与任何公开 REST API 的服务对话。</li>
+<li>Lagom 服务的 API 描述该服务如何使用 HTTP：REST 服务调用由 HTTP 方法与 URI 标识，请求头与响应头均可定制。默认情况下，Lagom 消息通过地道的映射库序列化为普通 JSON，让 JSON 在网络上的呈现方式对开发者透明。</li>
+</ul>
+<h2 id="开发环境概览">开发环境概览</h2>
+<p>借助「Lagom 入门」中介绍的 sbt 模板或 Maven 原型（archetype），几分钟即可搭好 Lagom 开发环境。这些模板无需任何编码、脚本或配置，就能建立以下内容：</p>
+<ul>
+<li>一个包含两示例服务的分层构建结构，你可以照着它的模式在同一项目里创建自己的服务。</li>
+<li>本地运行与测试服务所需的基础设施：
+<ul>
+<li>一个用于处理消息的 Kafka 服务器；</li>
+<li>一个用于处理持久化的 Cassandra 服务器；</li>
+<li>一套服务注册表与服务网关，支撑位置透明性；</li>
+<li>构建并运行服务与基础设施所需的配置。</li>
+</ul>
+</li>
+</ul>
+<p>用模板创建项目后，执行 <code>runAll</code> 命令即可启动所有运行时组件，立刻开始测试。</p>
+<h2 id="lagom-的构建理念">Lagom 的构建理念</h2>
+<p>如果做得对，采纳响应式微服务架构能显著提升研发组织的生产率与交付速度。Lagom 提供了一套灵活的构建方法，既支持个人开发，也支持团队协作，并能随业务增长而演进。你可以把所有微服务放在单个 sbt/Maven 构建（项目）中，也可以每个服务独立构建，或者把逻辑相关的服务组放进多个构建。</p>
+<p>如何取舍？可参考以下利弊：</p>
+<ul>
+<li><strong>单一构建承载多个服务</strong>：开发新功能往往要同时改动多个服务，把它们放在同一构建里，开发体验无懈可击。但随着参与构建的开发人数增加，彼此干扰会降低速度。</li>
+<li><strong>多个构建，每个承载一个或一小组服务</strong>：每个微服务都能独立变更，隔离状态下推进更快；发布时，相关服务再统一升级、消费更新后的服务。但多构建会增加复杂度——你需要把服务发布出去，供其他服务可用；实现时也要导入所依赖的全部服务。详见「将系统拆分为多个版本」。</li>
+</ul>
+<p>起步阶段，把所有服务放在同一构建里通常最合理：小团队用一个构建就够，也避免了拆多构建带来的滞后与依赖问题。随着系统与组织的发展，调整策略才有意义——比如随功能增长，把服务拆到不同的内部版本。团队同理。重要的是，不要害怕重构你的构建以满足组织需求。</p>
+<h2 id="组件技术">组件技术</h2>
+<p>作为一个完整的微服务平台，Lagom 汇聚了一系列技术，并在其之上增加了价值。Lagom 使用并支持的库、工具与服务器，一部分由 Lightbend 开发，其余来自第三方与开源社区。使用 Lagom 开发时，你还能借助以下技术：</p>
+<ul>
+<li><strong>Play 框架</strong>：Lagom 构建于 Lightbend 的 Web 框架 Play 之上，这是一个实现细节，开发简单微服务时你并不直接接触它；但高级用户可以直接调用部分 Play API。如果你已有 Play Framework 应用并想叠加微服务，Lagom 也为此用例提供支持。</li>
+<li><strong>Akka</strong>：Lagom 的 Persistence、Publish-Subscribe 与 Cluster 都构建于 Lightbend 的工具包 Akka 之上，用于构建并发、分布式、有韧性的消息驱动应用（同样是实现细节，简单微服务开发时并不直接相关；但你也可直接调用 Akka API）。为跨多服务器扩展微服务，Lagom 通过 Akka Cluster 提供集群能力；如「实现服务」所述，Lagom 服务可以是“简单的”或“流式的”，流式异步服务则建立在 Akka Streams 之上。</li>
+<li><strong>Lightbend Platform 增值组件</strong>（订户可用）：Akka Split Brain Resolver 处理网络故障与系统崩溃；Lightbend Telemetry 与 Lightbend Console 让你洞察系统的健康、可用与性能。详见 Lightbend Platform。</li>
+<li><strong>Cassandra</strong>：默认情况下，需要持久化的 Lagom 微服务使用随开发环境一起运行的 Cassandra 实例；你也可以用已有的 Cassandra 或其他类型数据库。</li>
+<li><strong>Guice</strong>：与 Play 一样，Lagom 使用 Guice 做依赖注入。</li>
+<li><strong>SLF4J 与 Logback</strong>：Lagom 用 SLF4J 记录日志，默认由 Logback 作为日志引擎支撑。</li>
+<li><strong>Typesafe Config</strong>：Lagom 及其众多组件技术都用 Typesafe Config 库配置，配置格式为 HOCON——JSON 的强大且富有表现力的超集。</li>
+<li><strong>序列化</strong>：Lagom 推荐的序列化格式是 JSON。Java 端默认用 Jackson，Scala 端用 Play JSON；也支持其他序列化格式。</li>
+</ul>
+<h2 id="api-概览">API 概览</h2>
+<p>Lagom 同时提供 Java 与 Scala API。Java API 以 Java 8 为目标，假定你熟悉 lambda、默认方法与 <code>Optional</code>。Lagom 主体用 Scala 实现，但即便你用 Java API 开发，这也是无需关心的实现细节。</p>
+<p>Lagom 富有表现力的服务接口声明，让开发者能快速定义接口并立即着手实现。开发时你会用到的重要 API 包括：</p>
+<ul>
+<li><strong>Service API</strong>：声明并实现供客户端使用的服务接口。为支持位置透明，客户端通过服务定位器发现服务。除同步的请求-响应调用外，Service API 也支持服务间的异步流。</li>
+<li><strong>Message Broker API</strong>：提供分布式发布-订阅模型，服务可借由主题（Topic）共享数据。主题只是允许服务推入/拉出数据的通道。</li>
+<li><strong>持久化 API（Persistence API）</strong>：为存储数据的服务提供基于事件溯源的持久化实体，并附带 CQRS 读侧支持。Lagom 管理持久化实体在节点集群中的分布，从而实现分片与水平扩展。开箱即用提供 Cassandra，但也支持其他数据库。</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/lagom-core-concepts-3/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Lagom核心概念(三)</span></a><a class="post-nav-item post-nav-next" href="/blog/dingtalk-api-getting-started/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">钉钉接口开发入门</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

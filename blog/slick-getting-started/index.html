@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>slick小白入门 · walker</title><meta name="description" content="Slick 入门：FRM 介绍、代码生成、数据库配置与常用 CRUD 操作示例。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/slick-getting-started/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="slick小白入门 · walker"><meta property="og:description" content="Slick 入门：FRM 介绍、代码生成、数据库配置与常用 CRUD 操作示例。"><meta property="og:url" content="https://wkh888888.github.io/blog/slick-getting-started/"><meta property="og:image" content="https://wkh888888.github.io/og/slick-getting-started.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="slick小白入门 · walker"><meta name="twitter:description" content="Slick 入门：FRM 介绍、代码生成、数据库配置与常用 CRUD 操作示例。"><meta name="twitter:image" content="https://wkh888888.github.io/og/slick-getting-started.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Slick · Scala · 数据库</span><h1>slick小白入门</h1><p>Slick 入门：FRM 介绍、代码生成、数据库配置与常用 CRUD 操作示例。</p><div class="hero-meta"><span>发表于 2019-02-19</span><span>约 6 分钟</span><a class="tag" href="/tags/Slick/">Slick</a><a class="tag" href="/tags/Scala/">Scala</a><a class="tag" href="/tags/数据库/">数据库</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#slick-简介">Slick 简介</a><a class="toc-l2" href="#通过代码生成器生成实体类">通过代码生成器生成实体类</a><a class="toc-l2" href="#数据库配置">数据库配置</a><a class="toc-l2" href="#常规操作">常规操作</a><a class="toc-l2" href="#slick-的局限">Slick 的局限</a><a class="toc-l2" href="#slick-纯-sql-查询">Slick 纯 SQL 查询</a></aside><article class="card prose"><h2 id="slick-简介">Slick 简介</h2>
+<p>Slick（Scala Language-Integrated Connection Kit，Scala 语言集成连接工具包）是 Lightbend 面向 Scala 推出的函数式关系映射（FRM，Functional Relational Mapping）库，让你轻松使用关系数据库。它让你操作数据库里的数据就像操作 Scala 集合一样自然，同时让你完全掌控数据库访问发生的时机与传输的内容。必要时你也可以直接使用 SQL。数据库操作以异步方式执行，这让 Slick 非常契合基于 Play 与 Akka 的响应式应用。</p>
+<p>Slick 的 FRM 范式把映射工作放在 Scala 中完成，具备松耦合、最小配置等核心优势，将关系数据库的复杂性抽象掉。</p>
+<p>Slick 并没有试图去弥合对象模型与数据库模型之间的鸿沟，而是把数据库模型直接引入 Scala，因此开发者无需手写 SQL。</p>
+<p>Slick 把数据库直接集成进 Scala，让你用普通的 Scala 类与集合，以处理内存数据同样的方式来查询和处理存储的、乃至远端的数据。</p>
+<p>Slick 这种函数式 FRM 方案的主要优点包括：</p>
+<ul>
+<li><strong>预优化效率</strong>：FRM 是一种更高效的连接方式。与 ORM 不同，它能在编译期预先优化与数据库的通信，开箱即用。用 FRM 比用 ORM 更快地把应用做出来。</li>
+<li><strong>类型安全的免繁琐排错</strong>：FRM 为构建数据库查询带来类型安全。编译器会自动发现错误，开发者效率更高，不必再像在普通字符串里那样做繁琐的手动排查。</li>
+<li><strong>更高效、可组合的查询模型</strong>：FRM 支持可组合的查询模型，可以像搭积木一样把各部分组合成查询，并在代码库中复用这些片段。</li>
+</ul>
+<p>支持的数据库</p>
+<ul>
+<li>DB2</li>
+<li>Derby / JavaDB</li>
+<li>H2</li>
+<li>HSQLDB (HyperSQL)</li>
+<li>Microsoft SQL Server</li>
+<li>MySQL</li>
+<li>Oracle</li>
+<li>PostgreSQL</li>
+<li>SQLite</li>
+</ul>
+<h2 id="通过代码生成器生成实体类">通过代码生成器生成实体类</h2>
+<p>Slick的代码生成器附带一个默认运行器，可以从命令行或Java / Scala中使用。你可以简单地执行</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">slick.codegen.</span><span style="color:#B392F0">SourceCodeGenerator</span><span style="color:#E1E4E8">.main(</span></span>
+<span class="line"><span style="color:#B392F0">  Array</span><span style="color:#E1E4E8">(profile, jdbcDriver, url, outputFolder, pkg, user, password)</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<ul>
+<li>uri：在类型安全配置中配置路径的URL和/或片段，例如 url#slick.db.default</li>
+<li>profile：配置文件类的完全限定名称，例如 slick.jdbc.H2Profile</li>
+<li>jdbcDriver：JDBC驱动程序类的完全限定名称，例如 org.h2.Driver</li>
+<li>url：JDBC url，例如 jdbc:postgresql://localhost/test</li>
+<li>outputFolder：应放置包文件夹结构的位置</li>
+<li>pkg：Scala包生成的代码应该放在哪里</li>
+<li>user：数据库连接用户名</li>
+<li>password：数据库连接密码</li>
+</ul>
+<h2 id="数据库配置">数据库配置</h2>
+<ol>
+<li>Using Typesafe Config</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mydb = {</span></span>
+<span class="line"><span>  dataSourceClass = "org.postgresql.ds.PGSimpleDataSource"</span></span>
+<span class="line"><span>  properties = {</span></span>
+<span class="line"><span>    databaseName = "mydb"</span></span>
+<span class="line"><span>    user = "myuser"</span></span>
+<span class="line"><span>    password = "secret"</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>  numThreads = 10</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#FFAB70"> db</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Database</span><span style="color:#E1E4E8">.forConfig(</span><span style="color:#9ECBFF">"mydb"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<ol start="2">
+<li>Using a JDBC URL</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#FFAB70"> db</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Database</span><span style="color:#E1E4E8">.forURL(</span><span style="color:#9ECBFF">"jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  driver</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"org.h2.Driver"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<ol start="3">
+<li>Using a DataSource(常用)</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#FFAB70"> db</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Database</span><span style="color:#E1E4E8">.forDataSource(</span><span style="color:#FFAB70">dataSource</span><span style="color:#E1E4E8">: javax.sql.</span><span style="color:#B392F0">DataSource</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">  Some</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">size</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<ol start="4">
+<li>Using a JNDI Name</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#FFAB70"> db</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Database</span><span style="color:#E1E4E8">.forName(</span><span style="color:#FFAB70">jndiName</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Some</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">size</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<h2 id="常规操作">常规操作</h2>
+<ol>
+<li>SELECT *</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"select * from PERSON"</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Person]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.result</span></span></code></pre>
+<ol start="2">
+<li>SELECT</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select AGE</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[(Int,String)]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.map(_.age).result</span></span></code></pre>
+<ol start="3">
+<li>WHERE</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"select * from PERSON where AGE &gt;= 18 AND NAME = 'C. Vogt'"</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Person]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.filter(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> p.age </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 18</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#E1E4E8"> p.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "C. Vogt"</span><span style="color:#E1E4E8">).result</span></span></code></pre>
+<ol start="4">
+<li>ORDER BY</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"select * from PERSON order by AGE asc, NAME"</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Person]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.sortBy(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.age.asc, p.name)).result</span></span></code></pre>
+<ol start="5">
+<li>Aggregations</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"select max(AGE) from PERSON"</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Option[Int]].head</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.map(_.age).max.result</span></span></code></pre>
+<ol start="6">
+<li>GROUP BY</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select ADDRESS_ID, AVG(AGE)</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON</span></span>
+<span class="line"><span style="color:#9ECBFF">  group by ADDRESS_ID</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[(Int,Option[Int])]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.groupBy(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> p.addressId)</span></span>
+<span class="line"><span style="color:#E1E4E8">       .map{ </span><span style="color:#F97583">case</span><span style="color:#E1E4E8"> (addressId, group) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (addressId, group.map(_.age).avg) }</span></span>
+<span class="line"><span style="color:#E1E4E8">       .result</span></span></code></pre>
+<ol start="7">
+<li>HAVING</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select ADDRESS_ID</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON</span></span>
+<span class="line"><span style="color:#9ECBFF">  group by ADDRESS_ID</span></span>
+<span class="line"><span style="color:#9ECBFF">  having avg(AGE) &gt; 50</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Int]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.groupBy(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> p.addressId)</span></span>
+<span class="line"><span style="color:#E1E4E8">       .map{ </span><span style="color:#F97583">case</span><span style="color:#E1E4E8"> (addressId, group) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (addressId, group.map(_.age).avg) }</span></span>
+<span class="line"><span style="color:#E1E4E8">       .filter{ </span><span style="color:#F97583">case</span><span style="color:#E1E4E8"> (addressId, avgAge) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> avgAge </span><span style="color:#F97583">&gt;</span><span style="color:#79B8FF"> 50</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">       .map(_._1)</span></span>
+<span class="line"><span style="color:#E1E4E8">       .result</span></span></code></pre>
+<ol start="8">
+<li>Implicit inner joins</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select P.NAME, A.CITY</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON P, ADDRESS A</span></span>
+<span class="line"><span style="color:#9ECBFF">  where P.ADDRESS_ID = a.id</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[(String,String)]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.flatMap(p </span><span style="color:#F97583">=&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  addresses.filter(a </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> p.addressId </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> a.id)</span></span>
+<span class="line"><span style="color:#E1E4E8">           .map(a </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.name, a.city))</span></span>
+<span class="line"><span style="color:#E1E4E8">).result</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// or equivalent for-expression:</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#F97583">for</span><span style="color:#E1E4E8">(p </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> people;</span></span>
+<span class="line"><span style="color:#E1E4E8">     a </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> addresses </span><span style="color:#F97583">if</span><span style="color:#E1E4E8"> p.addressId </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> a.id</span></span>
+<span class="line"><span style="color:#E1E4E8"> ) </span><span style="color:#F97583">yield</span><span style="color:#E1E4E8"> (p.name, a.city)</span></span>
+<span class="line"><span style="color:#E1E4E8">).result</span></span></code></pre>
+<ol start="9">
+<li>Explicit inner joins</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select P.NAME, A.CITY</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON P</span></span>
+<span class="line"><span style="color:#9ECBFF">  join ADDRESS A on P.ADDRESS_ID = a.id</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[(String,String)]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">(people join addresses on (_.addressId </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> _.id))</span></span>
+<span class="line"><span style="color:#E1E4E8">  .map{ </span><span style="color:#F97583">case</span><span style="color:#E1E4E8"> (p, a) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.name, a.city) }.result</span></span></code></pre>
+<ol start="10">
+<li>Outer joins (left/right/full)</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select P.NAME,A.CITY</span></span>
+<span class="line"><span style="color:#9ECBFF">  from ADDRESS A</span></span>
+<span class="line"><span style="color:#9ECBFF">  left join PERSON P on P.ADDRESS_ID = a.id</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[(Option[String],String)]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">(addresses joinLeft people on (_.id </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> _.addressId))</span></span>
+<span class="line"><span style="color:#E1E4E8">  .map{ </span><span style="color:#F97583">case</span><span style="color:#E1E4E8"> (a, p) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.map(_.name), a.city) }.result</span></span></code></pre>
+<ol start="11">
+<li>Subquery</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select *</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON P</span></span>
+<span class="line"><span style="color:#9ECBFF">  where P.ID in (select ID</span></span>
+<span class="line"><span style="color:#9ECBFF">                 from ADDRESS</span></span>
+<span class="line"><span style="color:#9ECBFF">                 where CITY = 'New York City')</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Person]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#FFAB70"> address_ids</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> addresses.filter(_.city </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "New York City"</span><span style="color:#E1E4E8">).map(_.id)</span></span>
+<span class="line"><span style="color:#E1E4E8">people.filter(_.id in address_ids).result </span><span style="color:#6A737D">// &lt;- run as one query</span></span></code></pre>
+<ol start="12">
+<li>insert</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#E1E4E8">sqlu</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  insert into PERSON (NAME, AGE, ADDRESS_ID) values ('M Odersky', 12345, 1)</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.map(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.name, p.age, p.addressId)) </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> (</span><span style="color:#9ECBFF">"M Odersky"</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">12345</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<ol start="13">
+<li>update</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#E1E4E8">sqlu</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  update PERSON set NAME='M. Odersky', AGE=54321 where NAME='M Odersky'</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.filter(_.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "M Odersky"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">       .map(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> (p.name,p.age))</span></span>
+<span class="line"><span style="color:#E1E4E8">       .update((</span><span style="color:#9ECBFF">"M. Odersky"</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">54321</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<ol start="14">
+<li>delete</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#E1E4E8">sqlu</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  delete PERSON where NAME='M. Odersky'</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#E1E4E8">people.filter(p </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> p.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "M. Odersky"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">       .delete</span></span></code></pre>
+<ol start="15">
+<li>CASE</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#9ECBFF">  select</span></span>
+<span class="line"><span style="color:#9ECBFF">    case</span></span>
+<span class="line"><span style="color:#9ECBFF">      when ADDRESS_ID = 1 then 'A'</span></span>
+<span class="line"><span style="color:#9ECBFF">      when ADDRESS_ID = 2 then 'B'</span></span>
+<span class="line"><span style="color:#9ECBFF">    end</span></span>
+<span class="line"><span style="color:#9ECBFF">  from PERSON P</span></span>
+<span class="line"><span style="color:#9ECBFF">"""</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">as</span><span style="color:#E1E4E8">[Option[String]]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#B392F0"> slick</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ast</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ScalaBaseType</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">stringType</span></span>
+<span class="line"><span style="color:#E1E4E8">people.map(p </span><span style="color:#F97583">=&gt;</span></span>
+<span class="line"><span style="color:#B392F0">  Case</span></span>
+<span class="line"><span style="color:#B392F0">    If</span><span style="color:#E1E4E8">(p.addressId </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">Then</span><span style="color:#9ECBFF"> "A"</span></span>
+<span class="line"><span style="color:#B392F0">    If</span><span style="color:#E1E4E8">(p.addressId </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">Then</span><span style="color:#9ECBFF"> "B"</span></span>
+<span class="line"><span style="color:#E1E4E8">).result</span></span></code></pre>
+<h2 id="slick-的局限">Slick 的局限</h2>
+<ol>
+<li>缺少部分查询运算符（Slick 在一定程度上是可扩展的，你可以自行补充缺失的操作符）。</li>
+<li>生成的 SQL 并非总是最优（某些情况下，生成的查询比手写更复杂，例如 Slick 偶尔会生成不必要的子查询；在 MySQL ≤ 5.5 中，这容易导致多余的表扫描或索引未被使用）。</li>
+</ol>
+<h2 id="slick-纯-sql-查询">Slick 纯 SQL 查询</h2>
+<p>普通 SQL 通过 <code>sql</code>、<code>sqlu</code> 与 <code>tsql</code> 插值器使用。<code>sqlu</code> 用于产生“受影响行数”而非结果集的 DML 语句，因此它们的类型是 <code>DBIO[Int]</code>。</p>
+<p>注入查询的任意变量或表达式，在最终生成的查询字符串里都会变成绑定变量，而不会直接拼进字符串，因此不存在 SQL 注入的风险。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> insert</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">c</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Coffee</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> DBIO</span><span style="color:#E1E4E8">[</span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span></span>
+<span class="line"><span style="color:#F97583">  sqlu</span><span style="color:#9ECBFF">"insert into coffees values (</span><span style="color:#E1E4E8">${c.name}</span><span style="color:#9ECBFF">, </span><span style="color:#E1E4E8">${c.supID}</span><span style="color:#9ECBFF">, </span><span style="color:#E1E4E8">${c.price}</span><span style="color:#9ECBFF">, </span><span style="color:#E1E4E8">${c.sales}</span><span style="color:#9ECBFF">, </span><span style="color:#E1E4E8">${c.total}</span><span style="color:#9ECBFF">)"</span></span></code></pre>
+<p>此方法生成的SQL语句始终相同：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">insert into</span><span style="color:#E1E4E8"> coffees </span><span style="color:#F97583">values</span><span style="color:#E1E4E8"> (?, ?, ?, ?, ?)</span></span></code></pre>
+<p>以下代码使用 <code>sql</code> 插值器返回语句生成的结果集。插值器本身不产生 <code>DBIO</code> 值，需要紧跟 <code>.as</code> 调用以定义行类型：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">sql</span><span style="color:#9ECBFF">"""select c.name, s.name</span></span>
+<span class="line"><span style="color:#9ECBFF">      from coffees c, suppliers s</span></span>
+<span class="line"><span style="color:#9ECBFF">      where c.price &lt; </span><span style="color:#E1E4E8">$price</span><span style="color:#9ECBFF"> and s.id = c.sup_id"""</span><span style="color:#E1E4E8">.as[(</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">)]</span></span></code></pre>
+<p>这将得到 <code>DBIO[Seq[(String, String)]]</code>。<code>.as</code> 接收一个隐式的 <code>GetResult</code> 参数，它负责从结果集中取出目标类型的数据。标准 JDBC 类型都有预定义的 <code>GetResult</code>；对于表示可空列的情况，则对应 <code>Option</code> 类型的 <code>GetResult</code>，以及元组类型的 <code>GetResult</code>。对于非标准类型，你需要自定义转换器：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">case</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> Coffee</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">supID</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">price</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Double</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sales</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">total</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">implicit</span><span style="color:#F97583"> val</span><span style="color:#FFAB70"> getCoffeeResult</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> GetResult</span><span style="color:#E1E4E8">(r </span><span style="color:#F97583">=&gt;</span><span style="color:#B392F0"> Coffee</span><span style="color:#E1E4E8">(r.</span><span style="color:#F97583">&lt;&lt;</span><span style="color:#E1E4E8">, r.</span><span style="color:#F97583">&lt;&lt;</span><span style="color:#E1E4E8">, r.</span><span style="color:#F97583">&lt;&lt;</span><span style="color:#E1E4E8">, r.</span><span style="color:#F97583">&lt;&lt;</span><span style="color:#E1E4E8">, r.</span><span style="color:#F97583">&lt;&lt;</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<p>这里用了快捷方法 <code>&lt;&lt;</code>，它会返回在当前上下文中预期类型的取值。（当然，只有当这个构造调用里实际能推断出类型时才能使用它。）</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/slick-hikaricp/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">slick使用HikariCP</span></a><a class="post-nav-item post-nav-next" href="/blog/linux-service-autostart/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Linux 实现指定服务开机自启</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

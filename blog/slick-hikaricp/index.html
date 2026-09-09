@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>slick使用HikariCP · walker</title><meta name="description" content="在 Slick/Scala 项目中使用 HikariCP 连接池的配置、常用参数与注意事项。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/slick-hikaricp/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="slick使用HikariCP · walker"><meta property="og:description" content="在 Slick/Scala 项目中使用 HikariCP 连接池的配置、常用参数与注意事项。"><meta property="og:url" content="https://wkh888888.github.io/blog/slick-hikaricp/"><meta property="og:image" content="https://wkh888888.github.io/og/slick-hikaricp.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="slick使用HikariCP · walker"><meta name="twitter:description" content="在 Slick/Scala 项目中使用 HikariCP 连接池的配置、常用参数与注意事项。"><meta name="twitter:image" content="https://wkh888888.github.io/og/slick-hikaricp.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Slick · Scala · 数据库</span><h1>slick使用HikariCP</h1><p>在 Slick/Scala 项目中使用 HikariCP 连接池的配置、常用参数与注意事项。</p><div class="hero-meta"><span>发表于 2019-02-22</span><span>约 9 分钟</span><a class="tag" href="/tags/Slick/">Slick</a><a class="tag" href="/tags/Scala/">Scala</a><a class="tag" href="/tags/数据库/">数据库</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#介绍">介绍</a><a class="toc-l2" href="#mave引用">mave引用</a><a class="toc-l2" href="#初始化例子">初始化例子</a><a class="toc-l2" href="#必需的">必需的</a><a class="toc-l2" href="#经常使用">经常使用</a><a class="toc-l2" href="#不经常使用">不经常使用</a><a class="toc-l2" href="#遗漏的配置">遗漏的配置</a><a class="toc-l2" href="#语句缓存">语句缓存</a></aside><article class="card prose"><h2 id="介绍">介绍</h2>
+<p>快速，简单，可靠。HikariCP是一个“零开销”生产就绪JDBC连接池。大约130Kb，lib非常轻</p>
+<h2 id="mave引用">mave引用</h2>
+<ul>
+<li>Java 8到11 maven配置：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    &lt;dependency&gt;</span></span>
+<span class="line"><span>        &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;</span></span>
+<span class="line"><span>        &lt;artifactId&gt;HikariCP&lt;/artifactId&gt;</span></span>
+<span class="line"><span>        &lt;version&gt;3.3.1&lt;/version&gt;</span></span>
+<span class="line"><span>    &lt;/dependency&gt;</span></span></code></pre>
+<ul>
+<li>Java 7 maven配置（维护模式）：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    &lt;dependency&gt;</span></span>
+<span class="line"><span>        &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;</span></span>
+<span class="line"><span>        &lt;artifactId&gt;HikariCP-java7&lt;/artifactId&gt;</span></span>
+<span class="line"><span>        &lt;version&gt;2.4.13&lt;/version&gt;</span></span>
+<span class="line"><span>    &lt;/dependency&gt;</span></span></code></pre>
+<ul>
+<li>Java 6 maven配置（维护模式）：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    &lt;dependency&gt;</span></span>
+<span class="line"><span>        &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;</span></span>
+<span class="line"><span>        &lt;artifactId&gt;HikariCP-java6&lt;/artifactId&gt;</span></span>
+<span class="line"><span>        &lt;version&gt;2.3.13&lt;/version&gt;</span></span>
+<span class="line"><span>    &lt;/dependency&gt;</span></span></code></pre>
+<h2 id="初始化例子">初始化例子</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">    val</span><span style="color:#FFAB70"> hikariConfig</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> HikariConfig</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setDriverClassName(</span><span style="color:#9ECBFF">"com.mysql.jdbc.Driver"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setJdbcUrl(</span><span style="color:#9ECBFF">"jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;useSSL=false"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setUsername(</span><span style="color:#9ECBFF">"root"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setPassword(</span><span style="color:#9ECBFF">"password"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setConnectionTimeout(</span><span style="color:#79B8FF">30000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.setMaxLifetime(</span><span style="color:#79B8FF">30</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 1000</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 60</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.addDataSourceProperty(</span><span style="color:#9ECBFF">"cachePrepStmts"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"true"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.addDataSourceProperty(</span><span style="color:#9ECBFF">"prepStmtCacheSize"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"250"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    hikariConfig.addDataSourceProperty(</span><span style="color:#9ECBFF">"prepStmtCacheSqlLimit"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"2048"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      new</span><span style="color:#B392F0"> HikariDataSource</span><span style="color:#E1E4E8">(hikariConfig)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#F97583">    catch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      case</span><span style="color:#FFAB70"> ex</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Exception</span><span style="color:#F97583"> =&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        logger.error(</span><span style="color:#9ECBFF">"[DB connection error]"</span><span style="color:#E1E4E8">, ex)</span></span>
+<span class="line"><span style="color:#F97583">        throw</span><span style="color:#E1E4E8"> ex</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span></code></pre>
+<p>或直接实例化HikariDataSource如此：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#B392F0">HikariDataSource</span><span style="color:#E1E4E8"> ds </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> HikariDataSource</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">ds.setJdbcUrl(</span><span style="color:#9ECBFF">"jdbc:mysql://localhost:3306/test"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">ds.setUsername(</span><span style="color:#9ECBFF">"root"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">ds.setPassword(</span><span style="color:#9ECBFF">"password"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">...</span></span></code></pre>
+<p>或基于属性文件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#B392F0">HikariConfig</span><span style="color:#E1E4E8"> config </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> HikariConfig</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/hikari.properties"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">HikariDataSource</span><span style="color:#E1E4E8"> ds </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> HikariDataSource</span><span style="color:#E1E4E8">(config)</span></span></code></pre>
+<p>示例属性文件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>dataSourceClassName=org.postgresql.ds.PGSimpleDataSource</span></span>
+<span class="line"><span>dataSource.user=test</span></span>
+<span class="line"><span>dataSource.password=test</span></span>
+<span class="line"><span>dataSource.databaseName=mydb</span></span>
+<span class="line"><span>dataSource.portNumber=5432</span></span>
+<span class="line"><span>dataSource.serverName=localhost</span></span></code></pre>
+<p>或基于java.util.Properties：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Properties props = new Properties()</span></span>
+<span class="line"><span>props.setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource")</span></span>
+<span class="line"><span>props.setProperty("dataSource.user", "test")</span></span>
+<span class="line"><span>props.setProperty("dataSource.password", "test")</span></span>
+<span class="line"><span>props.setProperty("dataSource.databaseName", "mydb")</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>HikariConfig config = new HikariConfig(props)</span></span>
+<span class="line"><span>HikariDataSource ds = new HikariDataSource(config)</span></span></code></pre>
+<h2 id="必需的">必需的</h2>
+<p>🔠dataSourceClassName
+这是DataSourceJDBC驱动程序提供的类的名称。请参阅特定JDBC驱动程序的文档以获取此类名，或参见下表。注意不支持XA数据源。XA需要像bitronix这样的真实事务管理器 。请注意，如果您使用的jdbcUrl是“old-school”基于DriverManager的JDBC驱动程序配置，则不需要此属性 。 默认值：无</p>
+<ul>
+<li>要么 -</li>
+</ul>
+<p>🔠jdbcUrl
+此属性指示HikariCP使用“基于DriverManager的”配置。我们认为基于DataSource的配置（上面）由于各种原因（见下文）而优越，但对于许多部署而言，几乎没有显着差异。 将此属性与“旧”驱动程序一起使用时，您可能还需要设置该driverClassName属性，但首先尝试不使用该属性 。 请注意，如果使用此属性，您仍可以使用DataSource属性来配置驱动程序，实际上建议使用URL本身中指定的驱动程序参数。 默认值：无</p>
+<p>🔠username
+此属性设置从基础驱动程序获取Connections时使用的默认身份验证用户名。请注意，对于DataSources，它通过调用DataSource.getConnection(<em>username</em>, password)底层DataSource 以非常确定的方式工作。但是，对于基于驱动程序的配置，每个驱动程序都不同。在基于驱动程序的情况下，HikariCP将使用此属性在传递给驱动程序的调用中username设置user属性。如果这不是您所需要的，请完全跳过此方法并调用，例如。 默认值：无PropertiesDriverManager.getConnection(jdbcUrl, props)addDataSourceProperty(“username”, …)</p>
+<p>🔠password
+此属性设置从基础驱动程序获取Connections时使用的默认验证密码。请注意，对于DataSources，它通过调用DataSource.getConnection(username, <em>password</em>)底层DataSource 以非常确定的方式工作。但是，对于基于驱动程序的配置，每个驱动程序都不同。在基于驱动程序的情况下，HikariCP将使用此属性在传递给驱动程序的调用中password设置password属性。如果这不是您所需要的，请完全跳过此方法并调用，例如。 默认值：无PropertiesDriverManager.getConnection(jdbcUrl, props)addDataSourceProperty(“pass”, …)</p>
+<h2 id="经常使用">经常使用</h2>
+<p>✅autoCommit
+此属性控制从池返回的连接的默认自动提交行为。它是一个布尔值。 默认值：true</p>
+<p>⌚ connectionTimeout
+此属性控制客户端（即您）等待池中连接的最大毫秒数。如果在没有连接可用的情况下超过此时间，则将抛出SQLException。最低可接受的连接超时为250毫秒。 默认值：30000（30秒）</p>
+<p>⌚ idleTimeout
+此属性控制允许连接在池中空闲的最长时间。 此设置仅在minimumIdle定义为小于时才适用maximumPoolSize。一旦池到达连接， 空闲连接将不会退出minimumIdle。连接是否空闲退出的最大变化为+30秒，平均变化为+15秒。在此超时之前，连接永远不会被空闲。值为0表示永远不会从池中删除空闲连接。允许的最小值为10000毫秒（10秒）。 默认值：600000（10分钟）</p>
+<p>⌚ maxLifetime
+此属性控制池中连接的最长生命周期。使用中的连接永远不会退役，只有当它关闭时才会被删除。在逐个连接的基础上，应用轻微的负衰减以避免池中的大量灭绝。 我们强烈建议设置此值，它应比任何数据库或基础结构强加的连接时间限制短几秒。 值0表示没有最大寿命（无限寿命），当然主题是idleTimeout设置。 默认值：1800000（30分钟）</p>
+<p>🔠connectionTestQuery
+如果您的驱动程序支持JDBC4，我们强烈建议您不要设置此属性。这适用于不支持JDBC4的“遗留”驱动程序Connection.isValid() API。这是在从池中给出连接之前执行的查询，以验证与数据库的连接是否仍然存在。再次尝试运行没有此属性的池，如果您的驱动程序不符合JDBC4，HikariCP将记录错误以通知您。 默认值：无</p>
+<p>🔢minimumIdle
+此属性控制HikariCP尝试在池中维护的最小空闲连接数。如果空闲连接低于此值并且池中的总连接数小于maximumPoolSize，则HikariCP将尽最大努力快速有效地添加其他连接。但是，为了获得最高性能和对峰值需求的响应，我们建议不要设置此值，而是允许HikariCP充当固定大小的连接池。 默认值：与maximumPoolSize相同</p>
+<p>🔢maximumPoolSize
+此属性控制允许池到达的最大大小，包括空闲和正在使用的连接。基本上，此值将确定数据库后端的最大实际连接数。对此的合理值最好由您的执行环境决定。当池达到此大小且没有空闲连接可用时，对getConnection（）的调用将connectionTimeout在超时前阻塞最多毫秒。请阅读有关连接池尺寸的信息。 默认值：10</p>
+<p>📈metricRegistry
+此属性仅可通过编程配置或IoC容器获得。此属性允许您指定池使用的Codahale / Dropwizard 实例MetricRegistry来记录各种度量标准。有关 详细信息，请参阅度量维基页面。 默认值：无</p>
+<p>📈healthCheckRegistry
+此属性仅可通过编程配置或IoC容器获得。此属性允许您指定池使用的Codahale / Dropwizard 实例HealthCheckRegistry来报告当前的健康信息。有关 详细信息，请参阅运行状况检查维基页面。 默认值：无</p>
+<p>🔠poolName
+此属性表示连接池的用户定义名称，主要显示在日志记录和JMX管理控制台中，以标识池和池配置。 默认值：自动生成</p>
+<h2 id="不经常使用">不经常使用</h2>
+<p>⌚ initializationFailTimeout
+如果无法成功为初始连接添加池，则此属性控制池是否“快速失败”。任何正数都被认为是尝试获取初始连接的毫秒数; 在此期间，应用程序线程将被阻止。如果在此超时发生之前无法获取连接，则将引发异常。此超时被应用后的connectionTimeout 期。如果值为零（0），HikariCP将尝试获取并验证连接。如果获得连接但验证失败，则将引发异常并且池未启动。但是，如果无法获得连接，则池将启动，但稍后获取连接的努力可能会失败。小于零的值将绕过任何初始连接尝试，并且池将在尝试在后台获取连接时立即启动。因此，稍后获得连接的努力可能失败。 默认值：1</p>
+<p>❎isolateInternalQueries
+此属性确定HikariCP是否在其自己的事务中隔离内部池查询，例如连接活动测试。由于这些通常是只读查询，因此很少需要将它们封装在自己的事务中。此属性仅在autoCommit禁用时适用。 默认值：false</p>
+<p>❎allowPoolSuspension
+此属性控制是否可以通过JMX挂起和恢复池。这对某些故障转移自动化方案很有用。当池暂停时，调用 getConnection()将不会超时并将一直保持到池恢复为止。 默认值：false</p>
+<p>❎readOnly
+此属性控制默认情况下从池中获取的Connections是否处于只读模式。请注意，某些数据库不支持只读模式的概念，而其他数据库在Connection设置为只读时提供查询优化。您是否需要此属性在很大程度上取决于您的应用程序和数据库。 默认值：false</p>
+<p>❎registerMbeans
+此属性控制是否注册JMX管理Bean（“MBean”）。 默认值：false</p>
+<p>🔠catalog
+该属性设置默认目录为支持目录的概念数据库。如果未指定此属性，则使用JDBC驱动程序定义的缺省目录。 默认值：驱动程序默认</p>
+<p>🔠connectionInitSql
+此属性设置一个SQL语句，该语句将在每次创建新连接之后执行，然后再将其添加到池中。如果此SQL无效或引发异常，则将其视为连接失败，并将遵循标准重试逻辑。 默认值：无</p>
+<p>🔠driverClassName
+HikariCP将尝试仅通过驱动程序管理器来解析驱动程序jdbcUrl，但对于某些较旧的驱动程序，driverClassName还必须指定。除非您收到明显的错误消息，指出未找到驱动程序，否则请忽略此属性。 默认值：无</p>
+<p>🔠transactionIsolation
+此属性控制从池返回的连接的默认事务隔离级别。如果未指定此属性，则使用JDBC驱动程序定义的缺省事务隔离级别。如果您具有所有查询通用的特定隔离要求，则仅使用此属性。此属性的值是从不断的名称Connection 类，如TRANSACTION_READ_COMMITTED，TRANSACTION_REPEATABLE_READ等 默认值：驱动程序默认</p>
+<p>⌚ validationTimeout
+此属性控制连接测试活动的最长时间。该值必须小于connectionTimeout。最低可接受的验证超时为250毫秒。 默认值：5000</p>
+<p>⌚ leakDetectionThreshold
+此属性控制在记录消息之前连接可以离开池的时间量，指示可能的连接泄漏。值为0表示禁用泄漏检测。启用泄漏检测的最低可接受值是2000（2秒）。 默认值：0</p>
+<p>➡ dataSource
+此属性仅可通过编程配置或IoC容器获得。此属性允许您直接设置DataSource要由池包装的实例，而不是让HikariCP通过反射构造它。这在一些依赖注入框架中很有用。指定此属性后，dataSourceClassName将忽略该属性和所有特定于DataSource的属性。 默认值：无</p>
+<p>🔠schema
+该属性设置的默认模式为支持模式的概念数据库。如果未指定此属性，则使用JDBC驱动程序定义的默认架构。 默认值：驱动程序默认</p>
+<p>➡ threadFactory
+此属性仅可通过编程配置或IoC容器获得。此属性允许您设置java.util.concurrent.ThreadFactory将用于创建池使用的所有线程的实例。在某些受限执行环境中需要它，其中线程只能通过ThreadFactory应用程序容器提供的方式创建。 默认值：无</p>
+<p>➡ scheduledExecutor
+此属性仅可通过编程配置或IoC容器获得。此属性允许您设置java.util.concurrent.ScheduledExecutorService将用于各种内部计划任务的实例。如果向HikariCP提供ScheduledThreadPoolExecutor 实例，建议setRemoveOnCancelPolicy(true)使用。 默认值：无</p>
+<h2 id="遗漏的配置">遗漏的配置</h2>
+<p>正如你在上面看到的那样，HikariCP有很多“配置”，但比其他一些连接池要少。这是一种设计理念。HikariCP设计美学是极简主义。为了保持 简单，更好或更少是更多的设计理念，有些配置是故意遗漏的。</p>
+<h2 id="语句缓存">语句缓存</h2>
+<p>许多连接池，包括Apache DBCP，Vibur，c3p0和其他连接池都提供PreparedStatement缓存。HikariCP没有。为什么？</p>
+<p>在连接池层，每个连接PreparedStatements只能缓存。如果您的应用程序有250个常用查询和20个连接池，那么您要求数据库保留5000个查询执行计划 - 同样，池必须缓存这么多及其相关的对象图。PreparedStatements</p>
+<p>大多数主要的数据库JDBC驱动程序已经具有可以配置的Statement缓存，包括PostgreSQL，Oracle，Derby，MySQL，DB2等等。JDBC驱动程序处于利用数据库特定功能的独特位置，几乎所有缓存实现都能够跨连接共享执行计划。这意味着，而不是内存中的5000个语句和相关的执行计划，250个常用的查询会在数据库中生成250个执行计划。聪明的实现甚至不会PreparedStatement在驱动程序级别的内存中保留 对象，而只是将新实例附加到现有的计划ID。</p>
+<p>在池化层使用语句缓存是一种反模式，与驱动程序提供的缓存相比，会对应用程序性能产生负面影响。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/sso-single-sign-on/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">SSO （Single Sign On）</span></a><a class="post-nav-item post-nav-next" href="/blog/slick-getting-started/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">slick小白入门</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

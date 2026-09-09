@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GitLab 双 Remote 协作：pull upstream、push origin、再提 PR · walker</title><meta name="description" content="记录把 Astro 博客源码推上 GitLab 时踩到的几个坑——新仓自带无关的占位提交、受保护分支禁止 force push、以及 fork 模型下不应直推 upstream。附标准协作流程与速查命令。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/gitlab-fork-workflow/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="GitLab 双 Remote 协作：pull upstream、push origin、再提 PR · walker"><meta property="og:description" content="记录把 Astro 博客源码推上 GitLab 时踩到的几个坑——新仓自带无关的占位提交、受保护分支禁止 force push、以及 fork 模型下不应直推 upstream。附标准协作流程与速查命令。"><meta property="og:url" content="https://wkh888888.github.io/blog/gitlab-fork-workflow/"><meta property="og:image" content="https://wkh888888.github.io/og/gitlab-fork-workflow.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="GitLab 双 Remote 协作：pull upstream、push origin、再提 PR · walker"><meta name="twitter:description" content="记录把 Astro 博客源码推上 GitLab 时踩到的几个坑——新仓自带无关的占位提交、受保护分支禁止 force push、以及 fork 模型下不应直推 upstream。附标准协作流程与速查命令。"><meta name="twitter:image" content="https://wkh888888.github.io/og/gitlab-fork-workflow.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">GitLab · Git · 协作 · 博客</span><h1>GitLab 双 Remote 协作：pull upstream、push origin、再提 PR</h1><p>记录把 Astro 博客源码推上 GitLab 时踩到的几个坑——新仓自带无关的占位提交、受保护分支禁止 force push、以及 fork 模型下不应直推 upstream。附标准协作流程与速查命令。</p><div class="hero-meta"><span>发表于 2026-09-09</span><span>约 4 分钟</span><a class="tag" href="/tags/GitLab/">GitLab</a><a class="tag" href="/tags/Git/">Git</a><a class="tag" href="/tags/协作/">协作</a><a class="tag" href="/tags/博客/">博客</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#为什么要双-remote">为什么要双 Remote</a><a class="toc-l2" href="#标准协作流程">标准协作流程</a><a class="toc-l2" href="#坑一新仓自带无关占位提交">坑一：新仓自带“无关”占位提交</a><a class="toc-l2" href="#坑二受保护分支禁止-force-push">坑二：受保护分支禁止 force push</a><a class="toc-l2" href="#绕行合并占位--普通推送">绕行：合并占位 + 普通推送</a><a class="toc-l2" href="#坑三我直推了-upstream违规">坑三：我直推了 upstream（违规）</a><a class="toc-l2" href="#速查表">速查表</a><a class="toc-l2" href="#小结">小结</a></aside><article class="card prose"><p>把博客源码纳入版本控制时，我按自己的约定给仓库配了双 remote：一个个人 fork，一个组织仓。结果第一次推送就连踩三个坑。这篇把过程和正确姿势记下来，省得下次再交一遍学费。</p>
+<h2 id="为什么要双-remote">为什么要双 Remote</h2>
+<p>个人项目我也习惯用 fork 模型：自己有一个 fork 随便折腾，组织仓作为“官方/规范”来源。约定如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>origin    git@10.100.100.5:walker/astro-blog.git   # 我的 fork，日常推送目标</span></span>
+<span class="line"><span>upstream  git@10.100.100.5:my-app/astro-blog.git   # 组织仓，协作与发布来源</span></span></code></pre>
+<p>配置用脚本一把梭，仓库名从目录推导：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$HOME</span><span style="color:#9ECBFF">/.agents/skills/my-gitlab/scripts/configure-remotes.sh"</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> remote</span><span style="color:#79B8FF"> -v</span></span>
+<span class="line"><span style="color:#6A737D"># origin    git@10.100.100.5:walker/astro-blog.git (fetch/push)</span></span>
+<span class="line"><span style="color:#6A737D"># upstream  git@10.100.100.5:my-app/astro-blog.git (fetch/push)</span></span></code></pre>
+<h2 id="标准协作流程">标准协作流程</h2>
+<p>fork 模型的核心纪律只有一句话：<strong>upstream 的 main 是 PR 目标分支，只通过合并 MR 接收变更，不要直接 push 它。</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>pull upstream  →  push origin  →  提 PR/MR</span></span>
+<span class="line"><span>  (同步组织仓)      (只推自己 fork)   (origin/&lt;branch&gt; → upstream/main)</span></span></code></pre>
+<p>日常三步：</p>
+<ol>
+<li><code>git pull upstream main</code> —— 先把组织仓同步到本地，避免分叉；</li>
+<li>改完 <code>git push origin main</code> —— 只推到自己的 fork；</li>
+<li>从 <code>origin/main</code> 向 <code>upstream/main</code> 开 Merge Request，等 review 合并。</li>
+</ol>
+<h2 id="坑一新仓自带无关占位提交">坑一：新仓自带“无关”占位提交</h2>
+<p>本地 <code>git init</code> 后提交了 37 个源码文件，信心满满去推。先 <code>git fetch origin</code>，GitLab 丢回来一句：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>警告：没有共同的提交</span></span>
+<span class="line"><span>来自 10.100.100.5:walker/astro-blog</span></span>
+<span class="line"><span> * [新分支]       main  -&gt; origin/main</span></span></code></pre>
+<p>远端 <code>origin/main</code> 是 <code>59799a8 Initial commit</code>，而且 <code>git ls-tree</code> 一看，里面只有 GitLab 建仓时自动生成的一个占位 <code>README.md</code>——和我的本地历史<strong>完全不相交</strong>。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> rev-list</span><span style="color:#79B8FF"> --left-right</span><span style="color:#79B8FF"> --count</span><span style="color:#9ECBFF"> main...origin/main</span></span>
+<span class="line"><span style="color:#6A737D"># 1       1     本地 1 个提交，远端 1 个提交，零共同祖先</span></span></code></pre>
+<h2 id="坑二受保护分支禁止-force-push">坑二：受保护分支禁止 force push</h2>
+<p>既然历史无关，直觉是用 force push 把占位提交覆盖掉。按安全性首选 <code>--force-with-lease</code>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> push</span><span style="color:#79B8FF"> --force-with-lease</span><span style="color:#9ECBFF"> origin</span><span style="color:#9ECBFF"> main</span></span>
+<span class="line"><span style="color:#6A737D"># 报错：</span></span>
+<span class="line"><span style="color:#6A737D"># GitLab: You are not allowed to force push code to a protected branch on this project.</span></span></code></pre>
+<p>GitLab <strong>默认保护 <code>main</code> 分支</strong>，force push 即使对仓库 owner 也是关闭的。这条规则拦得对——强推会抹掉远端历史，本就不该是常规操作。</p>
+<h2 id="绕行合并占位--普通推送">绕行：合并占位 + 普通推送</h2>
+<p>不用解保护、也不用管理员开关。把占位提交作为祖先并入本地，再做一次<strong>普通</strong>推送即可——因为推送的新 tip 包含了远端旧 tip，受保护分支会正常接受。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> fetch</span><span style="color:#9ECBFF"> origin</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> merge</span><span style="color:#9ECBFF"> origin/main</span><span style="color:#79B8FF"> --allow-unrelated-histories</span></span>
+<span class="line"><span style="color:#6A737D"># 冲突（添加/添加）：README.md —— 两端都有 README</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> checkout</span><span style="color:#79B8FF"> --ours</span><span style="color:#9ECBFF"> README.md</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> README.md</span><span style="color:#6A737D">   # 保留本地项目版 README</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> commit</span><span style="color:#79B8FF"> --no-edit</span><span style="color:#6A737D">                                  # 完成合并</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> merge-base</span><span style="color:#79B8FF"> --is-ancestor</span><span style="color:#9ECBFF"> origin/main</span><span style="color:#9ECBFF"> HEAD</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "OK: 远端占位已是本地祖先"</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> origin</span><span style="color:#9ECBFF"> main</span><span style="color:#6A737D">                                  # 普通推送，无需 --force</span></span>
+<span class="line"><span style="color:#6A737D"># 59799a8..4025ec6  main -&gt; main</span></span></code></pre>
+<p>合并后历史长这样，多出一个无害的 merge commit，但完全可追溯：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>*   4025ec6 merge: 并入 GitLab 占位初始提交</span></span>
+<span class="line"><span>|\</span></span>
+<span class="line"><span>| * 59799a8 Initial commit   (远端原来的占位)</span></span>
+<span class="line"><span>* e4c7443 feat: 初始化 Astro 静态博客源码</span></span></code></pre>
+<h2 id="坑三我直推了-upstream违规">坑三：我直推了 upstream（违规）</h2>
+<p>双 remote 配好后，顺手把 <code>upstream</code> 也推了。结果被纠正——<strong>正常流程应该是 pull upstream、push origin、再提 PR</strong>，我这一步直接 <code>git push upstream main</code> 越过了 PR 环节，属于违规操作。</p>
+<p>原因想通了就简单：</p>
+<ul>
+<li><code>upstream/main</code> 是别人（或未来的你）发起 MR 的<strong>目标分支</strong>，受 review 保护；</li>
+<li>直接强推/直推它，等于绕过了整个协作闸门；</li>
+<li>即使是个人项目、两个仓都是自己所有，也不该养成这个习惯。</li>
+</ul>
+<p>正确做法只有一条：任何变更都先落到 <code>origin</code>，再通过 MR 合进 <code>upstream</code>。只有“空仓一次性 bootstrap”这种极端情况才例外，而且即便那时也更推荐开 MR 而非直推。</p>
+<h2 id="速查表">速查表</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配双 remote</td>
+<td><code>configure-remotes.sh</code></td>
+<td>自动设 origin / upstream</td>
+</tr>
+<tr>
+<td>日常同步</td>
+<td><code>git pull upstream main</code></td>
+<td>先跟组织仓对齐</td>
+</tr>
+<tr>
+<td>日常发布</td>
+<td><code>git push origin main</code></td>
+<td>只推自己的 fork</td>
+</tr>
+<tr>
+<td>提变更</td>
+<td>开 MR <code>origin → upstream/main</code></td>
+<td>不直推 upstream</td>
+</tr>
+<tr>
+<td>新仓无关占位</td>
+<td><code>merge --allow-unrelated-histories</code> + 普通 push</td>
+<td>别用 force</td>
+</tr>
+<tr>
+<td>受保护分支</td>
+<td>普通 push（占位已并入祖先）</td>
+<td>force 会被拒</td>
+</tr>
+</tbody>
+</table>
+<h2 id="小结">小结</h2>
+<p>三个坑串起来就是一条经验：<strong>fork 模型下，upstream 是“被合入”的对象，不是“被推送”的对象</strong>。遇到受保护分支 + 无关占位提交，用“合并占位、普通推送”绕开，而不是去解保护做 force push。把这套写进了 my-gitlab 技能，下次直接照流程走。</p>
+<p>博客源码现在落在四个地方：GitLab 的 <code>walker/astro-blog</code>（fork）、<code>my-app/astro-blog</code>（组织仓，仅经 MR 收变更）、GitHub Pages 构建产物、以及自托管的 <code>blog.walkerhua.com</code>。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/astro-blog-tech-stack/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Astro + GitHub + 自定义域名：技术博客方案</span></a><a class="post-nav-item post-nav-next" href="/blog/personal-agent-digital-twin/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">打造自己的智能体：从个人助手到&quot;数字分身&quot;</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

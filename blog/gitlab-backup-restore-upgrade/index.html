@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Gitlab备份还原升级 · walker</title><meta name="description" content="GitLab 备份、还原与离线升级的操作笔记，记录从 8.9.9 升到 10.7.7 的 RPM 升级路线与常见问题。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/gitlab-backup-restore-upgrade/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Gitlab备份还原升级 · walker"><meta property="og:description" content="GitLab 备份、还原与离线升级的操作笔记，记录从 8.9.9 升到 10.7.7 的 RPM 升级路线与常见问题。"><meta property="og:url" content="https://wkh888888.github.io/blog/gitlab-backup-restore-upgrade/"><meta property="og:image" content="https://wkh888888.github.io/og/gitlab-backup-restore-upgrade.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Gitlab备份还原升级 · walker"><meta name="twitter:description" content="GitLab 备份、还原与离线升级的操作笔记，记录从 8.9.9 升到 10.7.7 的 RPM 升级路线与常见问题。"><meta name="twitter:image" content="https://wkh888888.github.io/og/gitlab-backup-restore-upgrade.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">GitLab · DevOps · Linux</span><h1>Gitlab备份还原升级</h1><p>GitLab 备份、还原与离线升级的操作笔记，记录从 8.9.9 升到 10.7.7 的 RPM 升级路线与常见问题。</p><div class="hero-meta"><span>发表于 2020-05-28</span><span>约 2 分钟</span><a class="tag" href="/tags/GitLab/">GitLab</a><a class="tag" href="/tags/DevOps/">DevOps</a><a class="tag" href="/tags/Linux/">Linux</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#备份">备份</a><a class="toc-l3" href="#备份目录">备份目录</a><a class="toc-l2" href="#还原">还原</a><a class="toc-l2" href="#查看版本号">查看版本号</a><a class="toc-l2" href="#还原配置">还原配置</a><a class="toc-l2" href="#启动">启动</a><a class="toc-l2" href="#升级">升级</a><a class="toc-l2" href="#899---1077">8.9.9 -&gt; 10.7.7</a><a class="toc-l3" href="#由于当时在局域网内没网采用离线rpm包安装">由于当时在局域网内没网，采用离线rpm包安装</a><a class="toc-l3" href="#安装rpm包">安装rpm包</a><a class="toc-l3" href="#升级rpm包">升级rpm包</a><a class="toc-l3" href="#版本降级">版本降级</a><a class="toc-l3" href="#升级路线">升级路线</a><a class="toc-l3" href="#可能遇到的问题">可能遇到的问题</a></aside><article class="card prose"><h2 id="备份">备份</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>gitlab-rake gitlab:backup:create STRATEGY=copy</span></span></code></pre>
+<h3 id="备份目录">备份目录</h3>
+<p>可以通过vim /etc/gitlab/gitlab.rb修改</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>/var/opt/gitlab/backups/1555917134_gitlab_backup.tar</span></span>
+<span class="line"><span>/var/opt/gitlab/backups/1590649071_2020_05_28_10.7.7_gitlab_backup.tar</span></span></code></pre>
+<h2 id="还原">还原</h2>
+<p>执行 <code>gitlab-rake gitlab:backup:restore BACKUP=版本号</code>（版本号基本就是 <code>_gitlab_backup.tar</code> 前的文件名）：</p>
+<p><strong>注意：tar 没权限的话 <code>chmod 777 xxxx.tar</code></strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>gitlab-rake gitlab:backup:restore BACKUP=1555917134</span></span>
+<span class="line"><span>gitlab-rake gitlab:backup:restore BACKUP=1590649071_2020_05_28_10.7.7</span></span></code></pre>
+<h2 id="查看版本号">查看版本号</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cat /opt/gitlab/embedded/service/gitlab-rails/VERSION</span></span></code></pre>
+<h2 id="还原配置">还原配置</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>gitlab-ctl reconfigure</span></span></code></pre>
+<h2 id="启动">启动</h2>
+<p>停止、重启、查看状态 类似</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>gitlab-ctl start</span></span></code></pre>
+<h2 id="升级">升级</h2>
+<p><strong>先备份！先备份！先备份！重要的话说三遍，留条后路。</strong>
+基本步骤：先升到当前大版本号的最高版本号，然后升到下一个大版本，每次升完先检查当前版本是否有问题，如果没有问题再往下升，有问题先解决问题。</p>
+<h2 id="899---1077">8.9.9 -&gt; 10.7.7</h2>
+<p>笔者当时的gitlab版本是8.9.9，由于老版本gitlab的不好用，决定升到与公司的同版本10.7.7</p>
+<h3 id="由于当时在局域网内没网采用离线rpm包安装">由于当时在局域网内没网，采用离线rpm包安装</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#相关rpm包</span></span>
+<span class="line"><span>gitlab-ce-8.9.9-ce.0.el7.x86_64.rpm</span></span>
+<span class="line"><span>gitlab-ce-8.17.8-ce.0.el7.x86_64.rpm</span></span>
+<span class="line"><span>gitlab-ce-9.5.9-ce.0.el7.x86_64.rpm</span></span>
+<span class="line"><span>gitlab-ce-10.7.7-ce.0.el7.x86_64.rpm</span></span></code></pre>
+<h3 id="安装rpm包">安装rpm包</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#其中i表示安装，v表示显示安装过程，h表示显示进度</span></span>
+<span class="line"><span>rpm -ivh gitlab-ce-8.17.8-ce.0.el7.x86_64.rpm</span></span></code></pre>
+<h3 id="升级rpm包">升级rpm包</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>rpm -Uvh gitlab-ce-8.17.8-ce.0.el7.x86_64.rpm</span></span>
+<span class="line"><span>rpm -Uvh gitlab-ce-9.5.9-ce.0.el7.x86_64.rpm</span></span>
+<span class="line"><span>rpm -Uvh gitlab-ce-10.7.7-ce.0.el7.x86_64.rpm</span></span></code></pre>
+<h3 id="版本降级">版本降级</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>rpm -Uvh --oldpackage [filename]</span></span></code></pre>
+<h3 id="升级路线">升级路线</h3>
+<p><strong>8.9.9 -&gt; 8.17.8 -&gt; 9.5.9 -&gt; 10.7.7</strong></p>
+<h3 id="可能遇到的问题">可能遇到的问题</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#  Failed asserting that mode permissions on "/var/opt/gitlab/git-data/repositories" is 2770</span></span>
+<span class="line"><span>chmod 2770  /var/opt/gitlab/git-data/repositories</span></span></code></pre>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/java-threadpool-pitfalls/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Java 线程池的坑</span></a><a class="post-nav-item post-nav-next" href="/blog/nacos-getting-started-1/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Nacos入门（一）</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

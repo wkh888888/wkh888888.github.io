@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nacos入门（一） · walker</title><meta name="description" content="Nacos 入门介绍：特性、优势、与 Eureka/apollo 对比，以及单机版快速启动和服务注册发现示例。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/nacos-getting-started-1/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Nacos入门（一） · walker"><meta property="og:description" content="Nacos 入门介绍：特性、优势、与 Eureka/apollo 对比，以及单机版快速启动和服务注册发现示例。"><meta property="og:url" content="https://wkh888888.github.io/blog/nacos-getting-started-1/"><meta property="og:image" content="https://wkh888888.github.io/og/nacos-getting-started-1.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Nacos入门（一） · walker"><meta name="twitter:description" content="Nacos 入门介绍：特性、优势、与 Eureka/apollo 对比，以及单机版快速启动和服务注册发现示例。"><meta name="twitter:image" content="https://wkh888888.github.io/og/nacos-getting-started-1.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CyO6XM4U.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Nacos · 微服务 · Java</span><h1>Nacos入门（一）</h1><p>Nacos 入门介绍：特性、优势、与 Eureka/apollo 对比，以及单机版快速启动和服务注册发现示例。</p><div class="hero-meta"><span>发表于 2020-05-22</span><span>约 5 分钟</span><a class="tag" href="/tags/Nacos/">Nacos</a><a class="tag" href="/tags/微服务/">微服务</a><a class="tag" href="/tags/Java/">Java</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#背景">背景</a><a class="toc-l2" href="#nacos-sdk-for-scala简介">Nacos SDK for Scala简介</a><a class="toc-l2" href="#nacos简介">Nacos简介</a><a class="toc-l2" href="#nacos的优势">Nacos的优势</a><a class="toc-l3" href="#nacos与eureka注册中心优缺点对比">Nacos与Eureka注册中心优缺点对比</a><a class="toc-l3" href="#nacos与apollo配置中心对比">Nacos与apollo配置中心对比</a><a class="toc-l2" href="#nacos-快速开始">Nacos 快速开始</a><a class="toc-l3" href="#预备环境准备">预备环境准备</a><a class="toc-l3" href="#下载源码或者安装包">下载源码或者安装包</a><a class="toc-l3" href="#启动服务器">启动服务器</a><a class="toc-l3" href="#服务注册发现和配置管理">服务注册&amp;发现和配置管理</a><a class="toc-l3" href="#关闭服务器">关闭服务器</a><a class="toc-l2" href="#参考资料">参考资料</a></aside><article class="card prose"><h2 id="背景">背景</h2>
+<p>工作以来由于不同项目中的不同业务，我经历过纯 Scala 的业务开发，也经历过纯 Java/Spring 的业务开发，也用 Scala 写过 Spring Cloud 应用。也研究过Scala背后公司Typesafe官方微服务框架Lagom，但始终不尽人意，我一直在寻找可以把Scala开发的应用和 Java/Spring 的服务相互配合的解决方案。</p>
+<p><strong>直到有一天我刷博客的时候刷到杨景杨老师的<a href="https://www.yangbajing.me/nacos-sdk-scala/introduction.html">博客</a></strong></p>
+<p><em>发现了Nacos SDK for Scala，我仿佛发现了新大陆。第一次认识到Nacos，我在了解Nacos SDK for Scala过程中发现，该API主要基于scala 2.12写的，不支持2.11，不然需要改源码，考虑到成本的问题，决定还是使用Nacos Java SDK或者Nacos Open API ，所以本文不过多述说Nacos SDK for Scala，以下是Nacos SDK for Scala简介，有兴趣的可以移步去阅读。</em></p>
+<h2 id="nacos-sdk-for-scala简介">Nacos SDK for Scala简介</h2>
+<p>Nacos SDK for Scala 是基于 <a href="https://nacos.io/zh-cn/docs/sdk.html">Nacos Java SDK</a> 的封装，使得在 Scala 下更易使用。
+支持使用 <a href="https://link.zhihu.com/?target=https%3A//github.com/lightbend/config">HOCON</a> 做为配置文件，支持
+<a href="https://doc.akka.io/docs/akka/current/discovery/index.html">Akka Discovery</a> 和
+<a href="https://www.playframework.com/documentation/2.8.x/ScalaWS">Play-WS</a> 。</p>
+<p>Nacos SDK for Scala 既可以 <strong>将 Nacos 引入 Scala 生态环境</strong>，作为微服务应用里的配置管理和服务发现机制。同时，也可以
+<strong>将 Scala/Akka/Play 引入 Java 以及 Spring 微服务环境</strong>，可以让你在微服务开发中混合使用 Java/Spring Cloud、Scala 应用、
+Akka 应用和 Play 应用。它们都通过 Nacos 作为统一的配置管理和服务发现机制。</p>
+<p>要快速上手请访问 <a href="https://nacos.io">Nacos 官方文档</a> 。</p>
+<p><em>对于很多 Scala 爱好者，若公司主要使用 Spring 进行业务开发，恰好又使用 Nacos 作为配置管理与服务发现工具。那你可以使用此 SDK 将使用 Scala
+实现的服务接入公司的 Spring 生态里。</em></p>
+<h2 id="nacos简介">Nacos简介</h2>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+<p>服务（Service）是 Nacos 世界的一等公民。Nacos 支持几乎所有主流类型的“服务”的发现、配置和管理：
+<a href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Service</a>
+<a href="https://grpc.io/docs/guides/concepts.html#service-definition">gRPC</a> &amp; <a href="https://dubbo.incubator.apache.org/">Dubbo RPC Service</a>
+<a href="https://spring.io/understanding/REST">Spring Cloud RESTful Service</a></p>
+<p>Nacos 的关键特性包括:</p>
+<ul>
+<li>服务发现和服务健康监测</li>
+<li>动态配置服务</li>
+<li>动态 DNS 服务</li>
+<li>服务及其元数据管理</li>
+</ul>
+<h2 id="nacos的优势">Nacos的优势</h2>
+<ul>
+<li>中文社区：学习和问题解决更方便</li>
+<li>可单独使用：纯 Scala 应用也可以使用</li>
+<li>支持 Spring Cloud：团队里大部分成员都有 Spring 开发经验</li>
+</ul>
+<h3 id="nacos与eureka注册中心优缺点对比">Nacos与Eureka注册中心优缺点对比</h3>
+<h4 id="nacos">Nacos</h4>
+<h5 id="优点">优点：</h5>
+<p>1）开箱即用，适用于dubbo，spring cloud等
+2）AP模型，数据最终一致性
+3）注册中心，配置中心二合一，提供控制台管理
+4）纯国产，各种有中文文档，久经双十一考验</p>
+<h5 id="缺点">缺点：</h5>
+<p>1）刚刚开源不久，社区热度不够，依然存在bug</p>
+<h4 id="eureka">Eureka：</h4>
+<h5 id="优点-1">优点：</h5>
+<p>1）Spring Cloud 官方推荐
+2）AP模型，数据最终一致性
+3）开箱即用，具有控制台管理</p>
+<h5 id="缺点-1">缺点：</h5>
+<p>1）客户端注册服务上报所有信息，节点多的情况下，网络，服务端压力过大，且浪费内存
+2）客户端更新服务信息通过简单的轮询机制，当服务数量巨大时，服务器压力过大。
+3）集群伸缩性不强，服务端集群通过广播式的复制，增加服务器压力
+4）Eureka2.0 闭源（Spring Cloud最新版本还是使用的1.X版本的Eureka）</p>
+<h3 id="nacos与apollo配置中心对比">Nacos与apollo配置中心对比</h3>
+<ol>
+<li>Nacos部署简化，Nacos整合了注册中心、配置中心功能，且部署相比apollo简单，方便管理和监控。</li>
+<li>apollo容器化较困难，Nacos有官网的镜像可以直接部署，总体来说，Nacos比apollo更符合KISS原则</li>
+<li>性能方面，Nacos读写tps比apollo稍强一些</li>
+</ol>
+<h2 id="nacos-快速开始">Nacos 快速开始</h2>
+<h3 id="预备环境准备">预备环境准备</h3>
+<p>Nacos 依赖 <a href="https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/">Java</a> 环境来运行。如果您是从代码开始构建并运行Nacos，还需要为此配置 <a href="https://maven.apache.org/index.html">Maven</a>环境，请确保是在以下版本环境中安装使用:</p>
+<ol>
+<li>64 bit OS，支持 Linux/Unix/Mac/Windows，推荐选用 Linux/Unix/Mac。</li>
+<li>64 bit JDK 1.8+；<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">下载</a> &amp; <a href="https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/">配置</a>。</li>
+<li>Maven 3.2.x+；<a href="https://maven.apache.org/download.cgi">下载</a> &amp; <a href="https://maven.apache.org/settings.html">配置</a>。</li>
+</ol>
+<h3 id="下载源码或者安装包">下载源码或者安装包</h3>
+<h4 id="从-github-上下载源码方式">从 Github 上下载源码方式</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git clone https://github.com/alibaba/nacos.git</span></span>
+<span class="line"><span>cd nacos/</span></span>
+<span class="line"><span>mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U  </span></span>
+<span class="line"><span>ls -al distribution/target/</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// change the $version to your actual path</span></span>
+<span class="line"><span>cd distribution/target/nacos-server-$version/nacos/bin</span></span></code></pre>
+<h4 id="下载编译后压缩包方式">下载编译后压缩包方式</h4>
+<p>您可以从 <a href="https://github.com/alibaba/nacos/releases">最新稳定版本</a> 下载 <code>nacos-server-$version.zip</code> 包。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span> unzip nacos-server-$version.zip 或者 tar -xvf nacos-server-$version.tar.gz</span></span>
+<span class="line"><span> cd nacos/bin</span></span></code></pre>
+<h3 id="启动服务器">启动服务器</h3>
+<h4 id="linuxunixmac">Linux/Unix/Mac</h4>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):
+sh startup.sh -m standalone
+如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：
+bash startup.sh -m standalone</p>
+<h4 id="windows">Windows</h4>
+<p>启动命令：
+cmd startup.cmd
+或者双击startup.cmd运行文件。</p>
+<h3 id="服务注册发现和配置管理">服务注册&amp;发现和配置管理</h3>
+<p>服务注册</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span></span></code></pre>
+<p>服务发现</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</span></span></code></pre>
+<p>发布配置</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=HelloWorld"</span></span></code></pre>
+<p>获取配置</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span></span></code></pre>
+<h3 id="关闭服务器">关闭服务器</h3>
+<h4 id="linuxunixmac-1">Linux/Unix/Mac</h4>
+<p>sh shutdown.sh</p>
+<h4 id="windows-1">Windows</h4>
+<p>cmd shutdown.cmd
+或者双击shutdown.cmd运行文件。</p>
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://www.yangbajing.me/nacos-sdk-scala/introduction.html">https://www.yangbajing.me/nacos-sdk-scala/introduction.html</a>
+<a href="https://nacos.io/zh-cn/docs/sdk.html">https://nacos.io/zh-cn/docs/sdk.html</a>
+<a href="https://blog.csdn.net/qq1300375795/java/article/details/86700330">https://blog.csdn.net/qq1300375795/java/article/details/86700330</a>
+<a href="https://www.jianshu.com/p/afd7776a64c6">https://www.jianshu.com/p/afd7776a64c6</a></p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/gitlab-backup-restore-upgrade/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Gitlab备份还原升级</span></a><a class="post-nav-item post-nav-next" href="/blog/microservice-framework-selection/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">微服务框架选型</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
