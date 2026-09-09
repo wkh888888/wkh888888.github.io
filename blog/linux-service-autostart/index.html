@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Linux 实现指定服务开机自启 · walker</title><meta name="description" content="在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/linux-service-autostart/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Linux 实现指定服务开机自启 · walker"><meta property="og:description" content="在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。"><meta property="og:url" content="https://wkh888888.github.io/blog/linux-service-autostart/"><meta property="og:image" content="https://wkh888888.github.io/og/linux-service-autostart.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Linux 实现指定服务开机自启 · walker"><meta name="twitter:description" content="在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。"><meta name="twitter:image" content="https://wkh888888.github.io/og/linux-service-autostart.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.B8LZj4Jz.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Linux · 运维</span><h1>Linux 实现指定服务开机自启</h1><p>在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。</p><div class="hero-meta"><span>发表于 2017-11-09</span><span>约 3 分钟</span><span>更新于 2023-08-01</span><a class="tag" href="/tags/Linux/">Linux</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#一用-sh-脚本启动服务">一、用 sh 脚本启动服务</a><a class="toc-l2" href="#二注册成一个系统服务">二、注册成一个系统服务</a><a class="toc-l2" href="#三用-chkconfig-设置开机自启">三、用 chkconfig 设置开机自启</a><a class="toc-l2" href="#四常见问题">四、常见问题</a><a class="toc-l2" href="#补充centos-7-及以上推荐用-systemd">补充：CentOS 7 及以上推荐用 systemd</a></aside><article class="card prose"><p>本教程介绍在 CentOS 服务器上实现指定服务开机自启。整体分四步：写启动脚本 → 注册成系统服务 → 设置开机自启 → 排查常见问题。</p>
+<h2 id="一用-sh-脚本启动服务">一、用 sh 脚本启动服务</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">vim</span><span style="color:#9ECBFF"> itService-start.sh</span></span></code></pre>
+<p>脚本内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D">#!/bin/sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># cd 到脚本所在的目录，并把路径赋值给 DIR</span></span>
+<span class="line"><span style="color:#E1E4E8">DIR</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> "$(</span><span style="color:#B392F0">dirname</span><span style="color:#9ECBFF"> "</span><span style="color:#79B8FF">$0</span><span style="color:#9ECBFF">")"</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#79B8FF">pwd</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 把要运行的 jar 包赋值给 classPath</span></span>
+<span class="line"><span style="color:#E1E4E8">classPath</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$DIR</span><span style="color:#9ECBFF">/itservice-0.1.jar</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 把主函数入口赋值给 mainClass</span></span>
+<span class="line"><span style="color:#E1E4E8">mainClass</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">s.com.wkh.ItService</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 把启动脚本日志赋值给 shLogPath</span></span>
+<span class="line"><span style="color:#E1E4E8">shLogPath</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$DIR</span><span style="color:#9ECBFF">/sh_start.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 获取该服务的进程号并强制结束进程</span></span>
+<span class="line"><span style="color:#B392F0">jps</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#9ECBFF"> ItService</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> awk</span><span style="color:#9ECBFF"> '{print $1}'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> xargs</span><span style="color:#9ECBFF"> kill</span><span style="color:#79B8FF"> -9</span><span style="color:#F97583"> &gt;</span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> 2&gt;&amp;1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 后台运行 jar 包</span></span>
+<span class="line"><span style="color:#B392F0">nohup</span><span style="color:#9ECBFF"> java</span><span style="color:#79B8FF"> -cp</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$classPath</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$mainClass</span><span style="color:#9ECBFF">"</span><span style="color:#F97583"> &gt;</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">$shLogPath</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> &amp;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 显示当前所有 java 进程 pid</span></span>
+<span class="line"><span style="color:#B392F0">jps</span></span></code></pre>
+<p>至此就可以用 <code>itService-start.sh</code> 启动该服务了。</p>
+<h2 id="二注册成一个系统服务">二、注册成一个系统服务</h2>
+<p>服务脚本必须存放在 <code>/etc/init.d/</code> 目录下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">vim</span><span style="color:#9ECBFF"> /etc/init.d/itservice</span></span></code></pre>
+<p>脚本内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D">#!/bin/sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">### BEGIN INIT INFO</span></span>
+<span class="line"><span style="color:#6A737D"># Provides:          itservice</span></span>
+<span class="line"><span style="color:#6A737D"># Default-Start:     2 3 4 5</span></span>
+<span class="line"><span style="color:#6A737D"># Default-Stop:      0 1 6</span></span>
+<span class="line"><span style="color:#6A737D"># Description:       itservice</span></span>
+<span class="line"><span style="color:#6A737D">### END INIT INFO</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">RETVAL</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">tdir</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/root/itService</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">pidof</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">`</span><span style="color:#B392F0">jps</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#9ECBFF"> ItService </span><span style="color:#F97583">|</span><span style="color:#B392F0"> awk</span><span style="color:#9ECBFF"> '{print $1}'`</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">case</span><span style="color:#9ECBFF"> "</span><span style="color:#79B8FF">$1</span><span style="color:#9ECBFF">"</span><span style="color:#F97583"> in</span></span>
+<span class="line"><span style="color:#DBEDFF">  start</span><span style="color:#F97583">)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> [ </span><span style="color:#F97583">-z</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$pidof</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ]; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">      echo</span><span style="color:#9ECBFF"> "Starting ItService..."</span></span>
+<span class="line"><span style="color:#E1E4E8">      $tdir</span><span style="color:#9ECBFF">/itService-start.sh</span></span>
+<span class="line"><span style="color:#F97583">    else</span></span>
+<span class="line"><span style="color:#79B8FF">      echo</span><span style="color:#9ECBFF"> "ItService already running"</span></span>
+<span class="line"><span style="color:#F97583">    fi</span></span>
+<span class="line"><span style="color:#E1E4E8">    RETVAL</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#E1E4E8">    ;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBEDFF">  stop</span><span style="color:#F97583">)</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "Stopping ItService..."</span></span>
+<span class="line"><span style="color:#E1E4E8">    [ </span><span style="color:#F97583">-z</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$pidof</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ] &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "ItService not running..."</span><span style="color:#F97583"> ||</span><span style="color:#79B8FF"> kill</span><span style="color:#E1E4E8"> $pidof</span></span>
+<span class="line"><span style="color:#E1E4E8">    RETVAL</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#E1E4E8">    ;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBEDFF">  restart</span><span style="color:#F97583">)</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "Stopping ItService..."</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "Starting ItService..."</span></span>
+<span class="line"><span style="color:#E1E4E8">    $tdir</span><span style="color:#9ECBFF">/itService-start.sh</span></span>
+<span class="line"><span style="color:#E1E4E8">    RETVAL</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#E1E4E8">    ;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBEDFF">  status</span><span style="color:#F97583">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    [ </span><span style="color:#F97583">-z</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$pidof</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ] &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "ItService not running..."</span><span style="color:#F97583"> ||</span><span style="color:#79B8FF"> echo</span><span style="color:#9ECBFF"> "ItService running with pid </span><span style="color:#E1E4E8">$pidof</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">    RETVAL</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#E1E4E8">    ;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  *)</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "Usage: /etc/init.d/itservice {start|stop|restart|status}"</span></span>
+<span class="line"><span style="color:#E1E4E8">    RETVAL</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#E1E4E8">    ;;</span></span>
+<span class="line"><span style="color:#F97583">esac</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">exit</span><span style="color:#E1E4E8"> $RETVAL</span></span></code></pre>
+<p>至此脚本写完，用 <code>chkconfig --add itservice</code> 注册成一个系统服务。此时服务会在 <code>/etc/rc.d/rcN.d</code> 中被赋予 K/S 入口，然后就可以用 <code>service itservice start</code> 来启动了。</p>
+<h2 id="三用-chkconfig-设置开机自启">三、用 chkconfig 设置开机自启</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">chkconfig</span><span style="color:#79B8FF"> --level</span><span style="color:#79B8FF"> 35</span><span style="color:#9ECBFF"> itservice</span><span style="color:#9ECBFF"> on</span></span></code></pre>
+<p><code>--level &lt;等级代号&gt;</code> 指定该服务要在哪一个执行等级中开启或关闭。</p>
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>关机</td>
+</tr>
+<tr>
+<td>1</td>
+<td>单用户模式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>无网络连接的多用户命令行模式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>有网络连接的多用户命令行模式</td>
+</tr>
+<tr>
+<td>4</td>
+<td>不可用</td>
+</tr>
+<tr>
+<td>5</td>
+<td>带图形界面的多用户模式</td>
+</tr>
+<tr>
+<td>6</td>
+<td>重新启动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="四常见问题">四、常见问题</h2>
+<ol>
+<li>
+<p><strong>sh 没有执行权限</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">chmod</span><span style="color:#79B8FF"> 700</span><span style="color:#9ECBFF"> itService-start.sh</span></span></code></pre>
+</li>
+<li>
+<p><strong><code>chkconfig --add servicename</code> 时提示 <code>service xxx does not support chkconfig</code></strong></p>
+<p>必须把下面两行注释放在 <code>/etc/init.d/itservice</code> 文件靠前的注释中：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Default-Start:    2 3 4 5</span></span>
+<span class="line"><span style="color:#6A737D"># Default-Stop:     0 1 6</span></span></code></pre>
+</li>
+</ol>
+<blockquote>
+<p>PS：不在脚本所在目录执行 sh 时要注意工作目录的问题。</p>
+</blockquote>
+<h2 id="补充centos-7-及以上推荐用-systemd">补充：CentOS 7 及以上推荐用 systemd</h2>
+<p>上面是 SysVinit 时代的做法。CentOS 7 起默认使用 systemd，虽然仍兼容 <code>chkconfig</code>，但更推荐写一个 unit 文件，好处是自带日志（<code>journalctl</code>）、自动重启和依赖管理：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="ini"><code><span class="line"><span style="color:#6A737D"># /etc/systemd/system/itservice.service</span></span>
+<span class="line"><span style="color:#B392F0">[Unit]</span></span>
+<span class="line"><span style="color:#F97583">Description</span><span style="color:#E1E4E8">=ItService</span></span>
+<span class="line"><span style="color:#F97583">After</span><span style="color:#E1E4E8">=network.target</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">[Service]</span></span>
+<span class="line"><span style="color:#F97583">Type</span><span style="color:#E1E4E8">=simple</span></span>
+<span class="line"><span style="color:#F97583">WorkingDirectory</span><span style="color:#E1E4E8">=/root/itService</span></span>
+<span class="line"><span style="color:#F97583">ExecStart</span><span style="color:#E1E4E8">=/usr/bin/java -cp /root/itService/itservice-0.1.jar s.com.wkh.ItService</span></span>
+<span class="line"><span style="color:#F97583">Restart</span><span style="color:#E1E4E8">=on-failure</span></span>
+<span class="line"><span style="color:#F97583">RestartSec</span><span style="color:#E1E4E8">=5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">[Install]</span></span>
+<span class="line"><span style="color:#F97583">WantedBy</span><span style="color:#E1E4E8">=multi-user.target</span></span></code></pre>
+<p>然后执行：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">systemctl</span><span style="color:#9ECBFF"> daemon-reload</span></span>
+<span class="line"><span style="color:#B392F0">systemctl</span><span style="color:#9ECBFF"> enable</span><span style="color:#79B8FF"> --now</span><span style="color:#9ECBFF"> itservice</span><span style="color:#6A737D">   # 设置开机自启并立即启动</span></span>
+<span class="line"><span style="color:#B392F0">systemctl</span><span style="color:#9ECBFF"> status</span><span style="color:#9ECBFF"> itservice</span><span style="color:#6A737D">         # 查看状态</span></span>
+<span class="line"><span style="color:#B392F0">journalctl</span><span style="color:#79B8FF"> -u</span><span style="color:#9ECBFF"> itservice</span><span style="color:#79B8FF"> -f</span><span style="color:#6A737D">         # 跟踪日志</span></span></code></pre>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/dingtalk-api-getting-started/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">钉钉接口开发入门</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

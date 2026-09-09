@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>打造自己的智能体：从个人助手到&quot;数字分身&quot; · walker</title><meta name="description" content="分六个阶段拆解个人智能体的演进路径——从建立知识与记忆层、决策数据库、个人价值函数，到赋予行动能力与反馈闭环，最终形成能持续学习&quot;你会怎么选&quot;的数字分身。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/personal-agent-digital-twin/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="打造自己的智能体：从个人助手到&quot;数字分身&quot; · walker"><meta property="og:description" content="分六个阶段拆解个人智能体的演进路径——从建立知识与记忆层、决策数据库、个人价值函数，到赋予行动能力与反馈闭环，最终形成能持续学习&quot;你会怎么选&quot;的数字分身。"><meta property="og:url" content="https://wkh888888.github.io/blog/personal-agent-digital-twin/"><meta property="og:image" content="https://wkh888888.github.io/og/personal-agent-digital-twin.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="打造自己的智能体：从个人助手到&quot;数字分身&quot; · walker"><meta name="twitter:description" content="分六个阶段拆解个人智能体的演进路径——从建立知识与记忆层、决策数据库、个人价值函数，到赋予行动能力与反馈闭环，最终形成能持续学习&quot;你会怎么选&quot;的数字分身。"><meta name="twitter:image" content="https://wkh888888.github.io/og/personal-agent-digital-twin.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.B8LZj4Jz.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">AI · 智能体</span><h1>打造自己的智能体：从个人助手到&quot;数字分身&quot;</h1><p>分六个阶段拆解个人智能体的演进路径——从建立知识与记忆层、决策数据库、个人价值函数，到赋予行动能力与反馈闭环，最终形成能持续学习&quot;你会怎么选&quot;的数字分身。</p><div class="hero-meta"><span>发表于 2026-09-09</span><span>约 5 分钟</span><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/智能体/">智能体</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#1-核心概念">1. 核心概念</a><a class="toc-l2" href="#2-总体架构">2. 总体架构</a><a class="toc-l2" href="#3-第一阶段先做知道你的智能体">3. 第一阶段：先做“知道你的智能体”</a><a class="toc-l2" href="#4-第二阶段建立会模仿你判断的模型">4. 第二阶段：建立“会模仿你判断”的模型</a><a class="toc-l2" href="#5-第三阶段建立决策数据库">5. 第三阶段：建立决策数据库</a><a class="toc-l2" href="#6-第四阶段建立个人价值函数">6. 第四阶段：建立个人价值函数</a><a class="toc-l2" href="#7-第五阶段赋予行动能力">7. 第五阶段：赋予行动能力</a><a class="toc-l2" href="#8-第六阶段加入反思机制与持续修正">8. 第六阶段：加入反思机制与持续修正</a><a class="toc-l2" href="#9-推荐的个人-ai-操作系统架构">9. 推荐的个人 AI 操作系统架构</a><a class="toc-l2" href="#10-技术栈建议">10. 技术栈建议</a><a class="toc-l3" href="#大语言模型llm">大语言模型（LLM）</a><a class="toc-l3" href="#智能体与编排">智能体与编排</a><a class="toc-l3" href="#记忆与数据库">记忆与数据库</a><a class="toc-l3" href="#知识层">知识层</a><a class="toc-l3" href="#个人模型">个人模型</a><a class="toc-l3" href="#自动化">自动化</a><a class="toc-l3" href="#本地运行环境">本地运行环境</a><a class="toc-l2" href="#11-一个最小智能体循环">11. 一个最小智能体循环</a><a class="toc-l2" href="#12-推荐实施路线">12. 推荐实施路线</a><a class="toc-l3" href="#v1第二大脑">V1：第二大脑</a><a class="toc-l3" href="#v2个人助手">V2：个人助手</a><a class="toc-l3" href="#v3数字分身">V3：数字分身</a><a class="toc-l3" href="#v4自主分身">V4：自主分身</a><a class="toc-l2" href="#13-最重要的设计原则">13. 最重要的设计原则</a></aside><article class="card prose"><h2 id="1-核心概念">1. 核心概念</h2>
+<p>“自己的智能体”和“自己的数字分身”可以看成两个层次：</p>
+<ul>
+<li><strong>智能体（Agent）</strong>：重点是“它能替你做什么”。</li>
+<li><strong>数字分身（Digital Twin）</strong>：重点是“它能不能越来越像你一样思考、判断和决策”。</li>
+</ul>
+<p>真正有价值的个人分身，不只是一个写着“你是某某某”的 System Prompt，而应该具备：</p>
+<ul>
+<li>长期记忆</li>
+<li>个人知识模型</li>
+<li>偏好与价值函数</li>
+<li>决策历史</li>
+<li>工具调用能力</li>
+<li>反馈与自我修正机制</li>
+</ul>
+<hr>
+<h2 id="2-总体架构">2. 总体架构</h2>
+<p><img alt="数字分身总体架构" loading="lazy" decoding="async" width="680" height="512" src="/_astro/digital-twin-architecture.CCU5EaDw_24i3jc.svg"></p>
+<p>可以把最终目标理解为一个<strong>个人 AI 操作系统（Personal AI OS）</strong>：它不只是回答问题，而是持续读取你的上下文、理解你的目标、做出符合你风格的判断，并调用工具执行。</p>
+<hr>
+<h2 id="3-第一阶段先做知道你的智能体">3. 第一阶段：先做“知道你的智能体”</h2>
+<p>第一步不是训练自己的大模型，而是建立个人知识与记忆层。</p>
+<p>建议长期积累：</p>
+<ul>
+<li>过去的聊天记录</li>
+<li>工作笔记</li>
+<li>Markdown 文档</li>
+<li>Git 项目</li>
+<li>日常决策记录</li>
+<li>喜欢和不喜欢的方案</li>
+<li>常用软件和工具</li>
+<li>编码习惯</li>
+<li>技术栈</li>
+<li>个人目标</li>
+<li>工作流程</li>
+</ul>
+<p>推荐目录结构：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>me/</span></span>
+<span class="line"><span>├── profile.md</span></span>
+<span class="line"><span>├── goals.md</span></span>
+<span class="line"><span>├── principles.md</span></span>
+<span class="line"><span>├── preferences.md</span></span>
+<span class="line"><span>├── people/</span></span>
+<span class="line"><span>├── projects/</span></span>
+<span class="line"><span>├── decisions/</span></span>
+<span class="line"><span>├── conversations/</span></span>
+<span class="line"><span>├── knowledge/</span></span>
+<span class="line"><span>└── timeline/</span></span></code></pre>
+<p>偏好可以结构化，例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">coding</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  prefer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">TypeScript</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">简单架构</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">CLI 自动化</span></span>
+<span class="line"><span style="color:#85E89D">  dislike</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">过度设计</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">没必要的抽象</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">大量 boilerplate</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">decision_style</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  speed_vs_perfection</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.75</span></span>
+<span class="line"><span style="color:#85E89D">  risk_tolerance</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.55</span></span>
+<span class="line"><span style="color:#85E89D">  cost_sensitivity</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.40</span></span>
+<span class="line"><span style="color:#85E89D">  automation_preference</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.90</span></span></code></pre>
+<p>关键点：不要把所有内容全部塞进 Prompt，而是通过 RAG / 记忆系统按当前任务检索最相关的信息。</p>
+<hr>
+<h2 id="4-第二阶段建立会模仿你判断的模型">4. 第二阶段：建立“会模仿你判断”的模型</h2>
+<p>可以把你的选择近似看成一个函数：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>决策 = f(上下文, 目标, 偏好, 风险, 成本, 历史)</span></span></code></pre>
+<p>例如在选择技术方案时，你可能隐含地在计算：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>评分 =</span></span>
+<span class="line"><span>0.30 × 性能</span></span>
+<span class="line"><span>+ 0.25 × 简洁</span></span>
+<span class="line"><span>+ 0.20 × 可维护性</span></span>
+<span class="line"><span>+ 0.15 × 开发速度</span></span>
+<span class="line"><span>+ 0.10 × 成本</span></span></code></pre>
+<p>对应的参数可以保存为：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "performance"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.30</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "simplicity"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.27</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "maintainability"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.18</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "development_speed"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.17</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "cost"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.08</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>以后遇到“性能更强但架构复杂”和“性能低一点但实现简单”的选择时，AI 不只是给大众化建议，而是根据你的历史选择预测你更可能选哪个。</p>
+<hr>
+<h2 id="5-第三阶段建立决策数据库">5. 第三阶段：建立决策数据库</h2>
+<p>这是“数字分身”的关键数据层。</p>
+<p>每次重要决策都记录：</p>
+<ul>
+<li>问题是什么</li>
+<li>有哪些候选方案</li>
+<li>最终选了哪个</li>
+<li>为什么选</li>
+<li>结果怎么样</li>
+<li>事后是否后悔</li>
+<li>哪些因素被低估或高估</li>
+</ul>
+<p>例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "problem"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"端口扫描应该使用 lsof 还是原生系统接口？"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "options"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">    "lsof"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "netstat"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "ss"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "原生 /proc"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "系统 API"</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#79B8FF">  "choice"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"原生实现"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "reasons"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">    "减少外部依赖"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "提升跨环境稳定性"</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#79B8FF">  "outcome"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"good"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>随着数据积累，系统可以尝试估计：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>P(choice | context)</span></span></code></pre>
+<p>也就是：在某种上下文下，你选择某个方案的概率。</p>
+<hr>
+<h2 id="6-第四阶段建立个人价值函数">6. 第四阶段：建立个人价值函数</h2>
+<p>真正的数字分身，需要定义一个近似的效用函数：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>U(x)</span></span></code></pre>
+<p>它回答的是一个核心问题：</p>
+<blockquote>
+<p>对你而言，什么叫“好”？</p>
+</blockquote>
+<p>例如工作选择可以定义为：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>U =</span></span>
+<span class="line"><span>0.25 × 收益</span></span>
+<span class="line"><span>+ 0.20 × 自由度</span></span>
+<span class="line"><span>+ 0.20 × 技术成长</span></span>
+<span class="line"><span>+ 0.15 × 时间</span></span>
+<span class="line"><span>+ 0.10 × 稳定性</span></span>
+<span class="line"><span>+ 0.10 × 兴趣</span></span></code></pre>
+<p>这样，AI 就可以基于“你的标准”打分，而不是基于大众标准。</p>
+<p>这也是数字分身与普通聊天机器人的重要区别。</p>
+<hr>
+<h2 id="7-第五阶段赋予行动能力">7. 第五阶段：赋予行动能力</h2>
+<p>前面解决“会不会想”，下一步解决“能不能做”。</p>
+<p>可以逐步接入：</p>
+<ul>
+<li>浏览器</li>
+<li>Terminal</li>
+<li>GitHub</li>
+<li>Email</li>
+<li>Calendar</li>
+<li>Notion</li>
+<li>文件系统</li>
+<li>数据库</li>
+<li>macOS Shortcuts</li>
+<li>MCP</li>
+</ul>
+<p>例如，当你说“看看我今天应该先做什么”，分身可以读取：</p>
+<ul>
+<li>Calendar</li>
+<li>GitHub Issues</li>
+<li>邮件</li>
+<li>项目状态</li>
+<li>TODO</li>
+</ul>
+<p>然后计算类似：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Priority =</span></span>
+<span class="line"><span>Urgency</span></span>
+<span class="line"><span>× Importance</span></span>
+<span class="line"><span>× 目标 Alignment</span></span>
+<span class="line"><span>× Personal 偏好</span></span></code></pre>
+<p>最后输出排序，甚至自动执行低风险任务。</p>
+<hr>
+<h2 id="8-第六阶段加入反思机制与持续修正">8. 第六阶段：加入反思机制与持续修正</h2>
+<p>真正让系统越来越像你的，是反馈闭环。</p>
+<p>例如系统预测你会选 A，但你最终选了 B：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>预测结果:</span></span>
+<span class="line"><span>选择 A</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>实际结果:</span></span>
+<span class="line"><span>用户选择 B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>原因:</span></span>
+<span class="line"><span>用户认为维护成本比性能重要</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>模型更新:</span></span>
+<span class="line"><span>maintainability +0.03</span></span>
+<span class="line"><span>performance -0.03</span></span></code></pre>
+<p>可以抽象成：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>θ(t+1) = θ(t) - η∇L</span></span></code></pre>
+<p>也就是根据预测误差持续修改参数。</p>
+<p>注意：这不一定需要真正训练一个神经网络。早期完全可以通过结构化 JSON、规则、统计、贝叶斯更新和 LLM 反思完成。</p>
+<hr>
+<h2 id="9-推荐的个人-ai-操作系统架构">9. 推荐的个人 AI 操作系统架构</h2>
+<p><img alt="个人 AI 操作系统架构" loading="lazy" decoding="async" width="680" height="500" src="/_astro/personal-ai-os.Ko79-fE1_arzz4.svg"></p>
+<hr>
+<h2 id="10-技术栈建议">10. 技术栈建议</h2>
+<h3 id="大语言模型llm">大语言模型（LLM）</h3>
+<ul>
+<li>GPT 系列</li>
+<li>Claude</li>
+<li>Gemini</li>
+<li>Qwen</li>
+</ul>
+<h3 id="智能体与编排">智能体与编排</h3>
+<ul>
+<li>自己写核心智能体循环</li>
+<li>LangGraph</li>
+<li>OpenAI Agents SDK</li>
+</ul>
+<h3 id="记忆与数据库">记忆与数据库</h3>
+<ul>
+<li>PostgreSQL</li>
+<li>pgvector</li>
+<li>SQLite</li>
+<li>Qdrant</li>
+</ul>
+<h3 id="知识层">知识层</h3>
+<ul>
+<li>Markdown</li>
+<li>Git</li>
+<li>RAG（检索增强生成）</li>
+<li>知识图谱</li>
+</ul>
+<h3 id="个人模型">个人模型</h3>
+<ul>
+<li>Python</li>
+<li>JSON / YAML</li>
+<li>Bayesian 模型</li>
+<li>简单机器学习模型</li>
+</ul>
+<h3 id="自动化">自动化</h3>
+<ul>
+<li>MCP</li>
+<li>Playwright</li>
+<li>Shell</li>
+<li>macOS Shortcuts</li>
+</ul>
+<h3 id="本地运行环境">本地运行环境</h3>
+<ul>
+<li>Docker</li>
+<li>Mac mini / MacBook</li>
+<li>本地服务器</li>
+</ul>
+<hr>
+<h2 id="11-一个最小智能体循环">11. 一个最小智能体循环</h2>
+<p>Agent 框架不一定越复杂越好。很多情况下，自己写核心循环更容易控制：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">while</span><span style="color:#79B8FF"> True</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    context </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> observe()</span></span>
+<span class="line"><span style="color:#E1E4E8">    memories </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> retrieve(context)</span></span>
+<span class="line"><span style="color:#E1E4E8">    personality </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_personal_model()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    decision </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> llm.reason(</span></span>
+<span class="line"><span style="color:#E1E4E8">        context,</span></span>
+<span class="line"><span style="color:#E1E4E8">        memories,</span></span>
+<span class="line"><span style="color:#E1E4E8">        personality</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    action </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> choose_action(decision)</span></span>
+<span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> execute(action)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    save_memory(context, decision, result)</span></span>
+<span class="line"><span style="color:#E1E4E8">    update_personal_model()</span></span></code></pre>
+<p>真正复杂、也真正有价值的部分通常不是智能体循环本身，而是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>记忆系统 + 个人模型 + 反馈闭环</span></span></code></pre>
+<hr>
+<h2 id="12-推荐实施路线">12. 推荐实施路线</h2>
+<h3 id="v1第二大脑">V1：第二大脑</h3>
+<p>目标：让 AI 知道“你知道什么”。</p>
+<p>能力：</p>
+<ul>
+<li>搜索你的文件</li>
+<li>搜索项目代码</li>
+<li>搜索聊天记录</li>
+<li>搜索个人知识库</li>
+</ul>
+<h3 id="v2个人助手">V2：个人助手</h3>
+<p>目标：让 AI 开始替你做事。</p>
+<p>能力：</p>
+<ul>
+<li>日历</li>
+<li>邮件</li>
+<li>Git</li>
+<li>Terminal</li>
+<li>浏览器</li>
+<li>自动化</li>
+</ul>
+<h3 id="v3数字分身">V3：数字分身</h3>
+<p>目标：让 AI 开始学习“你会怎么选”。</p>
+<p>新增：</p>
+<ul>
+<li>偏好模型</li>
+<li>价值函数</li>
+<li>决策历史</li>
+<li>预测结果 / 实际结果对比</li>
+<li>参数更新机制</li>
+</ul>
+<h3 id="v4自主分身">V4：自主分身</h3>
+<p>目标：从“接受命令”升级到“接受目标”。</p>
+<p>例如：</p>
+<blockquote>
+<p>优化我的开发效率。</p>
+</blockquote>
+<p>系统可以：</p>
+<ol>
+<li>观察当前状态</li>
+<li>找到瓶颈</li>
+<li>制定计划</li>
+<li>执行低风险动作</li>
+<li>请求高风险动作审批</li>
+<li>记录结果</li>
+<li>修正个人模型</li>
+</ol>
+<hr>
+<h2 id="13-最重要的设计原则">13. 最重要的设计原则</h2>
+<p>如果目标真的是打造自己的 AI 分身，建议从第一天就同时建设两件事：</p>
+<ol>
+<li><strong>个人知识与长期记忆</strong></li>
+<li><strong>个人决策数据集</strong></li>
+</ol>
+<p>很多个人 Agent 最后只是“一个能调用很多工具的 ChatGPT”。</p>
+<p>真正能拉开差距的是：</p>
+<blockquote>
+<p>系统不仅知道你的资料，还能逐渐学会你为什么做出某个选择，并据此预测和辅助未来决策。</p>
+</blockquote>
+<p>因此，长期来看，最核心的资产不是 Prompt，而是你的：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>记忆系统</span></span>
+<span class="line"><span>+ 决策历史</span></span>
+<span class="line"><span>+ 偏好模型</span></span>
+<span class="line"><span>+ 价值函数</span></span>
+<span class="line"><span>+ 反馈闭环</span></span></code></pre>
+<p>这五部分组合起来，才是真正意义上的“数字分身”。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/astro-blog-tech-stack/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Astro + GitHub + 自定义域名：技术博客方案</span></a><a class="post-nav-item post-nav-next" href="/blog/java-threadpool-pitfalls/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Java 线程池的坑</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>钉钉接口开发入门 · walker</title><meta name="description" content="把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/dingtalk-api-getting-started/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="钉钉接口开发入门 · walker"><meta property="og:description" content="把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。"><meta property="og:url" content="https://wkh888888.github.io/blog/dingtalk-api-getting-started/"><meta property="og:image" content="https://wkh888888.github.io/og/dingtalk-api-getting-started.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="钉钉接口开发入门 · walker"><meta name="twitter:description" content="把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。"><meta name="twitter:image" content="https://wkh888888.github.io/og/dingtalk-api-getting-started.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.B8LZj4Jz.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">钉钉</span><h1>钉钉接口开发入门</h1><p>把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。</p><div class="hero-meta"><span>发表于 2019-03-05</span><span>约 5 分钟</span><span>更新于 2023-08-01</span><a class="tag" href="/tags/钉钉/">钉钉</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#需求背景">需求背景</a><a class="toc-l2" href="#技术调研思路">技术调研思路</a><a class="toc-l3" href="#第一阶段在钉钉官网查看开发者文档">第一阶段：在钉钉官网查看开发者文档</a><a class="toc-l3" href="#第二阶段选择可行方案">第二阶段：选择可行方案</a><a class="toc-l2" href="#实现步骤">实现步骤</a><a class="toc-l3" href="#创建应用">创建应用</a><a class="toc-l3" href="#开发应用">开发应用</a><a class="toc-l3" href="#扫码登录第三方网站">扫码登录第三方网站</a><a class="toc-l3" href="#同步组织架构">同步组织架构</a><a class="toc-l2" href="#相关文档">相关文档</a><a class="toc-l2" href="#java-web-开发参考">Java Web 开发参考</a></aside><article class="card prose"><h2 id="需求背景">需求背景</h2>
+<p>将一个 A 系统接入钉钉平台，供该企业内部员工使用，实现移动化办公。主要需求：</p>
+<ol>
+<li>可以使用钉钉扫描二维码的方式登录 A 系统。</li>
+<li>可以在 A 系统中共享钉钉的组织架构。</li>
+</ol>
+<h2 id="技术调研思路">技术调研思路</h2>
+<h3 id="第一阶段在钉钉官网查看开发者文档">第一阶段：在钉钉官网查看开发者文档</h3>
+<p>接入场景主要有四种：</p>
+<ul>
+<li><a href="https://open-doc.dingtalk.com/microapp/bgb96b">企业内部开发</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/isv">第三方企业应用</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/personnal">第三方个人应用</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/native">移动应用接入</a></li>
+</ul>
+<h3 id="第二阶段选择可行方案">第二阶段：选择可行方案</h3>
+<p>根据需求，我们的使用场景为：仅供某个企业内的成员使用，其他企业无法使用该应用，所以优先选择<strong>企业内部开发</strong>方案。</p>
+<h4 id="企业内部开发">企业内部开发</h4>
+<p>基于钉钉的开放能力自主开发，供企业或组织内部使用，以满足办公场景中的个性化需求。该类应用无需钉钉团队审核。</p>
+<h4 id="应用类型">应用类型</h4>
+<p>可以开发 E 应用、微应用两种类型的应用。</p>
+<p>E 应用是一种全新的开发模式，让移动开发者通过简捷的前端语法写出 Native 级别的性能体验，并支持 iOS、安卓等多端部署。E 应用暂不支持 PC 端部署，如果您的应用必须要在 PC 端上使用，可暂时使用微应用开发方式。微应用是指用 H5 方式开发的应用。</p>
+<p>E 应用和微应用的对比：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>E 应用</th>
+<th>H5 微应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加载性能</td>
+<td>首次使用略慢，后续加载快</td>
+<td>受很多因素影响，优化不够好，容易慢</td>
+</tr>
+<tr>
+<td>使用体验</td>
+<td>非常顺滑，接近 Native</td>
+<td>容易卡顿</td>
+</tr>
+<tr>
+<td>开发环境搭建</td>
+<td>提供 IDE，快速创建项目</td>
+<td>成本高</td>
+</tr>
+<tr>
+<td>调试</td>
+<td>提供 IDE，可以在电脑上调试大部分功能</td>
+<td>在电脑上只能调 UI，涉及钉钉的 jsapi 必须真机调试</td>
+</tr>
+<tr>
+<td>使用开源 UI 组件</td>
+<td>目前不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>使用 npm 包</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>模块化组织代码</td>
+<td>支持 E 应用特有的模块化</td>
+<td>使用 vue、React 等框架可以轻松获得模块化支持</td>
+</tr>
+<tr>
+<td>灰度发布</td>
+<td>钉钉提供</td>
+<td>需要自己实现</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td>E 应用包默认在 CDN</td>
+<td>需要开发者自己购买相关服务</td>
+</tr>
+<tr>
+<td>开发个人应用</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>应用离线化</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody>
+</table>
+<p>由于 E 应用主要针对手机平台（iOS 和 Android），而且暂不支持在 PC 端使用。E 应用比较坑人的地方是必须购买阿里云的服务器，而且基础版的价格是 2 万每年。（果断放弃！）</p>
+<p>比较并验证可行性之后，最终选择实现方案：<strong>钉钉微应用接入（企业内部开发）</strong>。</p>
+<h2 id="实现步骤">实现步骤</h2>
+<h3 id="创建应用">创建应用</h3>
+<ol>
+<li>企业管理员登录钉钉管理后台，选择导航【工作台】，点击【自建应用】，开始创建自建应用。</li>
+<li>填写基础信息：包括应用名称、logo 和简介等。选择企业内部自主开发。</li>
+<li>开发模式选择“开发应用”，应用类型选择“微应用”。</li>
+<li>创建成功过后，会生成 <code>appKey</code> 和 <code>appSecret</code>，可获取 <code>access_token</code> 进行开发。</li>
+</ol>
+<h3 id="开发应用">开发应用</h3>
+<p>钉钉开放平台提供丰富的 API 接口，以便开发者接入：</p>
+<ul>
+<li>服务端能力：企业通讯录管理、文件管理、发送企业会话消息等，接口使用参考<a href="https://open-doc.dingtalk.com/microapp/serverapi2/gh60vz">服务端开发文档</a>。</li>
+<li>客户端能力：钉钉为微应用在钉钉客户端中运行的专用容器提供了一组 JSAPI，用于调用钉钉的本地能力和业务能力，接口使用参考<a href="https://open-doc.dingtalk.com/microapp/dev/welcome-to-lark">客户端开发文档</a>。</li>
+</ul>
+<h3 id="扫码登录第三方网站">扫码登录第三方网站</h3>
+<p>使用钉钉客户端扫码并确认登录您的 Web 系统，在您的系统内获得正在访问用户的钉钉身份，而用户无需输入账户密码。</p>
+<blockquote>
+<p>注：此功能与企业自建应用 / 第三方企业应用无关，只能用扫码登录打开第三方网站，并且不是钉钉内的应用免登。此流程只能做到获取用户身份（无手机号和企业相关信息）。</p>
+</blockquote>
+<h4 id="获取-appid-及-appsecret">获取 appId 及 appSecret</h4>
+<p>点击进入<a href="https://open-dev.dingtalk.com/">钉钉开发者平台</a>的页面，点击左侧菜单的【移动接入应用】，然后点击右上角的【创建扫码登录应用授权】，创建用于免登过程中验证身份的 appId 及 appSecret，创建后即可看到。</p>
+<h4 id="构造扫码登录页面">构造扫码登录页面</h4>
+<p><strong>第一种方式：直接使用钉钉提供的扫码登录页面</strong></p>
+<p>在企业 Web 系统里，用户点击使用钉钉扫描登录，第三方 Web 系统跳转到如下地址：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>https://oapi.dingtalk.com/connect/qrconnect?appid=APPID&amp;response_type=code&amp;scope=snsapi_login&amp;state=STATE&amp;redirect_uri=REDIRECT_URI</span></span></code></pre>
+<p>URL 里的参数需要换成第三方 Web 系统对应的参数。在钉钉用户扫码登录并确认后，会 302 到你指定的 <code>redirect_uri</code>，并向 URL 参数中追加临时授权码 <code>code</code> 及 <code>state</code> 两个参数。</p>
+<p><strong>第二种方式：将钉钉登录二维码内嵌到自己页面中</strong></p>
+<p>用户使用钉钉扫码登录后，JS 会将 <code>loginTmpCode</code> 返回给网站。这种方式的主要用途是：让用户在网站内就能完成登录，无需跳转到钉钉域下登录后再返回，提升登录的流畅性与成功率。详见<a href="https://open-doc.dingtalk.com/microapp/serverapi2/kymkv6">扫码登录第三方网站文档</a>。</p>
+<h3 id="同步组织架构">同步组织架构</h3>
+<p>调用钉钉提供的相关接口：</p>
+<ul>
+<li><a href="https://open-doc.dingtalk.com/microapp/serverapi2/ege851">用户管理</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/serverapi2/dubakq">部门管理</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/serverapi2/dnu5l1">角色管理</a></li>
+</ul>
+<h2 id="相关文档">相关文档</h2>
+<ul>
+<li><a href="https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.6c7e4a978KksTn&amp;treeId=385&amp;articleId=104980&amp;docType=1">开发前必读</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/bgb96b/mdg058">企业内部开发常见问题</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/bgb96b/gt5d6a">开发企业内部应用</a></li>
+<li><a href="https://open-doc.dingtalk.com/microapp/serverapi2/kymkv6">扫码登录第三方网站</a></li>
+</ul>
+<h2 id="java-web-开发参考">Java Web 开发参考</h2>
+<ul>
+<li><a href="https://blog.csdn.net/Jason847/article/details/75007140/">钉钉微应用接入（企业内部开发）</a></li>
+<li><a href="https://blog.csdn.net/baofeidyz/article/details/59059379">初步实现网站应用钉钉扫码登录</a></li>
+<li><a href="https://www.jianshu.com/p/6a61043c79c9">第三方网站通过钉钉扫码登录 / 免密码登录，获取手机号码、邮箱等信息</a></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/java-threadpool-pitfalls/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Java 线程池的坑</span></a><a class="post-nav-item post-nav-next" href="/blog/linux-service-autostart/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Linux 实现指定服务开机自启</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

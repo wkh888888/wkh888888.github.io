@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Java 线程池的坑 · walker</title><meta name="description" content="从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/java-threadpool-pitfalls/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Java 线程池的坑 · walker"><meta property="og:description" content="从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。"><meta property="og:url" content="https://wkh888888.github.io/blog/java-threadpool-pitfalls/"><meta property="og:image" content="https://wkh888888.github.io/og/java-threadpool-pitfalls.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Java 线程池的坑 · walker"><meta name="twitter:description" content="从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。"><meta name="twitter:image" content="https://wkh888888.github.io/og/java-threadpool-pitfalls.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.B8LZj4Jz.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Java · 并发</span><h1>Java 线程池的坑</h1><p>从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。</p><div class="hero-meta"><span>发表于 2020-06-09</span><span>约 5 分钟</span><span>更新于 2023-08-01</span><a class="tag" href="/tags/Java/">Java</a><a class="tag" href="/tags/并发/">并发</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#背景">背景</a><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#排查">排查</a><a class="toc-l2" href="#复现">复现</a><a class="toc-l2" href="#分析">分析</a><a class="toc-l2" href="#解决">解决</a><a class="toc-l2" href="#总结">总结</a><a class="toc-l2" href="#参考资料">参考资料</a></aside><article class="card prose"><h2 id="背景">背景</h2>
+<p>最近在优化代码（把一个大任务拆成使用多线程分批执行的小任务），使用多线程首当其冲就是使用线程池。一般比较常用的就是 <code>Executors.newFixedThreadPool</code>，毕竟有现成的就用是菜鸟的一贯风格，然而却不知道已经掉入坑中了。</p>
+<h2 id="现象">现象</h2>
+<p>优化完代码后，自测是一个好的开发必做的事情，毕竟好的开发不应该让测试太劳累。首先来常规的边界值测试：把每一批执行的量设置为 1，尽可能模拟多批次。在某个界面操作完后，再次点击其中特定的界面，发现卡在那里，前端一直等待后端响应。（内心 OS：我可真是个写 bug 小能手）</p>
+<h2 id="排查">排查</h2>
+<p>一般前端卡住，基本就是两种情况：数据库连接池不够用，或者 Java 线程池被占满。</p>
+<ol>
+<li>首先排查是否是数据库连接池的问题。连接数据库 <code>show processlist</code> 一下，你想看的不想看的都能看到，发现全是 sleep，睡得可香呢，不打扰，不打扰。</li>
+<li>接下来，矛头直指 Java 线程池。为了方便排查，作为写外挂小能手的我，二话不说写了个接口，用于查看线程池里线程的情况，主要看 <code>activeCount</code> 和 <code>completedTaskCount</code>。</li>
+</ol>
+<h2 id="复现">复现</h2>
+<p>万事俱备，只等再来一次——解决问题的前提是复现问题。按照流程又来了一次，果不其然，又卡在那里了。看了一下我的接口，<code>activeCount</code> 被占得死死的，小样，你的锅跑不掉了。</p>
+<h2 id="分析">分析</h2>
+<p><code>Executors</code> 是 Java 中的一个工具类，提供工厂方法来创建不同类型的线程池。<code>newFixedThreadPool(int nThreads)</code> 用于创建固定数目线程的线程池。</p>
+<p>乍一看好像没毛病：JDK 自身提供的构建线程池的方式，又用到了工厂模式、又有比较强的扩展性，重要的是用起来还比较方便，多重光环加身，让你无法说不。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#F97583">lazy</span><span style="color:#F97583"> val</span><span style="color:#FFAB70"> threadPool</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Executors</span><span style="color:#E1E4E8">.newFixedThreadPool(</span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>创建一个固定大小的线程池就这么简单，省时省力省心。</p>
+<p>但是知人知面不知心，让我们进一步查看源码：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * Creates a thread pool that reuses a fixed number of threads</span></span>
+<span class="line"><span style="color:#6A737D"> * operating off a shared unbounded queue.  At any point, at most</span></span>
+<span class="line"><span style="color:#6A737D"> * {@code nThreads} threads will be active processing tasks.</span></span>
+<span class="line"><span style="color:#6A737D"> * ...</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@param</span><span style="color:#FFAB70"> nThreads</span><span style="color:#6A737D"> the number of threads in the pool</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@return</span><span style="color:#6A737D"> the newly created thread pool</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@throws</span><span style="color:#B392F0"> IllegalArgumentException</span><span style="color:#6A737D"> if {@code nThreads &lt;= 0}</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> static</span><span style="color:#E1E4E8"> ExecutorService </span><span style="color:#B392F0">newFixedThreadPool</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> nThreads) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> ThreadPoolExecutor</span><span style="color:#E1E4E8">(nThreads, nThreads,</span></span>
+<span class="line"><span style="color:#79B8FF">                                  0L</span><span style="color:#E1E4E8">, TimeUnit.MILLISECONDS,</span></span>
+<span class="line"><span style="color:#F97583">                                  new</span><span style="color:#E1E4E8"> LinkedBlockingQueue&lt;</span><span style="color:#F97583">Runnable</span><span style="color:#E1E4E8">&gt;());</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><code>LinkedBlockingQueue</code> 成功引起了我的注意，这是个啥玩意，点进去一看：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * Creates a {@code LinkedBlockingQueue} with a capacity of</span></span>
+<span class="line"><span style="color:#6A737D"> * {@link Integer#MAX_VALUE}.</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#B392F0"> LinkedBlockingQueue</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">(Integer.MAX_VALUE);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Java 中的 <code>BlockingQueue</code> 主要有两种实现，分别是 <code>ArrayBlockingQueue</code> 和 <code>LinkedBlockingQueue</code>：</p>
+<ul>
+<li><code>ArrayBlockingQueue</code> 是用数组实现的有界阻塞队列，必须设置容量。</li>
+<li><code>LinkedBlockingQueue</code> 是用链表实现的有界阻塞队列，容量可以选择进行设置，不设置的话将是一个无边界的阻塞队列，最大长度为 <code>Integer.MAX_VALUE</code>。</li>
+</ul>
+<p>问题就出在这里：<code>newFixedThreadPool</code> 创建 <code>LinkedBlockingQueue</code> 时并未指定容量，此时它就是一个无边界队列。对于无边界队列，可以不断向其中加入任务，这种情况下就有可能因为任务过多而导致<strong>内存溢出（OOM）</strong>。</p>
+<p><strong>以上是大坑，以下是小坑。</strong></p>
+<ul>
+<li>
+<p><strong>任务提交后长时间没有执行</strong></p>
+<p>任务进入了队列，线程还在执行之前的任务。本质原因是对线程和队列的优先级认识不深刻，有一种错觉以为是所有线程都忙的时候才进入任务队列。实际上相反，<strong>是队列满的时候才会新建线程</strong>（线程数大于 core size 时）。</p>
+</li>
+<li>
+<p><strong>线程池中线程执行任务时无故消失</strong>（从日志可以看出，任务并未完成，也没有抛出异常）</p>
+<p>一般情况下，代码中只会去捕捉 <code>RuntimeException</code>，如果抛出 <code>Error</code> 则会导致线程退出，而异常信息又没有拿到。最佳解决办法是给线程池设置 <code>UncaughtExceptionHandler</code>。</p>
+</li>
+</ul>
+<h2 id="解决">解决</h2>
+<p>再来看其他三种创建线程池的方式：<code>newSingleThreadExecutor</code>、<code>newCachedThreadPool</code>、<code>newScheduledThreadPool</code>——要不就是无边界队列导致 OOM，要不就是最大线程数导致 OOM，都有坑，只能自定义创建线程池了。写个方法方便使用：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * 不使用系统自带的四个 Executors，有坑，</span></span>
+<span class="line"><span style="color:#6A737D"> * 轻则线程中任务没有执行，重则 OOM 导致系统崩掉。</span></span>
+<span class="line"><span style="color:#6A737D"> * 使用有边界队列，超出队列的情况返回给调用者执行。</span></span>
+<span class="line"><span style="color:#6A737D"> *</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@param</span><span style="color:#FFAB70"> nThreads</span><span style="color:#6A737D"> 线程数</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> newFixedThreadPool</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">nThreads</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> ThreadPoolExecutor</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  new</span><span style="color:#B392F0"> ThreadPoolExecutor</span><span style="color:#E1E4E8">(nThreads, nThreads, </span><span style="color:#79B8FF">3L</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">TimeUnit</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">SECONDS</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    new</span><span style="color:#B392F0"> ArrayBlockingQueue</span><span style="color:#E1E4E8">(nThreads),</span></span>
+<span class="line"><span style="color:#B392F0">    Executors</span><span style="color:#E1E4E8">.defaultThreadFactory,</span></span>
+<span class="line"><span style="color:#F97583">    new</span><span style="color:#B392F0"> ThreadPoolExecutor</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">CallerRunsPolicy</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>几个核心参数的含义：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>corePoolSize</code></td>
+<td>核心池大小。需要注意的是，初创建线程池时线程不会立即启动，直到有任务提交才开始启动线程，并逐渐使线程数目达到 <code>corePoolSize</code>。若想一开始就创建所有核心线程，需调用 <code>prestartAllCoreThreads</code> 方法。</td>
+</tr>
+<tr>
+<td><code>maximumPoolSize</code></td>
+<td>池中允许的最大线程数。需要注意的是，当核心线程满且阻塞队列也满时，才会判断当前线程数是否小于最大线程数，并决定是否创建新线程。</td>
+</tr>
+<tr>
+<td><code>keepAliveTime</code></td>
+<td>当线程数大于核心数时，多余的空闲线程最多存活的时间。</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td><code>keepAliveTime</code> 参数的时间单位。</td>
+</tr>
+<tr>
+<td><code>workQueue</code></td>
+<td>当线程数目超过核心线程数时用于保存任务的队列。主要有 3 种类型的 <code>BlockingQueue</code> 可供选择：无界队列、有界队列和同步移交。此队列仅保存实现 <code>Runnable</code> 接口的任务。别看这个参数位置很靠后，但是真的很重要，有的坑就因这个参数而起，这些细节有必要仔细了解清楚。</td>
+</tr>
+<tr>
+<td><code>threadFactory</code></td>
+<td>执行程序创建新线程时使用的工厂。</td>
+</tr>
+<tr>
+<td><code>handler</code></td>
+<td>阻塞队列已满且线程数达到最大值时所采取的饱和策略。Java 默认提供了 4 种实现：中止、抛弃、抛弃最旧的、调用者运行。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结">总结</h2>
+<p>不要使用系统自带的四个 <code>Executors</code>，有坑：轻则线程中任务没有执行，重则 OOM 导致系统崩掉。使用自定义创建线程池，参数根据实际的场景设置。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/340f23001a65">Java 线程池使用的注意事项</a></li>
+<li><a href="https://mp.weixin.qq.com/s/-89-CcDnSLBYy3THmcLEdQ">深入源码分析 Java 线程池的实现原理</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32867181">一次 Java 线程池误用引发的血案和总结</a></li>
+<li><a href="https://www.hollischuang.com/archives/2888">Java 中线程池，你真的会用吗？</a></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/personal-agent-digital-twin/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">打造自己的智能体：从个人助手到&quot;数字分身&quot;</span></a><a class="post-nav-item post-nav-next" href="/blog/dingtalk-api-getting-started/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">钉钉接口开发入门</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,6 @@
+# 本地工具与记忆目录，不进版本库
+.idea/
+.omc/
+.workbuddy/
+.DS_Store
+node_modules/

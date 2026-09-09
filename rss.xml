@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>walker · 技术笔记</title>
+    <link>https://wkh888888.github.io/</link>
+    <description>walker 的个人博客，记录后端开发、运维实践与踩过的坑。</description>
+    <language>zh-CN</language>
+    <atom:link href="https://wkh888888.github.io/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Astro + GitHub + 自定义域名：技术博客方案</title>
+      <link>https://wkh888888.github.io/blog/astro-blog-tech-stack/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/astro-blog-tech-stack/</guid>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+      <description>记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。</description>
+    </item>
+    <item>
+      <title>打造自己的智能体：从个人助手到&quot;数字分身&quot;</title>
+      <link>https://wkh888888.github.io/blog/personal-agent-digital-twin/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/personal-agent-digital-twin/</guid>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+      <description>分六个阶段拆解个人智能体的演进路径——从建立知识与记忆层、决策数据库、个人价值函数，到赋予行动能力与反馈闭环，最终形成能持续学习&quot;你会怎么选&quot;的数字分身。</description>
+    </item>
+    <item>
+      <title>Java 线程池的坑</title>
+      <link>https://wkh888888.github.io/blog/java-threadpool-pitfalls/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/java-threadpool-pitfalls/</guid>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 GMT</pubDate>
+      <description>从一次线上卡死事故出发，拆解 Executors.newFixedThreadPool 因无界队列导致 OOM 的源码级原因，并给出自定义线程池的正确写法。</description>
+    </item>
+    <item>
+      <title>钉钉接口开发入门</title>
+      <link>https://wkh888888.github.io/blog/dingtalk-api-getting-started/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/dingtalk-api-getting-started/</guid>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 GMT</pubDate>
+      <description>把内部系统接入钉钉的完整调研与落地记录：企业内部开发 vs 第三方应用选型、E 应用与 H5 微应用对比、扫码登录与组织架构同步的实现步骤。</description>
+    </item>
+    <item>
+      <title>Linux 实现指定服务开机自启</title>
+      <link>https://wkh888888.github.io/blog/linux-service-autostart/</link>
+      <guid isPermaLink="true">https://wkh888888.github.io/blog/linux-service-autostart/</guid>
+      <pubDate>Thu, 09 Nov 2017 00:00:00 GMT</pubDate>
+      <description>在 CentOS 上用 sh 脚本 + chkconfig 把一个 Java 服务注册为系统服务并设置开机自启，附 init.d 脚本模板、运行级别说明与常见坑。</description>
+    </item>
+  </channel>
+</rss>

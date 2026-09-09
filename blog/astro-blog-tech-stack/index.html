@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Astro + GitHub + 自定义域名：技术博客方案 · walker</title><meta name="description" content="记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/blog/astro-blog-tech-stack/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Astro + GitHub + 自定义域名：技术博客方案 · walker"><meta property="og:description" content="记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。"><meta property="og:url" content="https://wkh888888.github.io/blog/astro-blog-tech-stack/"><meta property="og:image" content="https://wkh888888.github.io/og/astro-blog-tech-stack.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Astro + GitHub + 自定义域名：技术博客方案 · walker"><meta name="twitter:description" content="记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。"><meta name="twitter:image" content="https://wkh888888.github.io/og/astro-blog-tech-stack.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.B8LZj4Jz.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">Astro · 博客 · 架构</span><h1>Astro + GitHub + 自定义域名：技术博客方案</h1><p>记录个人技术博客的一整套方案——Astro + Markdown + GitHub + Cloudflare Workers + 自定义域名，包含目录结构、发布流程、分阶段功能规划，以及博客与 AI 知识库一体化的思路。</p><div class="hero-meta"><span>发表于 2026-09-09</span><span>约 2 分钟</span><a class="tag" href="/tags/Astro/">Astro</a><a class="tag" href="/tags/博客/">博客</a><a class="tag" href="/tags/架构/">架构</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#推荐技术栈">推荐技术栈</a><a class="toc-l2" href="#推荐架构">推荐架构</a><a class="toc-l2" href="#域名建议">域名建议</a><a class="toc-l2" href="#发布流程">发布流程</a><a class="toc-l2" href="#第一版建议功能">第一版建议功能</a><a class="toc-l2" href="#第二阶段功能">第二阶段功能</a><a class="toc-l2" href="#博客与-ai-知识库一体化">博客与 AI 知识库一体化</a><a class="toc-l2" href="#部署建议">部署建议</a><a class="toc-l2" href="#最终推荐技术栈">最终推荐技术栈</a></aside><article class="card prose"><p>这篇整理我给自己技术博客选定的方案：内容归自己、源码归 GitHub、域名归自己，未来想换平台也比较自由。</p>
+<h2 id="推荐技术栈">推荐技术栈</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Astro</span></span>
+<span class="line"><span>+ Markdown / MDX</span></span>
+<span class="line"><span>+ GitHub</span></span>
+<span class="line"><span>+ Cloudflare Workers</span></span>
+<span class="line"><span>+ 自定义域名</span></span></code></pre>
+<p>这套方案适合长期维护技术博客：内容归自己、源码归 GitHub、域名归自己，未来迁移平台也比较自由。</p>
+<h2 id="推荐架构">推荐架构</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>your-blog/</span></span>
+<span class="line"><span>├── src/</span></span>
+<span class="line"><span>│   ├── content/</span></span>
+<span class="line"><span>│   │   └── blog/</span></span>
+<span class="line"><span>│   │       ├── ai/</span></span>
+<span class="line"><span>│   │       ├── backend/</span></span>
+<span class="line"><span>│   │       ├── architecture/</span></span>
+<span class="line"><span>│   │       └── devops/</span></span>
+<span class="line"><span>│   ├── layouts/</span></span>
+<span class="line"><span>│   ├── pages/</span></span>
+<span class="line"><span>│   └── components/</span></span>
+<span class="line"><span>├── public/</span></span>
+<span class="line"><span>├── astro.config.mjs</span></span>
+<span class="line"><span>├── package.json</span></span>
+<span class="line"><span>└── README.md</span></span></code></pre>
+<p>文章可以直接保存成：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>src/content/blog/2026/astro-blog.md</span></span></code></pre>
+<p>核心资产实际上是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>GitHub Repo</span></span>
+<span class="line"><span>    │</span></span>
+<span class="line"><span>    ├── Markdown 文章</span></span>
+<span class="line"><span>    ├── 图片</span></span>
+<span class="line"><span>    ├── Astro 源码</span></span>
+<span class="line"><span>    └── Git 历史</span></span></code></pre>
+<p>网站只是这些内容的一种展示方式。</p>
+<h2 id="域名建议">域名建议</h2>
+<p>如果已经有个人主域名，例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>kehua.dev</span></span></code></pre>
+<p>推荐直接使用根域名：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>kehua.dev</span></span></code></pre>
+<p>并规划：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>/about</span></span>
+<span class="line"><span>/blog</span></span>
+<span class="line"><span>/projects</span></span>
+<span class="line"><span>/notes</span></span></code></pre>
+<p>如果主域名另有用途，再使用：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>blog.kehua.dev</span></span></code></pre>
+<p>长期做个人技术品牌时，根域名通常更合适。</p>
+<h2 id="发布流程">发布流程</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>本地写 Markdown</span></span>
+<span class="line"><span>     ↓</span></span>
+<span class="line"><span>git commit</span></span>
+<span class="line"><span>     ↓</span></span>
+<span class="line"><span>git push</span></span>
+<span class="line"><span>     ↓</span></span>
+<span class="line"><span>GitHub</span></span>
+<span class="line"><span>     ↓</span></span>
+<span class="line"><span>Cloudflare 自动构建</span></span>
+<span class="line"><span>     ↓</span></span>
+<span class="line"><span>yourdomain.com</span></span></code></pre>
+<p>这样不需要登录博客后台复制粘贴文章。</p>
+<h2 id="第一版建议功能">第一版建议功能</h2>
+<p>第一版建议只做核心功能：</p>
+<ul>
+<li>首页</li>
+<li>博客列表</li>
+<li>文章详情</li>
+<li>分类</li>
+<li>Tag</li>
+<li>About</li>
+<li>Projects</li>
+<li>RSS</li>
+<li>Sitemap</li>
+<li>代码高亮</li>
+<li>深色模式</li>
+<li>全文搜索</li>
+<li>SEO</li>
+</ul>
+<p>技术博客建议额外加入：</p>
+<ul>
+<li>Mermaid</li>
+<li>LaTeX / Math</li>
+<li>Markdown / MDX</li>
+<li>复制代码按钮</li>
+<li>文章目录 TOC</li>
+<li>上一篇 / 下一篇</li>
+<li>阅读时间</li>
+<li>GitHub Edit Link</li>
+</ul>
+<h2 id="第二阶段功能">第二阶段功能</h2>
+<p>后续可以逐步加入：</p>
+<ul>
+<li>评论</li>
+<li>Newsletter</li>
+<li>访问统计</li>
+<li>中英文</li>
+<li>AI 搜索</li>
+<li>知识库</li>
+<li>MCP</li>
+</ul>
+<h2 id="博客与-ai-知识库一体化">博客与 AI 知识库一体化</h2>
+<p>可以让博客和 AI 知识库使用同一个 Markdown 数据源：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>                ┌→ Astro Blog → 人阅读</span></span>
+<span class="line"><span>Markdown → GitHub</span></span>
+<span class="line"><span>                └→ MCP / RAG → AI 阅读</span></span></code></pre>
+<p>例如文章可以按这些主题组织：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Zookeeper/</span></span>
+<span class="line"><span>EventBus/</span></span>
+<span class="line"><span>Port Scanner/</span></span>
+<span class="line"><span>Agent/</span></span>
+<span class="line"><span>MCP/</span></span>
+<span class="line"><span>LLM/</span></span>
+<span class="line"><span>Architecture/</span></span></code></pre>
+<p>这些内容既可以作为公开博客，也可以进一步成为个人 AI Agent / 数字分身的知识库。</p>
+<h2 id="部署建议">部署建议</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>GitHub</span></span>
+<span class="line"><span>   ↓</span></span>
+<span class="line"><span>Cloudflare Workers</span></span>
+<span class="line"><span>   ↓</span></span>
+<span class="line"><span>自定义域名</span></span></code></pre>
+<p>未来可以继续扩展：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Cloudflare DNS</span></span>
+<span class="line"><span>Workers</span></span>
+<span class="line"><span>KV</span></span>
+<span class="line"><span>D1</span></span>
+<span class="line"><span>R2</span></span>
+<span class="line"><span>Web Analytics</span></span>
+<span class="line"><span>Redirect</span></span>
+<span class="line"><span>Cache</span></span>
+<span class="line"><span>API</span></span></code></pre>
+<p>如果只需要最简单的静态托管，也可以考虑 GitHub Pages。</p>
+<h2 id="最终推荐技术栈">最终推荐技术栈</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Astro</span></span>
+<span class="line"><span>TypeScript</span></span>
+<span class="line"><span>MDX</span></span>
+<span class="line"><span>Tailwind CSS</span></span>
+<span class="line"><span>Pagefind</span></span>
+<span class="line"><span>Shiki</span></span>
+<span class="line"><span>Remark / Rehype</span></span>
+<span class="line"><span>Mermaid</span></span>
+<span class="line"><span>KaTeX</span></span>
+<span class="line"><span>GitHub</span></span>
+<span class="line"><span>Cloudflare Workers</span></span></code></pre>
+<p>这套方案适合长期建设个人技术博客、项目展示站和个人知识库。</p>
+<nav class="post-nav"><span></span><a class="post-nav-item post-nav-next" href="/blog/personal-agent-digital-twin/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">打造自己的智能体：从个人助手到&quot;数字分身&quot;</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
