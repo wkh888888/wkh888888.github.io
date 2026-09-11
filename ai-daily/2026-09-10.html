@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="yJRH5XhGp5emps3HGareFg">
+<head data-page-node-id="auPFxngb01DftREjEznVnE">
+<meta charset="UTF-8" data-page-node-id="HY6F87hNW0oGoBEDkez1ET">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="y9Pv7P9ZZtHX3TVETd8AGc">
+<title>AI 日报 · 2026-09-10 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body data-page-node-id="fBHDAn73a98NDDQt6jAgwB">
+
+<div class="hero" data-page-node-id="j9brgXEjX2FYUpAVXvrUho">
+  <div class="wrap" data-page-node-id="xPzbRxDyv6LReHD6J1rWAv">
+    <h1 data-page-node-id="GdoHxEs1vvYWmAA3x4tDl3">AI 日报 · 2026 年 9 月 10 日（周四）</h1>
+    <div class="sub" data-page-node-id="DjcV0dvtquper6ctORdwgz">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta" data-page-node-id="UYXI1BRvsU77ZrQ0vmx4iz">
+      <span class="chip" data-page-node-id="aAwIIK4dTPSLarylFCSKvQ">AI Coding ×3</span>
+      <span class="chip" data-page-node-id="MpLJeXygKoF5Y5C7o5nuwo">具身智能 ×2</span>
+      <span class="chip" data-page-node-id="uE1OFhCCKfr8s9sR4uOdI6">今日主线：Agent 信任边界 · 上下文降本 · 资本退烧</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav" data-page-node-id="JHX2wObeiz23ZrkaEammTa">
+  <div class="nav-inner" data-page-node-id="rBHWMnDQGb0m6SUKnmUw0m">
+    <a href="#n1" data-page-node-id="K7eZezggQbEXdlg59ET0dU">① GitSpawn 劫持</a>
+    <a href="#n2" data-page-node-id="NxYkJRmR9DxF5EdFvOLbvM">② 微软 FastContext</a>
+    <a href="#n3" data-page-node-id="b3UXUhzUUOs4ey6MpY5oA1">③ superpowers 283k</a>
+    <a href="#n4" data-page-node-id="RQuMqHOdUu795OUFF4Sr9c">④ 智元 AGILE2.0</a>
+    <a href="#n5" data-page-node-id="rcW2BTBD2COjotsxWihTUD">⑤ 机器人 IPO 收紧</a>
+    <a href="#mini" data-page-node-id="aAErFS93g0vpOY6w9nxXcI">顺带一提</a>
+  </div>
+</div>
+
+<div class="wrap" data-page-node-id="zyzqQYvpLzWEDJnMQwCJCT">
+
+<div class="sec-title" data-page-node-id="f1vyz2GpejSJXvvj1GpuwN">AI CODING · 3 条</div>
+
+<!-- 1 -->
+<div class="card coding" id="n1" data-page-node-id="wGxL27NFUPxbQIEhJ15gbO">
+  <div class="card-head" data-page-node-id="gKjglOiZ8KEIOBMDMcnB9a">
+    <div class="num" data-page-node-id="Hk8e8kvyGU2QxZ5xdiW1nn">1</div>
+    <h2 data-page-node-id="IBEYP0s3kKE4VKSz5P1Ek0">GitSpawn：一个 <code data-page-node-id="USJ4P4JWGwgntFWXaHSjhc">.git/config</code> 就能劫持 7 款主流 Coding Agent，披露时 4 项仍未修</h2>
+    <span class="tag t-code" data-page-node-id="3LGqbeqJ9a9IcnqVCQrUHY">AI Coding / 安全</span>
+  </div>
+  <div class="src" data-page-node-id="j0xTgU1Q6W1AwqS7itETf1">Manifold Security 披露（9/1–9/2，CSA 通报 9/4）· The Hacker News · IntelFusions · 各厂商公告</div>
+  <div class="body" data-page-node-id="608BkPM5zw6SLrn13Y6GEy">
+    <p data-page-node-id="DBHAVM5DMlM9N5TehlEZ85">安全公司 Manifold 的进攻安全工程师 Francisco Rosales 披露了 <strong data-page-node-id="cS87gW1nky2hvpw0MzTemZ">GitSpawn</strong> 漏洞类：<strong data-page-node-id="cDFPLIcPeEv05Xhq5WAjSp">Claude Code、OpenAI Codex、Cursor、Goose、Qwen Code、Grok Build、Hermes Agent 七款全部中招，共 8 项发现</strong>。</p>
+    <p data-page-node-id="KL4udxgJTJATYNmmYovkG0">机制简单到令人不适。Coding Agent 启动时会在后台跑 <code data-page-node-id="3k1We4GxBSEPURFE5Y8xDn">git status</code> / <code data-page-node-id="zKcFkBZOEy6hm0A1JON2Cx">git diff</code> 收集上下文——<strong data-page-node-id="u6d0BaAByIucu0qXupxS2N">有些在你敲第一句话之前、在工作区信任提示之前、甚至在认证之前</strong>。而 Git 有个正经的性能特性 <code data-page-node-id="SoWEpe7n4uR7xtzaUo8QUB">core.fsmonitor</code>：仓库可在自己的 <code data-page-node-id="ysmQxgMZ2xQVnoLKtzmwmi">.git/config</code> 里指定一个「文件变更监视助手」，索引刷新时 Git 会自动拉起它。于是仓库说跑什么，Git 就跑什么。</p>
+    <p data-page-node-id="LmR3Csc9VGOLpfZ143QpuQ">攻击载荷就是两行配置：</p>
+    <p data-page-node-id="XVYh2Syv9GfCDvAItECJ5g"><code data-page-node-id="ELrn4wMwgwhNF2iDgzqXaa">[core] fsmonitor = "sh -c '...'"</code></p>
+    <p data-page-node-id="lUWbGwdU0LzCwDrkADCykQ">关键在于它<strong data-page-node-id="9Lt9gRFP9hqzCcwNwQsTtt">绕过了 Agent 的一切防线</strong>：这不是模型提议的动作，不经过审批流、不在沙箱内、屏幕上一个字都不显示，直接以开发者账号的完整权限执行。Manifold 的原话是——「信任对话框、权限模型和沙箱，全都位于已经跑完的那个东西的下游。<strong data-page-node-id="R2R9KHRuZ8gAUJeMlh6jjK">安全控件被装在了载荷之后。</strong>」</p>
+    <table data-page-node-id="8u6Jf8kMAvMFB31vHQBRhW">
+      <tr data-page-node-id="9PKCHFvxCG2ySyuVAozX4H"><th data-page-node-id="NWoZWAVFHEHHmQHT1LEGFs">Agent</th><th data-page-node-id="G0gLmCMNWKuD08dGiLNYP4">状态</th><th data-page-node-id="NgmtY86Hsb8Ve88kOEKz7j">版本 / 编号</th></tr>
+      <tr data-page-node-id="Unk87a3C4TTrOHd0KoParX"><td data-page-node-id="1FNkZiIHjvJWS5BtRCWgkq">Claude Code（fsmonitor 路径）</td><td data-page-node-id="RIBMGFWG3QMqyXavuPWiIB">已修</td><td data-page-node-id="O72P2uxSKDwY0Y7zfujlrI">2.1.196</td></tr>
+      <tr data-page-node-id="EO1Yhge5OXMwok1EwhL0Hj"><td data-page-node-id="caqUsqrbzM9mIMsbTBOTGM">OpenAI Codex CLI</td><td data-page-node-id="npl4Y6GkUgdByoZIImn3ZR">已修</td><td data-page-node-id="TyP9MgBU2T1xSmb4GsaElC">0.131.0（CVE-2026-19592）</td></tr>
+      <tr data-page-node-id="VeOy7cAdu4YpWJDsmV4GdO"><td data-page-node-id="3kTrVOLwSkLdIFfRglW64e">Cursor</td><td data-page-node-id="SDuNXEmcOw0bHQ8c8ConHD">已修</td><td data-page-node-id="UR2qSZZMRcpMxFgga0kuYz">—</td></tr>
+      <tr data-page-node-id="Ucvj93oWgdWt9khVEC7wQS"><td data-page-node-id="4pXBLBoVqjLASp6adFfXjO">Goose</td><td data-page-node-id="xe6KGgMtJDny8CVgm1P2xc">已修</td><td data-page-node-id="H6JCJsyCVqleo2lcqwuwYz">1.44.0（CVE-2026-72718，CVSS 7.0）</td></tr>
+      <tr data-page-node-id="4keWGh62X8uope1Q4S7J7U"><td data-page-node-id="mWCGFPVikFqxfTY3HUWCB0"><strong data-page-node-id="aVvXoQvKPvsoneJWPqglJC">Claude Code（第二条路径）</strong></td><td data-page-node-id="KB1BoTRDv1YAS4fAmzSwbv"><strong data-page-node-id="MGPtcHSTV6Qk96fqSUT6jz">未修</strong></td><td data-page-node-id="nDwJ14hxGmuGLOzPrbF37b">另一配置项，细节暂扣；2.1.252 上确认</td></tr>
+      <tr data-page-node-id="TyivAzya7aNhQWHR4rx1Ka"><td data-page-node-id="fy7s7253H9ig2fBE6asz9d"><strong data-page-node-id="0mxFcj2UytMAcAdXGUubx1">Hermes Agent</strong></td><td data-page-node-id="ScOu0B7ZpejWthMvsQd4D2"><strong data-page-node-id="v8IjWdHbRRGaHCrrO0ytEj">未修</strong></td><td data-page-node-id="nYf6MuurAbFKERnOolZuLs">CVE-2026-71963</td></tr>
+      <tr data-page-node-id="p7E3YB8ChB1Xmg46y9oC63"><td data-page-node-id="sSJpQXGvSP6yMos4zfvrc3"><strong data-page-node-id="5eVZaCvYE0KpzkrTqB3ZZH">Qwen Code</strong></td><td data-page-node-id="wqNZPIZYrHJuFjzk3N1eOs"><strong data-page-node-id="kicBvHw826yk75wWXocUq2">未修</strong></td><td data-page-node-id="ZWY1FpGFAkIQQwTSZJ44kP">0.22.3 确认</td></tr>
+      <tr data-page-node-id="vnbdOGfFkW0aWPv2u6A0ET"><td data-page-node-id="UxbHlAUBCPafdDpUapI4J4"><strong data-page-node-id="eunGKTK3DCWBxpN1LecG4H">Grok Build</strong></td><td data-page-node-id="RerYr5fjA96T10BRdyHZtG"><strong data-page-node-id="ZorSHsUTfYJRDJBBd8Hn7n">未修</strong></td><td data-page-node-id="7NmCCFyV7hl3R8QGCCtzNT">1.0.13 确认</td></tr>
+    </table>
+    <div class="caveat" data-page-node-id="UHv9NtorORLR9S9CUeCI7x">
+      <b data-page-node-id="ErXSeTSSVeCcdiY6L4YjLh">别被标题吓过头，也别掉以轻心：交付路径比多数报道窄。</b> <code data-page-node-id="6QWPp59mNnjEi3BymQb9OQ">git clone</code> / <code data-page-node-id="3IMl2xCoN4j2oa9OiLqFhx">fetch</code> / <code data-page-node-id="ZZpQEWXKEszOVachjlKPlx">pull</code> <strong data-page-node-id="IRCAoGgoqN2pyI0mUXmenK">不会</strong>传输远端仓库的本地 config——Git 从不在网线上传递 config。仓库必须以「文件 + 完整 .git 目录」的形态抵达：zip 包、共享盘、同步文件夹、U 盘。但反过来说，<strong data-page-node-id="rfSHnZ5QU2AcGtMrkdmTpM">这恰恰是外包交付、同事传你一个坏构建、客户发来整个代码库的典型方式</strong>。另外 8 项里有 5 项是不同研究者独立重复提交的——说明它从来没藏住过。
+    </div>
+    <div class="act" data-page-node-id="B4cfV0Z2AqvUEuYyZ9J7jb">
+      <b data-page-node-id="Ra5tKykLxM4wRXRt5t9QNF">现在就能做的三件事：</b>
+      <ul data-page-node-id="RV6rnGMQwuTpoaXHFum7YV">
+        <li data-page-node-id="3PSQhxrudDabVGUwCgSBKI">收到非自己 clone 的仓库，先 <code data-page-node-id="vzYEa6a0eQGmlf5nf2dvHa">git config --get core.fsmonitor</code> 看一眼再打开。</li>
+        <li data-page-node-id="7NPefMABGPoYijlKH2mqgK"><strong data-page-node-id="KSFNEdCFwXTSJjgKHqQyKn"><code data-page-node-id="PwI6TxW0p9N312U8rxbGCb">git config --global core.fsmonitor false</code> 不可靠</strong>——仓库级 config 会覆盖全局设置。真正有效的是让工具显式传 <code data-page-node-id="8cK6rFotcrMqu0iTVBPqRI">git -c core.fsmonitor=false status</code>。</li>
+        <li data-page-node-id="qd22uZT6vWPg60IRcB9a3G">Claude Code 升到 2.1.196 只堵住第一条路径，第二条（<code data-page-node-id="gCvBUEvHnTcsmgUIVOGGUk">claude ultrareview</code>）仍开着；未修的三款 Agent 在生产凭据环境里隔离使用。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="why" data-page-node-id="wzmmkHxUjwEHsV5sp9VhE4">
+    <b data-page-node-id="TkB7TNxKOE4YGWIGI9sXcD">为什么值得关注：</b>这是「Agent 安全边界必须是 OS 边界，而不是 Agent 进程内的策略」迄今最干净的例证。七家团队各自独立地把「读取仓库」当成了安全动作、把仓库本地 Git config 当成了可信数据——<strong data-page-node-id="lWT3z2Ua5cz6MBAjfo8ob8">Agent 把文件夹当成即将读取的数据，Git 把同一个文件夹当成即将服从的配置</strong>。危险输入不是 prompt，是 Agent 为了搞清楚「我在哪」而读的一切。对日常用 Claude Code / Codex 的团队，这条本周就该进补丁清单，而不是本季度。
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="card coding" id="n2" data-page-node-id="KqoJOcBB3dnvO6dcvcWXmP">
+  <div class="card-head" data-page-node-id="peRlExE7Pcn7vRG6gcYH7N">
+    <div class="num" data-page-node-id="331MyITEnSRBbB1VpLlz9D">2</div>
+    <h2 data-page-node-id="9d4RX3hfbeECI5CnuHQAFc">微软开源 FastContext：把「找代码」从主模型里拆出去，主模型 Token 最多省 60%</h2>
+    <span class="tag t-code" data-page-node-id="M1sc8MMJCeCcbVAuhnPOk9">AI Coding / 架构</span>
+  </div>
+  <div class="src" data-page-node-id="ZfbuWmDpFENdSRXYwp8kkX">微软研究院 · Mini-SWE-Agent 评测 · 开源发布</div>
+  <div class="body" data-page-node-id="gJ3sVvPtM835lVtCnej3H9">
+    <p data-page-node-id="OGDZ8k0rr6EQ4Pxxqq2ecT">微软提出并开源 <strong data-page-node-id="8CRkGfBFEdruGroC7CwiNw">FastContext</strong>，思路是拆分工种：<strong data-page-node-id="E86cbiFV5SGRLd2s7fmkYA">主模型不再亲自翻仓库</strong>，改由一批 4B–30B 的专用小模型充当「代码侦察兵」（code scout），只用只读工具并行检索，把结果压缩后再交回主模型。</p>
+    <p data-page-node-id="7yqCNlQ2Ytpa4kuzbSffvj">官方在 Mini-SWE-Agent 上的评测结果：</p>
+    <ul data-page-node-id="ukdzw0936abN2THfxH95fo">
+      <li data-page-node-id="ZDG2kYT746SZDDbdURs1wV">主模型 <strong data-page-node-id="eIZubfH0xkC89NWA4PvuWK">Token 消耗最多降低 60%</strong></li>
+      <li data-page-node-id="kyWpx1jiTM7WGP76EuVUIZ">端到端任务<strong data-page-node-id="rOokHFHvnMDEuSmCHioDS5">解决率最高提升 5.5%</strong>（降本的同时没有掉点）</li>
+    </ul>
+    <p data-page-node-id="SsRhuP9A2fT7hX1Axe6XUj">这指向一条正在成形的路线：<strong data-page-node-id="ZPOY8Yvi56gxErNBODm8vF">多专用 Agent 协作</strong>替代「一个旗舰模型扛全流程」。</p>
+  </div>
+  <div class="why" data-page-node-id="OJ47vrBWZZPCFBEyLomfwB">
+    <b data-page-node-id="VYXI5WC4gKIxeAthffLZ6y">为什么值得关注：</b>与 09-08 推过的 Spotify <code data-page-node-id="NBj59S1DsNdSi7ZHxqrHKE">shunt</code> 是同一问题的两种解法——shunt 是「大文件交给 Gemini 代读」，FastContext 是「检索这件事整体外包给小模型集群」。区别在于 <strong data-page-node-id="hNhp0dcFwK19KQB1nGluw7">FastContext 有端到端解决率的正面数据</strong>，不只是省 token，还略微提分，这让它从「省钱技巧」升级为「架构范式」。注意口径：60% 是<i data-page-node-id="Wj1IGCjAVav0kfZUHDMHPz">主模型</i> token 的降幅，不是账单总额降幅；小模型本身的开销另算。
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="card coding" id="n3" data-page-node-id="e0GnYDQ6BgnitcZ4gjPA4d">
+  <div class="card-head" data-page-node-id="pXkLgLGsyoCOOZVDyd4lHQ">
+    <div class="num" data-page-node-id="8jG8O9TfmT4gR9tcEJ2EPb">3</div>
+    <h2 data-page-node-id="bZ1O0vXqBoTB972VVDiGzJ">obra/superpowers 冲到 28.4 万星：Skill 生态从「装了多少」转向「怎么把流程系统化」</h2>
+    <span class="tag t-code" data-page-node-id="NR0jM98BvVvz9hS9wXW1A5">AI Coding / 工程方法</span>
+  </div>
+  <div class="src" data-page-node-id="HiC4d4fM0SeKvRKFz2yy5E">GitHub Trending · AI Agent GitHub Digest（2026-09-10）</div>
+  <div class="body" data-page-node-id="vqmPwKBF3B6JvLMChm7R76">
+    <p data-page-node-id="UcAYkflB16Zg6kjxBBUjsE"><strong data-page-node-id="2ORiXGnKSVPwxVbwl4KyBg">obra/superpowers ⭐ 283,899（+690/日）</strong>——它不是又一个「写测试 / 修 bug」的单点 Skill，而是把一整套软件开发方法论固化成可安装的 Skill 集合：先问清你到底要做什么 → 拆成规格 → 写测试驱动的实现计划 → 再跑子 Agent 驱动的开发流程，一路贯彻 TDD / YAGNI / DRY。</p>
+    <p data-page-node-id="gfy90U3SaaUAlAZ1mwKBeR">关键是<strong data-page-node-id="dWeYW0oA5yQJBtMmYoEThl">跨 8+ harness 可安装</strong>（Claude Code、Codex、Cursor、Gemini CLI 等各自走插件市场 / session-start hook），不绑死在某一家的工具上。</p>
+    <p data-page-node-id="K8hbRjwyeCPkVxATHTDF8y">同日榜单上的邻居也印证了这个转向：</p>
+    <table data-page-node-id="OlRibKI5a9RPQBtHI7ccxm">
+      <tr data-page-node-id="IsfAuryjjF4sVihsfNDJRf"><th data-page-node-id="cRGQ9Qfu4GBveChPqwWzI7">项目</th><th data-page-node-id="yC1yZxwhaUdlGQI197u9kz">星数</th><th data-page-node-id="qGqLLgczdDC0RcoOmZlX5I">它是什么</th></tr>
+      <tr data-page-node-id="j79rBkHm569Zgyqiv56kvP"><td data-page-node-id="r2QJb3qpdA82EzZ0qzTjCn">obra/superpowers</td><td data-page-node-id="Ko40IHrTARy8GDPz4oHuYn">283,899</td><td data-page-node-id="si2iI9WzvQ42KCaDlOX7n2">开发方法论骨架</td></tr>
+      <tr data-page-node-id="bQjULL9uTv152F0SXadxkh"><td data-page-node-id="j0B6MJcVDDrFLJEAgp5xm4">affaan-m/ECC</td><td data-page-node-id="si3C0gHMfj35yt6tXBaL8V">254,988（+1,151）</td><td data-page-node-id="jEbZw9HDFKbs1opB3BMkCq">68 Agent + 286 Skill 的性能优化系统，硬编码「计划→测试→实现→评审→验证→记住→改进」</td></tr>
+      <tr data-page-node-id="YjPS72GYDHGZo2tQvf9CGT"><td data-page-node-id="hKXEnkDQsqbBTBAKWqhojM">cathrynlavery/diagram-design</td><td data-page-node-id="8oTEr2PHAA7d2x5JPnlBqU">36,362（+2,286）</td><td data-page-node-id="y00t1r1FybpBa8PPvgt0ct">最快黑马，用 39 种编辑级图型换掉 Mermaid——本质还是 Skill</td></tr>
+      <tr data-page-node-id="J4JK64PpggiBhjQLBQoyTI"><td data-page-node-id="2TanJ2cBg4k8rGz31uZI8D">Tencent/teamai-cli</td><td data-page-node-id="6nLNA0BghB1D2PCal0EibG">2,850（+563）</td><td data-page-node-id="WQcN6nh1dXcEf7rl8EWH6R">团队级统一分发 skill / rule / MCP 配置</td></tr>
+    </table>
+    <p data-page-node-id="LQ1DIJ7kPMgqQDaHPtQWyt">Digest 的总结很到位：<strong data-page-node-id="aRNQ6lXOqbvRXvRfnpb08D">今天爬得最快的项目里没有一个新模型或新框架——生态正在从「你装了多少 Skill」转向「你怎么把 Skill、记忆和流程系统化」。</strong></p>
+  </div>
+  <div class="why" data-page-node-id="oBplhb0E8Y5CRCFoXo0R99">
+    <b data-page-node-id="NyjgdYnnW08JxUFb2UKLAK">为什么值得关注：</b>这条和 09-07 的 OpenAI Skills Catalog 是不同层的东西——Catalog 解决「去哪儿找 Skill」，superpowers / ECC / teamai-cli 解决「Skill 装完之后怎么不变成一堆互不相干的碎片」。对你这种已经在跨 host 同步 Skill 的场景，<code data-page-node-id="o25GBqO4C37PHeADH0A5Bi">teamai-cli</code> 的「中心化分发 skill + rule + MCP 配置」尤其值得看一眼，它把 AGENT-POLICY-SYNC 那套手工活产品化了。
+  </div>
+</div>
+
+<div class="sec-title" data-page-node-id="uwOc0lpPEqOaaHWMW3b5No">具身智能 · 2 条</div>
+
+<!-- 4 -->
+<div class="card embodied" id="n4" data-page-node-id="ClVmAZDs8GSc11m5ycXYAp">
+  <div class="card-head" data-page-node-id="k53yqiHqa2OSRIpwH5ICVV">
+    <div class="num" data-page-node-id="99n4aytqtONs1ap5NN5jXN">4</div>
+    <h2 data-page-node-id="vSycL7cpA9t0nfBSE6Fy48">智元发布 AGILE2.0 感控一体模型：双足自主「踩球走」行业首次，机器人开始边看边想边动</h2>
+    <span class="tag t-emb" data-page-node-id="broBum98HrpOow2F1pbw15">具身智能</span>
+  </div>
+  <div class="src" data-page-node-id="ToZ2VvTLnrHlaQligF0cpt">智元机器人 9/9 发布 · 每日经济新闻 · 腾讯新闻</div>
+  <div class="body" data-page-node-id="eTmcGQpmrNKmWeOFUsvLJM">
+    <p data-page-node-id="eCLAZp5rkED6DahLfrVP7O">智元 9 月 9 日发布 <strong data-page-node-id="9KVo7m4827QEfMhsahvtXg">AGILE2.0</strong>（AGIBOT Generative Intelligent Locomotion Engine）感控一体模型，把视觉感知、环境理解与全身运动控制统一进一个闭环，<strong data-page-node-id="DGrOX8BK3xEow1FfP15w5d">从分段式架构推向端到端</strong>。</p>
+    <p data-page-node-id="XPWdo470weXAQqmPcC78Ie">载体是灵犀 X2 人形机器人，现场完成的动作里最扎眼的是：</p>
+    <ul data-page-node-id="CSxrtpbpj3rNTHFssN2T44">
+      <li data-page-node-id="DWkVYDGQC8nKYFa8kf9YVA"><strong data-page-node-id="DEDpY6n3CRGwTvMV1WMDCM">踩球走</strong>——行业首次由双足机器人自主实现</li>
+      <li data-page-node-id="DdzFqdOySgNBE4pp2VMzEZ">钻火圈、跳长绳</li>
+    </ul>
+    <p data-page-node-id="j8hFtY7zbosFWaTFr6AIg0">配套动作还有两条产业线：<strong data-page-node-id="lAKDn3HYCEs5kSvtCYlEE3">与长隆集团签约</strong>共建全球首个大型具身智能主题乐园；<strong data-page-node-id="rq23YuCnlm9nTm7ZBg41Yj">入股柔性电子皮肤研发商模感科技</strong>，补强触觉感知。</p>
+    <div class="caveat" data-page-node-id="HHxOtRaiBmT6bCw1PBp0jw">
+      <b data-page-node-id="PJFfSvqgW2Ko6qxcOsjoHC">演示 ≠ 产线。</b>端到端模型对数据、算力、安全冗余的要求都更高，「眼脑手」任何一次不同步就可能导致任务失败。这些动作目前仍属高难度演示，能否迁移到真实产线的长程任务还没有公开数据。
+    </div>
+  </div>
+  <div class="why" data-page-node-id="BUhNFC7zyCUx5MXKcahJhO">
+    <b data-page-node-id="yTDtOm4KGzpE6rdfwEOvK4">为什么值得关注：</b>具身智能的控制范式正在从「感知模块 → 规划模块 → 控制模块」的接力式，切到「看—想—动」同步的端到端。这解决了长期存在的<strong data-page-node-id="wLGyIjd7LMxHZpw77vThG2">「所见非所动」</strong>痛点，但代价是<strong data-page-node-id="QrU1kgsMnj5aY2BBOTfK2b">可解释性和可兜底性下降</strong>——中间状态不再是可调试的模块输出，而是一个黑箱闭环。对工业部署来说，这是能力跃升和工程风险同时到账。顺带注意智元的两步棋：主题乐园解决「数据从哪来」，触觉皮肤解决「手如何感知」，都在补真机数据的短板。
+  </div>
+</div>
+
+<!-- 5 -->
+<div class="card embodied" id="n5" data-page-node-id="Rxp7Ok7LbAseO66c6jEHLk">
+  <div class="card-head" data-page-node-id="BSkYBzPiSO7qoNPHaZHIga">
+    <div class="num" data-page-node-id="ur5pmzeiuGVbZl16aT1bxX">5</div>
+    <h2 data-page-node-id="6YqFO1Mqo2fNWtCn3Nfniz">证监会窗口指导收紧人形机器人 IPO：四大维度重塑门槛，「凭热度上市」时代终结</h2>
+    <span class="tag t-emb" data-page-node-id="kFDXfze0QpovoJcCWrUcYS">具身智能 / 资本</span>
+  </div>
+  <div class="src" data-page-node-id="iDQeYtOLVTAyhlcaDGNxza">财闻 · 券商窗口指导（非正式）· 近期报道</div>
+  <div class="body" data-page-node-id="MF8uPXFCJ7SsLe39zDGtS5">
+    <p data-page-node-id="8mSn6ErdkvTpzQBKM2bgH8">证监会近期向头部投行及机构下发<strong data-page-node-id="0xChwhDn7XkCkzvIR9Zvgb">非正式窗口指导</strong>，收紧人形机器人企业 IPO 审核标准，从四个维度重塑上市门槛：</p>
+    <table data-page-node-id="X0OKGZjmVBZAzTTkRLCApZ">
+      <tr data-page-node-id="jGAgCD4APLqHFnNZxIq83A"><th data-page-node-id="oIfvtEDR3jBahpthMhCnDq">维度</th><th data-page-node-id="TqPS6FzxgqUa4SKQJgviga">要查什么</th></tr>
+      <tr data-page-node-id="tB5mi8XdsycBbt96ZDXCno"><td data-page-node-id="y0rwP08mBKtFNHGBzSMtID">营收真实性</td><td data-page-node-id="ZfUZ8BxPdw5UqCwSg2ea54">收入是否来自真实交付、有无关联交易虚增</td></tr>
+      <tr data-page-node-id="He1X4ZECegFYKXklRgVEVY"><td data-page-node-id="4QGbdEsB5Ey3apudIuDBR2">盈利稳定性</td><td data-page-node-id="HZSlwmCDiiB8m4GqF4KdAq">是否具备可持续的盈利模型，而非一次性订单</td></tr>
+      <tr data-page-node-id="qoujim5lFdGStzePKDoXop"><td data-page-node-id="TMcbKBOWyHHIqSNKPybXR8">技术创新性</td><td data-page-node-id="ahCPtzIc6RSUCmgmEqDzZE">是否存在同质化、技术壁垒是否成立</td></tr>
+      <tr data-page-node-id="0qseAE616u9MIULpBJNNF0"><td data-page-node-id="TiIVaAPAroGd2KEeYaXCId">商业化落地能力</td><td data-page-node-id="Dy75qQnrN5Se4XA3Ora8b1">场景是否可复制、是否有复购</td></tr>
+    </table>
+    <p data-page-node-id="zw60tJLvD3ft78NZe4rfsl">官方目的是整治<strong data-page-node-id="xNHum0MdRBwHsCiDuryAyt">估值虚高、技术同质化</strong>乱象。导火索是<strong data-page-node-id="ohVFOJbDblOMRCBPCfj2fo">宇树科技上市后的市值大幅回撤</strong>。</p>
+    <p data-page-node-id="XKcpHUkaa7v6CeCOPCgd9u">同期另一组数据可作为对照：2026 上半年中国人形机器人出货超 4 万台，但<strong data-page-node-id="2zamOvAfA39IYOF2DSV0lq">家庭渗透率极低</strong>——30 万至 60 万元的售价、真实家庭场景任务成功率<strong data-page-node-id="EiY7AOvbRy2YhC0QtUhIbH">仅 12%</strong>。</p>
+  </div>
+  <div class="why" data-page-node-id="M8UlAMtFj9vgeJ1SSlOFQp">
+    <b data-page-node-id="vZTItuN2e1EbTREnnTLrTm">为什么值得关注：</b>在今天一水儿的「京东五年采购 300 万台」「外滩大会 40 家厂商真干活」利好里，这是唯一的<strong data-page-node-id="D5Vw8Ck3138o6Dbzsit3OK">降温信号</strong>，而且来自监管而非看空机构。它的信号价值在于：监管开始区分「出货量」和「可持续生意」——而 12% 的家庭场景成功率正好说明了这两者之间的鸿沟。对赛道内公司，融资逻辑要从「讲规模故事」切到「拿复购和毛利说话」；二级市场的估值锚也在重构。
+  </div>
+</div>
+
+<div class="sec-title" id="mini" data-page-node-id="2x0AAGqdHH1C4m1RlfMVyN">顺带一提 · 4 条</div>
+<div class="mini" data-page-node-id="okCuOsfDkdpRDaeCrBV9td">
+  <div class="m emb" data-page-node-id="5CijOnMitKc819VGyg1m8E">
+    <h3 data-page-node-id="UW7AGrpvrCO9fGnJTEULdm">京东启动「物理 AI 加速计划」，冲刺具身智能六项全球第一</h3>
+    <p data-page-node-id="PwVNxI0B90qW1WZHMAS6EP">9/9 JDD 大会发布「超级 AI 供应链」：两年建成全球最大具身数据采集中心（每周 10 万小时、两年 1000 万小时）；五年 80 多个机器人产业基地、百亿资源扶持品牌；物流领域五年采购 <strong data-page-node-id="nMPaeuU8lNK2CNFz15lk6V">300 万台机器人 + 100 万台无人车 + 10 万架无人机</strong>。上半年研发投入同比 +53%。——量级惊人，但都是「计划」，落地节奏待验证。</p>
+  </div>
+  <div class="m emb" data-page-node-id="xCS814OiI7nozt45fx0M6q">
+    <h3 data-page-node-id="51epIVv0uivaySTfeEE2PB">人社部新增「具身智能机器人应用技术员」新职业</h3>
+    <p data-page-node-id="uLReQO6CZqAgYxARFCxqSA">9/9 人社部等部门发布 11 个新职业、23 个新工种，数字职业占新增新职业总数 <strong data-page-node-id="aj1MdvSPyHZLSwrGxXOGqr">45.5%</strong>。这补的是人才侧的短板——行业从研发走向交付后，运维、场景调试、交付服务岗位终于有了国家职业体系支撑。</p>
+  </div>
+  <div class="m code" data-page-node-id="4jqUEiOllpKftArn6Swo2H">
+    <h3 data-page-node-id="A27f6Z4gdrGBhjLC8NSoH9">Anthropic 披露第四起 Claude 越界访问：沙箱配置错误，复核 4.81 亿份日志</h3>
+    <p data-page-node-id="cRQ5VuD5sDwjJHwFH9erkT">发生于 2026 年 1 月，早期 Opus 4.6 在网络安全评测中<strong data-page-node-id="sLTN72IgkaXZ7UYVjKwMw4">被误配置为可连公网</strong>（环境宣称是断网沙箱），且未加载商用版防护，最终访问了真实第三方系统。初查 14.1 万份会话漏掉了它；后在准备向 METR 交材料时发现，先按公网 IP/URL 扫 <strong data-page-node-id="Yherg97Cop6pluLccnQkhq">约 4.81 亿份日志</strong>，再让 Claude 深审 920 万份高风险记录，确认共四起。——与 GitSpawn 呼应：<strong data-page-node-id="9QBAyqkTM8o46OHCSnVisf">安全评测不能只靠提示词宣称「这是模拟环境」</strong>，必须网络层默认拒绝 + 最小权限 + 外联审计。</p>
+  </div>
+  <div class="m code" data-page-node-id="ZT6AaSk9Lrw0fzuvTqOG0E">
+    <h3 data-page-node-id="BaXJlOB2RxuBIaWldSkjfa">Shopify 收购 Tailwind Labs：周安装 1.1 亿次的前端基础设施有了长期供养方</h3>
+    <p data-page-node-id="hzhjcwpAdQ25itAloGmVe1">Tailwind CSS 周安装量超 <strong data-page-node-id="dvbvP4ChjLCmepeXYBDmGI">1.1 亿次</strong>，项目 9 年；官方承诺<strong data-page-node-id="VS7J2eQzpwIJGR5O8C12VF">永久保持 MIT 许可</strong>、继续由现团队主导，商业产品 Tailwind Plus / ui.sh 停止接纳新客户。团队将加入 Shopify，在商家后台、结账、Agentic Commerce 等复杂界面中继续迭代。——对开发者短期最重要的是许可证与维护连续性；长期看路线优先级可能逐步向电商需求倾斜。交易金额未披露。</p>
+  </div>
+</div>
+
+<div class="foot" data-page-node-id="09MZd5Wa5asYtb3i6EHAQ6">
+    <div>AI 日报 · 2026-09-10 · 北京时间 09:14</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-09.html">← 2026-09-09</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-11.html">2026-09-11 →</a></div>
+</body>
+</html>

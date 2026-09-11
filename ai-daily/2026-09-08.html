@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="vTZJlCXP05eE6ymXqWzyPl">
+<head data-page-node-id="Ijv0GHE9KoipzcEqB0fsI6">
+<meta charset="UTF-8" data-page-node-id="h0bcWNXTCE5iu8U88NKJNf">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="6dVZGNrx1QR2KO8VXGSj2I">
+<title>AI 日报 · 2026-09-08 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid for 顺带一提 */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body data-page-node-id="cG8NjcJORwqrypCgh29r0e">
+
+<div class="hero" data-page-node-id="efRpQlWsQQ9U7n41sZKiPZ">
+  <div class="wrap" data-page-node-id="ozJ2twHYDZ9uNKiIdraEA5">
+    <h1 data-page-node-id="aVonLCiWE8QBjG9FiKgF0N">AI 日报 · 2026 年 9 月 8 日（周一）</h1>
+    <div class="sub" data-page-node-id="jXgYtBWY2N29FkKCvS3jzx">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta" data-page-node-id="RK5OZhLqPorQYa1dWrryOy">
+      <span class="chip" data-page-node-id="PrqByP10klXz4DYKYVhJlh">AI Coding ×3</span>
+      <span class="chip" data-page-node-id="cBc6AAkKQhmMM4TWKZtECQ">具身智能 ×2</span>
+      <span class="chip" data-page-node-id="HF3zMpFvBg7jJk47CXHN6E">今日主线：成本工程 · 记忆层 · MCP 安全</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav" data-page-node-id="7vNDBQ5BSSqwoiYst3zWNE">
+  <div class="nav-inner" data-page-node-id="gcRRaapWaYahg7QVuHrVzg">
+    <a href="#n1" data-page-node-id="bpCmmOhR8xGuz7kc0iFVl6">1 Spotify 省 90% Token</a>
+    <a href="#n2" data-page-node-id="GGI9Pa9FoSeOHGmAQkCiN1">2 HF Funes 记忆层</a>
+    <a href="#n3" data-page-node-id="rWrusSJixUtmP5wL6aWEru">3 MCP 合约漂移</a>
+    <a href="#n4" data-page-node-id="6K5VMhaxeTpOG8tUWAkemg">4 宇树全自主搏击</a>
+    <a href="#n5" data-page-node-id="DHHe6gerYL35ywfGo63Uht">5 国标落地与交付</a>
+    <a href="#extra" data-page-node-id="nYf5mRF6qFdukggYy2HGyt">顺带一提</a>
+  </div>
+</div>
+
+<div class="wrap" data-page-node-id="1mxJ5rOShAUaloFY4p8ybk">
+
+  <div class="sec-title" data-page-node-id="yNbwlS7VCvBdlaxO9uuhD4">今日主榜</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1" data-page-node-id="q5sabwCGsFFpNU1AQebdSV">
+    <div class="card-head" data-page-node-id="X7lIiMtM6cjz2yRzssg2FZ">
+      <div class="num" data-page-node-id="voud5Roqe1HB2LtruEsoOt">1</div>
+      <h2 data-page-node-id="SaatA8NPpmT8VPDihj34Ai">Spotify 用 shunt 插件把 Claude Code 的 Token 消耗砍掉 90%：拦截读文件，交给便宜模型</h2>
+      <span class="tag t-code" data-page-node-id="W0OlKH3eazV9DkXcS45fdH">AI Coding</span>
+    </div>
+    <div class="src" data-page-node-id="Zu99kCQyQRQHewjLiqHabB">来源：Spotify Engineering Blog / byteiota / Analytics India Magazine · 2026-09-06 前后 · HN 首页热帖</div>
+    <div class="body" data-page-node-id="JuvOXF1hA5WpbLYCEondnC">
+      <p data-page-node-id="rtBtYD6UJwWIIuy81X9ZXB">Spotify 工程师 Dimitri Mazmanov 在内部 Backstage 平台 <strong data-page-node-id="4gypnpRFcnQuUrZTzuNNIE">Portal</strong> 上做了一个 Claude Code 插件 <code data-page-node-id="a0cHPgW5SfnbgJXpZChxX2">shunt</code>，核心思路一句话：<strong data-page-node-id="LxT1hM3hWaEeO9KIvxRCmi">Claude 负责思考，便宜模型负责 I/O</strong>。</p>
+      <p data-page-node-id="K8XvBqGULycHXt6q7hiHMh">他的原话很扎心——"<strong data-page-node-id="V1nFNJFU6WtUNC3Gt5L29Z">AI 编码助手替我做的大多数事不是思考，是 I/O</strong>：为了回答一个文件的问题去开五个文件，或者照抄旁边二十个测试的写法。"</p>
+      <ul data-page-node-id="1UGW0bnvzpVdjCycA6brLR">
+        <li data-page-node-id="J5feYnLX3w40hgFBWmA4zB"><strong data-page-node-id="BvCQp8LUHYelNs093RKBZp">拦截层</strong>：用 <code data-page-node-id="AfJUKK6dGfoQ5kIki1xpdK">PreToolUse</code> 钩子拦 Read 调用，文件超过 <strong data-page-node-id="tpa1dVKU6JB88TkEqNFMF4">350 行</strong>（可用 <code data-page-node-id="eODC5aA8Ymtvh7yxstSN03">SHUNT_MIN_LINES</code> 配置）就阻断，改走 <code data-page-node-id="Gp3H0nrEH3XUWPlvrlQcS5">/bulk-reader</code> skill；<code data-page-node-id="edp8AxEgfya5F1AXFBPCFP">check-bash-read</code> 还会拦 <code data-page-node-id="jq5PlkEkODTyLBKsE0UNLi">cat</code>/<code data-page-node-id="FZoVjcjSTxMj6UK9XAfkvB">head</code>/<code data-page-node-id="3mTDoX3Djr2C5dYmzQSFao">tail</code>。</li>
+        <li data-page-node-id="SMysFjkjZaGTy3hAicsDlz"><strong data-page-node-id="uNMbhf5251pbVY5KA9Af1O">执行层</strong>：Portal 的 "AiKA Modes"（声明式 agent，跑在临时运行时上，类似 agent 版 Lambda）用 <strong data-page-node-id="yVaExLPjuuo997fymYYgMf">Gemini 2.5 Flash、temperature 0.2</strong> 读完全文，只回结构化要点，不写散文。</li>
+        <li data-page-node-id="Oo7de04YzmGJcNVT2Hzngo"><strong data-page-node-id="TnSlzDZoHn5BK90zWwhqTX">code-writer 模式</strong>：生成的样板代码<strong data-page-node-id="dn8bZIEbkyxzUr6ST6NioN">直接写盘，Claude 永远看不到内容</strong>——贵模型的上下文窗口里根本不加载它不需要的东西。这是和"把 subagent 路由到便宜模型"的本质区别。</li>
+      </ul>
+      <table data-page-node-id="gKZ9NPPEC3I7HQ7d8Hao2e">
+        <tr data-page-node-id="E9hpq3jSnm9UG9p2Y85iuN"><th data-page-node-id="vVEsenV3CMSsi6zqfKDGo0">场景</th><th data-page-node-id="mDfQHSrMsEyDCXIfdASHme">结论</th></tr>
+        <tr data-page-node-id="v2n7VVOZqRXdBYaE1OKirK"><td data-page-node-id="OW0BqPYDnUPih45PVJkQsf">官方数据</td><td data-page-node-id="zCv9Bp0yGpShSVfruMM8Xu">Java monorepo 四个场景测试，<strong data-page-node-id="xwXOqnikuYP9yRqmKAYlDW">批量读取平均省约 90%</strong> token</td></tr>
+        <tr data-page-node-id="UBadOdftkAcap3Dbq1ijGK"><td data-page-node-id="DhD4ecxZbK3s812qGY7TpD">HN 质疑</td><td data-page-node-id="msa7TpM5WJXSGpxJOcpic1">Sonnet 5 输入 $2/M、输出 $10/M，差 5 倍。$100 输出 + $30 输入 → 省 $27，总额 $130→$103，<strong data-page-node-id="turCcBgGAa9rwlxv0b4VJs">实际只降 21%</strong></td></tr>
+        <tr data-page-node-id="B3pwxlyEXyNIREZLkniVFb"><td data-page-node-id="TSff5plerQdFCx832SRD7A">边界</td><td data-page-node-id="Yt3vMS57Gi6fnwUID3Wo3H">Flash 漏掉过一个 Claude 一眼看出的线程安全 bug；摘要缺可靠行号，<strong data-page-node-id="ZhheFfLEi16B8iLaK0wwCa">编辑类任务无法委派</strong>；单次委派 10–30 秒、Portal 上限 30 秒</td></tr>
+        <tr data-page-node-id="NTRPFtBhYjyiDPRNs97eJn"><td data-page-node-id="vFd1I4WcovzynzqCsA8dji">代码</td><td data-page-node-id="BDbqnv9zDZjpIwk3weE69V">已开源：<code data-page-node-id="Ffdr0Rs7Yd7OBmZjwHRhHf">spotify/portal-ai-plugins</code>，bulk-reader / code-writer 两种 mode 可通过 AiKA 复用</td></tr>
+      </table>
+      <div class="why" data-page-node-id="b3ctfVOXUKj1Gigs1INSl8">
+        <b data-page-node-id="iX3iBmAAMd0foyDxskFn36">为什么值得看：</b>这是本周最实用的一篇工程实践，而且<strong data-page-node-id="Ls1Q7E7oLIsrnGLwi9oySP">对你的场景直接对口</strong>——你手上就是 Java monorepo（ccdc），读大文件正是 token 黑洞。但要清醒：90% 是"输入 token 的 90%"，不是账单的 90%；只有<strong data-page-node-id="wXFugmow8Ld5Ph7BTEsiat">读密集型</strong>（摸陌生仓库、梳理依赖、扫配置）才吃满收益，写/调试为主的会话会大幅缩水。另外别把它和 <code data-page-node-id="VGxysY7h8yLUYswEd0N9rk">CLAUDE_CODE_SUBAGENT_MODEL=haiku</code> 混为一谈——后者换的是"谁处理任务"，shunt 换的是"文件内容进不进上下文"。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2" data-page-node-id="hQxCRevwH5ug17rFgDCtqm">
+    <div class="card-head" data-page-node-id="1NEEmQCEVvz1tv1AWwJGV0">
+      <div class="num" data-page-node-id="HmAkXV99wAHdRF3C5tMj8R">2</div>
+      <h2 data-page-node-id="D4NbnpiA1VokAEW119ioPR">Hugging Face 开源 Funes：给编码 agent 装一层"你自己拥有的记忆"，跨机器跨工具都能召回</h2>
+      <span class="tag t-code" data-page-node-id="kC3SaOXSqHFt2yrEWmiHgD">AI Coding</span>
+    </div>
+    <div class="src" data-page-node-id="HMD6I2NW3nTbMHPBVAbDPc">来源：Hugging Face Blog（David Corvoysier）· 2026-09-03 发布 · 本周持续发酵</div>
+    <div class="body" data-page-node-id="Cm9Y8vctv770hl8yytIem1">
+      <p data-page-node-id="39B37XQlQjrhybDvR9ldSq">所有主流编码 agent 都有一个结构性缺陷：<strong data-page-node-id="etJjcLRBkiwIvekclRegAb">无状态</strong>。Claude Code、Codex、pi、Hermes 每次开会话都是陌生人——下午在 Claude Code 里理清的架构决策，第二天换 Codex 全忘了。</p>
+      <p data-page-node-id="SupUG8FbGl8xSBZ6lKdyX5">Funes 的做法是<strong data-page-node-id="qBjkeWuW571YwqjKHJDccU">"记忆是数据集，不是服务"</strong>：把 agent 已经留在磁盘上的 session trace 解析成统一的 turn-and-block 结构 → 分块 → 用固定的本地模型做嵌入 → 写进本地 <strong data-page-node-id="yQJBhiUeQzCQqqLlN0gHCR">Lance 数据集</strong>。</p>
+      <ul data-page-node-id="orAq0EOKNJC1924x5FSfvs">
+        <li data-page-node-id="Xoz0Rme3rJMpWVulKW7WVM"><strong data-page-node-id="oaurBYDEKaB9a5iKineJ2b">一条命令接入</strong>：<code data-page-node-id="uUDb8LsvRdGKM0ptKYEONC">funes add claude</code>（或 <code data-page-node-id="L5uPLAUxLvsolJI2bZcI4N">codex</code> / <code data-page-node-id="2cNduGVQkCAp3OUih1aF9e">pi</code> / <code data-page-node-id="NkN3ZtLho69CeIFTRjyReu">hermes</code>）建索引、注入 <code data-page-node-id="vsyGUjKKPV48U6C3APx03v">recall</code>/<code data-page-node-id="n0FPc5X78B4t5nUmYGmMRu">get</code> 工具、装好每轮自动增量索引的钩子。</li>
+        <li data-page-node-id="IDe0fyx13UPBaP7BeyLOx5"><strong data-page-node-id="YHDtBhQ1YZmunZ7G410cWy">检索链路</strong>：向量 + BM25 混合 → RRF 融合 → cross-encoder 重排 → 按新近度加权 → 附带相邻块。<strong data-page-node-id="QoRZyV49HLaUIVaRnSkvM7">全部本地跑</strong>，无 ML runtime 依赖、不需要账号。</li>
+        <li data-page-node-id="fkLto42McB1AcF3ZoHScIX"><strong data-page-node-id="iyv8KpsQGpSOiY1uj5HDuz">保留原文不蒸馏</strong>：写入时不压成"事实摘要"，返回的永远是原始 turn，并标明来自哪个 agent、什么时间、哪个 session、第几轮。官方理由很实在：压缩过的摘要会把关键细节抹掉。</li>
+        <li data-page-node-id="CJId4DZ8wXllvflj7VEZzL"><strong data-page-node-id="ErC7ZkBQEoYBRGSMyRlkMm">跨机器</strong>：可绑定到你自己的私有 HF dataset，换台机器 <code data-page-node-id="5FVaAvPrzttpmASaWEcJES">funes add codex acme/funes-memory</code> 记忆就跟着走。发布前做凭证脱敏 + 二次扫描。</li>
+      </ul>
+      <p data-page-node-id="OGlzqfdZEY96sewAfjV7Fs">HF 的对比评测：两个需要前序会话推理的任务，<strong data-page-node-id="ajD1DGrB3xwB2GsVIRK8Ch">上下文压缩只在其中一个成功</strong>（另一个因为摘要阶段丢了细节直接失败）；recall 的成本是<strong data-page-node-id="V6q599HUYl5yYh3hl6C5Nk">手写交接文档的 1/4 到 1/8</strong>。</p>
+      <div class="why" data-page-node-id="0hHepicKMHgTjhfbIkx93c">
+        <b data-page-node-id="NvcVjGZdew5R0qnaiAb7kT">为什么值得看：</b>切工具/换机器的切换成本，本质是厂商的护城河。Funes 把记忆层做成<strong data-page-node-id="J2LTEqVsuQJgPLQ85iIiXp">你自己拥有的数据集</strong>而不是订阅制 API，等于把这个护城河填了。另一个值得抄的思路是它和"用 Markdown 存记忆"（Cal Paterson 上周的提法）的取舍：Markdown 简单，但撑不起上万轮的排序召回——<strong data-page-node-id="wwh6LlDDXUYQ5mdJUkv2Wu">你的 <code data-page-node-id="vmqzXpGMETaIk2DuQp6LrR">MEMORY.md</code> 体系正卡在这个量级拐点上</strong>，值得评估。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3" data-page-node-id="qYCuJNapc23tksT8PbZW5n">
+    <div class="card-head" data-page-node-id="WMuSSwy0kDtsGk8y5iHkEP">
+      <div class="num" data-page-node-id="f1gHZRzJgf5H777fVv4UWw">3</div>
+      <h2 data-page-node-id="Y48rSAFRpa8aKuunLGl7Ns">一周内 601 个 MCP 工具从"只读"悄悄变成"可写可删"，版本号还没变</h2>
+      <span class="tag t-code" data-page-node-id="iTncwJ0XmB990RQvpuWk4Q">AI Coding · 安全</span>
+    </div>
+    <div class="src" data-page-node-id="URID5lVmAnEsutPoXGgUQY">来源：mcpindex 周度合约 diff（18,907 工具 / 2,887 servers）· AGI Hunt 2026-09-08</div>
+    <div class="body" data-page-node-id="MbIsZYGltNyPaD3lumCBKL">
+      <p data-page-node-id="f8LOZPzfHwFA00fG8d0vlg">mcpindex 对公开 MCP server 的<strong data-page-node-id="PhM8BBuganv6ATYERSbnCF">声明式合约</strong>做每日快照并对比，本周数字相当吓人：</p>
+      <table data-page-node-id="u6QI8ytFLHYVwpCHKLITRF">
+        <tr data-page-node-id="0S7iEG6XRLnhnQtg8jFYj0"><th data-page-node-id="bK4asWvAy2mtUtBB5AItqk">指标</th><th data-page-node-id="lFVNA8ov2HXxVMUeEZ9unt">数量</th><th data-page-node-id="xWGAD2Xm52amV29SpVnK1S">说明</th></tr>
+        <tr data-page-node-id="BgaceYuOvWMwMapfOF0NxY"><td data-page-node-id="lqSXrfPcLFEGUlQapxZN4U">合约发生变更的工具</td><td data-page-node-id="WLZ2jLme6lBIQc1XmTURlv"><strong data-page-node-id="fYEeVp8i0gCuNY45omqIED">18,907</strong></td><td data-page-node-id="jDbJNRsCd30PcWyoTw3xxf">覆盖 2,887 个 server</td></tr>
+        <tr data-page-node-id="I5vqmYHL3YH4xqVVJWrMrE"><td data-page-node-id="0AQrhd2vVywZQvrtKpBZEq">其中<strong data-page-node-id="CbO76qx4yHnptWLF9rIOwx">安全相关</strong>变更</td><td data-page-node-id="gxiC1tafp4JyigxHF2gCS9"><strong data-page-node-id="cbrtujkyxj2h2ybjOn63J4">12,257</strong></td><td data-page-node-id="aSW6EV8F5KwaBCM1DaJlD2">改变了工具能做什么</td></tr>
+        <tr data-page-node-id="muUzmHMCGYnmoAME8wYCym"><td data-page-node-id="JmpYmKL2WAvEJSIAs9EhiZ"><strong data-page-node-id="j6omWI5jYI6liuXSnDRAMz">只读 → 破坏性</strong>翻转</td><td data-page-node-id="L68qbZmzY7G7FfFvDrXT4V"><strong data-page-node-id="QhitbXkES9IbN6ILqpQKG2">601</strong></td><td data-page-node-id="4W9QKj9q3PahlD48TAwE9W">分布在 129 个 server，单个最多占 11%</td></tr>
+        <tr data-page-node-id="kLOLB6yuZ7yWof7xmKznwL"><td data-page-node-id="cf9of2YQLPh5ia5EwUhk7A">新增必填参数</td><td data-page-node-id="o35U7qJk0AxReM7ZvH3RRl">812（上周 405）</td><td data-page-node-id="CTaaCIcFd7QFpgfK8IU8DC">其中 207 来自单一 server，<strong data-page-node-id="nVnWYaJJtecNa90OxMj6wy">179 个版本号字符串没变</strong></td></tr>
+        <tr data-page-node-id="wBKJk8d58MENy8SV4lTKyA"><td data-page-node-id="zAHRfxLChto3jHAqUwSH82">被移除的参数</td><td data-page-node-id="WRrCBN7eJoW7yelDPUuAYK">1,146</td><td data-page-node-id="kqtAYIyffEZhURhI0BRKEQ">agent 可能还在发，直接失败或落到未预期的默认值</td></tr>
+      </table>
+      <p data-page-node-id="NYICuRmqQPSqe0elijhDWC"><strong data-page-node-id="u2kgnGhit9h9vt1Ewd9jzv">核心风险</strong>：周五接好的 server，周六 agent 还用周五的参数在调——失败或者拿到一个你没选过的默认值，而<strong data-page-node-id="y10rBe36KgdP7K0ymX8nsC">版本号一模一样</strong>。这就是"rug pull"的工程版本。</p>
+      <p data-page-node-id="Gscuz7aPKRydWjo2MKF1gm">同一批报道还提到另一条：<strong data-page-node-id="oGfzIwgXpJAkARl5ZE6gh3">LLM 网关成了更大的爆炸半径</strong>。LiteLLM / Bifrost 这类代理把各家 provider 的 key 和 admin 面板、工具服务器放在同一个进程里——一旦被拿下，交出去的是<strong data-page-node-id="2mez5SRkfJAjXp5U0n5cAr">钥匙 + 一个能写库、能开 YOLO 模式的 agent</strong>。今年已经有一个广泛使用的网关包在 PyPI 上被投毒并从 CI 里抽走 key。</p>
+      <div class="why" data-page-node-id="m9VYqMdyFxaAGduOsxTkbI">
+        <b data-page-node-id="7oZerJu0yzTQbvKbfYizw8">为什么值得看：</b>你这边正在用 agent-mail 等多个 MCP，这条是<strong data-page-node-id="dkXGJA78xzWW1Fcazangcd">直接风险提示</strong>，不是行业花边。三个可落地的动作：① 按 digest 而不是名字 pin MCP server；② 标注是自报的、不可信，<strong data-page-node-id="8LCerSh1JX5HrBsp3tA4bT">read-only 标注不等于没有写路径</strong>；③ 别把 provider key 和 agent 运行时放同一个进程。附一条自检标准（来自 cohorte 的清单）："我们review过这个 server"是感觉，<strong data-page-node-id="LspgJoanFmyMb6FxRqyc2a">"描述哈希变了就拒绝加载"才是能拿给审计看的事实</strong>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4" data-page-node-id="txMzyveCNgM3uXcjx3Ae1P">
+    <div class="card-head" data-page-node-id="HCo5gA2u8TRlaDC2TypEgI">
+      <div class="num" data-page-node-id="D7m4ebeVDbRTRulxgDhNMn">4</div>
+      <h2 data-page-node-id="C1d8LgYNITSe22ydsutaJi">宇树发布人形机器人全自主搏击视频：UnifoLM-X2-1.0 世界-动作大模型首次跑通动态对抗</h2>
+      <span class="tag t-emb" data-page-node-id="ec4Zrz6oeT6VJhCKFHYgFd">具身智能</span>
+    </div>
+    <div class="src" data-page-node-id="VH4pmRq6KYJoJGBD68JE55">来源：宇树科技官方视频 / 新华网 · 2026-09-07</div>
+    <div class="body" data-page-node-id="rtpMv9ZVQG0GUCkizxPyok">
+      <p data-page-node-id="20lQFhSaap1Yq6KoFViQ7A">9 月 7 日宇树发布视频，展示人形机器人<strong data-page-node-id="saK8R2xDlUgq9cNmdjReU4">全自主搏击</strong>能力——注意是"全自主"，不是遥控、不是预设动作序列。</p>
+      <p data-page-node-id="HroFylngz8e316jGntxz8f">背后是 <strong data-page-node-id="nyJphgyRh4ilPkVPQWrZHX">UnifoLM-X2-1.0 世界-动作大模型</strong>，官方称突破了<strong data-page-node-id="OX2zZZTb5OqrFxQOyS5Tjp">瞬时规划、决策、动态交互执行</strong>三个瓶颈，验证了"世界模型驱动人形机器人大规模落地部署"的基础可行性。</p>
+      <p data-page-node-id="CW5zfdl3sxXJItPgZ7vktN">搏击这个选题本身有讲究：它同时要求毫秒级的<strong data-page-node-id="4wFXHU1Gv1nye4V955RB0Z">感知—预测—决策—执行</strong>闭环（对手会变招）、强对抗下的<strong data-page-node-id="hTDbycdsA1HiYR19QpR7DM">动态平衡</strong>、以及非结构化接触下的力控。相比跑步、跳远这类可预规划的动作，它更接近"真实物理交互"的下限要求。</p>
+      <div class="why" data-page-node-id="NWjBTguj4vakfnQK6QCluS">
+        <b data-page-node-id="3d3TYHiyO6pX44HHr98O4p">为什么值得看：</b>这是"世界模型"从<strong data-page-node-id="IAjBEh8gjaDuYsDDZ198Ss">仿真叙事走向真机验证</strong>的一个硬指标。此前行业痛点正如赵沁平院士所指：虚拟仿真难以复刻真实世界的物体形变、触觉反馈与环境扰动，必须打通"<strong data-page-node-id="sgwxhGXBGOk5KHbmutrAtW">虚拟训练—真机部署—数据回传—迭代优化</strong>"闭环。搏击演示说明这条闭环至少在一个高动态场景里跑通了。当然，<strong data-page-node-id="5czExUx8uSo4DCeiBTGyDN">演示 ≠ 量产可靠性</strong>——99% 成功率意味着出门 100 次仍有 1 次掉链子，这仍是全行业没过的坎。
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5" data-page-node-id="r40LJEU0vXva7fc7NYoCZj">
+    <div class="card-head" data-page-node-id="oaqzQu4JApQHlZeAeZUPVp">
+      <div class="num" data-page-node-id="vnejPPVBAfUG7v9LqwdnPM">5</div>
+      <h2 data-page-node-id="wFDUtf4urj8TBxFIT8zrid">人形机器人国标 GB/T 47245-2026 正式实施，优必选首批工业交付定档 9 月 16 日</h2>
+      <span class="tag t-emb" data-page-node-id="ckVrd52Ur1XjFQqxvvb8Fm">具身智能</span>
+    </div>
+    <div class="src" data-page-node-id="Zo28pfK9d5bHDyqEyfX4gS">来源：行业周报（2026-09-08 第 10 期）/ 证券时报 / 科技日报 · 综合</div>
+    <div class="body" data-page-node-id="LtVMGpC6juusUXnAINrjg4">
+      <p data-page-node-id="fJLyBcCaF5uME2wOBhZ11U"><strong data-page-node-id="M4lxDCwrJFHaV08l1uqgfA">9 月 1 日，人形机器人国家标准 GB/T 47245-2026 正式实施</strong>，行业从"无标可依"进入规范化阶段。紧接着 <strong data-page-node-id="fUmzcVSEsJUTi9ucRtVaEj">优必选首批工业场景交付定于 9 月 16 日</strong>。</p>
+      <p data-page-node-id="sldboITDBPaX26w2FrWZyB">行业观察给了一个很到位的概括：机器人产业正从"<strong data-page-node-id="DCU8D1OtbfAuwQBhnTWQGS">展台逻辑</strong>"转向"<strong data-page-node-id="eMUlKHbG5TPqkI9uivFb6p">现场逻辑</strong>"——</p>
+      <table data-page-node-id="7vEhXHeVC5mTjE78hvje44">
+        <tr data-page-node-id="vaehLPPwGFgBGpmIRDODr0"><th data-page-node-id="ocASFL7mMqQp35tyk363oE">维度</th><th data-page-node-id="8JVzWBCblezQbBAEQNdAdX">当前状态</th></tr>
+        <tr data-page-node-id="gz2ifPbjIPn0WqkdIhmvHC"><td data-page-node-id="DvHWfehsbf3DF32Z1Dulgr">标准</td><td data-page-node-id="RqX27nj812uZD7Xj0yIW8x">GB/T 47245-2026 已于 9/1 落地</td></tr>
+        <tr data-page-node-id="04V2tdayX37WCNNNamG1zz"><td data-page-node-id="ULFlzpogc4A5tly2pV3MJA">订单</td><td data-page-node-id="O5wOEeZs4U7KQHG3iRqqWD">优必选 U1 系列全渠道订单破 <strong data-page-node-id="1qApuzsTyhTlNU0BqEj4vZ">13,361 台</strong>；现代 Atlas 已获 2.5 万台订单，2028 起美国年产 3 万台</td></tr>
+        <tr data-page-node-id="cZE7O1f24Llot8BcF1ObAm"><td data-page-node-id="rm1JshlLpOaLiZy5kcRq8O">产能</td><td data-page-node-id="0ecWOYqFuzh1LwxZvhgUym">敏实 × AGIBOT 在塞尔维亚启用欧洲首条人形机器人生产量（首期 2000 万欧元），中国供应链开启欧洲本地化</td></tr>
+        <tr data-page-node-id="e2gK99G5gtu0u2KPecIZqU"><td data-page-node-id="qi78DJtE2deJhfC7EcEXJB">算力</td><td data-page-node-id="N1ipHLQXoamQcbTOib9INh">Figure AI 与 Nscale 签初始 <strong data-page-node-id="gIE5xgpJf7qO1aROYUTqSK">35 亿美元</strong>计算协议，部署最高 10 万颗 NVIDIA Vera Rubin GPU 训练 Helix</td></tr>
+        <tr data-page-node-id="985fAyUqK8DSY7TJQMDeGG"><td data-page-node-id="TorZmASw5nltN4CqQ6zZxb">隐忧</td><td data-page-node-id="s17r7JCG7Xwdz30LEYUICH">宇树超 70% 收入来自科研教育、工业应用仅 9%，商业化结构仍早期</td></tr>
+      </table>
+      <p data-page-node-id="dyzsuaIsGQdTqnOjX4qXTK"><strong data-page-node-id="lyqrUgKBx0CDF7Z4Mrtvhl">9 月观察窗口</strong>：杭州 AI 机器人展（9/9）、宁波智博会（9/11–13，设"具身智能进工厂"展区）、优必选首批交付（9/16）、合肥世界制造业大会（9/20）。</p>
+      <div class="why" data-page-node-id="GgeSQKbIsHClQDHhZGhdNT">
+        <b data-page-node-id="AuOi3HKXUn0ojyld35aEcq">为什么值得看：</b>今年被叫做"规模化应用元年"，但真正能证伪的只有交付数据。<strong data-page-node-id="EkSaWwtVnAVUyKBABMoiFG">估值锚点已经从"概念与 Demo"切换到"量产时间表 + 在手订单"</strong>——给不出明确交付节点的企业拿不到大钱。9 月是第一个大考月：标准有了、订单有了，剩下的问题是<strong data-page-node-id="pCxEUeb0mUkk7mqYxqHaXN">产能和一致性跟不跟得上</strong>。判断一家具身智能公司，现在最该问的三个问题是：标准符合了吗？订单是真是假？产能爬坡曲线长什么样？
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="extra" data-page-node-id="h6i4RSiyzdevvI3UEPKVmi">顺带一提</div>
+  <div class="mini" data-page-node-id="xfbh25KkAY8vSEHLmRBXSP">
+    <div class="m emb" data-page-node-id="KFUYleR2lQWhKO1QJhf32K">
+      <h3 data-page-node-id="EuteEMnausooEsoDx95GFL">Skild AI 发布 S1：一条视频提示，执行 10 分钟未见任务</h3>
+      <p data-page-node-id="2XMH5ml8WaTdPhAeYosFow">零任务后训练——仅凭一段视频就能执行训练中从未见过的长序列操作任务，指向"视频即任务描述"的新范式。</p>
+    </div>
+    <div class="m code" data-page-node-id="CA7CtxCU0ZoBhxlxEhw1pL">
+      <h3 data-page-node-id="kPdvhsNHnWBYx1CHWGDkYm">网易有道：编程占办公 Agent 任务量 38.5%</h3>
+      <p data-page-node-id="k7IZBPnfnkBcfMBzKL31b8">基于 LobsterAI 超 100 万用户数据：编程/代码占比约为文档写作的 4 倍；前 5% 重度用户独占 53.5% 算力；平均单任务规模每 3 个月翻一倍；DeepSeek 系列调用份额超 85.8%。</p>
+    </div>
+    <div class="m emb" data-page-node-id="IIIt1bsbi2mYslaQpBlkhE">
+      <h3 data-page-node-id="VJqPxMn3K4KnVegSGzgxNc">寰宇心生：注册 4 天拿种子轮，World Arena 2.0 双赛道进前三</h3>
+      <p data-page-node-id="wCPFsDebIyG6QQ8LPdHaWG">上海神经认知世界模型公司，9/3 注册、9/7 官宣数千万种子轮（元生资本）。仿生人脑"快慢规划"架构在 IROS 2026 World Arena 2.0 的 Track 1 前三、Track 2 第二。CEO 任云帆为 99 年生、同济长聘副教授。</p>
+    </div>
+    <div class="m emb" data-page-node-id="uAqk5IVkAHmNJFk7o7R8H7">
+      <h3 data-page-node-id="mnedrwbswqIe0DytF3eZ2u">智象 HiDream-O1-Embodied 登顶 RoboColiseum</h3>
+      <p data-page-node-id="pR8UHJcUpxIGgDl6JQc1qX">在具身智能评测平台 RoboColiseum 的"扰动适应"子榜以平均分 0.692 位列第一。同期知行具身发布千赫兹视触觉传感器 Imprint X（延迟 1ms、帧率 &gt;1000Hz），已进入多家 3C 产线验证。</p>
+    </div>
+  </div>
+
+  <div class="foot" data-page-node-id="ox6BcZ6wWYlhJKHMcWvOHG">
+    <div>AI 日报 · 2026-09-08 · 北京时间 09:10</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-07.html">← 2026-09-07</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-09.html">2026-09-09 →</a></div>
+</body>
+</html>

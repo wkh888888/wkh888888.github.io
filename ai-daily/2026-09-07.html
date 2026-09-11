@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="ZpejmepIA9df3P4KGJZ4Ei">
+<head data-page-node-id="SNMcKPGH3buDxHE6AfbZ0Y">
+<meta charset="UTF-8" data-page-node-id="fp8nRQXQJgGhWqi09jp2st">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="jQkdWatBpiYPfom5u8ky3T">
+<title>AI 日报 · 2026-09-07 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b7326b;
+}
+.why{
+  margin-top:13px;background:#fafbfc;border:1px solid #eceef1;border-radius:8px;padding:12px 14px;
+}
+.why .lbl{
+  font-size:11.5px;font-weight:700;color:#6b7683;letter-spacing:.6px;
+  margin-bottom:7px;display:block;
+}
+.why ul{list-style:none;padding:0}
+.why li{
+  font-size:13.4px;color:#39414b;padding-left:15px;position:relative;margin-bottom:6px;
+}
+.why li:last-child{margin-bottom:0}
+.why li::before{content:"▸";position:absolute;left:0;color:#2b6cb0;font-size:11px;top:1px}
+.embodied .why li::before{color:#2f855a}
+.kv{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.kv span{
+  font-size:12px;background:#f0f2f5;color:#4a5561;padding:3px 9px;
+  border-radius:5px;font-variant-numeric:tabular-nums;
+}
+.kv span b{color:#11181f;font-weight:650}
+
+/* Aside */
+.aside{
+  background:#fffbea;border:1px solid #f0e2b0;border-radius:12px;padding:18px 22px;margin-top:26px;
+}
+.aside h3{font-size:14.5px;font-weight:700;color:#7a5c10;margin-bottom:11px}
+.aside ul{list-style:none}
+.aside li{
+  font-size:13.3px;color:#4a4230;padding-left:14px;position:relative;margin-bottom:9px;
+}
+.aside li:last-child{margin-bottom:0}
+.aside li::before{content:"·";position:absolute;left:2px;font-weight:700;color:#b79229}
+.aside li b{color:#6b4f0d}
+
+footer{
+  text-align:center;font-size:12px;color:#98a1ad;margin-top:34px;
+  padding-top:18px;border-top:1px solid #e4e7eb;
+}
+@media(max-width:640px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 17px}
+  .src{padding-left:0}
+  .card h2{font-size:16px}
+}
+</style>
+</head>
+<body data-page-node-id="bwYn4OBsT5AivoPlsXjx2J">
+
+<div class="hero" data-page-node-id="rJ7DjaDckxycZMOSXPWtYd">
+  <div class="wrap" data-page-node-id="5DkAwzrn1eyO9NtLXhSZa4">
+    <h1 data-page-node-id="OEGP0kSyWxtiWPVlQu1AMF">AI 日报 · 2026-09-07</h1>
+    <div class="sub" data-page-node-id="ZhAeOGFqXMTPSVGvIQ0bMC">侧重 AI Coding 与具身智能</div>
+    <div class="hero-meta" data-page-node-id="otwBOy5G1UldX6KKoT5Okw">
+      <span class="chip" data-page-node-id="v8wA448sRdi5XLpd0pSmUM">5 条精选</span>
+      <span class="chip" data-page-node-id="t3BYT3Icf4kPtXqtsdbpmk">AI Coding ×3</span>
+      <span class="chip" data-page-node-id="XLyDfcsoZbm48IwK8l3ZzX">具身智能 ×2</span>
+      <span class="chip" data-page-node-id="GAuLKlIZxq4rQf8kFOXirV">已过滤上周旧闻</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" data-page-node-id="9gcgE5CGK5qTHinSU1t8Vs">
+  <div class="nav-inner" data-page-node-id="Kj3DF8gVY9m8eDPXiBXMgd">
+    <a href="#n1" data-page-node-id="C7qa47OdGAuzVA8fjjUzYc">1 OpenAI Skills</a>
+    <a href="#n2" data-page-node-id="K0FZ0AyeLjBYU7sgOGyNAq">2 Project Zenith</a>
+    <a href="#n3" data-page-node-id="p6E8GFFDwJkicGR5UbUhmD">3 OpenClaw 2.0</a>
+    <a href="#n4" data-page-node-id="CRhNwmcA9BTZJ6k7F6FTdB">4 具身出货/融资</a>
+    <a href="#n5" data-page-node-id="QJLgaw1mrg92itzSnDvCeh">5 实用三关</a>
+    <a href="#aside" data-page-node-id="v57w8m2UHXDYM0mujnOm4o">顺带一提</a>
+  </div>
+</nav>
+
+<div class="wrap" data-page-node-id="7uLf8FCljKG0cZG8BtuWRD">
+
+  <div class="sec-title" data-page-node-id="AeOXOumZOgJH7334qDdUKh">AI CODING</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1" data-page-node-id="YjB8bV7YwGqquW7S4EEB7W">
+    <div class="card-head" data-page-node-id="DXFCfe8KUcPsSj9KfYmZvd">
+      <div class="num" data-page-node-id="DTxwbFvke6QP5hLUNYMH40">1</div>
+      <h2 data-page-node-id="ige8keDGF71hc8HvfLccN4">OpenAI 上线官方 Skills Catalog，大厂首次给 Agent Skills 定标准</h2>
+      <span class="tag t-code" data-page-node-id="7x6lCO8PXdiRktXY7JkRIG">GitHub Trending</span>
+    </div>
+    <div class="src" data-page-node-id="Ot8nP62evjZyjmNCAPPCUY">openai/skills · 2026-09-07 登上 GitHub Trending · 25,607 stars</div>
+    <div class="body" data-page-node-id="UO3Fnfb1RsY6OrymZAInuO">
+      <p data-page-node-id="QCu9Co1gByuiDoUXDbe3dC">OpenAI 开源了 <code data-page-node-id="No2JonPIlaeGEzGN4WjqIF">openai/skills</code> —— 一套「Agent Skills」开放标准 + 技能目录，供 Codex 打包、分发、安装可复用能力。每个 skill 是一个文件夹：SKILL.md（名称/用途/执行流）+ 可选脚本与参考文件，Codex 把 skill 的<strong data-page-node-id="CIH0nrHrTvAc4XL43ufvLM">名称和描述预加载进 system prompt</strong>，运行时自主选择是否调用。</p>
+      <p data-page-node-id="Gz6cf0M27PWWMmZINgbzUO">目录分三层：<code data-page-node-id="hSdEJz2rIm9g43zmKS3Jwh">.system</code>（5 个随 Codex 自动安装，含 skill-creator / skill-installer / plugin-creator）、<code data-page-node-id="RAoCADm7pkgSA7VMUj5nUC">.curated</code>（39 个，用 <code data-page-node-id="ffND8HaJOVxcQobwSoJ34X">$skill-installer</code> 按名安装，如 gh-fix-ci、gh-address-comments、playwright）、<code data-page-node-id="eU54CaMjeYLUZmbybLBql9">.experimental</code>。安装位置支持全局 <code data-page-node-id="vmUEOmRQVy91VFOFwqg4Z8">~/.codex/skills/</code> 与项目级 <code data-page-node-id="wmgQAPrD34UZhfEsUOJDqD">.codex/skills/</code> 或 <code data-page-node-id="bROGq5FX46jmd3i2f2D3LB">.agents/skills/</code>。</p>
+      <div class="kv" data-page-node-id="SBpNd2dON3swknAu2LKSHl">
+        <span data-page-node-id="PrjLNnIwzhKetpoZaMESLg">官方 <b data-page-node-id="CylWkE2bi9ApsnpHqNShyd">25.6k</b> stars</span>
+        <span data-page-node-id="EznvL51OBn0oE0gZbJ8lNm">社区 mattpocock/skills <b data-page-node-id="i3aXC9rXLL9ciX7tHGSX4Z">240k</b> stars</span>
+        <span data-page-node-id="61Bq3oshQcpBXeinkxuSI7"> curated <b data-page-node-id="ncXCcEcpJCSHMzTjJnCqdB">39</b> 个</span>
+      </div>
+    </div>
+    <div class="why" data-page-node-id="k5ENPZM3wjNP8d3IsJOQwR">
+      <span class="lbl" data-page-node-id="WvVojvkwxEAFGR3jTUoPbN">值得关注</span>
+      <ul data-page-node-id="N8GaDjJI9BKuOJdaR39660">
+        <li data-page-node-id="kN7yCXQengNDAtWunoeZM2">OpenAI 等于官方承认：<strong data-page-node-id="GHtK48UaNyXIVyP72im76q">光有模型能力不够</strong>，最佳实践必须被编码成可复用格式 —— skills 从「社区玩法」升级成「平台一等公民」。</li>
+        <li data-page-node-id="JW7KiEVh1Lsfs71jCbLEpB">但社区派 star 数是官方的近 10 倍，<strong data-page-node-id="8UghBu6fROjWya6aGv4BYt">标准分裂风险实打实</strong>：官方目录与 Codex 强绑定，社区偏好平台无关格式。未来 3-6 个月是收敛期。</li>
+        <li data-page-node-id="ZpUTIYRQLUKv6sp3VPosFW"><strong data-page-node-id="RySbnswcumvNHN1douqsie">对你的直接影响</strong>：你本地维护的 skill 跨 <code data-page-node-id="Kn2ezIVo2KTzhOY0OxbLNs">.agents</code> / <code data-page-node-id="XqcjIhFGMcn4sGI20ui4mG">.claude</code> / <code data-page-node-id="Zx6D6BS2Yipca5oguEPIVV">.codex</code> / <code data-page-node-id="Gx3STZndCuQp1NwRJ2qPNT">.workbuddy</code> 等多宿主软链，若格式收敛就是一次批量迁移，值得提前盯住 Codex 这套目录结构。</li>
+        <li data-page-node-id="o4gW7H48gHmizAcVg47uTh">实操提醒：每个 skill 都吃上下文窗口，<strong data-page-node-id="xrUxysssE4kyh8K05MNoaA">装太多会降低 agent 的选择准确率</strong>。skill 数量已经堆到几十个量级的，该做一次去重瘦身了。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2" data-page-node-id="dFj5gfAxriH2sDCz7eCPfs">
+    <div class="card-head" data-page-node-id="VNBGzQq5tE63ssFgMTDM89">
+      <div class="num" data-page-node-id="pER6v75eqCPYtjPb4cM7gD">2</div>
+      <h2 data-page-node-id="bkaCT8eRbegDXOn1tOKkWM">微软 Project Zenith：Windows 11 变身「开箱即用的本地 AI 开发机」</h2>
+      <span class="tag t-code" data-page-node-id="ReJCJmerNFz4lzGiXmteOT">9/4 发布</span>
+    </div>
+    <div class="src" data-page-node-id="y2O4TbXqUY2jmM53AfhSrs">Windows Developer Blog 2026-09-04 · 首批 AMD Ryzen AI Halo（最高 128GB LPDDR5x）</div>
+    <div class="body" data-page-node-id="3AMoplvZYO2X1ctRt6U3YJ">
+      <p data-page-node-id="xeGGjwdzXV9Lv5C6nyU60D">微软 9 月 4 日发布 Project Zenith —— 不是新的 Windows 版本，而是<strong data-page-node-id="nq4XcWxtAX0v1aM7qBypEy">面向高性能开发机的预配置 Windows 11 体验</strong>。硬件门槛：<strong data-page-node-id="WI11gjjHiVLz0vq8apbYZf">64GB+ 统一内存 + 250GB/s+ 内存带宽</strong>，官方说法是这套配置可以<strong data-page-node-id="dFcUykyIhmPEoYHZVgose7">本地、不计量地跑 30B+ 参数模型</strong>。</p>
+      <p data-page-node-id="S6lOOjFzsMQ4mg5zYDItmM">预装链路：VS Code、GitHub Copilot、Windows Terminal、PowerToys、WinAppCLI、PowerShell 7、Git / GitHub CLI / Azure CLI、Python 3.14+、Node.js 24+、.NET 10、WSL 2 + Ubuntu。系统默认项也按开发者习惯改过 —— 资源管理器默认显示扩展名/隐藏文件/完整路径/详细信息窗格并开启长路径，关掉最近使用、同步提示、开始菜单推荐和账户通知。</p>
+      <p data-page-node-id="t64J25JcvGjkMB9bFEgWMs">Agent 安全侧：OS 级身份认证 + <strong data-page-node-id="gzDK8Bcle68KeBITnIKvWs">MXC（Microsoft Execution Containers）隔离容器</strong>，可声明式限制 agent 能访问的文件与网络资源，边界在运行时强制生效；配合 Agent 365 与 Defender / Entra / Intune / Purview 打通。</p>
+      <div class="kv" data-page-node-id="1lnpGLTp4OyMW632pPPjR1">
+        <span data-page-node-id="Ha1unBGIYZpzRBiCd3i5a3">内存 <b data-page-node-id="kH78hKiZVF4rIpXc0vujgP">≥64GB</b></span>
+        <span data-page-node-id="NjwZtNXyiK4qFqscBg5nlU">带宽 <b data-page-node-id="JHbkrb69drT8PIT35tKLG9">≥250GB/s</b></span>
+        <span data-page-node-id="Edx29fSzCspD0mobXEOYvD">本地模型 <b data-page-node-id="ocZXuaDd5lJUS8SfuB6Olu">30B+</b></span>
+        <span data-page-node-id="NOZsV1NeC2Al5NTYwwbQ5C">首批平台 <b data-page-node-id="gHfLc5QV0aLrNCjlhqbRxi">Ryzen AI Halo</b></span>
+      </div>
+    </div>
+    <div class="why" data-page-node-id="k0aZdjk7xpP8htdc1blRYX">
+      <span class="lbl" data-page-node-id="NFK6dZHK9RKLUXBEYWP4Wz">值得关注</span>
+      <ul data-page-node-id="Bgez1hZBAXwqE8BixGJ5y0">
+        <li data-page-node-id="weKayNRVHKXxoOABuzDSF3">微软给出了明确的 token 经济学分层：<strong data-page-node-id="H32dfdQSz0hDefg7zOLGIJ">frontier 模型留给 frontier 问题，其余全部本地跑</strong>。这不是口号，是被写进 OS 默认配置的。</li>
+        <li data-page-node-id="1yKh5bYbyxuuudC6yl2gYv">MXC 把「agent 能碰什么」变成<strong data-page-node-id="4LvmJy2KIwhWp06SMDeqht">运行时强制的声明式边界</strong>，而不是靠 prompt 自觉 —— 这是「把 coding agent 推上生产」目前缺的那一块，比又一个模型发布重要。</li>
+        <li data-page-node-id="Xyq6AKXQVjHt4BdC7TEHEn">代价也很直白：64GB 统一内存门槛意味着<strong data-page-node-id="u4cXxeFXT969Ip53E9Z30E">短期跟你手上的机器基本无关</strong>，现在只是「买新机才有的体验」，普及要等 OEM 铺货。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3" data-page-node-id="j0vdcxyHGiQpPCDEdTArde">
+    <div class="card-head" data-page-node-id="U8pJzknhSUmTjQmsa9iS4I">
+      <div class="num" data-page-node-id="cOjF8fgVi5HPfyTgH4UxbJ">3</div>
+      <h2 data-page-node-id="pR8PpNuvj4jZWPS79g4J1g">OpenClaw 2.0：AI 编程从「单人 Copilot」转向「团队共享 Agent」</h2>
+      <span class="tag t-code" data-page-node-id="mL1lK1HtF08OuWRBUpi8T0">v2026.8.1</span>
+    </div>
+    <div class="src" data-page-node-id="ewl5nuf1qiP9GdIKEEfZ4h">上周末发布 · 933 贡献者 / 16,000+ 合并 PR（约占项目历史 PR 一半）</div>
+    <div class="body" data-page-node-id="hb5Uf2NMiolSKyGYQicamo">
+      <p data-page-node-id="1y23X190zYUlcjOlKf6wMh">OpenClaw 发布 v2026.8.1，官方定性为「史上最大更新」。核心变化是<strong data-page-node-id="7h1jYtZSwCi55Vsuv48xLs">共享云会话</strong>：agent session 不再随发起人的笔记本关机而消失，可以多人接入、交接、继续跑。归属模型分三层 —— 不可变的 Creator、可转让的 Owner、Participants 历史。</p>
+      <p data-page-node-id="ulhJahFWZawakpx7XhbAvH">权限侧：基于角色的审批流、命令参数可限定到具体参数与工作目录、可校验脚本是否与审阅时签字的版本一致、越权需管理员批准。浏览器 UI 重建，把对话/文件/审批/配置/实时 agent 活动收进一个界面。安装器会自动探测机器上已有的 ChatGPT / Claude 订阅、API key、本地模型（Ollama / LM Studio）。</p>
+      <div class="kv" data-page-node-id="gV49gVFMVZ4NZqplXXWsGa">
+        <span data-page-node-id="VrZnbO9p3YWpuKCFUbtdj9">贡献者 <b data-page-node-id="EDHtXZ9biAFUCvKEfm7lJO">933</b></span>
+        <span data-page-node-id="BE3HWogpjwSahAYcf3TApm">合并 PR <b data-page-node-id="lTqVqCGH7gzuzBRVLaK7Mh">&gt;16,000</b></span>
+        <span data-page-node-id="lfcWz80zic3bOD3crzRzGD">周新增用户 <b data-page-node-id="F8R2Z01EfQVp3vwwxDTto1">450 万</b></span>
+        <span data-page-node-id="X8IQlgEhK0Bj4s6ykUPfgV">单 agent 被攻陷 <b data-page-node-id="xEAdCxp5TBVLRWsTU8Bm2V">0.24</b> → 7 agent <b data-page-node-id="VSWinpTP6FkA1QAvVKcZvb">0.86</b></span>
+      </div>
+    </div>
+    <div class="why" data-page-node-id="zrnVIo19esGyKzlyvIC7Px">
+      <span class="lbl" data-page-node-id="xuu0GGExkOwCwCXrZITqRy">值得关注</span>
+      <ul data-page-node-id="8mxyw8TfmiCdQjRRofNbF7">
+        <li data-page-node-id="zDCt4sXSGO5RuEWqiaD07x">竞争焦点变了：不再是「谁单点写码快」，而是<strong data-page-node-id="j79LE5oNOPkzTs1JtHZCAC">谁能管理一次完整变更</strong> —— 审批、交接、审计这套 scaffolding 才是企业采购单上的东西。</li>
+        <li data-page-node-id="Nx4E3w9HzPIYzTwocHKRvf">那组概率数据值得抄下来：<strong data-page-node-id="PooxU2Led7Qa5xMxtjzhF8">agent 数量 × 权限半径 = 风险乘数</strong>，1 个 agent 0.24，7 个就到 0.86。给自己搭多 agent 流水线时别只看吞吐。</li>
+        <li data-page-node-id="EEKn46nzleUXo4fvKTMEuB"><strong data-page-node-id="aRIvCC4Dy2xKDRi9InvMNB">你本地装了 OpenClaw</strong>：2.0 的安装器会主动探测已有订阅和 key，升级前建议先备份 gateway 配置 —— 社区已反馈有迁移失败、gateway 损坏、认证报错的情况。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-title" data-page-node-id="upFQKB0E9sgajGjifCU1W8">具身智能</div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4" data-page-node-id="pGCeA54W8cwalXVH9X5LXT">
+    <div class="card-head" data-page-node-id="wbXpLs5jwFdIAHlOBbeKpH">
+      <div class="num" data-page-node-id="AXwTArXJdtzYoEvCeZ9EHO">4</div>
+      <h2 data-page-node-id="kNiAsGUBZcizsaZCLQ6MHE">上半年出货 4 万台、融资 935 亿，但「超级时刻」的时间表严重分裂</h2>
+      <span class="tag t-emb" data-page-node-id="njj68zTcCOlS9EloJ4DR8K">产业数据</span>
+    </div>
+    <div class="src" data-page-node-id="awLWbw5GwmvJOcVqNZgvB7">大湾区经济网 / 虎嗅 / 中财网 · 2026-09-07</div>
+    <div class="body" data-page-node-id="uoYNgixwpMUV3O7mF6qNAc">
+      <p data-page-node-id="GKWGCsXmy2hRdr5KaHH6IH">2026 上半年国内人形机器人<strong data-page-node-id="IHcA6wENk6B2ZoFvH4YRcS">出货超 4 万台、占全球 97%</strong>；具身智能赛道融资 <strong data-page-node-id="QQaqsosEFMX9fmKVShVVsi">935 亿元、322 起，同比 5 倍</strong>，半年规模已超 2025 全年。同期宇树登陆科创板<strong data-page-node-id="qJZt8cyRmcY2XqSBaktXZ1">开盘暴涨 629%，市值一度 4449 亿元</strong>。但虎嗅的数据：上半年 22 家独角兽中，<strong data-page-node-id="LHiOWoZugB5BokEfH41UFj">95% 没有持续正向现金流</strong>。</p>
+      <p data-page-node-id="Eypdvt7eAW5WBwGpkZKtoy">时间表分歧极大 —— 王兴兴：快则两三年、慢则五到十年；王鹤：当前基础模型约等于数字世界的 <strong data-page-node-id="rFkoo0IXqd7wbe1VbCV1jJ">GPT-2</strong>，2028 年到 GPT-3.5/4 水平；特斯拉 Optimus 三代 7 月底量产，2026 目标 5-10 万台；优必选 2026 产能目标 1 万台。</p>
+      <div class="kv" data-page-node-id="Al4K6jII5puWSfj87LTe5Y">
+        <span data-page-node-id="tR517mT5vmaHlERcWcCauJ">上半年出货 <b data-page-node-id="jNzdwjhFO9snICkpSL8CgJ">4 万台</b>（全球 97%）</span>
+        <span data-page-node-id="mrFo5Hla5VLmEApB3bqCkg">融资 <b data-page-node-id="aRWPmpAzYRF5hToDS5ySrh">935 亿</b>（+5×）</span>
+        <span data-page-node-id="aVNHf2uXnmepb90v1k71FP">独角兽 <b data-page-node-id="iXDtfWmvKYqAG7qqli4a3G">22 家</b> / 95% 无正向现金流</span>
+        <span data-page-node-id="mwK2KCxbxQIcNB5r2iCBE1">工业场景占比仅约 <b data-page-node-id="CWM0rqxIGnJNLF9K7Z1HtF">9%</b></span>
+      </div>
+    </div>
+    <div class="why" data-page-node-id="Fz8ZERE8Y63KqHtxdjXoq2">
+      <span class="lbl" data-page-node-id="xnaA1VAptAINXbWQBHurFd">值得关注</span>
+      <ul data-page-node-id="puDKPLcUZAvE1q239P1eHp">
+        <li data-page-node-id="Exxvx0ocQSyrhyXatus4VZ">出货和融资都是<strong data-page-node-id="mxrCBJ0G0WNioIM7gAGYWb">上半年的存量数字</strong>，真正的分歧全在「什么时候能真干活」。数字漂亮不代表闭环跑通。</li>
+        <li data-page-node-id="xifRdy7CT5GBAPARMJyamM">王兴兴给了一个<strong data-page-node-id="QG0a2MBqyF6RUDVSCbYuvA">可验证的定义</strong>：把一台机器人带进任意陌生环境，能按语音/文字指令完成约 80% 的任务 —— 比「ChatGPT 时刻」这类比喻有用得多，可以直接当跟踪指标用。</li>
+        <li data-page-node-id="hhGjkR03eRIvpixKR8ucZA">最扎眼的是场景结构：2025 年全球出货中，文娱商演 / 科研教育 / 数据采集 / 导览导购四类合计近 <strong data-page-node-id="JxYrX8sLOqrfvUTmVRZFM4">90%</strong>，<strong data-page-node-id="Bkva4M2XSZF8GlCJ3uEMHX">工业制造仅约 9%</strong>。机器人大多「被生产出来」，还没「进厂打工」。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5" data-page-node-id="xqphgw8tycrpBZv5dQ3o0u">
+    <div class="card-head" data-page-node-id="mxRYtk3zODBd2BRh8sdXgE">
+      <div class="num" data-page-node-id="WdeUBn7NuFTiP2qXjAvKsb">5</div>
+      <h2 data-page-node-id="uMzxE0K4nOt3vk2o7cq3IV">新华网：具身智能走向实用还要闯三关 —— 大脑不可靠、硬件拖后腿、量产难</h2>
+      <span class="tag t-emb" data-page-node-id="5qi4guk3PpIt52WdJ8Ly5X">官方口径</span>
+    </div>
+    <div class="src" data-page-node-id="tY0LkE7M0HHRvogioTyHRS">新华网 2026-09-07 · 央视《焦点访谈》2026-09-06 · 第二届世界人形机器人运动会</div>
+    <div class="body" data-page-node-id="5mUwcRJF2FP7dvcIX6vf18">
+      <p data-page-node-id="uPGa0D7EPc0m0LhJDAtKgy">新华网 9 月 7 日发文：今年国内人形机器人<strong data-page-node-id="iBc8ccPUUGlTnC1vk7PFpK">累计交付约 1.5 万台、市场规模 20 余亿元</strong>，被业内称为「规模化应用元年」，但三道坎没过：<strong data-page-node-id="QxL8vlCjw7W1XBXGl3vTE8">「大脑」不可靠、硬件拖后腿、大规模生产难</strong>。</p>
+      <p data-page-node-id="8Rkyy2iAMsiAvj9PIF1jfs">同期的第二届世界人形机器人运动会有硬成绩：北京人形机器人创新中心的「天工」在 100 米预赛跑出 <strong data-page-node-id="zrCHJ3ZvXq9lOO57pwn5XC">9 秒 39</strong>（已破博尔特 9.58 的人类纪录），决赛提升到 <strong data-page-node-id="7dbMSoXDzPBjMO1eUayZoY">8 秒 64</strong>。更关键的变化是 —— 去年多数参赛机器人靠遥控，<strong data-page-node-id="S1T9CM44rKlQcHEhRjhG18">今年大多实现了自主化</strong>，足球/网球/乒乓球这类需要实时预测轨迹的项目也有明显进步。</p>
+      <p data-page-node-id="J4aEamAYggUzUF5SUCw0HD">但央视和厂商自己的归因都很克制：成绩跃升<strong data-page-node-id="YglWMwJVxuPdyWROVGSQmo">不是某一项技术突破</strong>，而是算法、软件、硬件的全方位工程提升。焦点访谈的定调是「从技术展示转向价值创造」，工信部已启动实景实训专项行动，推动机器人进真实场景常态化应用。</p>
+      <div class="kv" data-page-node-id="jNs8GIIQIAuMjVk7froKNA">
+        <span data-page-node-id="Czsog0k3O2CPUbDUDWJ5lw">累计交付 <b data-page-node-id="Iu74T23elBoXKkC2nTnh1K">≈1.5 万台</b></span>
+        <span data-page-node-id="Pczy1Thvu9iQdmJ5E6A4qV">市场规模 <b data-page-node-id="b2S9ldEdbZo88LacpGcKga">20 余亿元</b></span>
+        <span data-page-node-id="bE5owXTAzEdmkb4y4zdFWT">天工 100m 决赛 <b data-page-node-id="lugCK9ctUnDPzZH2R7DNBY">8.64s</b></span>
+        <span data-page-node-id="GdejcxDMTv6Owb2LnOomtO">今年参赛 <b data-page-node-id="kDJxTgduFcPGwGwolHsBk1">多数已自主化</b></span>
+      </div>
+    </div>
+    <div class="why" data-page-node-id="hYtEi1cCxn36JophZNZUns">
+      <span class="lbl" data-page-node-id="Ewzwavizrt81ZSZxQvqPHo">值得关注</span>
+      <ul data-page-node-id="YOK6c3qSp7xFwVG15HXjkO">
+        <li data-page-node-id="21AY5l4gmHBEQOPredG1y9">8.64 秒是真实进步，但官方与厂商都承认这属于<strong data-page-node-id="J7HHVFam5HjuUDsdgRJ0xx">工程化红利而非范式突破</strong> —— 判断行业阶段时别把工程迭代误读成能力跃迁。</li>
+        <li data-page-node-id="7iBda1Hcq42hcqVO5NtCLX">「去年遥控 → 今年自主」这个对比，比跑分更能说明 VLA / 感知-控制链路的实际成熟度。</li>
+        <li data-page-node-id="GW4UdMIQlzMKaW03N4As7I">政策口径已经切换：从「能不能做出来 / 能跑会跳」切到<strong data-page-node-id="S7dsfaHzCty1uvMMUsXKhS">「能不能在真实工位连续稳定干活」</strong>。评价标准变了，后面看厂商宣传要换一把尺子。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="aside" id="aside" data-page-node-id="rpTeP1YSGtoDNGh4DSGcHW">
+    <h3 data-page-node-id="ghTHXMEV0mgaeOjlFtQ31A">顺带一提（今天没进主榜，但值得扫一眼）</h3>
+    <ul data-page-node-id="l1pZQatAhil5eTTAum5NUC">
+      <li data-page-node-id="r8z0YpLeruWn2UPoL4q0Yk"><b data-page-node-id="023BAnytHKi41E4Ks4jj9R">Anthropic Fable 5.1 / Mythos 5.1（9/1）</b> —— Terminal-Bench 4.0 55.8%、缓存读取降价 75%（$1→$0.25/M），Cognition 已把 Devin 部分流量从 Opus 5 迁过来。CodeRabbit 实测：45 项评审找出的缺陷数几乎没变（65→64），但<strong data-page-node-id="j6heCTWqLsgkHiP4QTft0H">生成评论从 253 条降到 166 条、琐碎意见 265→79</strong>，代价是单次耗时 +49%。不适合当所有 PR 的默认模型。</li>
+      <li data-page-node-id="UC4GJFZG9eR8IrDE3BOmJg"><b data-page-node-id="BYgAidfElKquBgVyBlGyaA">吴恩达《AI Engineering Skills Map: Using coding agents》（9/6）</b> —— 提出规划/执行/部署/监控四阶段，五项关键能力，并直指「超长自主运行的实际效用被夸大」。跟他上面 Fable 5.1 的实测数据互相印证。</li>
+      <li data-page-node-id="Vnh3wVEvO2lmuHTw6RGZ6I"><b data-page-node-id="5Ud7uyYp5updRtS7Q1x33f">GitHub HydraFusion（9/4 research preview）</b> —— 多模型编排，在达到 Opus 5 基线的同时压低单次工作流成本。竞争从「你用哪个模型」转向「你怎么跨模型路由」。</li>
+      <li data-page-node-id="r9JId0iRyz5GtERjCXzqEH"><b data-page-node-id="MblTEHdaCKiuo3cYbtv0UQ">小鹏 IRON 融资超 9 亿美元、投后 63 亿美金</b>（8 月），何小鹏亲任机器人业务 CEO，计划年底规模量产、2027 年月产能升至数千台。车企「造人」已成行业浪潮，共用供应链 + 自有工厂当训练场是他们的真实优势。</li>
+    </ul>
+  </div>
+
+  <footer data-page-node-id="1spezgQo0pDfZBTAwx8YaB">
+    AI 日报 · 2026-09-07 · 北京时间 15:20
+  </footer>
+
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-08.html">2026-09-08 →</a></div>
+</body>
+</html>

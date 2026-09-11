@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="5y99zTSH9p3nFby00z2OAK">
+<head data-page-node-id="pO0qiIgPAlwddoGiSXX0DT">
+<meta charset="UTF-8" data-page-node-id="9xGwGyjq8BiXjZi9Qy6O05">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="lykTwOfL4ZXwu8fZDuAhAH">
+<title>AI 日报 · 2026-09-09 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body data-page-node-id="V17FBjZVAMO9nup0tAlktw">
+
+<div class="hero" data-page-node-id="XI1JtTpOKfGZlAo3uKT39B">
+  <div class="wrap" data-page-node-id="Roe28Qr4PFLKa2XHDa4PHE">
+    <h1 data-page-node-id="KaBFVdl6m7tYqtIPfhxny7">AI 日报 · 2026 年 9 月 9 日（周三）</h1>
+    <div class="sub" data-page-node-id="QWTlshynPBFnHHwdxTABtC">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta" data-page-node-id="CwhnhO8kEILAsdzMyK68Fx">
+      <span class="chip" data-page-node-id="lL78L45IDIohdmAmRrMgo7">AI Coding ×3</span>
+      <span class="chip" data-page-node-id="qT0llk3Ceug0BnTa5V2P1N">具身智能 ×2</span>
+      <span class="chip" data-page-node-id="WP0wH4ysYankTTA3M5Ue47">今日主线：验证优先 · 规格工程 · 部署后学习</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav" data-page-node-id="Wp53xOExzoOJXkHt5ccfJo">
+  <div class="nav-inner" data-page-node-id="3aZApOxEItebN8jXqfDVbi">
+    <a href="#n1" data-page-node-id="f2sZtDpByqrpacCxpSE96G">① Cognition 480 亿</a>
+    <a href="#n2" data-page-node-id="JO8MOkfFl1pOiTLmCzAa80">② AI 原生 SDLC</a>
+    <a href="#n3" data-page-node-id="94wVDn1s7NvxFGnFabHiin">③ Astra + Navier-Stokes</a>
+    <a href="#n4" data-page-node-id="AxH4u6ZjYmLjwqlS95HbJH">④ 具身 ICL</a>
+    <a href="#n5" data-page-node-id="kwjrTOO2NqvYmf1YlYMxZ6">⑤ 外滩大会真干活</a>
+    <a href="#mini" data-page-node-id="CaEbRLT5VBAEy9BDPqwrZp">顺带一提</a>
+  </div>
+</div>
+
+<div class="wrap" data-page-node-id="yV1ivsWqUwoqvfNzbK4Of1">
+
+  <div class="sec-title" data-page-node-id="jY0FhryxCbwA1G2hnxJ1ji">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1" data-page-node-id="8NhmuQC3VTcoEWLlG4zjDC">
+    <div class="card-head" data-page-node-id="IFyztIks7sotCQykDRjWeB">
+      <div class="num" data-page-node-id="dqFNgskSwM9VdjYWd2x7zU">1</div>
+      <h2 data-page-node-id="SMCPgcinYzn27VZFwyXBT0">Cognition（Devin）拿下 20 亿美元 E 轮，估值 480 亿美元：AI Coding 成为独立预算科目</h2>
+      <span class="tag t-code" data-page-node-id="kbBnGdUwHBe0f6WzLau6V4">AI Coding</span>
+    </div>
+    <div class="src" data-page-node-id="P6PqDbjeXhjsPxOsd2ZlAF">来源：Cognition 官方博客 / TechCrunch / SiliconANGLE（2026-09-08）</div>
+    <div class="body" data-page-node-id="ZvjlNRxxdXvsd8NxSaoxar">
+      <p data-page-node-id="o8eeHJwNI9JTqlHictUkhj">a16z 与 Accel 领投，Founders Fund、General Catalyst、Avenir 跟投，NVIDIA、Benchmark、Lightspeed、Kleiner Perkins、Greylock、T. Rowe Price 等 30 余家参与。<strong data-page-node-id="uCwyWLyDa0pW9bZBfNgEC6">估值从 5 月的 260 亿跃至 480 亿美元（+85%），年化营收 run-rate 从 4.92 亿增至近 9 亿美元（4 个月 +83%）</strong>——营收增速与估值增速几乎同步，隐含倍数稳定在约 53x。</p>
+      <table data-page-node-id="Hw4pUzHM6B21BS0mN8IAGa">
+        <tr data-page-node-id="NtXeiQNhzOhtrOSjm21cPI"><th data-page-node-id="FZYdQpBJ5Q2lhDZZGOrhFz">指标</th><th data-page-node-id="KUDq3SRZ9E9NNWFOtqXNBK">2026-05（D 轮）</th><th data-page-node-id="9xjdQkgSGUpFn8cEgFZp39">2026-09（E 轮）</th><th data-page-node-id="H79Myl1yiKLueU6AdenCks">变化</th></tr>
+        <tr data-page-node-id="zdfBZgkMFNUpzGlTNHji3g"><td data-page-node-id="3Ck5QOunvBLJ0F9H3yDfWD">投后估值</td><td data-page-node-id="vBFazEqddmrM4OWNVEdMTf">260 亿美元</td><td data-page-node-id="V7Fcz3PfWDPBzAYS1Uq7Br"><strong data-page-node-id="J8UaLE87XhCy5yYRKb5SDm">480 亿美元</strong></td><td data-page-node-id="2EWEkYH7rlQg7GSHdFw3GC">+85%</td></tr>
+        <tr data-page-node-id="LJGPCMWJAltqWMTKzYzGEQ"><td data-page-node-id="QQa87VEtws2PNhfRnRWBPl">本轮融资</td><td data-page-node-id="0bkHyXNoQ5WBKIO3jVyf28">10 亿+</td><td data-page-node-id="gSB3M8hIMqN8i1kEOhCBFS"><strong data-page-node-id="Q02XjXU6NrGpLlmGFuffZk">20 亿+</strong></td><td data-page-node-id="rWliy1jU6RCgAeG9m6h7Up">+100%</td></tr>
+        <tr data-page-node-id="1TXIPB6DIb8gtzrjifvW4z"><td data-page-node-id="ER7AqcfcJpdNmC6fOLh8A9">年化 run-rate</td><td data-page-node-id="ZPa01gz2gbE3pB99Scq95I">4.92 亿美元</td><td data-page-node-id="q33LwNyy1BIR0Fl7Molo38"><strong data-page-node-id="NDSGSqHD90fAmi60nlfZIJ">约 9 亿美元</strong></td><td data-page-node-id="A5FcJCwcQoM2FAIDG8NNTB">+83%</td></tr>
+        <tr data-page-node-id="Nr5VfSEDW3uwMEF4Yd02Aq"><td data-page-node-id="0frzp6ZplIVv5uTrtGzT1t">隐含营收倍数</td><td data-page-node-id="FiyD4xX07khasa63BTM0KM">约 53x</td><td data-page-node-id="VfXUk13DsdNnzhpRuRabPq">约 53x</td><td data-page-node-id="NMRBwSXc4xx0QLkZSaarW0">持平</td></tr>
+      </table>
+      <p data-page-node-id="4tcqWcdqzCMqYd4xvPBGmw">落地客户覆盖 NVIDIA（芯片设计）、GE Aerospace、Citi、Mercedes-Benz、Modal、Goldman Sachs。同期发布三个新产品方向：<strong data-page-node-id="F3PkXgtEhxdu6sukcPCQuY">Devin Auto-Triage</strong>（生产事故首轮排查）、<strong data-page-node-id="oXq9P6k7eHrgpz6IjvFjDY">Devin Security Swarm</strong>（跨代码库漏洞猎捕）、<strong data-page-node-id="qrd7UvZoYoGYR1nbj55Nox">Devin Automations</strong>（由 Slack / GitHub / Linear 事件直接触发，不须开一个聊天窗口）。官方定位是"独立 agent 实验室"——可自由组合最优模型（含自研 SWE 系列），不把客户绑死在单一模型厂商上。</p>
+      <div class="caveat" data-page-node-id="cFlM5zkZmC9OuWQsVWAPSD">
+        <b data-page-node-id="aEFczvHVdHKc63RT8aAeNj">反方与边界：</b>① run-rate 是公司自报、未经审计的"上月×12"，不等于已实现营收；② TechCrunch 披露 2026 年预计烧钱约 8 亿美元，其中 NVIDIA 服务器集群年租达数亿——每 1 美元 run-rate 对应约 1 美元现金消耗；③ 历史争议：2024 年 Devin 首发演示被 Internet of Bugs 指夸大实际完成情况，2025 年 8 月裁员 30 人并向留任者提出"80 小时六天工作制"。
+      </div>
+      <div class="why" data-page-node-id="NHw73NS2n4CkMIe7JeAK0D">
+        <b data-page-node-id="ZHwzhOSQHP2MxJisG1adN6">为什么值得关注：</b>倍数没变、绝对值翻倍，说明这轮定价是跟着营收走的，不是纯情绪。真正的信号是资本认可了"<strong data-page-node-id="tw7aJgufId94Eloa6GExVU">独立 agent 层</strong>"这个生态位——在 OpenAI / Anthropic / Google 都在自卖 coding agent 的格局下，仍有企业愿意为"可换模型的中立层"付钱。对国内做 agent 的团队，这是"不绑模型"路线的一次估值背书。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2" data-page-node-id="6AozvFBKWEpOeacTu4E7uk">
+    <div class="card-head" data-page-node-id="aDrkAiM3IqkT4f64AB9lr8">
+      <div class="num" data-page-node-id="0RRxoqwthkHUajTWghbq1E">2</div>
+      <h2 data-page-node-id="Wcp0dG1OeROjbIPDj7IUEK">Anthropic 发布《AI-Native SDLC Playbook》：瓶颈已从"写代码"移到"写规格"</h2>
+      <span class="tag t-code" data-page-node-id="3vHteFjxQwtKn8Y7Mf3w49">AI Coding</span>
+    </div>
+    <div class="src" data-page-node-id="XAjewVmHz2F1szTrtLbTOq">来源：claude.com/blog/the-ai-native-sdlc-playbook · 作者 Louis Claxton（Anthropic Applied AI）· 原文 2026-08-21，本周在中文技术圈集中传播</div>
+    <div class="body" data-page-node-id="Atk9OwohXXROmJ3M5rOdJe">
+      <p data-page-node-id="GIGEFEvfrm1uBv86j6AInX">核心判断很直白：<strong data-page-node-id="3FqdXOWHiZ8pPKd9MJF7km">agent 让 build 从数周压缩到数小时，但 plan / review / test / deploy 仍以人类速度运行，整体流程变成沙漏形</strong>。产出更多代码 ≠ 交付更多可靠软件，安全评审队列和变更委员会成了新卡点。</p>
+      <p data-page-node-id="UlM03IljkCE4V2TOdR413C">解法不是给每个阶段塞一个 AI 助手，而是把线性流水线改成闭环——<strong data-page-node-id="tAIwd2EpKYuTDG6pNFhi8Z">每个阶段向版本控制提交一个产物，下一阶段从读取它开始</strong>：</p>
+      <p data-page-node-id="oY90BTSKl7loplsunjtSbx"><code data-page-node-id="IDr5oX3hxSZR7N4aCVGFPp">intent.md</code>（Plan）→ <code data-page-node-id="TKHzJiny1JD7WdQ6r3YsV6">spec.md</code>（Design）→ <code data-page-node-id="fI9g0egjgxJLW3I5b09mv3">plan.md</code> + diff + 测试（Build）→ 验证输出与 eval 结果（Test）→ PR + 评审发现（Deploy）→ 事件记录回写新的 <code data-page-node-id="su6ondswJJPLqnToMwGqiY">intent.md</code>（Maintain）。提交链本身就是审计追踪：谁提了需求、agent 产出了什么、谁批准的。</p>
+      <p data-page-node-id="I042UufmFif4rdbmtAGmhk">执行层分三层，且职责不可互换：</p>
+      <ul data-page-node-id="8iDeGbwER68zNtDPRX4jlO">
+        <li data-page-node-id="ua3OzDeSvG6Q0aAN5VNgiI"><strong data-page-node-id="oBUtJuoD0b5n1YBRpTCsMo">CLAUDE.md</strong> —— 项目级机构记忆，保持一页以内，<em data-page-node-id="fOZfIgoOdB3bv92LsERBND">同一个错误犯第二次就写进去</em>。</li>
+        <li data-page-node-id="GAJs2wJze3USE4jjcPNFjU"><strong data-page-node-id="FgpiPAMOPtEymsIcApBGqQ">Skills</strong> —— 建议性控制，让违规<u data-page-node-id="gcPD8Jr7qaeJeS3XtxV0ht">变少</u>；任何必须无例外成立的策略，skill 背后必须有确定性机制。</li>
+        <li data-page-node-id="XNZSfBIrEeEtpzxwMnUwgD"><strong data-page-node-id="unW8oEe0F4zUHr1fgDVUet">Hooks</strong> —— 确定性控制（allow / ask / block），让违规<u data-page-node-id="pnHCJoUHCTwFohokYE09A0">几乎不可能</u>；不可协商的 hook 放平台管理员持有的 managed settings，工程师关不掉。</li>
+      </ul>
+      <p data-page-node-id="VdN5P2z5vE7MB2794J9CV6">几条最硬的规则：修 bug 必须先让 agent 写出<strong data-page-node-id="8IA5KWIRweDY42RCOGZZlq">会因预期原因失败</strong>的复现测试，提交后再修，同时用 hook 禁止其在修复期间编辑测试文件；生产监控的<strong data-page-node-id="HGFmUhGgEhVN1Fkaf4cVXA">检测保持确定性</strong>（滚动窗口 + Western Electric 规则，模型完全不介入），只有突破后才按 sigma 分级调用模型；<strong data-page-node-id="AZLgqCkjXLpZ7yujYEUJ06">agent 可以做生产门之前的一切，但越不过它</strong>——分支保护把 agent 的一切变成 PR，发布 hook 阻塞到具名发布经理授权；并行会话 2–3 条起步，上限是"你能妥善评审多少条流"；evals 从近期真实任务收集 20–50 个，每个生产事件变成一条永久 eval。</p>
+      <div class="caveat" data-page-node-id="5CSTcArRF9NXCg5dP5Q9Oz">
+        <b data-page-node-id="t7bUd0oD2bfkTxhH6Tr1Eu">边界：</b>手册引 DORA 研究自认——AI 是<strong data-page-node-id="HkbHTmSlQokcuCkGC68DLA">放大器</strong>：平台、自动化测试、快速反馈都扎实的团队把速度转化为交付稳定性，基础弱的团队会放大既有混乱。它同时坦承 agent 目前是"生产力工具"而非"自主开发者"，离全自动开发还远。
+      </div>
+      <div class="why" data-page-node-id="fk9GFdzxdg5BIARaJO67Rb">
+        <b data-page-node-id="F2ULokg9lzDLFxMEKxKiKw">为什么值得关注：</b>这是前沿实验室第一次把内部 AI 原生研发流程系统化公开，类比 2016 年 Google 的 SRE 手册对运维的意义。对做 agent 工程的人，它给出了"记忆 / 技能 / Harness / 权重"各层自我进化的清晰坐标；对工程管理者，它把"AI 编码 ROI 怎么向董事会证明"从"感觉变快了"变成了可度量的 eval 与产物链。<strong data-page-node-id="OrnYVVQCH02CJHJEeA74YX">最反直觉的一条：代码生成越便宜，规划越重要</strong>——在 plan 阶段纠正一个错误方向，成本远低于在一份巨大 diff 里发现它。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3" data-page-node-id="Y01al1A5lci5dg46UJmb6A">
+    <div class="card-head" data-page-node-id="38vDNXSJNUGFJXA3ejSD9b">
+      <div class="num" data-page-node-id="ASgohTW2dTLEW4n8TFXrtq">3</div>
+      <h2 data-page-node-id="XbOSuhiQ3ReNhk7EKns8no">OpenAI Astra 全面推送 Plus/Pro/Business/Enterprise；同批 agent 88 小时解 Navier-Stokes 千禧年难题</h2>
+      <span class="tag t-code" data-page-node-id="pCiOxhnOwTKUqn0po6S5Mf">AI Coding / Agent</span>
+    </div>
+    <div class="src" data-page-node-id="90qpjtCJloCMBmOohpXQp7">来源：OpenAI 官方（2026-09-08 21:06）、openai.com/index/navier-stokes-solution、Simon Willison 博客、TechCrunch</div>
+    <div class="body" data-page-node-id="nfr4ZXRyrD2sRUqDEIhWHT">
+      <p data-page-node-id="sEReUasbsILJoosAsDTTGK"><strong data-page-node-id="zk0nDn2owSI9KjgzZPvxqD">Astra 已全面推送给 Codex 与 ChatGPT Work 的 Plus / Pro / Business / Enterprise 用户</strong>，可直接上手（实机演示见 openai.com/gpt-tv/）。</p>
+      <p data-page-node-id="z4MiCXMktVb3Mouk4wMfe0">同日更大的一条：OpenAI 宣布一组 agent 使用"能力显著强于 GPT-6 Astra 的下一代模型"，<strong data-page-node-id="IXTEpleIA0jQOKXUCYxuRC">约 88 小时给出 Navier-Stokes 存在与光滑性问题的 blowup 解</strong>（证明初始光滑的流体可在有限时间内形成奇点，该问题悬置约 90 年），随后由 GPT-6 Astra 完成 <strong data-page-node-id="2TwkJcJOhqgG2qaaDRN65H">17 小时 Lean 形式化验证</strong>。全程发送 490 万条消息、消耗约 <strong data-page-node-id="CTuT577gHjndJGy4P9dYZ2">3000 亿输出 token</strong>。</p>
+      <p data-page-node-id="EHps4EytHyCsyGJlgIhgJy">争议同步爆发：NYU 数学教授 Tristan Buckmaster 与 Anthropic 数学家 Levent Alpöge 称自己先有三项 blowup 结果，研究进展信息被泄露给 OpenAI，对方随后用大量算力沿其独特路线追赶；Sam Altman 回应称对方只有 Euler 结果、双方协调失败并遭抄袭指控威胁；Noam Brown 承认这次证明花费数百万美元，但认为成本会快速下降。</p>
+      <div class="why" data-page-node-id="vtvpbJqF705zuOO6tRsecM">
+        <b data-page-node-id="62ZW0R7fZXcsC2M2ZvDnR1">为什么值得关注：</b>把它当<strong data-page-node-id="zcPiT6xAuq865dpF11uctV">agent 工程新闻</strong>读，不是数学新闻。真正的看点是"<strong data-page-node-id="SaPj9las5nOsVYajoSS5cn">大规模并行 agent + 机器可判定的正确性标准</strong>"第一次在开放难题上跑通——Lean 形式化验证提供了不依赖人类评审的闭环信号。这与 AI coding 里的"验证优先于能力"是同一条主线：只有当正确性标准机器可判定时，agent 的产出才是可信的。同日 GitHub trending 主题也恰好是"可信任"——<code data-page-node-id="P2EK9zYFwG2dXaQyLFYaMK">reverify</code> 用确定性工具验证 AI 对代码的断言、<code data-page-node-id="vs4VDdMYeeW0OwvTwjpyTe">bankmcp</code> 把银行数据访问锁进只读边界。
+      </div>
+      <div class="caveat" data-page-node-id="IsIPtlM6LDIYiQhvCpd09x">
+        <b data-page-node-id="znmzm83hGthrjkeoBlVOXx">别读过头：</b>形式化验证只在有形式化标准的窄领域成立。通用软件没有等价物，所以这<u data-page-node-id="66f0fyIkO2Ex17sYffhJ3g">不</u>等于"AI 能自动写出正确代码"。离你最近的可用部分是 Astra 进 Codex——那是今天就能开的东西。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4" data-page-node-id="jL6QoiUykxJUOgvUcXf9Fx">
+    <div class="card-head" data-page-node-id="mBsBg36AgFUfUnBbvM6kM4">
+      <div class="num" data-page-node-id="4Gaey2Rj0EkZdCKoY9QWOV">4</div>
+      <h2 data-page-node-id="mXkAAQTUGEoCkh0H6biZfg">具身 ICL 成新赛道：机器人看一遍演示就会新任务，Scaling 维度从"堆数据"扩到"部署后还能学"</h2>
+      <span class="tag t-emb" data-page-node-id="Vxg9fEsTbNEuxztWa7hxv6">具身智能</span>
+    </div>
+    <div class="src" data-page-node-id="JIHaeB368HMQBHViZJteqw">来源：量子位（2026-09-06）、Skild AI、Generalist AI；背景工作 RoboTTT（李飞飞 / Jim Fan / Yuke Zhu 等，2026-07-16）</div>
+    <div class="body" data-page-node-id="EbO7BnPLdXX9VJ4gDEyMyJ">
+      <p data-page-node-id="UPskCM7GEnCKqv1a1QsgDY">2020 年 GPT-3 靠"看几个示例就会新任务"震动 NLP，同样的故事正在具身领域重演——<strong data-page-node-id="hRxlfS8qwF6UKC8UULpiRe">In-Context Learning</strong>。</p>
+      <ul data-page-node-id="gydfQOEpnboumrOBJ0O0EY">
+        <li data-page-node-id="ecW75cgthRRO7jjJMGFhot"><strong data-page-node-id="QgsBGFwEiqC75A4M6OZsNc">Skild AI · S1</strong>：给机器人看一遍任务演示视频，<strong data-page-node-id="OKg9GzrFf7Z4KfwVPy7Vah">不微调、不做额外 post-training</strong> 即可尝试未训练过的新任务；任务时长可达 10 分钟、含几十个操作步骤。关键数据——训练数据仅 1000 小时时语言 prompt 更好，数据规模增大后 ICL 反超；<strong data-page-node-id="e5rEZYIKucndXFQ6dsHsoS">未见任务上加入视频 context 相比纯语言指令提升约 7 倍</strong>。</li>
+        <li data-page-node-id="my5AtbPCGwCLC3g8B8Djsa"><strong data-page-node-id="dm0BzpbgXVyfpHobMD82gn">Generalist AI · GEN-1.5</strong>：同为 one-shot，3–12 秒示范视频，数秒内学会新任务，无需梯度更新，支持人类示范到机器人执行、组合泛化与 Sim-to-Real 迁移。</li>
+        <li data-page-node-id="MpXCfxGdEbE9t9UTAiFGo4"><strong data-page-node-id="WLTdcX98Am7Sq1kFhnHEPP">可可矩阵 COCO Matrix</strong>（国内，2026 年 4 月成立）：把 ICL 从后训练<u data-page-node-id="UwgEjpq1HkmHaxFCFzTutZ">前置到预训练</u>阶段，主张"<strong data-page-node-id="8PDWNILVZ54MiQ4DUzIvnI">强理解、轻生成</strong>"——在条件表征阶段就把动作相关信息提炼出来，同样算力下把动作头压到约 60M 参数，效果仍超过动作头约 1.1B 的对照方案。</li>
+      </ul>
+      <div class="caveat" data-page-node-id="DNpH8BGvHzUH5lx62H8fUc">
+        <b data-page-node-id="DCkW8UUq7c3eWqydkzFKv8">反方与边界：</b>① 两家公司均以 demo 形式发布，技术细节未完整公开；② <strong data-page-node-id="BozUk38HA1zUrM2nDHP3UF">不要只看示范时长</strong>——可可矩阵创始人高宇翔指出，10 分钟视频若全是重复动作，信息密度反而低于一段完整的第一视角任务演示；③ 真正的硬骨头是<strong data-page-node-id="gwBGu2AqY5b8SMTZdtdUsZ">流式记忆</strong>（历史信息持续压缩筛选）与长时序 KV Cache 压缩，这两个都还在内部测试阶段；④ 行业最缺的是"人机教学 / 实时纠偏"数据，连该采集什么都没有统一标准。
+      </div>
+      <div class="why" data-page-node-id="0EQymsSDSbQukqgk6XS9Fc">
+        <b data-page-node-id="k5CvuQKVezUFJRiEDkGgKe">为什么值得关注：</b>具身智能的 Scaling 维度正在扩展——过去问"训练时见过多少数据"，现在问"到了没见过的新环境，能不能利用当前 context 快速学会"。连带的是<strong data-page-node-id="WxqnEAy4SN4JSFEhKuyTNG">评价指标要换</strong>：如果机器人能持续 self-correction，单纯的成功率会越来越不够用，更有价值的是"<strong data-page-node-id="xEn4iHaK69lwLzuA4EyUQA">第一次成功平均耗时</strong>"——它对应的正是机器人的教学成本。做具身落地时，这个指标比 demo 视频好看与否更能预测 ROI。
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5" data-page-node-id="BiYLFAmhiiTAt77IdvAje0">
+    <div class="card-head" data-page-node-id="d7rEkMXGPgGOKEGPpbLu9C">
+      <div class="num" data-page-node-id="2dJAqoaaBUPKg4TIkmnt6h">5</div>
+      <h2 data-page-node-id="X5fBosbNfGLZSzGAilDXWf">外滩大会：从"翻跟头"到"真干活"，机器人在<u data-page-node-id="7CBXU4guF9bi1OtdTOeVFM">未改造</u>的人类场景里连续上岗</h2>
+      <span class="tag t-emb" data-page-node-id="9174ACKiPAKuUWV8WlStEQ">具身智能</span>
+    </div>
+    <div class="src" data-page-node-id="EkGdR8zkUZKuImWyw10p0K">来源：新闻晨报 / 新浪（2026-09-09）、2026 外滩大会具身智能展区</div>
+    <div class="body" data-page-node-id="rKWZqLEUJGklfLoweqFr2x">
+      <p data-page-node-id="PmhdncJzOd78lQlC9HI2Uf">最有说服力的一个场景：凌晨两点的国大药房，货架间距<strong data-page-node-id="8VAU0BPVOpy57hC3dxk1cS">仅 80 厘米</strong>、药品密集排列。搭载蚂蚁灵波通用大脑的机器人在<strong data-page-node-id="EGhOz8AGFrZpnedq3oYhQo">不改货架、不重新布线</strong>的前提下，自主接收订单、识别药盒、完成分拣，再把药品送回工作台交药师核对打包。</p>
+      <p data-page-node-id="nm0TnqAev0XX5PsdvwGl0f">同场其他真作业：</p>
+      <ul data-page-node-id="usE7IKcRuQBqakbAijMv4B">
+        <li data-page-node-id="jNYWNwFRA2O16rz9HrTbPT"><strong data-page-node-id="WTXdwHAZHZB8bo7BnDtTCM">物流</strong>：同一套大脑驱动不同形态机器人分拣随机包裹，<strong data-page-node-id="8AuHQDiVFSs7Hufxul78Kr">仅采集 10 小时数据即可连续作业</strong>。</li>
+        <li data-page-node-id="JA2b9LR1R8I2PugWsqZhMW"><strong data-page-node-id="qxWv5ycqZrKNFPWRFeUaIY">工业</strong>：眸深智能具身大模型驱动的轮式双臂机器人，识别洗衣机螺栓与装配孔位，自主完成抓取、定位、插入、拧紧。</li>
+        <li data-page-node-id="6r4E8tEAlcmQlhW8TFRstW"><strong data-page-node-id="d1xyprh28kOwBDq8GhYWOx">服务业</strong>：擎朗两台人形机器人在洗衣房协同完成取衣→开关洗衣机→折叠整理的长程任务；开普勒人形机器人进入狭小咖啡门店，"充电 1 小时、连干 8 小时"，双臂协同搬运 30 公斤，承担取杯、制饮与清洁。</li>
+        <li data-page-node-id="ANFAuXasbpZ591YEZDt9AO"><strong data-page-node-id="WYtqOP0pCiOcspPoBL8mOZ">受限空间</strong>：辰行远略的飞行智能体与机器狗进入核电、地铁、水厂等无 GPS、无光、强干扰环境自主巡航。</li>
+      </ul>
+      <p data-page-node-id="7ZBzM2Ra8rAmHB1voqZWz2">时间线对比很能说明问题：2024 年外滩大会宇树机器狗还在翻跟头，2026 年 8 月 19 日宇树已登陆科创板成为 A 股首家人形机器人上市公司。本届 <strong data-page-node-id="AE2VACtSDFA9J2B2hSqD6h">40 余家具身厂商集中亮相，核心叙事从"运动能力"彻底切换为"真实工作流程"</strong>。</p>
+      <div class="why" data-page-node-id="k8QhnHT8NPTBEJIyUWN5vD">
+        <b data-page-node-id="nkuC8V0eAxv0ibvRyl6FLu">为什么值得关注：</b>行业评价口径变了——从"能不能跑跳翻跟头"变成"<strong data-page-node-id="M7lWECAY54VAxmQZhMqV9G">能不能在没改造过的人类场景里连续干活</strong>"。这给出一条很好用的判据：<strong data-page-node-id="Y6hMNPilxnFX6496oKOaz6">场景改造成本 ≈ 0 才算真落地</strong>；凡是需要改货架、重新布线、贴 marker 才能跑的，本质上还在演示阶段。另外"仅采集 10 小时数据即可连续作业"这个数字，比任何跑分都更接近商业化门槛。
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini" data-page-node-id="ciCCL5MUfAV1vIcwgvFjwk">顺带一提 · 4 条</div>
+  <div class="mini" data-page-node-id="ZkD0DBTi944ZCtQ7v2tx0h">
+    <div class="m code" data-page-node-id="BL6joA0UBy17PCjFNDmKdg">
+      <h3 data-page-node-id="boAycL08tvECErAHeSi97U">Cursor 推出 self-hosted machines</h3>
+      <p data-page-node-id="o2ZwihR2zJaFHCBGGMQP0u">cloud agent 的工具执行完全留在企业自有网络内，并支持动态池按需求自动扩缩闲置 worker。直接回应"代码不出企业边界"的合规诉求，与上条主线里的"验证 / 边界控制"同源。</p>
+    </div>
+    <div class="m code" data-page-node-id="ZYIHfMSzbbkbiBOMEZIfbC">
+      <h3 data-page-node-id="y8USHcK5uxKx7FK4lD4fqI">阿里推出 AI DeepSign</h3>
+      <p data-page-node-id="bboUzhhbuMf1Y94dESqlyW">结合 C2PA 标准与水印技术，为 AI 生成内容发放可验证、防篡改的数字身份标记。与 <code data-page-node-id="u7CA4FzAqAAxQGlTbGsH5J">reverify</code>、<code data-page-node-id="QfRJvACsbcZK6hdqPLmXQs">bankmcp</code> 同属今天的"可信任"主题。</p>
+    </div>
+    <div class="m" data-page-node-id="didOf9TlBmoFhBLWjrvy8E">
+      <h3 data-page-node-id="RP78E4pNtjDNaVd4NE3DnU">Mistral 完成 30 亿欧元 D 轮</h3>
+      <p data-page-node-id="nfduE1JpDLXpWxlNHPsL77">投后估值超 210 亿欧元，公司称为欧洲科技公司史上最大股权融资，距成立仅三年。主打"主权 + 开放权重"路线。</p>
+    </div>
+    <div class="m emb" data-page-node-id="Ve80HUjfpK2epI47JWPx5b">
+      <h3 data-page-node-id="ufpJTCebNx1m6hSo8keZvw">Phi-WM 1.0 ActEffect：世界模型训练完就"退场"</h3>
+      <p data-page-node-id="ovp9yYJsZUVnOLJRGrqBue">光象科技联合清华李升波课题组：世界模型只存在于训练阶段，专门检查动作后果并给优化反馈，训练完直接退出部署链路，执行时不再展开未来预测。LIBERO 平均成功率 98.8%，加七类分布偏移的 LIBERO-PLUS 达 80.3%，29 维动作空间 RoboCasa-GR1 达 67.5%——"训练用重模型、部署用轻策略"的可落地范式。</p>
+    </div>
+  </div>
+
+  <div class="foot" data-page-node-id="sr1XevoVuMYR7hA3vczAt0">
+    <div>AI 日报 · 2026-09-09 · 北京时间 09:35</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-08.html">← 2026-09-08</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-10.html">2026-09-10 →</a></div>
+</body>
+</html>
