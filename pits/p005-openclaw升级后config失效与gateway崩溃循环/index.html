@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P005 · openclaw 升级后 config invalid / gateway 崩溃循环 · walker</title><meta name="description" content="openclaw update 直接报 OpenClaw config is invalid，两条 error："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p005-openclaw%E5%8D%87%E7%BA%A7%E5%90%8Econfig%E5%A4%B1%E6%95%88%E4%B8%8Egateway%E5%B4%A9%E6%BA%83%E5%BE%AA%E7%8E%AF/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P005 · openclaw 升级后 config invalid / gateway 崩溃循环 · walker"><meta property="og:description" content="openclaw update 直接报 OpenClaw config is invalid，两条 error："><meta property="og:url" content="https://wkh888888.github.io/pits/p005-openclaw%E5%8D%87%E7%BA%A7%E5%90%8Econfig%E5%A4%B1%E6%95%88%E4%B8%8Egateway%E5%B4%A9%E6%BA%83%E5%BE%AA%E7%8E%AF/"><meta property="og:image" content="https://wkh888888.github.io/og/p005-openclaw%E5%8D%87%E7%BA%A7%E5%90%8Econfig%E5%A4%B1%E6%95%88%E4%B8%8Egateway%E5%B4%A9%E6%BA%83%E5%BE%AA%E7%8E%AF.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P005 · openclaw 升级后 config invalid / gateway 崩溃循环 · walker"><meta name="twitter:description" content="openclaw update 直接报 OpenClaw config is invalid，两条 error："><meta name="twitter:image" content="https://wkh888888.github.io/og/p005-openclaw%E5%8D%87%E7%BA%A7%E5%90%8Econfig%E5%A4%B1%E6%95%88%E4%B8%8Egateway%E5%B4%A9%E6%BA%83%E5%BE%AA%E7%8E%AF.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P005 · openclaw 升级后 config invalid / gateway 崩溃循环</h1><p>openclaw update 直接报 OpenClaw config is invalid，两条 error：</p><div class="hero-meta"><span>踩坑于 2026-09-03</span><span>约 4 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#1-修失效插件路径">1. 修失效插件路径</a><a class="toc-l3" href="#2-用正确的-node-跑常驻用-homebrew-node">2. 用正确的 node 跑（常驻用 homebrew node）</a><a class="toc-l3" href="#3-清两个-warningconfig-validate-后才暴露">3. 清两个 warning（config validate 后才暴露）</a><a class="toc-l3" href="#4-gateway-崩溃循环移走残留-sessionsjson">4. gateway 崩溃循环：移走残留 sessions.json</a><a class="toc-l2" href="#预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a><a class="toc-l2" href="#关联">关联</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-03</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费时间，gateway 起不来但无数据损失）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>openclaw、update、config invalid、gateway、sessions.json、node版本、session迁移、launchd、TencentDB-Agent-Memory</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p><code>openclaw update</code> 直接报 <code>OpenClaw config is invalid</code>，两条 error：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>plugins.load.paths: plugin path not found: /Users/kehua/Code/TencentDB-Agent-Memory/MemoryCore/openclaw-plugin</span></span>
+<span class="line"><span>plugins.slots.memory: plugin not found: memory-tencentdb-client</span></span></code></pre>
+<p>修完路径、升级到 2026.8.2 后，gateway 起不来且<strong>崩溃循环</strong>（launchd KeepAlive 反复重启），日志尾部：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Gateway failed to start: Legacy session store requires migration:</span></span>
+<span class="line"><span>/Users/kehua/.openclaw/agents/main/sessions/sessions.json.</span></span>
+<span class="line"><span>Run "openclaw doctor --fix" against the same state/config before starting OpenClaw.</span></span></code></pre>
+<p><code>openclaw doctor --fix</code> 跑完仍报 <code>could not complete maintenance</code> + 同一句 <code>sessions.json requires migration</code>，<strong>不解决问题</strong>。</p>
+<h2 id="根因">根因</h2>
+<p><strong>一句话</strong>：升级链路里有 3 个独立坑叠在一起——① 仓库搬家导致插件绝对路径失效；② openclaw 的 Node 门槛把 WorkBuddy 默认 node 挡在门外；③ 2026.8.2 的启动守卫把「已迁移完的」旧 <code>sessions.json</code> 当成未迁移而拒绝启动，且 <code>doctor --fix</code> 自己有 bug 修不了。</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>直接原因</th>
+<th>根本原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置</td>
+<td>插件路径指向已删除目录</td>
+<td>TencentDB-Agent-Memory 仓库从 <code>~/Code/</code> 迁到 <code>~/projects/open-source/</code>，配置里的绝对路径没跟着搬</td>
+</tr>
+<tr>
+<td>node</td>
+<td>命令报 <code>Node.js &gt;=22.22.3 &lt;23 ... required (current: v22.22.2)</code></td>
+<td>WorkBuddy managed node 是 v22.22.2，差 0.0.1 即拒启；且用 nvm node 跑 <code>update</code> 会造出「nvm 旧副本 vs /opt/homebrew 新版」二进制分叉</td>
+</tr>
+<tr>
+<td>gateway</td>
+<td><code>assertSessionStoreMigrationComplete</code> 检测 <code>sessions.json</code>（非 .sqlite）存在即抛错</td>
+<td>会话数据<strong>早已迁进</strong> <code>agents/main/agent/openclaw-agent.sqlite</code>；<code>doctor --fix</code> 内部 <code>session-transcripts</code> 诊断步抛 <code>artifact is not an unaliased issue</code>，导致整体中断、没机会删残留文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="解法">解法</h2>
+<h3 id="1-修失效插件路径">1. 修失效插件路径</h3>
+<p><code>~/.openclaw/openclaw.json</code> 的 <code>plugins.load.paths[0]</code>：
+<code>/Users/kehua/Code/TencentDB-Agent-Memory/MemoryCore/openclaw-plugin</code>
+→ <code>/Users/kehua/projects/open-source/TencentDB-Agent-Memory/MemoryCore/openclaw-plugin</code></p>
+<h3 id="2-用正确的-node-跑常驻用-homebrew-node">2. 用正确的 node 跑（常驻用 homebrew node）</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 临时排障/升级/doctor —— 不要前置 nvm，否则二进制分叉</span></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#E1E4E8"> PATH</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"/opt/homebrew/opt/node@22/bin:</span><span style="color:#E1E4E8">$PATH</span><span style="color:#9ECBFF">"</span><span style="color:#6A737D">   # v22.23.2</span></span>
+<span class="line"><span style="color:#B392F0">openclaw</span><span style="color:#79B8FF"> --version</span><span style="color:#6A737D">          # 应显示 2026.8.2</span></span>
+<span class="line"><span style="color:#B392F0">openclaw</span><span style="color:#9ECBFF"> config</span><span style="color:#9ECBFF"> validate</span><span style="color:#6A737D">    # Config valid</span></span>
+<span class="line"><span style="color:#B392F0">openclaw</span><span style="color:#9ECBFF"> update</span><span style="color:#6A737D">             # 走 /opt/homebrew 那一份</span></span></code></pre>
+<h3 id="3-清两个-warningconfig-validate-后才暴露">3. 清两个 warning（config validate 后才暴露）</h3>
+<ul>
+<li>feishu 缺 <code>channelConfigs</code>：编辑 <code>~/.openclaw/extensions/feishu/openclaw.plugin.json</code>，照 <code>~/.openclaw/npm/.../openclaw-weixin/openclaw.plugin.json</code> 的 <code>channelConfigs</code> 结构补一个 <code>feishu</code> 键。</li>
+<li>openclaw-weixin 重复 id：旧副本 <code>~/.openclaw/extensions/openclaw-weixin</code>（v2.0.0）与 npm 全局 <code>@tencent-weixin/openclaw-weixin</code>（v2.4.6）并存 → <code>mv</code> 旧副本到 <code>~/.openclaw/tmp/removed-plugins-$(date +%s)/</code>。</li>
+</ul>
+<h3 id="4-gateway-崩溃循环移走残留-sessionsjson">4. gateway 崩溃循环：移走残留 sessions.json</h3>
+<p>先验证数据已在 .sqlite（关键，避免丢会话）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">openclaw</span><span style="color:#9ECBFF"> sessions</span><span style="color:#9ECBFF"> cleanup</span><span style="color:#79B8FF"> --dry-run</span><span style="color:#79B8FF"> --all-agents</span></span>
+<span class="line"><span style="color:#6A737D"># 输出应含: Session store: .../openclaw-agent.sqlite   Entries: 1 -&gt; 1 (remove 0)</span></span>
+<span class="line"><span style="color:#6A737D"># 且 agent:main:main 状态为 keep —— 说明索引已迁移</span></span></code></pre>
+<p>确认后备份并移走残留文件，gateway 即起：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> ~/.openclaw/agents/main/sessions</span></span>
+<span class="line"><span style="color:#B392F0">mv</span><span style="color:#9ECBFF"> sessions.json</span><span style="color:#9ECBFF"> sessions.json.migrated-</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">date</span><span style="color:#9ECBFF"> +%s</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">launchctl</span><span style="color:#9ECBFF"> load</span><span style="color:#9ECBFF"> ~/Library/LaunchAgents/ai.openclaw.gateway.plist</span></span>
+<span class="line"><span style="color:#B392F0">sleep</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#B392F0">lsof</span><span style="color:#79B8FF"> -nP</span><span style="color:#79B8FF"> -iTCP:18789</span><span style="color:#79B8FF"> -sTCP:LISTEN</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "✅ gateway up"</span></span></code></pre>
+<blockquote>
+<p>⚠️ <strong>不要</strong>指望 <code>openclaw doctor --fix</code> 自动迁移：2026.8.2 在 Mac 上该步会因内部 <code>session-transcripts</code> 诊断 bug 中断。手动移走残留文件是当前唯一稳妥 workaround。</p>
+</blockquote>
+<h2 id="预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</h2>
+<ul>
+<li><strong>跑 openclaw 一律用 homebrew node</strong>：<code>export PATH="/opt/homebrew/opt/node@22/bin:$PATH"</code>。WorkBuddy 默认 node v22.22.2 差 0.0.1 就被拒；用 nvm node 跑 update 还会造二进制分叉让后续 <code>update</code> 自检失败。</li>
+<li><strong>仓库搬家要同步改 openclaw 插件绝对路径</strong>：<code>plugins.load.paths</code> 是写死路径，git 挪窝必断。</li>
+<li><strong>gateway 起不来先查 <code>sessions.json</code> 是不是旧版残留</strong>：2026.8.2+ 启动守卫见到非 <code>.sqlite</code> 的 <code>sessions.json</code> 即拒启；<code>sessions cleanup</code> 能确认数据是否已进 <code>.sqlite</code>，已迁就直接移走残留文件。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li>配置：<code>~/.openclaw/openclaw.json</code>（备份 <code>openclaw.json.bak.manual-*</code>，含 <code>plugins.load.paths</code> 与 <code>agents.defaults.sessionStore.agentId: "main"</code> 两项增补）</li>
+<li>会话：<code>~/.openclaw/agents/main/sessions/</code>（备份 <code>sessions.bak-*</code>；残留 <code>sessions.json.migrated-*</code>）</li>
+<li>插件：<code>~/.openclaw/extensions/{feishu,openclaw-weixin}</code>、<code>~/.openclaw/tmp/removed-plugins-*</code></li>
+<li>启动：<code>~/Library/LaunchAgents/ai.openclaw.gateway.plist</code>（用 <code>/opt/homebrew/opt/node@22/bin/node</code> 跑 <code>/opt/homebrew/lib/node_modules/openclaw</code>）</li>
+<li>日志：<code>~/Library/Logs/openclaw/gateway.log</code>、<code>~/.openclaw/logs/stability/*.json</code></li>
+</ul>
+<h2 id="关联">关联</h2>
+<ul>
+<li>同主题 skill：<code>openclaw-troubleshoot</code>（~/.workbuddy/skills/openclaw-troubleshoot）</li>
+<li>仓库位置变更属「环境变了」类，若 TencentDB-Agent-Memory 再次搬家，回来更新本案例路径。</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p004-git直连hang死与proxy_env按需注入/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export</span></a><a class="post-nav-item post-nav-next" href="/pits/p006-主md不适用skill单一源/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

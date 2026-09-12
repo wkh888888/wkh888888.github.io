@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export · walker</title><meta name="description" content="git clone github.com/... 直连 hang 住直到超时。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p004-git%E7%9B%B4%E8%BF%9Ehang%E6%AD%BB%E4%B8%8Eproxy_env%E6%8C%89%E9%9C%80%E6%B3%A8%E5%85%A5/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export · walker"><meta property="og:description" content="git clone github.com/... 直连 hang 住直到超时。"><meta property="og:url" content="https://wkh888888.github.io/pits/p004-git%E7%9B%B4%E8%BF%9Ehang%E6%AD%BB%E4%B8%8Eproxy_env%E6%8C%89%E9%9C%80%E6%B3%A8%E5%85%A5/"><meta property="og:image" content="https://wkh888888.github.io/og/p004-git%E7%9B%B4%E8%BF%9Ehang%E6%AD%BB%E4%B8%8Eproxy_env%E6%8C%89%E9%9C%80%E6%B3%A8%E5%85%A5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export · walker"><meta name="twitter:description" content="git clone github.com/... 直连 hang 住直到超时。"><meta name="twitter:image" content="https://wkh888888.github.io/og/p004-git%E7%9B%B4%E8%BF%9Ehang%E6%AD%BB%E4%B8%8Eproxy_env%E6%8C%89%E9%9C%80%E6%B3%A8%E5%85%A5.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export</h1><p>git clone github.com/... 直连 hang 住直到超时。</p><div class="hero-meta"><span>踩坑于 2026-09-03</span><span>约 2 分钟</span><a class="tag" href="/tags/网络/">网络</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因2026-09-03-实测修正">根因（2026-09-03 实测修正）</a><a class="toc-l2" href="#解法按可靠性排序">解法（按可靠性排序）</a><a class="toc-l2" href="#workbuddy-特别注意">WorkBuddy 特别注意</a><a class="toc-l2" href="#验证">验证</a><a class="toc-l2" href="#预防规则已上浮-l1">预防规则（已上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-03（现象早于此，本日归档并<strong>修正原记忆的错误根因</strong>）</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>网络 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（卡住命令，但有可靠解法）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>git、curl、proxy、7890、FlClash、proxy_env、hang、GitHub、沙箱</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（2026-09-03 实测核实）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p><code>git clone github.com/...</code> 直连 hang 住直到超时。</p>
+<h2 id="根因2026-09-03-实测修正">根因（2026-09-03 实测修正）</h2>
+<blockquote>
+<p>⚠️ 原 L1 记忆写的是「环境变量只设了大写 <code>HTTPS_PROXY</code>/<code>HTTP_PROXY</code>，小写为空；git 不读大写变量、也不读小写」。<strong>该描述不成立</strong>，实测：当前会话大写、小写 proxy 变量<strong>均为 0 个</strong>，且 <code>git config --global http.proxy</code> 未配置。</p>
+</blockquote>
+<p>真实情况：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.zsh/functions.zsh      ← proxy_env 数组定义在【这里】</span></span>
+<span class="line"><span>      ↓ source</span></span>
+<span class="line"><span>~/.zshrc (cxa/cxb/gemini/kiro/agy 等函数)</span></span>
+<span class="line"><span>      ↓ env "${proxy_env[@]}" &lt;命令&gt;</span></span>
+<span class="line"><span>命令才带上代理</span></span></code></pre>
+<p><code>proxy_env</code> 定义在 <code>~/.zsh/functions.zsh</code> 第 8 行，含 <strong>8 个变量（大小写齐全 + no_proxy）</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="zsh"><code><span class="line"><span style="color:#E1E4E8">proxy_env</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#B392F0">  http_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  https_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  all_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">socks5://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  HTTP_PROXY</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  HTTPS_PROXY</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  ALL_PROXY</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">socks5://127.0.0.1:7890</span></span>
+<span class="line"><span style="color:#B392F0">  no_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">127.0.0.1,localhost,::1</span></span>
+<span class="line"><span style="color:#B392F0">  NO_PROXY</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">127.0.0.1,localhost,::1</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>关键：它只在封装函数里按需注入，不全局 <code>export</code>。</strong> 所以：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>是否有代理</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通 <code>git clone</code></td>
+<td>❌ 无</td>
+<td>直连 hang 死</td>
+</tr>
+<tr>
+<td><code>cxa</code> / <code>gemini</code> / <code>kiro</code> 等封装函数</td>
+<td>✅ 有</td>
+<td>正常走 7890</td>
+</tr>
+<tr>
+<td>WorkBuddy Bash 工具</td>
+<td>❌ 无</td>
+<td>需手动内联</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这是个<strong>合理设计</strong>（按需代理、不污染全局），不是配置疏漏。只是“全局没代理”这件事需要知道。</p>
+</blockquote>
+<h2 id="解法按可靠性排序">解法（按可靠性排序）</h2>
+<p><strong>1. 显式 git -c（最可靠，不依赖任何环境变量）</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> http.proxy=http://127.0.0.1:7890</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> https.proxy=http://127.0.0.1:7890</span><span style="color:#9ECBFF"> clone</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">ur</span><span style="color:#E1E4E8">l</span><span style="color:#F97583">&gt;</span></span></code></pre>
+<p><strong>2. 命令前内联环境变量</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">http_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span><span style="color:#E1E4E8"> https_proxy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">http://127.0.0.1:7890</span><span style="color:#B392F0"> git</span><span style="color:#9ECBFF"> clone</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">ur</span><span style="color:#E1E4E8">l</span><span style="color:#F97583">&gt;</span></span></code></pre>
+<p><strong>3. 给新 CLI 套封装函数</strong>（沿用既有模式，加到 <code>~/.zsh/functions.zsh</code>）</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="zsh"><code><span class="line"><span style="color:#B392F0">mycli</span><span style="color:#E1E4E8">() { </span><span style="color:#B392F0">env</span><span style="color:#9ECBFF"> "${</span><span style="color:#E1E4E8">proxy_env</span><span style="color:#9ECBFF">[</span><span style="color:#F97583">@</span><span style="color:#9ECBFF">]}"</span><span style="color:#9ECBFF"> command</span><span style="color:#9ECBFF"> mycli</span><span style="color:#9ECBFF"> "</span><span style="color:#79B8FF">$@</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">; }</span></span></code></pre>
+<h2 id="workbuddy-特别注意">WorkBuddy 特别注意</h2>
+<p>Bash 工具<strong>默认沙箱会阻断网络</strong>，即便配了代理也连不出去。下载外部仓库需显式 <code>dangerouslyDisableSandbox: true</code>。</p>
+<h2 id="验证">验证</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">lsof</span><span style="color:#79B8FF"> -nP</span><span style="color:#79B8FF"> -iTCP:7890</span><span style="color:#79B8FF"> -sTCP:LISTEN</span><span style="color:#6A737D">     # 代理在不在</span></span>
+<span class="line"><span style="color:#B392F0">env</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -i</span><span style="color:#9ECBFF"> proxy</span><span style="color:#6A737D">                   # 当前有没有代理变量（正常应为 0 个）</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> http.proxy</span><span style="color:#6A737D">  # git 自身有没有配（正常应为空）</span></span></code></pre>
+<p>2026-09-03 实测：<code>FlClashCo</code> 监听 7890 ✅ / 会话内 proxy 变量 0 个 / git 未配置 http.proxy。</p>
+<h2 id="预防规则已上浮-l1">预防规则（已上浮 L1）</h2>
+<p><code>git clone</code> 走 <code>git -c http.proxy=...</code> 显式指定，<strong>不要假设环境里有代理变量</strong> —— 本机的代理是按需注入的。</p>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/.zsh/functions.zsh</code> 第 8 行：<code>proxy_env</code> 定义</li>
+<li><code>~/.zshrc</code> 第 83-97 行：<code>cxa</code>/<code>cxb</code> 引用 <code>proxy_env</code>（未加 <code>command</code> 前缀，与 <code>gemini</code>/<code>kiro</code> 风格不一致）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p003-codex规范移植与codegraph中文查询/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑）</span></a><a class="post-nav-item post-nav-next" href="/pits/p005-openclaw升级后config失效与gateway崩溃循环/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P005 · openclaw 升级后 config invalid / gateway 崩溃循环</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑） · walker</title><meta name="description" content="用户要求把 ~/.codex/AGENTS.md 中「Skill 使用说明文档」与「CodeGraph」两节移植到 WorkBuddy。直接照搬会踩一个坑：CodeGraph 节原文写的是 codegraph explo"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p003-codex%E8%A7%84%E8%8C%83%E7%A7%BB%E6%A4%8D%E4%B8%8Ecodegraph%E4%B8%AD%E6%96%87%E6%9F%A5%E8%AF%A2/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑） · walker"><meta property="og:description" content="用户要求把 ~/.codex/AGENTS.md 中「Skill 使用说明文档」与「CodeGraph」两节移植到 WorkBuddy。直接照搬会踩一个坑：CodeGraph 节原文写的是 codegraph explo"><meta property="og:url" content="https://wkh888888.github.io/pits/p003-codex%E8%A7%84%E8%8C%83%E7%A7%BB%E6%A4%8D%E4%B8%8Ecodegraph%E4%B8%AD%E6%96%87%E6%9F%A5%E8%AF%A2/"><meta property="og:image" content="https://wkh888888.github.io/og/p003-codex%E8%A7%84%E8%8C%83%E7%A7%BB%E6%A4%8D%E4%B8%8Ecodegraph%E4%B8%AD%E6%96%87%E6%9F%A5%E8%AF%A2.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑） · walker"><meta name="twitter:description" content="用户要求把 ~/.codex/AGENTS.md 中「Skill 使用说明文档」与「CodeGraph」两节移植到 WorkBuddy。直接照搬会踩一个坑：CodeGraph 节原文写的是 codegraph explo"><meta name="twitter:image" content="https://wkh888888.github.io/og/p003-codex%E8%A7%84%E8%8C%83%E7%A7%BB%E6%A4%8D%E4%B8%8Ecodegraph%E4%B8%AD%E6%96%87%E6%9F%A5%E8%AF%A2.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑）</h1><p>用户要求把 ~/.codex/AGENTS.md 中「Skill 使用说明文档」与「CodeGraph」两节移植到 WorkBuddy。直接照搬会踩一个坑：CodeGraph 节原文写的是 codegraph explo</p><div class="hero-meta"><span>踩坑于 2026-09-03</span><span>约 4 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/规范移植/">规范移植</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#区块一skill-使用说明文档l1-精简版">区块一：Skill 使用说明文档（L1 精简版）</a><a class="toc-l2" href="#skill-使用说明文档">Skill 使用说明文档</a><a class="toc-l3" href="#区块二codegraphl1-精简版已加中文查询警示">区块二：CodeGraph（L1 精简版，已加中文查询警示）</a><a class="toc-l2" href="#移植前的适配改动">移植前的适配改动</a><a class="toc-l2" href="#前置条件检查移植前必做">前置条件检查（移植前必做）</a><a class="toc-l2" href="#可管理区块的价值本次顺带落地">可管理区块的价值（本次顺带落地）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-03</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 规范移植</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（不记录会导致 CodeGraph 规则形同虚设）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>AGENTS.md、CodeGraph、codegraph、技能文档规范、skill使用说明、中文查询、explore</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（2026-09-03 实测）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>用户要求把 <code>~/.codex/AGENTS.md</code> 中「Skill 使用说明文档」与「CodeGraph」两节移植到 WorkBuddy。直接照搬会踩一个坑：<strong>CodeGraph 节原文写的是 <code>codegraph explore "&lt;symbol names or question&gt;"</code>，暗示可以传自然语言问题；实测中文自然语言查询返回 <code>No relevant code found</code></strong>。</p>
+<h2 id="根因">根因</h2>
+<p>CodeGraph 的语义检索基于<strong>标识符匹配 + 英文语义</strong>，不支持中文自然语言。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /Users/kehua/projects/local-server/ai-probe</span></span>
+<span class="line"><span style="color:#B392F0">codegraph</span><span style="color:#9ECBFF"> explore</span><span style="color:#9ECBFF"> "轮询"</span><span style="color:#6A737D">   # → No relevant code found for "轮询"</span></span>
+<span class="line"><span style="color:#B392F0">codegraph</span><span style="color:#9ECBFF"> explore</span><span style="color:#9ECBFF"> "poll"</span><span style="color:#6A737D">   # → Found 16 symbols across 3 files（成功）</span></span></code></pre>
+<p><strong>危险之处</strong>：返回结果看起来像“这个仓库没索引/没这段代码”，极易误导 Agent 退回 grep，规则形同虚设。与 P001 同类 —— <strong>不了解参数格式，就会把工具失败误判为数据不存在</strong>。</p>
+<h2 id="解法">解法</h2>
+<p>L1 <code>~/.workbuddy/MEMORY.md</code> 中加入两个带 HTML 注释标记的可管理区块，其中 CodeGraph 节显式写入中文查询的坑。</p>
+<!-- SKILL-DOC-POLICY:START -->
+<h3 id="区块一skill-使用说明文档l1-精简版">区块一：Skill 使用说明文档（L1 精简版）</h3>
+<p>创建 / 重命名 / 实质更新任意 Skill 时，<strong>必须</strong>在 <code>~/docs/skill使用说明/</code> 同步 <code>&lt;skill-name&gt;使用说明.md</code>（用户明确要求不生成时除外）。
+内容含：用途、适用场景、前置条件、调用方式、至少一个实例、配置或文件位置、边界与注意事项。
+Skill 改名 → 同步重命名说明文档并更新其中的路径与调用名；<strong>文档不放入 Skill 目录</strong>，也不以 Skill 内部说明替代。
+完成后验证：Skill 本体有效 + 说明文档存在 + 文档内路径与调用名与当前一致。</p>
+<!-- SKILL-DOC-POLICY:END -->
+<p><strong>Codex 原文（英文，便于日后对照同步）</strong></p>
+<blockquote>
+<h2 id="skill-使用说明文档">Skill 使用说明文档</h2>
+<p>创建、重命名或实质更新任意 Skill 时，除非用户明确要求不生成文档，否则必须同步在 <code>~/docs/skill使用说明/</code> 创建或更新一份面向人的 Markdown 使用说明。</p>
+<ul>
+<li>文件名使用 <code>&lt;skill-name&gt;使用说明.md</code>；Skill 改名时，同步重命名说明文档，并更新其中的路径和 <code>$skill-name</code> 调用。</li>
+<li>文档说明 Skill 的用途、适用场景、前置条件、调用方式、至少一个实际示例、配置或文件位置，以及主要边界或注意事项。</li>
+<li>文档面向用户，使用清晰的中文；不要将此文档放入 Skill 目录，也不要以 Skill 内部说明替代它。</li>
+<li>完成后验证：Skill 本体有效、说明文档存在，且文档中的路径和调用名称与当前 Skill 一致。</li>
+</ul>
+</blockquote>
+<!-- CODEGRAPH:START -->
+<h3 id="区块二codegraphl1-精简版已加中文查询警示">区块二：CodeGraph（L1 精简版，已加中文查询警示）</h3>
+<p>在已索引仓库中定位或理解代码，<strong>先 CodeGraph，后 grep/find/读文件</strong>：</p>
+<ul>
+<li>命令：<code>codegraph explore "&lt;符号名&gt;"</code>（<code>/Users/kehua/.local/bin/codegraph</code> v1.5.0）。WorkBuddy 无 codegraph MCP，<code>explore</code> 输出与 MCP 版一致。</li>
+<li>🔴 <strong>查询必须用英文标识符</strong>（<code>poll</code>、<code>HealthAppServiceImpl</code>），<strong>中文查询一律返回 <code>No relevant code found</code></strong> —— 那是查询语言问题，<strong>不是索引失效</strong>，别据此退回 grep。</li>
+<li>输出含依赖半径（blast radius）与「无覆盖测试」警告，改代码前先看这个。</li>
+<li>另有两个子命令：<code>query &lt;符号&gt;</code> 搜索、<code>node &lt;符号&gt;</code> 看单符号调用链。</li>
+<li>已建索引 5 处：<code>~/.codegraph</code>、<code>mind-harbor</code>、<code>mind-helper</code>、<code>ai-probe</code>、<code>refiner-5.6</code>。</li>
+<li>仓库无 <code>.codegraph/</code> 则跳过 —— 是否索引由用户决定，<strong>不要擅自创建</strong>。</li>
+</ul>
+<!-- CODEGRAPH:END -->
+<h2 id="移植前的适配改动">移植前的适配改动</h2>
+<table>
+<thead>
+<tr>
+<th>原文（Codex）</th>
+<th>WorkBuddy 适配</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codegraph_explore</code> MCP 工具优先</td>
+<td><strong>只保留 shell 分支</strong></td>
+<td>实测 <code>~/.workbuddy/mcp.json</code> 仅配置 <code>chrome-devtools</code>、<code>bt-panel</code>，无 codegraph MCP</td>
+</tr>
+<tr>
+<td><code>explore "&lt;symbol names or question&gt;"</code></td>
+<td>改为 <code>"&lt;符号名&gt;"</code> + 中文警示</td>
+<td>中文自然语言查询无效</td>
+</tr>
+<tr>
+<td>无索引清单</td>
+<td>补 5 处已索引路径</td>
+<td>实测发现，便于快速判断能否用</td>
+</tr>
+<tr>
+<td>—</td>
+<td>补 <code>query</code> / <code>node</code> 子命令</td>
+<td><code>codegraph --help</code> 中列出，原文未提</td>
+</tr>
+</tbody>
+</table>
+<h2 id="前置条件检查移植前必做">前置条件检查（移植前必做）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">which</span><span style="color:#9ECBFF"> codegraph</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">codegraph</span><span style="color:#79B8FF"> --version</span></span>
+<span class="line"><span style="color:#B392F0">find</span><span style="color:#9ECBFF"> ~</span><span style="color:#79B8FF"> -maxdepth</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> -name</span><span style="color:#9ECBFF"> ".codegraph"</span><span style="color:#79B8FF"> -type</span><span style="color:#9ECBFF"> d</span></span>
+<span class="line"><span style="color:#B392F0">python3</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> "import json;print(list(json.load(open('</span><span style="color:#E1E4E8">$HOME</span><span style="color:#9ECBFF">/.workbuddy/mcp.json'))['mcpServers'].keys()))"</span></span>
+<span class="line"><span style="color:#B392F0">ls</span><span style="color:#9ECBFF"> ~/docs/skill使用说明/</span></span></code></pre>
+<p>实测结果：CLI v1.5.0 ✅ / 索引 5 处 ✅ / codegraph MCP ❌ / 文档目录已存在且用户已在执行该规范 ✅</p>
+<blockquote>
+<p>用户虽已有大量 <code>&lt;name&gt;使用说明.md</code>，但规范<strong>未写进 WorkBuddy 的 L1</strong>，属于“人在执行、系统不知道”。制度化后进 L1 才会每次会话自动提醒。</p>
+</blockquote>
+<h2 id="可管理区块的价值本次顺带落地">可管理区块的价值（本次顺带落地）</h2>
+<p>两个区块均用 <code>&lt;!-- BLOCK:START --&gt;</code> / <code>&lt;!-- BLOCK:END --&gt;</code> 包裹，沿用 Codex 的做法：</p>
+<ul>
+<li>工具/脚本可<strong>精准替换区块内内容</strong>，不误伤人工编写的其他章节。</li>
+<li>日后 Codex 侧更新了这两节，可直接对照替换，不必逐行 diff 整个文件。</li>
+<li>校验命令（列出所有区块及体量）：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> re</span></span>
+<span class="line"><span style="color:#E1E4E8">t </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(path, </span><span style="color:#FFAB70">encoding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">'utf-8'</span><span style="color:#E1E4E8">).read()</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> m </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> re.finditer(</span><span style="color:#F97583">r</span><span style="color:#9ECBFF">'</span><span style="color:#DBEDFF">&lt;!-- </span><span style="color:#79B8FF">(\S</span><span style="color:#F97583">+?</span><span style="color:#79B8FF">)</span><span style="color:#DBEDFF">:</span><span style="color:#F97583">?</span><span style="color:#DBEDFF">START --&gt;</span><span style="color:#79B8FF">(.</span><span style="color:#F97583">*?</span><span style="color:#79B8FF">)</span><span style="color:#DBEDFF">&lt;!-- </span><span style="color:#85E89D">\1</span><span style="color:#DBEDFF">:</span><span style="color:#F97583">?</span><span style="color:#DBEDFF">END --&gt;</span><span style="color:#9ECBFF">'</span><span style="color:#E1E4E8">, t, re.S):</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(m.group(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">), </span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(m.group(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">).strip()))</span></span></code></pre>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li>L1：<code>~/.workbuddy/MEMORY.md</code>（两个区块共约 700 字符）</li>
+<li>源：<code>~/.codex/AGENTS.md</code>（2280 字符）</li>
+<li>待验证项：WorkBuddy 是否支持 <code>AGENTS.md</code> 与 <code>@/path</code> 文件导入（<code>.workbuddy</code> 目录下目前无 AGENTS.md）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p001-邮件入口撞车与mcp选型/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P001 · 邮件入口三撞车：Skill 与 MCP 混用导致 4 次授权失败</span></a><a class="post-nav-item post-nav-next" href="/pits/p004-git直连hang死与proxy_env按需注入/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P004 · git/curl 直连 GitHub hang 死：proxy_env 是按需注入，不是全局 export</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-12 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 12 日（周六）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：从「能不能做」转向「能不能证明」· 成本/效果/风险/收入全部进入可测量区间</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 双模型路由省钱</a>
+    <a href="#n2">② Skill 的 Δ 分数</a>
+    <a href="#n3">③ 导弹 GNC 软件</a>
+    <a href="#n4">④ 1 亿美元 ARR</a>
+    <a href="#n5">⑤ 人视频当机器人数据</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Cognition 的 Devin Fusion：前沿模型做规划、便宜模型干活，第三方实测每任务省 36%–43%</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：Cognition 官方发布（9/12）· Artificial Analysis Coding Agent Index v1.5 独立实测 · AGI Hunt 2026-09-12</div>
+    <div class="body">
+      <p>Fusion 的结构很直白：<strong>一个前沿「lead」模型负责计划、解读歧义与最终评审，一个便宜的「sidekick」负责探索、实现、跑测试并回报</strong>。两个 agent 各带独立工具与独立持久化上下文，交接只传三样东西——任务简报（含约束与验收标准）、执行结果、lead 的反馈，而不是整段对话历史。</p>
+      <p>这样设计是为了躲开两个坑：一是<strong>简短的 issue 描述并不能暴露任务真实难度</strong>，二是<strong>在单个会话中途换模型会让整个 prompt cache 失效</strong>。两边上下文各自存活，就不用跨模型边界复制工具历史。</p>
+      <p>关键数字来自第三方而非厂商。Artificial Analysis 把 Fusion 纳入其 Coding Agent Index，这是<strong>该榜单第一次收录多模型 coding agent</strong>：</p>
+      <table>
+        <tr><th>配置</th><th>Index 得分</th><th>每任务成本</th><th>对比基准</th></tr>
+        <tr><td>Fable 5.1(xhigh) + SWE-2(medium)</td><td><strong>61.7</strong></td><td>$7.90</td><td>Claude Code 同模型 62.2 / $12.40（<strong>省 36%</strong>）</td></tr>
+        <tr><td>GPT-6 Astra(xhigh) + SWE-2</td><td><strong>59</strong></td><td>$4.54</td><td>比 Fable 配置<strong>再省 43%、快 31%</strong></td></tr>
+      </table>
+      <p>Cognition 自己给的头版数字是「基准成本降 39%」，并称<strong>自家工程团队 88% 的合并 PR 由 Fusion 自动路由完成、无人干预</strong>。Cognition 上一个极端例子：Astra lead + 每百万 token 0.75 美元的 SWE-2，跑出 63.4 分、单任务 2.34 美元。</p>
+      <p>同日还有两条同构的信号：Sakana 发布 <strong>Fugu Max / Fugu Ultra v2</strong>，把每个任务路由到「能干完的最便宜模型」，宣称近旗舰质量、成本低 2–6 倍；微软工程师详解 GitHub Copilot 的 <strong>HydraFusion</strong> 引擎——每个 prompt 按推理深度、代码生成复杂度、调试难度、工具编排需求四轴打分，再选三条执行流之一并分阶段派模型。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>这是 coding agent 竞争维度的一次位移——<strong>不再是「谁家模型分高」，而是「谁能把质量-成本帕累托前沿往前推」</strong>。三家（Cognition / Sakana / 微软）在同一天拿出同一形态的解法，说明路由层已经从技巧变成标配。对你手上的项目，最实际的读法是：<strong>把「美元/完成一个任务」而不是「每百万 token 单价」当成选型指标</strong>，Fusion 的第三方数字正是按这个口径出的。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 基准成本 ≠ 生产成本。FrontierCode / DeepSWE / AA Index 跑的都是范围清晰、验收标准明确的任务集；真实工单充满模糊描述、半残测试集和没人写过的隐式约定，路由器完全可能把本该留给前沿模型判断的活派给 sidekick。② 88% 自动路由是 <strong>Cognition 拿自家代码库做的 dogfooding</strong>，不保证迁移到你的仓库。③ 拆开看 Fable 配置的成分：Repository Q&amp;A 上 Fusion 反而更高（65.9 vs 64.8），DeepSWE（63.1 vs 64.3）和 Terminal-Bench（56.1 vs 57.6）略降——<strong>总分打平掩盖了内部的一升两降</strong>。
+    </div>
+    <div class="act">
+      <b>可做的动作：</b>Fusion 现在推荐搭配的 sidekick 正是 09-11 推送的 SWE-2，而 Cognition 给 Pro/Max/Teams 订阅用户免费用一个月（约到 10 月中）。<strong>免费的 sidekick 模型等于把试错成本降为零</strong>——想验证多模型路由在你的仓库里成不成立，这是最便宜的一次机会。
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Claude Code 上线 <code>claude plugin eval</code>：Skill 到底有没有用，第一次有了可测量的数字</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：Claude Code v2.1.269 发布说明（9/11）· Anthropic 官方 Plugin Evals 工作流文档 · @ClaudeDevs</div>
+    <div class="body">
+      <p>命令做的事是一次<strong>消融实验</strong>：每个测试用例默认跑两遍——一遍加载插件（with），一遍不加载（without），两者分数之差叫 <strong>Δ（delta）</strong>。</p>
+      <table>
+        <tr><th>结果形态</th><th>判断</th><th>该做什么</th></tr>
+        <tr><td>WITH 高 / W/OUT 低 / Δ 大</td><td>插件确实在干活</td><td>保留，并补回归测试守住</td></tr>
+        <tr><td>WITH 高 / W/OUT 也高 / Δ≈0</td><td>基础模型本来就会</td><td><strong>冗余，该删</strong></td></tr>
+        <tr><td>WITH 低 / W/OUT 也低 / Δ≈0</td><td>插件没解决问题</td><td>重设计</td></tr>
+        <tr><td>WITH 反而低于 W/OUT</td><td><strong>插件在帮倒忙</strong></td><td>查约束、工具调用、上下文污染</td></tr>
+      </table>
+      <p>六种 grader：<strong>免费四种</strong>（<code>regex</code>、<code>tool_used</code>、<code>tool_order</code>、<code>file_exists</code>，从 transcript 和磁盘算），<strong>计费两种</strong>（<code>llm</code> 按你写的评分标准判、<code>baseline</code> 对比参考答案）。官方示例：6 次运行、74 秒、$0.41，某用例 WITH 1.00 / W/OUT 0.33 / <strong>Δ +0.67</strong>。</p>
+      <p>Anthropic 明确点名了<strong>最常见的失败形态</strong>：Δ 接近 0，同时 <code>tool_used: Skill</code> 判定失败——意思是用户用自然说法提问时，Claude 根本没选中你的 skill。这是 <code>claude plugin validate</code> 抓不到的（它只查 manifest 语法），<strong>语法完全合法、运行时从不触发</strong>。</p>
+      <p>更关键的是它能进 CI：<code>--threshold 0.8 --max-cost-usd 20 --no-publish</code>，分数不够或超预算直接让构建失败。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>把这三天的推送串起来看，Skill 生态正在走完一条完整的成熟路径——<strong>09-10 比谁装得多（superpowers 28.4 万星）→ 09-11 讨论怎么编排（Subagents vs Skills，胜负取决于有没有输入输出契约）→ 今天问有没有用（Δ 几分）</strong>。第三步是分水岭：前两步可以靠感觉，第三步不行。而且 Δ 这个口径比绝对分数诚实得多——它直接回答「这段指令是资产还是装饰」。
+    </div>
+    <div class="act">
+      <b>可做的动作：</b>① 在插件根目录跑 <code>claude plugin eval init</code>，它会读你的插件、问「什么算好结果」、自动提议用例和 grader 并试跑一遍。② 至少配一个 <code>tool_used: Skill</code> grader——专治「从不触发」这个最普遍的暗病。③ 涉密代码或 prompt 记得加 <code>--no-publish</code>，报告默认会发到 claude.ai。④ 把 <code>--threshold</code> 挂到 CI 上，Skill 的静默腐化（升级 Claude Code、三个月后有人改了一句提示词）会在 PR 里暴露，而不是等用户来骂。
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Anthropic 威胁情报报告：也门武器小组用 Claude Code「取代人类软件工程师」写导弹制导软件</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：Anthropic 威胁情报报告（美东 9/10 发布，被称为「迄今最详细的一份」）· Bloomberg / IBTimes / 钜亨网转述</div>
+    <div class="body">
+      <p>Anthropic 发现一个位于也门北部的威胁行为者小组，同时推进<strong>三个武器项目</strong>：一枚用商用「手机级」飞控 + 末段寻的制导火箭、一型标称射程超 2000 公里的多级弹道导弹、以及一个含<strong>高超音速滑翔体</strong>方案的导弹家族。</p>
+      <p>报告原话：<strong>「这些操作者使用 Claude Code 取代人类软件工程师，开发用于制导、导航和控制（GNC）的软件。」</strong>具体工作包括——把开源自动驾驶系统集成到手机级飞控、编写控制与位置估算软件、调整控制参数、跑固件构建流程、做飞行仿真。</p>
+      <p>用法尤其值得注意：<strong>同时开多个 Claude 实例并分工</strong>，一个写代码、一个做调研、第三个审前两个的产出，就像一个首席工程师给小团队派活。</p>
+      <p>结果层面：他们确实<strong>试射了一枚制导火箭，但「似乎失败了」</strong>；数小时后他们回到 Claude，试图分析失败原因。Anthropic 称<strong>没有证据表明他们成功部署了可投入使用的武器</strong>，但发现他们<strong>已经建了一套不依赖 Claude、也不依赖 MATLAB 之类工程环境的离线仿真工具链</strong>。</p>
+      <p>绕过手法与防护效果：隐藏真实目标与软件最终用途、把工作<strong>拆分到多个会话</strong>，让任何单次对话都看不出完整的武器研发意图。Anthropic 的原话是——<strong>「我们的安全防护机制拦截了他们的许多请求，但并非全部。」</strong>目前相关账号已封禁，情报已共享给公共及私营部门伙伴。</p>
+      <p>Anthropic 未直接指认该小组属于胡塞武装（也门北部大部分地区由胡塞控制，媒体据此关联）。这份报告共涉及也门、中国、俄罗斯相关的<strong>六起常规武器相关调查</strong>，另含无人机集群、电子战、军购与武器研究等软件用途。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>把这三天的推送排成一列，Agent 的角色已经走完三幕：
+      <table>
+        <tr><th>日期</th><th>事件</th><th>Agent 的角色</th></tr>
+        <tr><td>09-10</td><td>GitSpawn：一个 <code>.git/config</code> 劫持 7 款主流 Coding Agent</td><td><strong>受害者</strong></td></tr>
+        <tr><td>09-11</td><td>PaperCut / Kimsuky：数百个 Agent 批量打洞、写钓鱼</td><td><strong>武器</strong></td></tr>
+        <tr><td>09-12</td><td>也门小组用 Claude Code 顶替工程师写 GNC 软件</td><td><strong>劳动力本身</strong></td></tr>
+      </table>
+      第三幕的分量在于：<strong>它不是「AI 帮坏人写了个脚本」，而是非国家行为体第一次把 coding agent 当作工程团队的替代品</strong>——稀缺的不再是武器设计知识，而是「有没有人能落地实现」。同时注意那句「拦截了很多，但不是全部」和「已建离线工具链」：封号是滞后的，能力已经转移出去了。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① Anthropic 是当事方也是披露方，报告由其内部调查驱动，封号与防护有效性属于自述。② 未点名胡塞武装，归属是媒体推断。③ 试射<strong>失败</strong>、无证据显示形成可实战武器——把它读作「能力门槛在下降」的趋势证据，而不是「AI 造出了导弹」。
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Skild AI 首次商用部署后 10 个月做到 1 亿美元 ARR，同时公开炮轰行业「Demo 文化」</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：Skild AI 官方博客《The Hidden Pillar of Robotics》（9/9）· Humanoids Daily / Securities.io 转述 · FutureX Physical AI Daily Issue 117</div>
+    <div class="body">
+      <p>数字本身：<strong>年化经常性收入（ARR）突破 1 亿美元，距离第一次真实商业部署只过了 10 个月</strong>；今年 1 月 C 轮融资 14 亿美元时披露的口径还是约 3000 万美元。客户 60+ 家付费企业，覆盖电子装配、餐饮、仓储、数据中心巡检，点名包括 <strong>富士康、三井物产、住友电装、G10 Fulfillment</strong>。</p>
+      <p>收入结构比总额更有信息量：<strong>移动底盘只占 10%、Fetch 方案占 4%，绝大部分来自工业操作与专项物理作业</strong>——和 Foxconn / NVIDIA 一起把 Skild Brain 用在双臂 manipulator 上装配 Blackwell 系统（插busbar、放限位块、拧 16 颗螺丝且带接触力阈值）；与住友电装攻线束装配这块「被认为不可能自动化」的硬骨头；与三井物产在日本供餐（日均 140 万份）的厨房做摆盘试点。</p>
+      <p>联合创始人 Deepak Pathak 与 Abhinav Gupta 随里程碑发了一篇檄文，几句话很扎人：</p>
+      <ul>
+        <li><strong>「5% 准确率和 99% 准确率，各剪一条成功视频，看起来是一样的。」</strong></li>
+        <li>去年教模型煎蛋：煎出第一个蛋用了一周，<strong>让它在不同鸡蛋、不同环境下稳定下来又花两个月</strong>；「把最后 5% 提上去花的力气，远大于做出前 95%」。</li>
+        <li><strong>「即便 99.9% 准确率，只要慢十倍，就没法部署。」</strong>产线上十个工位机器人占了一半，只要有一个工位慢，整条线的吞吐就被它锁死。</li>
+        <li>「哪怕只有 50% 准确率，你也能挑出一条好看的镜头。要部署，你得处理剩下那 50%，那难得多。<strong>我们决定奖励部署。</strong>」</li>
+      </ul>
+      <p>他还提了 <strong>physical RSI（物理递归自我改进）</strong>：部署数据回流基座模型，让下一次部署的起点更高。收尾一句是：<strong>「Demo 的时代结束了，部署的时代开始了。」</strong></p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>这是和昨天主榜第 4 条<strong>严格镜像</strong>的一组对照——09-11 梅卡曼德 CEO 指控同行靠「数据采集中心 + 关联交易」造收入，09-12 Skild 用 60 家付费客户和 1 亿美元 ARR 给出「真收入长什么样」。在监管收紧（09-10 证监会窗口指导）、二级出清（宇树市值回撤逾 2400 亿）的背景下，<strong>具身赛道的估值锚正在被强制校准：能拿出 ARR 的才配谈估值</strong>。Pathak 那几条关于「最后 5%」和「慢十倍」的判断，也完全可以当成甲方评审机器人方案时的提问清单。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① ARR 是公司自报口径，<strong>未经审计</strong>，且「年化」是把当前收入折算成年，不等于已到账收入。② 客户名单里既有规模化部署也有试点（住友是「推进中」、三井是「试点」）。③ 檄文的立场不中性——它既是方法论宣言，也是融资与销售材料，批判 Demo 文化对 Skild 自身有利。
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>HuRo：把人类视频「机器人化」拿去做 VLA 预训练，真机任务完成率 51.5% → 80.3%</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：arXiv 2609.10706（Jinho Jeong 等）· FutureX Physical AI Daily Issue 117（09/12）· 代码与数据已开源</div>
+    <div class="body">
+      <p>具身智能最卡的瓶颈一直是真机数据——遥操作采集贵、慢、规模上不去。HuRo 的切入点是：<strong>把现成的人类视频转换成机器人对齐的数据来预训练 VLA</strong>。</p>
+      <p>做法是汇集<strong>五类人类视频源</strong>，转成约 <strong>63 万条机器人对齐片段、合计 1.42 亿帧</strong>，构成 HuRo 数据集。作者要验证的是两件事：机器人化的人视频能不能支撑 VLA 预训练，以及能不能随规模良性增长。</p>
+      <p>答案是能，且涨幅不小：</p>
+      <table>
+        <tr><th>场景</th><th>预训练规模扩大前</th><th>扩大后</th></tr>
+        <tr><td>四项真机任务 · 整体完成率</td><td>51.5%</td><td><strong>80.3%</strong></td></tr>
+        <tr><td>分布外（空间与视觉条件变化）</td><td>34.9%</td><td><strong>72.2%</strong></td></tr>
+      </table>
+      <p>分布外那一栏是重点：<strong>涨了 37.3 个百分点，比分布内还猛</strong>，说明靠人视频堆出来的多样性确实在补泛化，而不只是把训练集拟合得更好。代码与数据已开源。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>这条和昨天主榜第 5 条（理想把 Mach VLA 2.0 压回 2022 年的 Orin 平台推给近百万存量车）刚好构成具身落地的两半：<strong>一个解决「模型怎么落到已售出的旧硬件上」，一个解决「训练数据从哪来、怎么便宜地规模化」</strong>。如果机器人化人视频这条路走得通，数据成本的量级变化会直接改写小团队的入场门槛——毕竟人视频是互联网上少数几乎无限的货源。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① arXiv 预印本，未经同行评审（好在数据与代码已公开，可复现）。② 只验证了<strong>四项</strong>真机任务，样本面窄，能否推广到长时程、富接触、高精度装配类任务未知。③ 「机器人化」这一步本身有对齐损失，人视频与机器人本体之间的形态差异（尤其是手部自由度）仍是不小的鸿沟。
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>Trail of Bits 开源 Coop：给 Claude Code / Codex 的一次性隔离 VM</h3>
+      <p>Rust 写的 CLI，每个 agent 会话跑在按需创建、用完即毁的 VM 里，给足 Docker / git / 编译器 / 包管理器权限但不碰宿主机。<strong>关键差异是 VM 级隔离而非容器</strong>——容器与宿主共享内核，VM 有自己的内核，攻击面完全不同。缺口也很明确：目前只支持 Claude Code 与 Codex，缺企业策略下发与集中审计日志。<strong>和主榜第 3 条是同一天的一体两面</strong>。</p>
+    </div>
+    <div class="m code">
+      <h3>Anthropic 开源 Model Hardware Standard（MHS）：把 MCP 的思路用到物理设备上</h3>
+      <p>9/11 研究预览。定义一套共享规范，让 agent 能发现并安全操作显微镜、液体处理站、机械臂、实验激光等设备——每个设备通过标准化驱动暴露读写命令与机器可读安全上限，可经 MCP / CLI / 代码调用且与模型无关。<strong>宣称把实体 AI 集成时间从数周压到数小时</strong>。MCP 统一了 agent 到软件，MHS 想统一 agent 到硬件。</p>
+    </div>
+    <div class="m emb">
+      <h3>ReactHuman：MLLM 当人形大脑，突发危险约三分之一答错，且不随模型规模下降</h3>
+      <p>盘子滑落、刀子掉下来这类需要临场反应的场景。17 类事件、1000+ 可用 240Hz 刚体仿真复现的场景，还故意放了<strong>外观与物理属性冲突的物体</strong>（泡沫做的铁砧、钢做的苹果）。被测的七个 MLLM <strong>大约三个里错一个，而且模型越大错误不减少</strong>。数据集已上 Hugging Face——和 09-11 的 SWE-Bench Pro Verified 属于同一类「审计式基准」，只是这次审的是具身大脑。</p>
+    </div>
+    <div class="m emb">
+      <h3>进产线与出海：Fanuc×Google 焊接智能体 12 月出货，优必选海外订单超 5000 万元</h3>
+      <p>① Fanuc 与 Google 合作的 AI 焊接智能体，<strong>工程师用平板扫一下图纸就能生成焊接路径</strong>，跳过传统离线编程，12 月正式出货，面向中小制造企业。② 优必选拿下超 5000 万元海外订单，买家来自欧洲、日本、韩国。同日埃斯顿完成对 Estun Cool Drive 的整合收购（4.87 亿元，原股东承诺四年累计营收不低于 6.2 亿元）。<strong>模型直接进产线 + 本体开始出海</strong>，是今天具身侧最实的产业信号。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系（避免被误判为重复）</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>③ 也门小组用 Claude Code 写 GNC 软件</td><td>09-11 ② PaperCut / Kimsuky<br>09-10 ① GitSpawn 劫持 Agent</td><td><strong>同一主线的第三幕</strong>：受害者 → 武器 → 劳动力替代</td></tr>
+        <tr><td>④ Skild AI 1 亿美元 ARR</td><td>09-11 ④ 邵天兰指控虚增收入<br>09-10 ⑤ 证监会收紧人形机器人 IPO</td><td><strong>反向镜像 + 收束</strong>：一边被指造假，一边拿出 ARR；监管收紧的背景下给出「什么算真收入」的样本</td></tr>
+        <tr><td>④ Skild AI ARR</td><td>09-08 顺带 · Skild AI S1 模型</td><td><strong>同公司不同事</strong>：从模型发布到收入兑现，中间隔 10 个月</td></tr>
+        <tr><td>② <code>claude plugin eval</code></td><td>09-11 ③ Subagents vs Skills<br>09-10 ③ superpowers 28.4 万星</td><td><strong>同一条成熟路径的第三步</strong>：装了多少 → 怎么编排（契约）→ 有没有用（Δ）</td></tr>
+        <tr><td>① Devin Fusion</td><td>09-11 速览 · Cognition SWE-2<br>09-09 ① Cognition 480 亿估值</td><td><strong>同公司、且互为配件</strong>：SWE-2 正是 Fusion 推荐的 sidekick；估值之后是单位经济学</td></tr>
+        <tr><td>① Devin Fusion / HydraFusion</td><td>09-10 ② 微软 FastContext<br>09-07 顺带 · GitHub HydraFusion</td><td><strong>同层不同面</strong>：都是 harness 层优化，FastContext 省的是上下文 token，Fusion 换的是模型组合；HydraFusion 今天拿到的是引擎细节</td></tr>
+        <tr><td>⑤ HuRo 人视频预训练</td><td>09-11 ⑤ 理想 Mach VLA 2.0 推存量车</td><td><strong>互补两半</strong>：一个解数据从哪来，一个解模型怎么落到旧硬件</td></tr>
+        <tr><td>速览 · Trail of Bits Coop</td><td>09-10 ① GitSpawn</td><td><strong>问题与缓解</strong>：GitSpawn 证明入口可被劫持，Coop 给出可执行的隔离边界</td></tr>
+        <tr><td>速览 · ReactHuman 基准</td><td>09-11 ① SWE-Bench Pro Verified</td><td><strong>同类方法论</strong>：都是「回炉审计」式基准，一个审 coding 分数，一个审具身大脑</td></tr>
+      </table>
+      <p style="margin-bottom:0"><strong>今日主线一句话：</strong>今天五条看起来分属四个赛道，其实指向同一件事——<strong>「能不能做」的阶段过去了，「能不能证明」开始分胜负</strong>。成本要能证明（Fusion 的美元/任务，由第三方按完成口径出）、效果要能证明（plugin eval 的 Δ，Δ≈0 的 Skill 就是装饰）、风险要能证明（威胁报告写明「拦截了很多但不是全部」）、收入要能证明（Skild 的 ARR，以及 Pathak 那句「5% 和 99% 的成功视频看起来一样」）。谁还在只给 demo 不给数字，谁就在这一轮里掉队。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-12 · 北京时间 16:37</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-11.html">← 2026-09-11</a></div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P013 · macOS 上 OpenShip Edge 只认容器：宿主 OpenResty 能&quot;过关&quot;但不接路由 · walker</title><meta name="description" content="macOS 上 OpenShip 的路由/证书提供者是写死的空实现（NoopInfraProvider），宿主 OpenResty 这条代码路径被平台判断直接挡掉 —— 所以「让 OpenShip 托管域名」只有 Doc"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p013-openship-edge%E5%9C%A8macos%E5%8F%AA%E8%AE%A4%E5%AE%B9%E5%99%A8/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P013 · macOS 上 OpenShip Edge 只认容器：宿主 OpenResty 能&quot;过关&quot;但不接路由 · walker"><meta property="og:description" content="macOS 上 OpenShip 的路由/证书提供者是写死的空实现（NoopInfraProvider），宿主 OpenResty 这条代码路径被平台判断直接挡掉 —— 所以「让 OpenShip 托管域名」只有 Doc"><meta property="og:url" content="https://wkh888888.github.io/pits/p013-openship-edge%E5%9C%A8macos%E5%8F%AA%E8%AE%A4%E5%AE%B9%E5%99%A8/"><meta property="og:image" content="https://wkh888888.github.io/og/p013-openship-edge%E5%9C%A8macos%E5%8F%AA%E8%AE%A4%E5%AE%B9%E5%99%A8.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P013 · macOS 上 OpenShip Edge 只认容器：宿主 OpenResty 能&quot;过关&quot;但不接路由 · walker"><meta name="twitter:description" content="macOS 上 OpenShip 的路由/证书提供者是写死的空实现（NoopInfraProvider），宿主 OpenResty 这条代码路径被平台判断直接挡掉 —— 所以「让 OpenShip 托管域名」只有 Doc"><meta name="twitter:image" content="https://wkh888888.github.io/og/p013-openship-edge%E5%9C%A8macos%E5%8F%AA%E8%AE%A4%E5%AE%B9%E5%99%A8.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P013 · macOS 上 OpenShip Edge 只认容器：宿主 OpenResty 能&quot;过关&quot;但不接路由</h1><p>macOS 上 OpenShip 的路由/证书提供者是写死的空实现（NoopInfraProvider），宿主 OpenResty 这条代码路径被平台判断直接挡掉 —— 所以「让 OpenShip 托管域名」只有 Doc</p><div class="hero-meta"><span>踩坑于 2026-09-11</span><span>约 7 分钟</span><a class="tag" href="/tags/部署/">部署</a><a class="tag" href="/tags/架构边界/">架构边界</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#一句话">一句话</a><a class="toc-l2" href="#故事线装完-openresty错误变轻了但没消失">故事线：装完 OpenResty，错误“变轻”了但没消失</a><a class="toc-l2" href="#为什么宿主-openresty-接不了路由决定性代码">为什么宿主 OpenResty 接不了路由（决定性代码）</a><a class="toc-l2" href="#那么域名--https到底有几条路更正不止一条">那么「域名 + HTTPS」到底有几条路（更正：不止一条）</a><a class="toc-l2" href="#附apple-silicon-装-openresty-的坑可复用">附：Apple Silicon 装 OpenResty 的坑（可复用）</a><a class="toc-l2" href="#后续发现域名记录不能删无用可删">后续发现：域名记录不能删（“无用”≠“可删”）</a><a class="toc-l2" href="#预防规则">预防规则</a><a class="toc-l2" href="#相关文件">相关文件</a><a class="toc-l2" href="#2026-09-11-后续edge-容器手动装成功了推翻macos-上-noopinfraprovider-恒定的结论">2026-09-11 后续：edge 容器手动装成功了（推翻「macOS 上 NoopInfraProvider 恒定」的结论）</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-11</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>部署 / 架构边界</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（部署已成功，但域名/HTTPS 这一层拿不到）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>openship、edge、openresty、docker、OrbStack、launchd、bare runtime、loopback inventory、:80 需要 root、GeoIP、–without-geoip、macOS、Apple Silicon</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一句话">一句话</h2>
+<p><strong>macOS 上 OpenShip 的路由/证书提供者是写死的空实现（<code>NoopInfraProvider</code>），宿主 OpenResty 这条代码路径被平台判断直接挡掉 —— 所以「让 OpenShip 托管域名」只有 Docker 容器一条路。宿主安装 OpenResty 只能让部署不再因读不到路由清单而致命失败，不会、也不可能真正接管路由。</strong></p>
+<h2 id="故事线装完-openresty错误变轻了但没消失">故事线：装完 OpenResty，错误“变轻”了但没消失</h2>
+<p>同一条部署链，装 OpenResty 前后：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>装之前</th>
+<th>装之后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日志</td>
+<td><code>Missing: edge</code></td>
+<td><code>Missing: docker, edge</code></td>
+</tr>
+<tr>
+<td>接着</td>
+<td><code>Failed to install edge: needs root</code></td>
+<td><code>Failed to install docker: needs root</code></td>
+</tr>
+<tr>
+<td>结果</td>
+<td><strong>致命</strong> <code>Cannot read Openship edge routes</code> → 部署失败</td>
+<td><strong>warn</strong> <code>Edge/routing setup failed — deploy continues</code> → 部署成功</td>
+</tr>
+<tr>
+<td>路由</td>
+<td>无</td>
+<td><code>Registering route ai-probe.localhost → http://127.0.0.1:30202</code>（只写进 DB，无人消费）</td>
+</tr>
+</tbody>
+</table>
+<p>原因：OpenShip 里那段路由装配是 try/catch 包着的 ——</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (plannedRoutes.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> &gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> needsStrictLoopbackInventory) { </span><span style="color:#6A737D">/* ensureEdge ... */</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">} </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (err2) {</span></span>
+<span class="line"><span style="color:#E1E4E8">  logger4.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Edge/routing setup failed — deploy continues; services run and routing is retried later"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"warn"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>而 <code>bare</code> 运行时下 <code>needsStrictLoopbackInventory</code> <strong>恒为真</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> usesHostLoopbackUpstream</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">strategy</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">runtime</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> runtime.name </span><span style="color:#F97583">!==</span><span style="color:#9ECBFF"> "cloud"</span></span>
+<span class="line"><span style="color:#F97583">      &amp;&amp;</span><span style="color:#E1E4E8"> (strategy </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "loopback-port"</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> runtime.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "bare"</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> …);   </span><span style="color:#6A737D">// ← bare 恒真</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><code>ensureEdge</code> 内部会先 <code>scanOpenshipEdgeStrict()</code> 读宿主 <code>openresty -T</code> 的路由清单。<strong>机器上没 OpenResty 时这个读取抛错 → 被 catch 的是外层，但错误向上冒泡成了致命失败</strong>；装了 OpenResty，读取通过，于是流程能继续走到后面的 docker 检查，失败在那里被降级成 warn。</p>
+<p>→ <strong>OpenResty 的作用是“让代码走完”，不是“让域名能访问”。</strong></p>
+<h2 id="为什么宿主-openresty-接不了路由决定性代码">为什么宿主 OpenResty 接不了路由（决定性代码）</h2>
+<p><code>createInfraProvider()</code>（<code>server/index.js:63754</code>）是<strong>按固定顺序短路返回</strong>的：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">async</span><span style="color:#F97583"> function</span><span style="color:#B392F0"> createInfraProvider</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">_mode</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">config2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">executor</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">edgeContainer</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (edgeContainer) { …localContainerEdgeProvider… }        </span><span style="color:#6A737D">// ① 显式容器（OPENSHIP_EDGE_MODE=docker）</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> remoteEdge</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> resolveOurEdgeContainer</span><span style="color:#E1E4E8">(executor)</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (remoteEdge) { …containerEdgeProvider… }                </span><span style="color:#6A737D">// ② 主机上已有的 edge 容器</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (executor </span><span style="color:#F97583">instanceof</span><span style="color:#B392F0"> LocalExecutor</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#E1E4E8"> process.platform </span><span style="color:#F97583">!==</span><span style="color:#9ECBFF"> "linux"</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> NoopInfraProvider</span><span style="color:#E1E4E8">();                          </span><span style="color:#6A737D">// ③ ★ macOS + 本地 → 空实现</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  …detectOpenRestyPaths </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> ensureOpenRestyConfig </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> NginxProvider…   </span><span style="color:#6A737D">// ④ 宿主 OpenResty（仅 Linux）</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>macOS + 本地 executor 永远落在分支 ③</strong>，拿到一个<strong>什么都不做的</strong>路由/证书提供者：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> NoopInfraProvider</span><span style="color:#E1E4E8"> {                 </span><span style="color:#6A737D">// server/index.js:62216</span></span>
+<span class="line"><span style="color:#F97583">  async</span><span style="color:#B392F0"> registerRoute</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">_route</span><span style="color:#E1E4E8">) {}          </span><span style="color:#6A737D">// ← 空函数体</span></span>
+<span class="line"><span style="color:#F97583">  async</span><span style="color:#B392F0"> removeRoute</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">_domain</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">_opts</span><span style="color:#E1E4E8">) {}    </span><span style="color:#6A737D">// ← 空函数体</span></span>
+<span class="line"><span style="color:#F97583">  async</span><span style="color:#B392F0"> provisionCert</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">domain</span><span style="color:#E1E4E8">) { </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> { domain, expiresAt: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, issuer: </span><span style="color:#9ECBFF">"none"</span><span style="color:#E1E4E8">, verified: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8"> }; }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>→ 部署日志里那句 <code>Registering route ai-probe.localhost → http://127.0.0.1:30202</code> <strong>只写进 DB，<code>registerRoute()</code> 把它吞掉</strong>。所以「路由已登记」和「域名能访问」是两件事。</p>
+<p><strong>实测三重印证分支 ③ 生效</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>判据</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/opt/homebrew/etc/openresty/nginx.conf</code> vs <code>nginx.conf.default</code></td>
+<td><strong>逐字节相同</strong> → OpenShip 从未改过宿主 nginx 配置</td>
+</tr>
+<tr>
+<td>OpenResty 前缀内搜 <code>openship</code> 产物</td>
+<td>零</td>
+</tr>
+<tr>
+<td><code>~/.openship/logs/instance.log</code> 里的 <code>[openresty]</code> 行</td>
+<td><strong>一条都没有</strong>（分支 ④ 从未进入）</td>
+</tr>
+</tbody>
+</table>
+<p>（对比：<code>detectMail()</code> 明确有 <code>flavor: "host"</code> 分支，说明“宿主模式”是一处一议的特例，不是通用能力。）</p>
+<p>Edge 侧同样只有容器：<code>detectEdge2()</code> 只调 <code>detectEdgeContainer()</code>；<code>installContainerEdge</code> 在检查 Docker <strong>之前</strong>就先过提权门 <code>prepareExecutor</code> → <code>privilegedExecutor</code>，macOS 上 <code>isRoot=false</code>/<code>canSudo=false</code> → 直接 refuse，<strong>给 sudo 也没用</strong>；<code>SYSTEM_COMPONENT_DEPENDENCIES = { edge: ["docker"] }</code>。</p>
+<p><code>openship doctor</code> 也直说：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{ </span><span style="color:#79B8FF">"name"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Edge"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"state"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"warn"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"detail"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"docker unavailable — can't check"</span><span style="color:#E1E4E8"> }</span></span></code></pre>
+<h2 id="那么域名--https到底有几条路更正不止一条">那么「域名 + HTTPS」到底有几条路（更正：不止一条）</h2>
+<p>严格区分两件事 —— <strong>交给 OpenShip 托管</strong> vs <strong>只要域名能访问</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>需要什么</th>
+<th>OpenShip 管</th>
+<th>端口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. OpenShip edge 容器（启 Docker/OrbStack）</strong></td>
+<td>Docker 在跑</td>
+<td>✅ 原生托管</td>
+<td>80/443</td>
+</tr>
+<tr>
+<td><strong>B. 自建反代 + 绑 :80</strong></td>
+<td><strong>root</strong>（本机无免密 sudo，需输密码）</td>
+<td>❌ 手工</td>
+<td>80/443</td>
+</tr>
+<tr>
+<td><strong>C. 自建反代 + 绑 ≥1024 端口</strong></td>
+<td><strong>什么都不需要</strong></td>
+<td>❌ 手工</td>
+<td>如 8080，URL 带端口</td>
+</tr>
+<tr>
+<td>D. 把 deploy target 换成 Linux 主机</td>
+<td>Linux 机器</td>
+<td>✅</td>
+<td>80/443</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>「让 OpenShip 自己托管」→ 只有 A</strong>，因为 macOS 的分支 ③ 写死返回 Noop，宿主 OpenResty 那条路被平台判断直接挡掉（这是设计如此，不是配置问题）。</li>
+<li><strong>「只想让 <code>ai-probe.localhost</code> 能打开」→ 还有 C</strong>：非 root 无法 bind :80（实测 <code>socket.bind(("127.0.0.1",80))</code> → <code>PermissionError</code>），但 <strong>≥1024 端口不需要任何权限</strong>。用已有的 <code>/opt/homebrew/bin/nginx</code>（或新装的 OpenResty）监听 8080、<code>proxy_pass</code> 到 <code>127.0.0.1:30202</code>，就能用 <code>http://ai-probe.localhost:8080</code> 访问。代价：带端口、无自动 HTTPS、脱离平台管理。</li>
+</ul>
+<p><strong>所以早先那句「要域名 + HTTPS 只能启 OrbStack」说过头了</strong> —— 准确说法是：<strong>要域名在标准 80/443 上、且由 OpenShip 托管，只有 A 一条路</strong>。</p>
+<h2 id="附apple-silicon-装-openresty-的坑可复用">附：Apple Silicon 装 OpenResty 的坑（可复用）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> tap</span><span style="color:#9ECBFF"> openresty/brew</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> trust</span><span style="color:#9ECBFF"> openresty/brew</span><span style="color:#6A737D">           # 官方仓库 github.com/openresty/homebrew-brew</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> openresty/brew/openresty</span></span>
+<span class="line"><span style="color:#6A737D"># ✗ ./configure: error: the GeoIP module requires the GeoIP library</span></span>
+<span class="line"><span style="color:#6A737D">#   （M 系列已知问题，homebrew-brew issue #53）</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> openresty/brew/openresty</span><span style="color:#79B8FF"> --without-geoip</span><span style="color:#6A737D">    # ✓ 54 秒装成</span></span></code></pre>
+<p>Formula 自带 <code>option "without-geoip", "Compile without ngx_http_geoip module"</code>。</p>
+<p>验收判据（OpenShip 会这样判）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">command</span><span style="color:#79B8FF"> -v</span><span style="color:#9ECBFF"> openresty</span><span style="color:#6A737D">            # 需在 plist PATH 内，如 /opt/homebrew/bin</span></span>
+<span class="line"><span style="color:#B392F0">openresty</span><span style="color:#79B8FF"> -T</span><span style="color:#F97583"> &gt;</span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> 2&gt;&amp;1</span><span style="color:#E1E4E8">; </span><span style="color:#79B8FF">echo</span><span style="color:#79B8FF"> $?</span><span style="color:#6A737D">    # 必须 0</span></span>
+<span class="line"><span style="color:#B392F0">openresty</span><span style="color:#79B8FF"> -T</span><span style="color:#F97583"> 2&gt;</span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> "server {"</span><span style="color:#6A737D">   # 需 &gt; 0</span></span></code></pre>
+<p>注意 OpenResty <strong>不是常驻服务</strong>，OpenShip 只需要能读到它的配置；别去 <code>openresty</code> 起进程（默认 conf <code>listen 80</code>，非 root 起不来）。</p>
+<h2 id="后续发现域名记录不能删无用可删">后续发现：域名记录不能删（“无用”≠“可删”）</h2>
+<p>想“清理”那条域名警告时踩了一步：<strong>把域名记录删掉，项目就再也部署不了</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>根因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删域名后部署 → <code>403 CLOUD_REQUIRED_MANAGED_PROJECT_DOMAIN</code></td>
+<td><code>requestBuildAccess()</code>：<code>routeState.publicEndpoints</code> 为空时自动补 <code>defaultFreeEndpoint()</code> —— 一个免费 <code>*.opsh.io</code> 端点。免费端点需要 Openship Cloud 路由，自托管下必 403</td>
+</tr>
+<tr>
+<td>只把域名加回来仍 403</td>
+<td>新建域名没有 <code>targetPort</code>，被 <code>routeDomainRowToPublicEndpoint</code> 丢弃（它要求 <code>port</code>/<code>targetPath</code> <strong>恰好有其一</strong>）→ <code>buildRouteState()</code> 的 <code>publicEndpoints[0]</code> 为 undefined → 仍判「没有自定义域名」</td>
+</tr>
+<tr>
+<td>重部署时 <code>Port 30202 is already in use</code></td>
+<td>旧部署进程已孤儿化（<code>PPID=1</code>）但继续监听端口，需先 <code>kill</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>正确的部署方式</strong>：把域名写进 <code>openship.json</code>，并在部署请求里显式传 <code>publicEndpoints</code>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#9ECBFF">"domains"</span><span style="color:#E1E4E8">: [ { </span><span style="color:#79B8FF">"domain"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"ai-probe.localhost"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"port"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">30202</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"custom"</span><span style="color:#E1E4E8"> } ]</span></span></code></pre>
+<p>→ <code>publicEndpoints: [{ "domainType": "custom", "customDomain": "ai-probe.localhost", "port": "30202" }]</code>
+（<strong><code>port</code> 必须是字符串</strong> —— 传数字报 400 <code>Expected string</code>）</p>
+<p><strong>教训：判断一个对象能不能删，不能只看「它有没有在产生价值」，还要问「删掉它会不会触发别的行为」。</strong> 这条域名行同时承担「路由端点声明」和「占位、防止回落到免费域名」两个职责 —— 与“有没有人真的访问这个 URL”完全无关。删掉它触发了自动补全逻辑，把项目推到了一个必然失败的状态。</p>
+<p><strong><code>routingUnsynced</code> 也清不掉</strong>：它读自部署记录的 <code>meta.deployWarning</code>，自托管项目必须有自定义域名、域名没证书就每次部署都写 → 每次都是 true。<code>POST /api/projects/&lt;id&gt;/routing/retry</code> 同样无效，只会返回「需要 Docker 才能恢复 edge」。<strong>只有让 edge 真正跑起来才会消失。</strong></p>
+<h2 id="预防规则">预防规则</h2>
+<ul>
+<li><strong>看到“组件缺失”先分清是“读取失败致命”还是“安装失败降级”。</strong> 本例装宿主 OpenResty 只解决了前者；误以为它能解决后者会白等一轮。</li>
+<li><strong>判断某个组件有没有“宿主模式”，别猜 —— 看 detect 函数有没有 host 分支。</strong> 有（<code>mail</code>）说明支持；没有（<code>edge</code>）说明只能容器。</li>
+<li><strong>macOS 上任何要占 80/443 的方案，先确认特权来源</strong>：root / 免密 sudo / Docker 端口转发，三选一，缺一即为死路。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/bin/openship-local-deploy</code>（手工五步部署脚本）</li>
+<li><code>~/bin/openship-restart</code>（保留环境变量的正确重启姿势）</li>
+<li>部署记录：<code>dep_8taeQ-UU8MvS_mI0</code>（ready）、项目 <code>proj_5yQ9-UXPQKBmc9c3</code></li>
+<li>CLI 关键位置：<code>dist/server/index.js:321019</code>（<code>detectEdge2</code>）、<code>:281596</code>（<code>usesHostLoopbackUpstream</code>）、<code>:303880</code>（routing try/catch）</li>
+</ul>
+<h2 id="2026-09-11-后续edge-容器手动装成功了推翻macos-上-noopinfraprovider-恒定的结论">2026-09-11 后续：edge 容器手动装成功了（推翻「macOS 上 NoopInfraProvider 恒定」的结论）</h2>
+<p>关键更正：<code>createInfraProvider()</code> 的<strong>分支①（已有 edge 容器）优先于平台短路</strong>。之前说「macOS + 本地 executor 永远 Noop」不准确 —— 准确说法是「<strong>无 edge 容器时</strong>才落到 Noop」。只要 <code>docker ps</code> 能看到 <code>openship-edge</code>，macOS 上路由就走容器通道，完全可用。</p>
+<p>三条安装通道都堵死后手动复刻成功的完整 runbook：</p>
+<table>
+<thead>
+<tr>
+<th>通道</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openship edge up</code></td>
+<td>CLI 有 <code>requireLinux()</code> 守卫，macOS 直接退出</td>
+</tr>
+<tr>
+<td>面板/<code>POST /api/system/install</code></td>
+<td><code>prepareExecutor</code> 提权门：无免密 sudo → <code>Installing edge needs root</code></td>
+</tr>
+<tr>
+<td>手动 <code>docker run</code>（buildEdgeRunCommand 原样）</td>
+<td>✅ 成功</td>
+</tr>
+</tbody>
+</table>
+<p>要点：</p>
+<ol>
+<li>前置一次性 sudo：<code>sudo mkdir -p /var/lib/openship/edge/{sites-enabled,acme} /etc/letsencrypt /opt/openship/static &amp;&amp; sudo chown -R $(whoami) …</code>（<code>/var/lib</code>、<code>/opt</code> 在 macOS 都是 root 的）。</li>
+<li><code>docker run -d --name openship-edge --network host --restart unless-stopped -v &lt;四个挂载&gt; ghcr.io/oblien/openship-edge:&lt;cli版本&gt;</code>。OrbStack 的 <code>--network host</code> + 80/443 绑定<strong>不需要 root</strong>。</li>
+<li>起来后 <code>POST /api/projects/&lt;id&gt;/routing/retry</code> 从「requires Docker」变成 <code>{"ok":true}</code>，vhost 自动写进 <code>/var/lib/openship/edge/sites-enabled/</code>，<code>Host: ai-probe.localhost</code> 打 :80 → 200，<code>http://ai-probe.localhost</code> 直接可访问。</li>
+<li><strong><code>.localhost</code> 拿不到 Let’s Encrypt 证书</strong>（Certbot 报 no certificate produced）→ 面板 “Verify DNS” 警告对 <code>.localhost</code> 永远清不掉，HTTPS 死路，属预期。</li>
+<li>面板三条警告的实际收敛：Docker ECONNREFUSED ✅ 消（Docker 在跑）；routingUnsynced ✅ 消（新部署 meta 不再写 deployWarning）；Verify DNS ❌ 永在（<code>.localhost</code> 无证书）。</li>
+<li>OrbStack 默认不开机自启，重启后 edge 掉线；应用本身不受影响（仍 <code>127.0.0.1:&lt;port&gt;</code>）。</li>
+</ol>
+<p><strong>教训：</strong> ①「恒定短路」类结论要标注前提条件——分支顺序里只要有更高优先级的出口，前提一变结论就翻。②平台的安装 API 被提权门锁死时，读它的 <code>ensure*</code> 实现，里面的降级路径（<code>rootOrDegrade</code>）往往才是真实的最小需求。③<code>.localhost</code> 域名注定无 HTTPS，别再为它点 Verify。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p012-同文件并行编辑导致改动被吞/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」</span></a><a class="post-nav-item post-nav-next" href="/pits/p014-dom自动化假成功_节点数量与queryselector/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P014 - DOM 自动化里的两类「假成功」：节点数量判状态 &amp; querySelector 取首个元素</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

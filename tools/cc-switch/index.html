@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CC Switch：给八个 AI 编程工具装一个「总闸」 · walker</title><meta name="description" content="开源桌面应用，把 Claude Code、Codex、Gemini CLI 等八个 AI 工具的供应商配置、MCP、Skills 收进一个界面统一管理，一键切换不再手改 JSON。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/tools/cc-switch/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="CC Switch：给八个 AI 编程工具装一个「总闸」 · walker"><meta property="og:description" content="开源桌面应用，把 Claude Code、Codex、Gemini CLI 等八个 AI 工具的供应商配置、MCP、Skills 收进一个界面统一管理，一键切换不再手改 JSON。"><meta property="og:url" content="https://wkh888888.github.io/tools/cc-switch/"><meta property="og:image" content="https://wkh888888.github.io/og/cc-switch.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="CC Switch：给八个 AI 编程工具装一个「总闸」 · walker"><meta name="twitter:description" content="开源桌面应用，把 Claude Code、Codex、Gemini CLI 等八个 AI 工具的供应商配置、MCP、Skills 收进一个界面统一管理，一键切换不再手改 JSON。"><meta name="twitter:image" content="https://wkh888888.github.io/og/cc-switch.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">工具推荐</span><h1>CC Switch：给八个 AI 编程工具装一个「总闸」</h1><p>它不写代码、不调模型，只管一件事——让你在多个 AI 编程工具和供应商之间一键切换。</p><div class="hero-meta"><span>第 2 期</span><span>发布于 2026-09-11</span><span>约 3 分钟</span><a class="tag" href="https://github.com/farion1231/cc-switch" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/Claude Code/">Claude Code</a><a class="tag" href="/tags/开源/">开源</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心功能readme-实锤非营销稿">核心功能（README 实锤，非营销稿）</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>第一次听说 CC Switch 的人，十个里有八个以为它是 Anthropic 官方出的、或者是 Claude Code 的某个组件。都不是。</p>
+<p><strong>它是一款社区开源桌面应用</strong>（作者 Jason Young，MIT 协议，Tauri 2 构建，更新很勤，写这篇时最新版 v3.20.2），本身不写代码、不调模型、不执行任何 AI 推理。它只做一件事：<strong>帮你管理那些 AI 编程工具的配置</strong>——供应商地址、API Key、模型名、MCP 服务器、Skills。</p>
+<p>所以先把预期摆正：装了它不会凭空多出模型能力，API Key 还得自己准备；它也不是 Claude Code 的替代品，而是 Claude Code 们的「总闸」。</p>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>如果你只装一个 Claude Code、只用官方 API，可以直接划走，你不需要它。</p>
+<p>但只要你同时用两三个以上的 AI 编程工具，痛点就来了。我自己的机器上就常年跑着 Claude Code、Codex、Gemini CLI、OpenClaw 好几个 agent，每个工具一份配置文件，格式还各不相同：</p>
+<ul>
+<li>想把 Claude Code 从官方 API 切到某个国产模型，得手改 <code>settings.json</code> 里的 Base URL、API Key、Model ID 三处；</li>
+<li>Codex 和 Gemini CLI 又是另外两套文件；</li>
+<li>MCP 配置更麻烦，同一批 MCP 服务器要往每个工具里配一遍；</li>
+<li>改错一个逗号，整个配置加载失败，还得自己排查。</li>
+</ul>
+<p>CC Switch 把这些全收进一个界面。</p>
+<h2 id="核心功能readme-实锤非营销稿">核心功能（README 实锤，非营销稿）</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供应商管理</td>
+<td>50+ 内置预设，点一下导入；一键切换，系统托盘快捷切换</td>
+</tr>
+<tr>
+<td>多工具支持</td>
+<td>一款应用管八个：Claude Code、Claude Desktop、Codex、Gemini CLI、Grok Build、OpenCode、OpenClaw、Hermes</td>
+</tr>
+<tr>
+<td>MCP / Prompts / Skills</td>
+<td>统一管理，跨工具双向同步，不用每个工具配一遍</td>
+</tr>
+<tr>
+<td>代理与故障转移</td>
+<td>本地代理热切换、格式转换、自动故障转移与熔断</td>
+</tr>
+<tr>
+<td>用量与成本追踪</td>
+<td>仪表板看花费、请求数、Token 趋势，多家供应商一对比就知道钱花在哪</td>
+</tr>
+<tr>
+<td>会话管理器</td>
+<td>浏览、搜索、恢复各工具的对话历史</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>云同步配置（Dropbox/OneDrive/iCloud/WebDAV）、原子写入防配置写坏、深链接 <code>ccswitch://</code></td>
+</tr>
+</tbody>
+</table>
+<p>其中我认为最值钱的是两个：<strong>供应商一键切换</strong>和 <strong>MCP/Skills 统一管理</strong>。前者把「切模型」从一次十分钟的手改 JSON 变成一次点击；后者解决了「同一套 MCP 配置在 N 个工具里重复维护、改一处漏一处」的经典问题。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>原生桌面应用，Tauri 2 构建，三平台都有包：</p>
+<ul>
+<li>Windows 10+；macOS 12+（已签名公证，不会卡 Gatekeeper）；Linux（Ubuntu 22.04+ / Debian 11+ / Fedora 34+ 等主流发行版）</li>
+<li>开源协议 MIT，直接去 <a href="https://github.com/farion1231/cc-switch">GitHub 仓库</a> 下载对应平台的安装包即可</li>
+</ul>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>它不管模型服务</strong>。切换供应商只是改「请求发去哪」，那条供应商线路通不通、质量好不好，是供应商的事。切完记得跑个小任务验证。</li>
+<li><strong>API Key 集中在一处，等于风险也集中</strong>。配置支持云同步是便利，但同步盘里躺着各家 Key，盘的账号安全要自己上心。</li>
+<li><strong>社区项目，非官方</strong>。Anthropic、OpenAI 等厂商的配置格式变了，得等它跟进；好在更新很勤。</li>
+<li>桌面 GUI 的思路是「可视化优先」，纯命令行党如果只想脚本化切换，它也有深链接等入口，但整体还是面向「愿意开个窗口管理配置」的用户。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<ul>
+<li>同时用两个以上 AI 编程工具、经常在多家供应商之间切换的人——这是它的主场；</li>
+<li>想统一管理 MCP / Skills、不想在各个工具里重复配置的人；</li>
+<li>想搞清楚自己 AI 编程开销都花在哪的人（成本仪表板）。</li>
+</ul>
+<p>只有一个 Claude Code、只用一家供应商、配置从不折腾的，不用装，少一个常驻应用。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/workbuddy/"><span class="post-nav-label">上一期</span><span class="post-nav-title">WorkBuddy：让 AI 从「陪聊」变成「干活」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

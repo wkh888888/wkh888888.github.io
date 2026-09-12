@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」 · walker</title><meta name="description" content="给 src/pages/ai-daily/index.astro 同时改两处（副标题文案 + 元信息行的条件渲染），两条改文件请求在同一条消息里并行发出。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p012-%E5%90%8C%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A1%8C%E7%BC%96%E8%BE%91%E5%AF%BC%E8%87%B4%E6%94%B9%E5%8A%A8%E8%A2%AB%E5%90%9E/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」 · walker"><meta property="og:description" content="给 src/pages/ai-daily/index.astro 同时改两处（副标题文案 + 元信息行的条件渲染），两条改文件请求在同一条消息里并行发出。"><meta property="og:url" content="https://wkh888888.github.io/pits/p012-%E5%90%8C%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A1%8C%E7%BC%96%E8%BE%91%E5%AF%BC%E8%87%B4%E6%94%B9%E5%8A%A8%E8%A2%AB%E5%90%9E/"><meta property="og:image" content="https://wkh888888.github.io/og/p012-%E5%90%8C%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A1%8C%E7%BC%96%E8%BE%91%E5%AF%BC%E8%87%B4%E6%94%B9%E5%8A%A8%E8%A2%AB%E5%90%9E.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」 · walker"><meta name="twitter:description" content="给 src/pages/ai-daily/index.astro 同时改两处（副标题文案 + 元信息行的条件渲染），两条改文件请求在同一条消息里并行发出。"><meta name="twitter:image" content="https://wkh888888.github.io/og/p012-%E5%90%8C%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A1%8C%E7%BC%96%E8%BE%91%E5%AF%BC%E8%87%B4%E6%94%B9%E5%8A%A8%E8%A2%AB%E5%90%9E.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」</h1><p>给 src/pages/ai-daily/index.astro 同时改两处（副标题文案 + 元信息行的条件渲染），两条改文件请求在同一条消息里并行发出。</p><div class="hero-meta"><span>踩坑于 2026-09-11</span><span>约 2 分钟</span><a class="tag" href="/tags/Agent 工具使用/">Agent 工具使用</a><a class="tag" href="/tags/文件改动/">文件改动</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法--预防规则">解法 / 预防规则</a><a class="toc-l2" href="#与-p008p009-的关系">与 P008/P009 的关系</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-11</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>Agent 工具使用 / 文件改动</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（改动静默丢失，构建产物仍带旧逻辑）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>Edit 并行、同文件多处修改、写后回读、假成功、构建产物校验、Astro 博客、AI 日报</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>给 <code>src/pages/ai-daily/index.astro</code> 同时改两处（副标题文案 + 元信息行的条件渲染），两条改文件请求<strong>在同一条消息里并行发出</strong>。</p>
+<ul>
+<li>两条都返回 <code>Successfully edited file: …</code></li>
+<li>构建后产物里：副标题的新文案在，元信息行的新逻辑<strong>不在</strong>（还是旧的 <code>&lt;span&gt;{issue.miniCount} 条速览&lt;/span&gt;</code>）</li>
+<li>源文件 <code>grep "miniCount &gt; 0"</code> 无结果 → 改动确实没落盘，不是构建缓存问题</li>
+</ul>
+<h2 id="根因">根因</h2>
+<p>两条编辑各自读取同一份文件快照、各自基于快照写回；后写入的把先写入的结果覆盖掉（写回的是“自己的快照 + 自己那处改动”，不含对方的改动）。<strong>工具层面无冲突检测，两处都报成功。</strong></p>
+<h2 id="解法--预防规则">解法 / 预防规则</h2>
+<ul>
+<li><strong>同一文件的多处改动，串行发送</strong>（一次消息一个改动），或干脆一次调用写完整个区块。</li>
+<li>跨文件的改动才可以并行。</li>
+<li><strong>改动后必须回读校验</strong>：<code>grep -c "&lt;新标记&gt;" 源文件</code>，而不是只看工具返回的 “Successfully”。</li>
+<li><strong>最终以构建产物校验为准</strong>：改完构建一次，去 <code>dist/</code> 里 grep 新逻辑/新文案是否存在（本次就是靠产物 grep 抓出来的）。</li>
+<li>面向用户的交付前自检同理：渲染后的页面截图 / 产物 grep 才算证据。</li>
+</ul>
+<h2 id="与-p008p009-的关系">与 P008/P009 的关系</h2>
+<p>同一家族（「报成功 ≠ 生效」）的第三种形态：P008 是 CLI 升级的超时/缓存默认值骗人，P009 是多安装源的假成功，本条是<strong>并发的读写覆盖</strong>。共同检查项：<strong>任何写操作之后都要用独立手段回读确认，不要以工具返回码/措辞作为结论。</strong></p>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/projects/server-apps/astro-blog/src/pages/ai-daily/index.astro</code>（AI 日报栏目页）</li>
+<li>校验命令：<code>grep -c "miniCount &gt; 0" src/pages/ai-daily/index.astro</code> / <code>grep -o "0 条速览" dist/ai-daily/index.html</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p011-openshipjson非法键导致配置被丢弃/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类</span></a><a class="post-nav-item post-nav-next" href="/pits/p013-openship-edge在macos只认容器/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P013 · macOS 上 OpenShip Edge 只认容器：宿主 OpenResty 能&quot;过关&quot;但不接路由</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类 · walker</title><meta name="description" content="openship deploy（本地目录部署）连续 4 次失败，每次报错都指向不同且都误导的方向："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p011-openshipjson%E9%9D%9E%E6%B3%95%E9%94%AE%E5%AF%BC%E8%87%B4%E9%85%8D%E7%BD%AE%E8%A2%AB%E4%B8%A2%E5%BC%83/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类 · walker"><meta property="og:description" content="openship deploy（本地目录部署）连续 4 次失败，每次报错都指向不同且都误导的方向："><meta property="og:url" content="https://wkh888888.github.io/pits/p011-openshipjson%E9%9D%9E%E6%B3%95%E9%94%AE%E5%AF%BC%E8%87%B4%E9%85%8D%E7%BD%AE%E8%A2%AB%E4%B8%A2%E5%BC%83/"><meta property="og:image" content="https://wkh888888.github.io/og/p011-openshipjson%E9%9D%9E%E6%B3%95%E9%94%AE%E5%AF%BC%E8%87%B4%E9%85%8D%E7%BD%AE%E8%A2%AB%E4%B8%A2%E5%BC%83.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类 · walker"><meta name="twitter:description" content="openship deploy（本地目录部署）连续 4 次失败，每次报错都指向不同且都误导的方向："><meta name="twitter:image" content="https://wkh888888.github.io/og/p011-openshipjson%E9%9D%9E%E6%B3%95%E9%94%AE%E5%AF%BC%E8%87%B4%E9%85%8D%E7%BD%AE%E8%A2%AB%E4%B8%A2%E5%BC%83.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类</h1><p>openship deploy（本地目录部署）连续 4 次失败，每次报错都指向不同且都误导的方向：</p><div class="hero-meta"><span>踩坑于 2026-09-11</span><span>约 4 分钟</span><a class="tag" href="/tags/部署/">部署</a><a class="tag" href="/tags/配置/">配置</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因两个叠加第一个是关键">根因（两个叠加，第一个是关键）</a><a class="toc-l3" href="#-配置里有一个-schema-不认识的键--整份文件被丢弃">① 配置里有一个 schema 不认识的键 → 整份文件被丢弃</a><a class="toc-l3" href="#-项目被探测成-monorepo而-cli-的-folder-部署读不到子应用的-startcommand">② 项目被探测成 monorepo，而 CLI 的 folder 部署读不到子应用的 startCommand</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#1-修配置删掉-schema-里没有的键">1. 修配置：删掉 schema 里没有的键</a><a class="toc-l3" href="#2-关键诊断动作把扫描结果原样打出来不要猜">2. 关键诊断动作：把扫描结果原样打出来，不要猜</a><a class="toc-l3" href="#3-绕过-cli-缺陷ensure-时自己纠正-projecttype">3. 绕过 CLI 缺陷：ensure 时自己纠正 projectType</a><a class="toc-l3" href="#4-或者用-mcp-改库里的项目记录">4. 或者用 MCP 改库里的项目记录</a><a class="toc-l2" href="#预防规则建议上浮-l1">预防规则（建议上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-11</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>部署 / 配置</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中高（部署连挂 4 次，每次报错都指向无关方向）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>openship、openship.json、additionalProperties、AJV、workload、productionMode、monorepo、folder deploy、hasServer、pre-check、静态部署</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p><code>openship deploy</code>（本地目录部署）连续 4 次失败，<strong>每次报错都指向不同且都误导的方向</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>报错</th>
+<th>误导方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Deploy failed: Cannot read Openship edge routes</code></td>
+<td>以为缺 Edge 组件</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Endpoint target (30202): Static deployments cannot expose port-targeted routes</code></td>
+<td>以为端口配错</td>
+</tr>
+<tr>
+<td>3</td>
+<td>同上（改了库里的项目设置后）</td>
+<td>以为改错了地方</td>
+</tr>
+<tr>
+<td>4</td>
+<td>同上（改完 openship.json 后仍报）</td>
+<td>以为配置没生效</td>
+</tr>
+</tbody>
+</table>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">openship</span><span style="color:#9ECBFF"> deploy</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> ai-probe</span><span style="color:#79B8FF"> --watch</span></span>
+<span class="line"><span style="color:#6A737D"># ✖ Folder deploy failed</span></span>
+<span class="line"><span style="color:#6A737D"># Pre-deploy checks failed: Endpoint target (30202): Static deployments cannot</span></span>
+<span class="line"><span style="color:#6A737D"># expose port-targeted routes. Use a static target path instead.</span></span></code></pre>
+<h2 id="根因两个叠加第一个是关键">根因（两个叠加，第一个是关键）</h2>
+<h3 id="-配置里有一个-schema-不认识的键--整份文件被丢弃">① 配置里有一个 schema 不认识的键 → <strong>整份文件被丢弃</strong></h3>
+<p><code>openship.json</code> 里写了 <code>"workload": "web"</code>。但官方 schema 是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "additionalProperties"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#FDAEB7;font-style:italic">    …</span></span>
+<span class="line"><span style="color:#79B8FF">    "productionMode"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"enum"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"host"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"static"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"standalone"</span><span style="color:#E1E4E8">] },</span></span>
+<span class="line"><span style="color:#6A737D">    // ← 根本没有 "workload" 这个属性</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><code>additionalProperties: false</code> + 一个未知键 ⇒ <strong>AJV 整体拒绝整个对象</strong>，不是“忽略这一个字段”。</p>
+<p>CLI 侧对应逻辑：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6A737D">// server/index.js:298725  extractOpenshipConfig()</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">config</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">errors</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">warnings</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> parseOpenshipConfig</span><span style="color:#E1E4E8">(raw);</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">config) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> { diagnostics: { errors, warnings: [], wholeFile: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8"> } };  </span><span style="color:#6A737D">// ← 整份丢弃</span></span></code></pre>
+<p>CLI 会打印 <code>openship.json was ignored entirely — deployed with detected settings</code>，但<strong>这句在失败时不一定滚到屏幕上</strong>（错误是从后续接口抛回的 ApiError，捕获分支只 <code>err(e.message)</code>，不输出 <code>configDiagnostics</code>）。</p>
+<p>→ 配置全丢 → 退回自动探测 → 项目按目录结构被重新分类。</p>
+<h3 id="-项目被探测成-monorepo而-cli-的-folder-部署读不到子应用的-startcommand">② 项目被探测成 monorepo，而 CLI 的 folder 部署读不到子应用的 startCommand</h3>
+<p>目录是两个 package.json：根（express 后端）+ <code>client/</code>（vite 前端）。扫描结果：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{ </span><span style="color:#79B8FF">"projectType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"monorepo"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"stack"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"vite"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "startCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">,                       </span><span style="color:#6A737D">// ← 顶层是空的！</span></span>
+<span class="line"><span style="color:#79B8FF">  "monorepoApps"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">"rootDirectory"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"."</span><span style="color:#E1E4E8">,      </span><span style="color:#79B8FF">"stack"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"express"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"startCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"node server.js"</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">"rootDirectory"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"client"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"stack"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"vite"</span><span style="color:#E1E4E8">,    </span><span style="color:#79B8FF">"startCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8"> } ] }</span></span></code></pre>
+<p>而 <code>deployFolder</code>（dist/index.js:1603）只读顶层：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hasServer</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Boolean</span><span style="color:#E1E4E8">(scan.startCommand);      </span><span style="color:#6A737D">// → false</span></span>
+<span class="line"><span style="color:#F97583">await</span><span style="color:#B392F0"> apiRequest</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/projects/ensure"</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#E1E4E8">  projectType: scan.projectType,                   </span><span style="color:#6A737D">// monorepo 被原样存下</span></span>
+<span class="line"><span style="color:#E1E4E8">  framework: scan.stack,                           </span><span style="color:#6A737D">// → "vite"</span></span>
+<span class="line"><span style="color:#E1E4E8">  productionMode: hasServer </span><span style="color:#F97583">?</span><span style="color:#9ECBFF"> "standalone"</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> "static"</span><span style="color:#E1E4E8">,   </span><span style="color:#6A737D">// → "static" ← 死因</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// 注意：body 里根本没有 monorepoApps —— 子应用配置被丢掉</span></span></code></pre>
+<p><code>hasServer=false</code> ⇒ <code>productionMode=static</code> ⇒ 预检：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6A737D">// server/index.js:300415  checkPublicEndpoints()</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> workload</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> snapshotToClass</span><span style="color:#E1E4E8">(snapshot).workload;</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (workload </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "static"</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#E1E4E8"> hasPortTarget) {</span></span>
+<span class="line"><span style="color:#B392F0">  fail</span><span style="color:#E1E4E8">(…</span><span style="color:#9ECBFF">"Static deployments cannot expose port-targeted routes…"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>端口 30202 是 openship.json 写的（这份值恰好被扫描读到了），于是「静态部署 + 端口端点」互斥 → 判死。</p>
+<h2 id="解法">解法</h2>
+<h3 id="1-修配置删掉-schema-里没有的键">1. 修配置：删掉 schema 里没有的键</h3>
+<p>用 schema 校验，别靠猜。<strong>校验方式</strong>：直接 fetch <code>https://openship.io/openship.schema.json</code>，比对每个键是否在 <code>properties</code> 里；有 <code>additionalProperties: false</code> 时，<strong>一个多余键就是全盘失效</strong>。</p>
+<p>改后：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "$schema"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"https://openship.io/openship.schema.json"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "framework"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"express"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "packageManager"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"npm"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "rootDirectory"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "installCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"npm i &amp;&amp; npm i --prefix client"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "buildCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"npm run build"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "startCommand"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"node server.js"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "runtime"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"bare"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "productionMode"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"host"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "port"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">30202</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "domains"</span><span style="color:#E1E4E8">: []</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>（删掉 <code>workload</code> 与对 bare 无意义的 <code>buildImage</code>；显式补 <code>rootDirectory: "."</code>。）</p>
+<h3 id="2-关键诊断动作把扫描结果原样打出来不要猜">2. 关键诊断动作：<strong>把扫描结果原样打出来</strong>，不要猜</h3>
+<p>官方 folder 部署五步流程，可以手工逐段调，中间结果全部可见：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">SID</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">openship</span><span style="color:#9ECBFF"> api</span><span style="color:#9ECBFF"> /projects/folder/session</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -d</span><span style="color:#9ECBFF"> '{"name":"scan-probe","packageManager":"npm","stack":"node"}'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> python3</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> 'import json,sys;print(json.load(sys.stdin)["sessionId"])'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">tar</span><span style="color:#79B8FF"> -czf</span><span style="color:#9ECBFF"> /tmp/x.tar.gz</span><span style="color:#79B8FF"> --exclude=./node_modules</span><span style="color:#79B8FF"> --exclude=./.git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> .</span><span style="color:#9ECBFF"> .</span></span>
+<span class="line"><span style="color:#E1E4E8">TOKEN</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">python3</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> 'import json;print(json.load(open("'"</span><span style="color:#E1E4E8">$HOME</span><span style="color:#9ECBFF">"'/.openship/config.json"))["contexts"]["default"]["token"])'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#9ECBFF"> "http://localhost:10303/api/projects/folder/upload/</span><span style="color:#E1E4E8">$SID</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> "x-upload-ticket: &lt;ticket&gt;"</span><span style="color:#79B8FF"> -H</span><span style="color:#9ECBFF"> "Authorization: Bearer </span><span style="color:#E1E4E8">$TOKEN</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> "Content-Type: application/gzip"</span><span style="color:#79B8FF"> --data-binary</span><span style="color:#9ECBFF"> @/tmp/x.tar.gz</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">openship</span><span style="color:#9ECBFF"> api</span><span style="color:#9ECBFF"> /projects/folder/scan/</span><span style="color:#E1E4E8">$SID </span><span style="color:#79B8FF">-X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> '{}'</span><span style="color:#6A737D">     # ★ 这一步是破案关键</span></span></code></pre>
+<p><code>scan</code> 的返回会直接把 <code>stack / projectType / startCommand / monorepoApps / productionMode</code> 全摊开 —— 一眼看出「被判成 monorepo 且顶层 startCommand 为空」。</p>
+<h3 id="3-绕过-cli-缺陷ensure-时自己纠正-projecttype">3. 绕过 CLI 缺陷：<code>ensure</code> 时自己纠正 <code>projectType</code></h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">openship</span><span style="color:#9ECBFF"> api</span><span style="color:#9ECBFF"> /projects/ensure</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> '{</span></span>
+<span class="line"><span style="color:#9ECBFF">  "projectId":"proj_…","name":"ai-probe","gitProvider":"upload",</span></span>
+<span class="line"><span style="color:#9ECBFF">  "framework":"express","projectType":"app",          # ← 把 monorepo 改回单应用</span></span>
+<span class="line"><span style="color:#9ECBFF">  "packageManager":"npm",</span></span>
+<span class="line"><span style="color:#9ECBFF">  "installCommand":"npm i &amp;&amp; npm i --prefix client",</span></span>
+<span class="line"><span style="color:#9ECBFF">  "buildCommand":"npm run build","startCommand":"node server.js",</span></span>
+<span class="line"><span style="color:#9ECBFF">  "outputDirectory":"","rootDirectory":".",</span></span>
+<span class="line"><span style="color:#9ECBFF">  "hasBuild":true,"hasServer":true,"productionMode":"host","port":30202 }'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">openship</span><span style="color:#9ECBFF"> api</span><span style="color:#9ECBFF"> /deployments/build/access</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> '{</span></span>
+<span class="line"><span style="color:#9ECBFF">  "projectId":"proj_…","uploadSessionId":"&lt;SID&gt;","environment":"production" }'</span></span></code></pre>
+<p>→ 预检直接通过，install + build 全绿。</p>
+<h3 id="4-或者用-mcp-改库里的项目记录">4. 或者用 MCP 改库里的项目记录</h3>
+<p><code>mcp__openship__patch_projects_by_id</code> 可以直接写 <code>workloadType</code> / <code>productionMode</code> / <code>hasServer</code> / <code>framework</code>。注意：<strong><code>/projects/ensure</code> 会用扫描结果覆盖这些字段</strong>，所以要改必须在 ensure 之后。</p>
+<h2 id="预防规则建议上浮-l1">预防规则（建议上浮 L1）</h2>
+<ul>
+<li><strong>给工具写配置文件时，先 fetch 官方 schema 逐键核对。</strong> 有 <code>additionalProperties: false</code> 的 schema，<strong>一个不认识的键 = 整份配置作废</strong>，而且报错往往出现在很久之后、指向完全无关的地方。</li>
+<li><strong>配置类问题先验证「配置到底被读到了吗」</strong>，再查业务逻辑。判据：把中间产物（扫描结果 / effective config / 项目记录）原样打印出来，和磁盘上的文件逐字段对比。不一致 → 配置根本没进去。</li>
+<li><strong>CLI 报错 ≠ 根因。</strong> 连挂多次且每次报错都不同时，停下来找<strong>共同的上游</strong>（本例是“配置整份被丢弃”），不要逐个错误去追。</li>
+<li>工具自带的多步流程（本例的 session→upload→scan→ensure→deploy）<strong>可以手工逐段调用来定位</strong>，比黑盒跑整条链高效得多。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/projects/local-server/ai-probe/openship.json</code>（备份 <code>*.bak.20260911-1130</code>）</li>
+<li>CLI 关键位置：<code>~/.openship/cli/current/dist/index.js:1603</code>（<code>deployFolder</code>）、
+<code>dist/server/index.js:298725</code>（<code>extractOpenshipConfig</code>）、<code>:25340</code>（<code>resolveWorkload</code>）、
+<code>:300415</code>（<code>checkPublicEndpoints</code> 预检）</li>
+<li>官方 schema：<code>https://openship.io/openship.schema.json</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p010-非默认端口下的来源校验与重启丢环境变量/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」</span></a><a class="post-nav-item post-nav-next" href="/pits/p012-同文件并行编辑导致改动被吞/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」 · walker</title><meta name="description" content="OpenShip 用非默认端口跑（api 10303 / dashboard 10304，默认是 4000 / 3001）。MCP 客户端接入时连续撞两堵墙："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p010-%E9%9D%9E%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B8%8B%E7%9A%84%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C%E4%B8%8E%E9%87%8D%E5%90%AF%E4%B8%A2%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」 · walker"><meta property="og:description" content="OpenShip 用非默认端口跑（api 10303 / dashboard 10304，默认是 4000 / 3001）。MCP 客户端接入时连续撞两堵墙："><meta property="og:url" content="https://wkh888888.github.io/pits/p010-%E9%9D%9E%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B8%8B%E7%9A%84%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C%E4%B8%8E%E9%87%8D%E5%90%AF%E4%B8%A2%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"><meta property="og:image" content="https://wkh888888.github.io/og/p010-%E9%9D%9E%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B8%8B%E7%9A%84%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C%E4%B8%8E%E9%87%8D%E5%90%AF%E4%B8%A2%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」 · walker"><meta name="twitter:description" content="OpenShip 用非默认端口跑（api 10303 / dashboard 10304，默认是 4000 / 3001）。MCP 客户端接入时连续撞两堵墙："><meta name="twitter:image" content="https://wkh888888.github.io/og/p010-%E9%9D%9E%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B8%8B%E7%9A%84%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C%E4%B8%8E%E9%87%8D%E5%90%AF%E4%B8%A2%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」</h1><p>OpenShip 用非默认端口跑（api 10303 / dashboard 10304，默认是 4000 / 3001）。MCP 客户端接入时连续撞两堵墙：</p><div class="hero-meta"><span>踩坑于 2026-09-11</span><span>约 3 分钟</span><a class="tag" href="/tags/网络/">网络</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#1-用显式环境变量补齐运行时参数--安全校验的断层">1. 用显式环境变量补齐「运行时参数 → 安全校验」的断层</a><a class="toc-l3" href="#2-用对照-curl定位-403-是来源问题还是凭证问题">2. 用「对照 curl」定位 403 是来源问题还是凭证问题</a><a class="toc-l3" href="#3-走-mcp-oauth-三件套做端到端验收">3. 走 MCP OAuth 三件套做端到端验收</a><a class="toc-l3" href="#4-封装重启入口杜绝手动-up-丢环境变量">4. 封装重启入口，杜绝「手动 up 丢环境变量」</a><a class="toc-l2" href="#预防规则建议上浮-l1">预防规则（建议上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-11</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>网络 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（功能完全不可用，但报错文案指向完全错误的方向）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>openship、MCP、OAuth 2.1、trustedOrigins、Origin 403、DEFAULT_PORT 硬编码、非默认端口、launchd、EnvironmentVariables、kickstart、重启丢环境变量</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>OpenShip 用非默认端口跑（api <code>10303</code> / dashboard <code>10304</code>，默认是 <code>4000</code> / <code>3001</code>）。MCP 客户端接入时连续撞两堵墙：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>症状</th>
+<th>表面指向</th>
+<th>真实原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点授权 → 浏览器跳到 <code>http://localhost:3001</code> → <code>ERR_CONNECTION_REFUSED</code></td>
+<td>以为 MCP 客户端配置写错</td>
+<td><code>DEFAULT_PORT.dashboard</code> 硬编码 <code>3001</code>，<code>--dashboard-port 10304</code> 没被派生进去</td>
+</tr>
+<tr>
+<td>2</td>
+<td>授权页点“同意” → 页面报「无法完成授权」</td>
+<td>以为账号/权限问题</td>
+<td><code>POST /api/tokens/mcp-authorize</code> → <strong>403</strong>，Origin <code>http://localhost:10304</code> 不在信任列表</td>
+</tr>
+</tbody>
+</table>
+<p>关键证据：同一接口用<strong>不同 Origin</strong> 打，返回码不同 —— 说明是来源校验，不是凭证问题：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Origin: http://localhost:3001  → 401   # 默认端口，来源通过，只是没带凭证</span></span>
+<span class="line"><span>Origin: http://localhost:10304 → 403   # 自定义端口，来源直接被拒</span></span>
+<span class="line"><span>无 Origin                       → 401</span></span></code></pre>
+<h2 id="根因">根因</h2>
+<p><strong>一句话：运行时参数（启动 flag）与代码内硬编码默认值之间存在断层，而来源校验/回跳地址这类安全逻辑往往读的是后者。</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6A737D">// server/index.js</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> DEFAULT_PORT</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> { dashboard: </span><span style="color:#79B8FF">3001</span><span style="color:#E1E4E8">, api: </span><span style="color:#79B8FF">4000</span><span style="color:#E1E4E8">, web: </span><span style="color:#79B8FF">3000</span><span style="color:#E1E4E8"> };   </span><span style="color:#6A737D">// ← 硬编码</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 回跳地址：用 LOCAL_DASHBOARD_URL，但它不理会 runtime 的 --dashboard-port</span></span>
+<span class="line"><span style="color:#6A737D">// 信任列表：基础只有默认的 dashboard / api</span></span>
+<span class="line"><span style="color:#E1E4E8">extraTrustedOrigins </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (env.</span><span style="color:#79B8FF">OPENSHIP_EXTRA_TRUSTED_ORIGINS</span><span style="color:#F97583"> ??</span><span style="color:#9ECBFF"> ""</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">o</span><span style="color:#F97583"> =&gt;</span><span style="color:#E1E4E8"> o.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(Boolean);</span></span>
+<span class="line"><span style="color:#E1E4E8">trustedOrigins </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...new</span><span style="color:#B392F0"> Set</span><span style="color:#E1E4E8">([runtimeTarget.dashboard, runtimeTarget.api, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">extraTrustedOrigins])];</span></span></code></pre>
+<p>于是：换了端口 → 回跳仍指向 3001；来源校验只放行默认端口 → 403。</p>
+<p><strong>第二个坑（更隐蔽）：</strong> 修复靠在 launchd plist 里加 <code>EnvironmentVariables</code>，但 <code>serviceEnv()</code> 只透传 <code>OPENSHIP_DASHBOARD_DIR</code> / <code>OPENSHIP_HOME</code>。<strong>手动执行 <code>openship up</code> 时，plist 级环境变量全部丢失，403 立即复发。</strong> 且 plist 里 <code>KeepAlive=true</code>，手动起的进程还会和 launchd 抢端口。</p>
+<h2 id="解法">解法</h2>
+<h3 id="1-用显式环境变量补齐运行时参数--安全校验的断层">1. 用显式环境变量补齐「运行时参数 → 安全校验」的断层</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#6A737D">&lt;!-- ~/Library/LaunchAgents/io.openship.up.plist --&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;EnvironmentVariables&lt;/</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">dict</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;OPENSHIP_LOCAL_DASHBOARD_URL&lt;/</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;&lt;</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">&gt;http://localhost:10304&lt;/</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;OPENSHIP_EXTRA_TRUSTED_ORIGINS&lt;/</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">&gt;http://localhost:10304,http://127.0.0.1:10304,http://localhost:10303,http://127.0.0.1:10303&lt;/</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">dict</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>改完必须重载才生效（<code>plutil -p</code> 确认解析结果，别只看文件内容）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">plutil</span><span style="color:#79B8FF"> -lint</span><span style="color:#9ECBFF"> ~/Library/LaunchAgents/io.openship.up.plist</span></span>
+<span class="line"><span style="color:#B392F0">launchctl</span><span style="color:#9ECBFF"> bootout</span><span style="color:#9ECBFF">   gui/</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">id</span><span style="color:#79B8FF"> -u</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">/io.openship.up</span></span>
+<span class="line"><span style="color:#B392F0">launchctl</span><span style="color:#9ECBFF"> bootstrap</span><span style="color:#9ECBFF"> gui/</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">id</span><span style="color:#79B8FF"> -u</span><span style="color:#E1E4E8">) </span><span style="color:#9ECBFF">~/Library/LaunchAgents/io.openship.up.plist</span></span>
+<span class="line"><span style="color:#B392F0">launchctl</span><span style="color:#9ECBFF"> print</span><span style="color:#9ECBFF"> gui/</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">id</span><span style="color:#79B8FF"> -u</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">/io.openship.up</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -A8</span><span style="color:#9ECBFF"> "environment = "</span><span style="color:#6A737D">   # 确认变量真进去了</span></span></code></pre>
+<h3 id="2-用对照-curl定位-403-是来源问题还是凭证问题">2. 用「对照 curl」定位 403 是来源问题还是凭证问题</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> /dev/null</span><span style="color:#79B8FF"> -w</span><span style="color:#9ECBFF"> "%{http_code}\n"</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> "Origin: http://localhost:10304"</span><span style="color:#79B8FF"> -H</span><span style="color:#9ECBFF"> 'Content-Type: application/json'</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -d</span><span style="color:#9ECBFF"> '{}'</span><span style="color:#9ECBFF"> http://127.0.0.1:10303/api/tokens/mcp-authorize</span></span></code></pre>
+<p><strong>403 = 来源被拒；401 = 来源通过、缺凭证。</strong> 两个 Origin 打同一接口对比，一次定性。</p>
+<h3 id="3-走-mcp-oauth-三件套做端到端验收">3. 走 MCP OAuth 三件套做端到端验收</h3>
+<p>修完别只看一个接口，把客户端要走的链路全打一遍：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> http://localhost:10304/.well-known/oauth-protected-resource/api/proxy/api/mcp</span><span style="color:#6A737D">  # issuer 是不是新端口</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> http://localhost:10304/.well-known/oauth-authorization-server</span><span style="color:#6A737D">                  # issuer / 各 endpoint</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#79B8FF"> -H</span><span style="color:#9ECBFF"> 'Content-Type: application/json'</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> '{...}'</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">     http://localhost:10304/api/auth/mcp/register</span><span style="color:#6A737D">                                      # DCR 能否签发 client_id</span></span></code></pre>
+<p><code>issuer</code> 必须是新端口；若仍是默认端口，说明第 1 步没生效。</p>
+<h3 id="4-封装重启入口杜绝手动-up-丢环境变量">4. 封装重启入口，杜绝「手动 up 丢环境变量」</h3>
+<p>已落地 <code>~/bin/openship-restart</code>：<code>plutil</code> 校验 → <code>kickstart -k</code> → 回读环境变量 → 探端口 → 打一发 Origin 对照检查。<strong>重启一律走它，不要手敲 <code>openship up</code>。</strong></p>
+<h2 id="预防规则建议上浮-l1">预防规则（建议上浮 L1）</h2>
+<ul>
+<li><strong>服务跑非默认端口时，必须同时检查「回跳地址」与「来源信任列表」</strong> —— 这两处最容易残留默认端口硬编码。改端口的验收清单：issuer / redirect_uri / trustedOrigins 三处一致。</li>
+<li><strong>launchd 服务的配置一律放 plist，并且只通过 <code>launchctl kickstart</code>/<code>bootstrap</code> 重启</strong>；手动跑 CLI 的 <code>up</code>/<code>start</code> 会绕过 plist 环境变量。</li>
+<li><strong>改 plist 后必须回读运行时环境</strong>（<code>launchctl print ... | grep environment</code>），文件写对 ≠ 进程读到。</li>
+<li><strong>区分 403 与 401</strong>：403 查来源/权限，401 查凭证。用两个 Origin 对照一次定性，不要靠猜。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/Library/LaunchAgents/io.openship.up.plist</code>（备份 <code>*.bak.20260911</code>）</li>
+<li><code>~/bin/openship-restart</code>（重启入口）</li>
+<li><code>~/.workbuddy/mcp.json</code>、<code>~/.claude.json</code>（MCP 引用 <code>http://localhost:10304/api/proxy/api/mcp</code>）</li>
+<li>上游缺陷位置：<code>~/.openship/cli/current/dist/server/index.js</code>（<code>DEFAULT_PORT</code>、<code>extraTrustedOrigins</code>）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p009-多安装源并存下的假成功/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致</span></a><a class="post-nav-item post-nav-next" href="/pits/p011-openshipjson非法键导致配置被丢弃/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P011 · openship.json 一个非法键 → 整份配置被静默丢弃，项目退回错误分类</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

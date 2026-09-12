@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P001 · 邮件入口三撞车：Skill 与 MCP 混用导致 4 次授权失败 · walker</title><meta name="description" content="用户要求「给 walkerhua@vip.qq.com 发个 test」。助手加载了 agently-mail skill，走 agently-cli auth login 的 OAuth device-code 流程，"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p001-%E9%82%AE%E4%BB%B6%E5%85%A5%E5%8F%A3%E6%92%9E%E8%BD%A6%E4%B8%8Emcp%E9%80%89%E5%9E%8B/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P001 · 邮件入口三撞车：Skill 与 MCP 混用导致 4 次授权失败 · walker"><meta property="og:description" content="用户要求「给 walkerhua@vip.qq.com 发个 test」。助手加载了 agently-mail skill，走 agently-cli auth login 的 OAuth device-code 流程，"><meta property="og:url" content="https://wkh888888.github.io/pits/p001-%E9%82%AE%E4%BB%B6%E5%85%A5%E5%8F%A3%E6%92%9E%E8%BD%A6%E4%B8%8Emcp%E9%80%89%E5%9E%8B/"><meta property="og:image" content="https://wkh888888.github.io/og/p001-%E9%82%AE%E4%BB%B6%E5%85%A5%E5%8F%A3%E6%92%9E%E8%BD%A6%E4%B8%8Emcp%E9%80%89%E5%9E%8B.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P001 · 邮件入口三撞车：Skill 与 MCP 混用导致 4 次授权失败 · walker"><meta name="twitter:description" content="用户要求「给 walkerhua@vip.qq.com 发个 test」。助手加载了 agently-mail skill，走 agently-cli auth login 的 OAuth device-code 流程，"><meta name="twitter:image" content="https://wkh888888.github.io/og/p001-%E9%82%AE%E4%BB%B6%E5%85%A5%E5%8F%A3%E6%92%9E%E8%BD%A6%E4%B8%8Emcp%E9%80%89%E5%9E%8B.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P001 · 邮件入口三撞车：Skill 与 MCP 混用导致 4 次授权失败</h1><p>用户要求「给 walkerhua@vip.qq.com 发个 test」。助手加载了 agently-mail skill，走 agently-cli auth login 的 OAuth device-code 流程，</p><div class="hero-meta"><span>踩坑于 2026-09-03</span><span>约 3 分钟</span><a class="tag" href="/tags/工具选型/">工具选型</a><a class="tag" href="/tags/邮件/">邮件</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l3" href="#环境里实际存在-4-个名字撞车的邮件入口">环境里实际存在 4 个名字撞车的邮件入口</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#mcp__agent-mail__sendmessage-正确用法">mcp__agent-mail__SendMessage 正确用法</a><a class="toc-l2" href="#预防规则已上浮至-workbuddymemorymd">预防规则（已上浮至 ~/.workbuddy/MEMORY.md）</a><a class="toc-l2" href="#通用排查手法副产品">通用排查手法（副产品）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-03</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具选型 / 邮件</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费约 40 分钟，无数据损失）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>agent-mail、agently-mail、智能体邮箱、MCP、OAuth、device-code、pty、发邮件</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（2026-09-03 验证）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>用户要求「给 <a href="mailto:walkerhua@vip.qq.com">walkerhua@vip.qq.com</a> 发个 test」。助手加载了 <code>agently-mail</code> skill，走 <code>agently-cli auth login</code> 的 OAuth device-code 流程，<strong>连续 4 次失败</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>结果</th>
+<th>直接原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>13 秒后 <code>login failed</code></td>
+<td>后台启动未分配 pty，进程立刻读到 stdin EOF</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10 分钟 <code>authorization expired</code></td>
+<td>浏览器端未授权（进程本身正常）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8 秒后 <code>login failed</code></td>
+<td>同第 1 次</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10 分钟 <code>authorization expired</code></td>
+<td>已改用 pty，进程正常挂满有效期，浏览器端仍未授权</td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<p><strong>不是授权没点、也不是网络问题，是选错了工具层。</strong></p>
+<p>用户截图显示管理端提示：<strong>「Workbuddy 已存在智能体邮箱，无需再绑定」</strong> —— 说明该账号的 <code>agently-cli</code> 独立绑定入口已被官方关闭。而同一个能力其实由 WorkBuddy 内置的 MCP connector <code>mcp__agent-mail</code> 提供，<strong>零授权、直接可调用</strong>。</p>
+<p>根本失误在于：收到任务后先去搜 Skill 加载，而没有先看当前会话已经挂了哪些 MCP 工具。</p>
+<h3 id="环境里实际存在-4-个名字撞车的邮件入口">环境里实际存在 4 个名字撞车的邮件入口</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>服务商</th>
+<th>结局</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agently-mail</code></td>
+<td>Skill（提示词 + <code>agently-cli</code>）</td>
+<td>腾讯 agent.qq.com</td>
+<td>⛔ 已移除</td>
+</tr>
+<tr>
+<td><code>agent-mail</code>（name: agentmail）</td>
+<td>Skill，第三方</td>
+<td><strong>agentmail.to</strong>（与腾讯无关）</td>
+<td>⛔ 已移除</td>
+</tr>
+<tr>
+<td><code>智能体邮箱</code>（name: agentmail）</td>
+<td>上者的<strong>中文马甲</strong></td>
+<td>agentmail.to</td>
+<td>⛔ 已移除</td>
+</tr>
+<tr>
+<td><code>mcp__agent-mail</code></td>
+<td><strong>MCP connector</strong></td>
+<td>腾讯 agent.qq.com</td>
+<td>✅ 唯一可用</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>第三个是查台账时从「复用标记 ✅」条目里挖出来的：目录名中文化，但 frontmatter 的 <code>name</code> 仍是 <code>agentmail</code>。<strong>按目录名查重会漏。</strong></p>
+</blockquote>
+<h2 id="解法">解法</h2>
+<ol>
+<li>放弃 <code>agently-cli</code>，直接调 <code>mcp__agent-mail__SendMessage</code>，一次成功（<code>queued: true</code>）。</li>
+<li>三个邮件 Skill 全部禁用移除，备份在 <code>/tmp/skill-backup-20260903/</code>（真实目录 + tar.gz 各一份，零物理删除）。</li>
+</ol>
+<h3 id="mcp__agent-mail__sendmessage-正确用法"><code>mcp__agent-mail__SendMessage</code> 正确用法</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "to"</span><span style="color:#E1E4E8">: [{</span><span style="color:#79B8FF">"email"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"walkerhua@vip.qq.com"</span><span style="color:#E1E4E8">}],</span></span>
+<span class="line"><span style="color:#79B8FF">  "subject"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"test"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "body"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"test"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<ul>
+<li><code>to</code> / <code>cc</code> / <code>bcc</code> 是 <strong><code>{email, name?}</code> 对象数组</strong>，传 <code>["a@b.com"]</code> 会报 <code>schema_type: array field_type: string</code>。</li>
+<li>首次调用必返 <code>42801</code> + <code>confirmation_token</code>（<strong>5 分钟有效</strong>）→ 必须展示 <code>operation_summary</code> → <strong>停下等用户明确许可</strong> → 再带 token 重发。禁止自己确认自己；token 过期就重新调用拿新的。</li>
+<li>发件别名 <code>walkerhua@agent.qq.com</code>，日配额 50 封（响应头 <code>x_dailyquota_remaining</code> 可见）。</li>
+</ul>
+<h2 id="预防规则已上浮至-workbuddymemorymd">预防规则（已上浮至 <code>~/.workbuddy/MEMORY.md</code>）</h2>
+<ol>
+<li><strong>先扫 MCP，再考虑 Skill</strong>。有 <code>mcp__&lt;服务&gt;__&lt;动作&gt;</code> 就直接调，不去加载同名/近名 Skill。MCP = 宿主托管凭据；Skill = 提示词文档，常附本地 CLI 且多半要自行 OAuth。</li>
+<li><strong>加载 Skill 前按 frontmatter 的 <code>name</code> 字段查重</strong>，不看目录名。</li>
+<li><strong>遇「已存在账号，无需再绑定」类提示即判结构性死路，不重试第二次</strong>。</li>
+<li>该规则适用于所有能力域（日历 / 网盘 / IM / 代码托管），不限于邮件。</li>
+</ol>
+<h2 id="通用排查手法副产品">通用排查手法（副产品）</h2>
+<p>后台跑交互式长命令（OAuth、安装向导等）时，<strong>不分配 pty 会导致进程秒退</strong>。用以下方式包裹可挂满有效期：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">script</span><span style="color:#79B8FF"> -q</span><span style="color:#9ECBFF"> /dev/null</span><span style="color:#9ECBFF"> agently-cli</span><span style="color:#9ECBFF"> auth</span><span style="color:#9ECBFF"> login</span></span></code></pre>
+<p>判据：秒退 = pty 问题；挂满有效期仍失败 = 用户端/权限问题。两者不要混为一谈。</p>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li>备份：<code>/tmp/skill-backup-20260903/</code>（<code>agent-mail</code>、<code>agently-mail</code>、<code>智能体邮箱</code>）</li>
+<li>台账：<code>~/docs/skill使用说明/workbuddy-skill-reuse-index.md</code>（第 16 行撞车警告、第 68/69/237 行条目已标 ⛔）</li>
+<li>记忆：<code>~/.workbuddy/MEMORY.md</code> → 《工具选型决策规则》</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p002-skill单一源对齐与宿主分叉/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P002 · 自定义 Skill 多工具目录单一源对齐：宿主适配分叉与漂移巡检</span></a><a class="post-nav-item post-nav-next" href="/pits/p003-codex规范移植与codegraph中文查询/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P003 · Codex AGENTS.md 两节规范移植到 WorkBuddy（含中文查询坑）</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

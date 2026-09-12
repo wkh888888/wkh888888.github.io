@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人 · walker</title><meta name="description" content="自研的 agentctl（~/projects/agentctl）一次全量升级，12 个 Agent 里 5 个有问题："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p008-%E6%89%B9%E9%87%8F%E5%8D%87%E7%BA%A7ai-cli%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F%E4%B8%8E%E8%B6%85%E6%97%B6%E6%B2%BB%E7%90%86/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人 · walker"><meta property="og:description" content="自研的 agentctl（~/projects/agentctl）一次全量升级，12 个 Agent 里 5 个有问题："><meta property="og:url" content="https://wkh888888.github.io/pits/p008-%E6%89%B9%E9%87%8F%E5%8D%87%E7%BA%A7ai-cli%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F%E4%B8%8E%E8%B6%85%E6%97%B6%E6%B2%BB%E7%90%86/"><meta property="og:image" content="https://wkh888888.github.io/og/p008-%E6%89%B9%E9%87%8F%E5%8D%87%E7%BA%A7ai-cli%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F%E4%B8%8E%E8%B6%85%E6%97%B6%E6%B2%BB%E7%90%86.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人 · walker"><meta name="twitter:description" content="自研的 agentctl（~/projects/agentctl）一次全量升级，12 个 Agent 里 5 个有问题："><meta name="twitter:image" content="https://wkh888888.github.io/og/p008-%E6%89%B9%E9%87%8F%E5%8D%87%E7%BA%A7ai-cli%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F%E4%B8%8E%E8%B6%85%E6%97%B6%E6%B2%BB%E7%90%86.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人</h1><p>自研的 agentctl（~/projects/agentctl）一次全量升级，12 个 Agent 里 5 个有问题：</p><div class="hero-meta"><span>踩坑于 2026-09-10</span><span>约 3 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防规则上浮-l1-的候选">预防规则（上浮 L1 的候选）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-10</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费时间 + 假成功，长期会误以为工具都是最新）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>agentctl、claude、gemini、codex、cursor、opencode、hermes、kimi、openclaw、exit 0、假成功、超时、代理、latest 缓存、npm view</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>自研的 <code>agentctl</code>（<code>~/projects/agentctl</code>）一次全量升级，12 个 Agent 里 5 个有问题：</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>日志结果</th>
+<th>真实情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gemini CLI</td>
+<td><code>failed (exit 124)</code> 超时 180s</td>
+<td>卡在非交互/信任提示上，不是纯粹网络慢</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td><code>failed (exit 124)</code> 超时 180s</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>Cursor CLI</td>
+<td><code>failed (exit 1)</code> ETIMEDOUT</td>
+<td>裸连外网，本机代理没注入</td>
+</tr>
+<tr>
+<td>Kimi Code</td>
+<td><strong>ok</strong>（假成功）</td>
+<td>只打印了 “To update manually, run: curl …” 就 exit 0</td>
+</tr>
+<tr>
+<td>Hermes</td>
+<td><strong>ok</strong>（假成功）</td>
+<td>输出 “⚠ Update partially complete”，SQLite WAL bug 未修复仍 exit 0</td>
+</tr>
+<tr>
+<td>openclaw</td>
+<td><code>failed</code></td>
+<td>自身拒绝：“package manager owner is unknown”</td>
+</tr>
+</tbody>
+</table>
+<p><code>agentctl check</code> 另有 7 项 <code>unknown</code>，看不到有没有更新。</p>
+<h2 id="根因">根因</h2>
+<p><strong>一句话：把「命令退出码」当成「升级结果」，把「固定长超时」当成「没事」，把「查不到 latest」当成「没有更新」。</strong></p>
+<p>三条具体缺陷：</p>
+<ol>
+<li><strong>假成功</strong>：多数 CLI 的自更新只负责“提示”，不保证“完成”，且统一 exit 0。
+校验缺失 → Kimi / Hermes 这类被记成成功。</li>
+<li><strong>超时与并发</strong>：单个命令 180s 且串行，两个卡住就 6 分钟；同时环境里没有代理变量
+（P004：代理是按需注入，不是全局 export），外网类操作必然 ETIMEDOUT。</li>
+<li><strong>latest 缓存反噬</strong>：注册表查不到时回落到旧缓存，而旧值<strong>比已安装版本还旧</strong>，
+版本比较给出 <code>lat &lt; cur → up to date</code>，于是“缓存过期”被包装成“已是最新”。
+实测 claude 已装 2.1.267，缓存里是 2.1.236 → 显示 up to date，纯属谎言。</li>
+</ol>
+<h2 id="解法">解法</h2>
+<p>改 <code>agentctl</code>（已落地，备份 <code>src.bak-20260910/</code>）：</p>
+<ol>
+<li><strong>升级后回读版本</strong>再判定，而不是看退出码：
+<ul>
+<li>版本变了 → OK</li>
+<li>exit 0 但输出含 <code>partially complete / manually / Update refused / not replaced</code> → <strong>WARN</strong></li>
+<li>自更新后版本没变且输出没有 <code>up to date</code> → <strong>WARN</strong>（Kimi 立刻现形）</li>
+<li>非 0 退出 / 超时 / 网络错误 → FAILED</li>
+<li>注意边界：<strong>包管理器命令</strong>（brew/npm/pipx）exit 0 即算成功，不能用“版本没变”判 WARN</li>
+</ul>
+</li>
+<li><strong>超时 90s 可配 + 并发 4</strong>：同类包管理器（brew / npm / pnpm / yarn / pip / cargo）用锁串行，其余并行。</li>
+<li><strong>代理四级回退</strong>：<code>--proxy</code> &gt; <code>AGENTCTL_PROXY</code>/<code>HTTPS_PROXY</code> &gt; 配置文件 &gt; 自动探测本机 7890/7897/1087/8888/1080。</li>
+<li><strong>缓存只许报新不许报旧</strong>：缓存版本 &lt; 已装版本 → 标 <code>stale cache (x.y.z)</code> + unknown，绝不谎报 up to date。</li>
+<li><code>--only-outdated</code>：先 <code>check</code> 再只升有更新的，12 个里只跑 3 个。</li>
+<li>抑制 Homebrew 的 30 天 cleanup 与 hint 横幅（省几十秒 + 一屏噪音）。</li>
+</ol>
+<p>效果：gemini 从 180s 卡死 → 6.3s 快速失败并暴露真实错误（<code>~/.gemini/settings.json</code> 里
+<code>mcpServers.bt-panel</code> 多了 <code>disabled</code> 键 + Gemini Code Assist 个人版已停止支持）；
+unknown 从 7 项降到 4 项且每项带原因；Kimi 从假 ok 变成 WARN + 可直接复制的修复命令，退出码 3。</p>
+<h2 id="预防规则上浮-l1-的候选">预防规则（上浮 L1 的候选）</h2>
+<p>判断任何“批量升级 / 批量执行外部命令”的工具是否可信，按这个检查项过一遍：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>检查项</th>
+<th>不通过的表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>完成后是否<strong>回读状态</strong>校验，而不是只看退出码</td>
+<td>exit 0 但什么都没变，记为成功</td>
+</tr>
+<tr>
+<td>2</td>
+<td>是否有<strong>可配超时</strong>，且默认不至于拖垮整批</td>
+<td>单条 180s × 串行</td>
+</tr>
+<tr>
+<td>3</td>
+<td>是否需要<strong>代理</strong>，有没有回退链</td>
+<td>裸连 → ETIMEDOUT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>缓存值是否可能<strong>比现状更旧</strong>，旧了怎么处理</td>
+<td>缓存 2.1.236 &lt; 已装 2.1.267 → 谎报 up to date</td>
+</tr>
+<tr>
+<td>5</td>
+<td>输出能否<strong>区分 ok / warn / failed</strong>，退出码是否区分</td>
+<td>全 ok，看不出部分完成</td>
+</tr>
+<tr>
+<td>6</td>
+<td>结尾有没有<strong>汇总</strong>（before → after / 耗时）</td>
+<td>一屏流式日志，得自己翻</td>
+</tr>
+</tbody>
+</table>
+<p>一句话铁律：<strong>凡是“我帮你批量升级/批量执行”的工具，都要先问它拿什么证明真的做成了。</strong></p>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li>工具源码：<code>~/projects/agentctl/src/agentctl/</code>（<code>check.py</code> / <code>upgrade.py</code> / <code>config.py</code> / <code>runtime.py</code>）</li>
+<li>改动前备份：<code>~/projects/agentctl/src.bak-20260910/</code></li>
+<li>配置：<code>~/.config/agentctl/config.json</code>；缓存：<code>~/.cache/agentctl/latest.json</code></li>
+<li>代理背景：P004</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p007-git提交身份分层与includeif目录匹配/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则</span></a><a class="post-nav-item post-nav-next" href="/pits/p009-多安装源并存下的假成功/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

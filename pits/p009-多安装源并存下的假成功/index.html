@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致 · walker</title><meta name="description" content="同一条链路上三次操作，CLI 都报成功，实际全都没生效："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p009-%E5%A4%9A%E5%AE%89%E8%A3%85%E6%BA%90%E5%B9%B6%E5%AD%98%E4%B8%8B%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致 · walker"><meta property="og:description" content="同一条链路上三次操作，CLI 都报成功，实际全都没生效："><meta property="og:url" content="https://wkh888888.github.io/pits/p009-%E5%A4%9A%E5%AE%89%E8%A3%85%E6%BA%90%E5%B9%B6%E5%AD%98%E4%B8%8B%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F/"><meta property="og:image" content="https://wkh888888.github.io/og/p009-%E5%A4%9A%E5%AE%89%E8%A3%85%E6%BA%90%E5%B9%B6%E5%AD%98%E4%B8%8B%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致 · walker"><meta name="twitter:description" content="同一条链路上三次操作，CLI 都报成功，实际全都没生效："><meta name="twitter:image" content="https://wkh888888.github.io/og/p009-%E5%A4%9A%E5%AE%89%E8%A3%85%E6%BA%90%E5%B9%B6%E5%AD%98%E4%B8%8B%E7%9A%84%E5%81%87%E6%88%90%E5%8A%9F.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P009 · 升级/重启/卸载全都&quot;报成功&quot;却全都没生效——三个假成功，同一个病根：落点不一致</h1><p>同一条链路上三次操作，CLI 都报成功，实际全都没生效：</p><div class="hero-meta"><span>踩坑于 2026-09-11</span><span>约 3 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l3" href="#1-消除落点不一致治本统一到单一安装形态">1. 消除落点不一致（治本）：统一到单一安装形态</a><a class="toc-l3" href="#2-验证必须看运行时不看被操作方的输出">2. 验证必须看「运行时」，不看被操作方的输出</a><a class="toc-l3" href="#3-多-node-环境下-npm--g-一律显式---prefix">3. 多 node 环境下 npm -g 一律显式 --prefix</a><a class="toc-l3" href="#4-排查起手式先查落点别先查逻辑">4. 排查起手式：先查落点，别先查逻辑</a><a class="toc-l2" href="#预防规则建议上浮-l1">预防规则（建议上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-11</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费时间；更糟的是让人误判系统状态）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>openship、npm -g prefix、多 node 并存、bun 全局、launchd、假成功、installer、tarball、符号链接切换、exit 0、up to date</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>同一条链路上三次操作，CLI 都报成功，实际全都没生效：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>操作</th>
+<th>CLI 输出</th>
+<th>实际结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>openship update</code></td>
+<td><code>installed openship@0.7.2</code> / <code>Restarted the service onto the new version</code></td>
+<td>装进了 bun 全局目录，服务端仍跑 nvm 的 <strong>0.6.8</strong>；Dashboard 横幅持续提示“可更新到 0.7.2”</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>openship stop &amp;&amp; openship up</code></td>
+<td><code>✔ Openship is running as a service</code> / <code>launchd agent io.openship.up</code> / <code>Starts on boot and auto-restarts</code></td>
+<td>launchd job <strong>根本没加载</strong>（<code>launchctl print</code> → Could not find service），无进程、10303/10304 无监听，浏览器“拒绝连接”</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>npm uninstall -g openship</code></td>
+<td><code>up to date in 379ms</code>（无任何报错）</td>
+<td>包目录和 bin 链接<strong>纹丝未动</strong></td>
+</tr>
+</tbody>
+</table>
+<p>关联症状：Dashboard 一直提示“有新版本”——<strong>它是对的</strong>，因为真正在跑的服务确实还是旧版。</p>
+<h2 id="根因">根因</h2>
+<p><strong>一句话：CLI 的成功输出描述的是「命令自身执行完毕」，不是「你预期的那份产物在预期位置生效」。</strong> 只要机器上存在多套 node / 多个包管理器 / 多种安装形态，这个断层就必然出现。</p>
+<p>三个子现象的直接原因：</p>
+<ol>
+<li>
+<p><strong>update 装错落点</strong>——<code>detectPackageManager2()</code> 只判断 <code>bun --version</code> 能否执行成功，<strong>完全不看 CLI 自己装在哪</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hasBun</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> spawnSync</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"bun"</span><span style="color:#E1E4E8">, [</span><span style="color:#9ECBFF">"--version"</span><span style="color:#E1E4E8">]).status </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">return</span><span style="color:#E1E4E8"> hasBun </span><span style="color:#F97583">?</span><span style="color:#9ECBFF"> "bun"</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> "npm"</span><span style="color:#E1E4E8">;     </span><span style="color:#6A737D">// 机器上有 bun → 永远用 bun</span></span></code></pre>
+<p>而 launchd plist 硬编码了 nvm 的 node + nvm 的 openship。更新落点 ≠ 运行落点，从此版本永不一致。</p>
+</li>
+<li>
+<p><strong>up 没真正 bootstrap</strong>——<code>stop</code> 只做 bootout（不移除 plist），紧接着 <code>up</code> 会跳过真正的加载；输出文案照旧是“已装好”。plist 文件本身完全正常（手动 <code>launchctl bootstrap</code> 一次即成功，exit 0），坏的只是安装路径。</p>
+</li>
+<li>
+<p><strong>npm -g 作用于错误 prefix</strong>——npm 的全局 prefix 由 <code>process.execPath</code> 推导。<code>~/.nvm/.../bin/npm</code> 是 <code>#!/usr/bin/env node</code> 脚本，当 PATH 把另一个 node（WorkBuddy 托管版）排在前面时，prefix 被算成那个 node 的目录：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.nvm/versions/node/v22.22.3/bin/npm config get prefix</span></span>
+<span class="line"><span>→ /Users/kehua/.workbuddy/binaries/node/versions/22.22.2-3     # 不是 nvm 目录</span></span></code></pre>
+<p>于是 <code>uninstall -g</code> 跑去错误目录找包 → 找不到 → “up to date”，而真身还在原地。</p>
+</li>
+</ol>
+<h2 id="解法">解法</h2>
+<h3 id="1-消除落点不一致治本统一到单一安装形态">1. 消除落点不一致（治本）：统一到单一安装形态</h3>
+<p>以 OpenShip 为例，改用官方 installer 的 tarball 形态——它是自包含 + sha256 校验的，且 <code>selfInvocation()</code> 会走 <code>cli.launcher</code> 分支，plist 只需引用一个恒定路径的 launcher：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -fsSL</span><span style="color:#9ECBFF"> https://get.openship.io</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sh</span></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">/.openship/bin/openship up --port 10303 --dashboard-port 10304</span></span></code></pre>
+<p>之后升级只切换一个符号链接，launcher 与 plist 都不用动：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>launchd plist → ~/.openship/bin/openship（恒定） → cli/current（软链） → cli/v0.7.2/</span></span></code></pre>
+<h3 id="2-验证必须看运行时不看被操作方的输出">2. 验证必须看「运行时」，不看被操作方的输出</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">launchctl</span><span style="color:#9ECBFF"> list</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">labe</span><span style="color:#E1E4E8">l</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">                                    # job 真的加载了吗</span></span>
+<span class="line"><span style="color:#B392F0">ps</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> command=</span><span style="color:#79B8FF"> -p</span><span style="color:#E1E4E8"> $(</span><span style="color:#B392F0">pgrep</span><span style="color:#79B8FF"> -f</span><span style="color:#9ECBFF"> "dist/server/index.js"</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> head</span><span style="color:#79B8FF"> -1</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D"># 实际跑的是哪份代码</span></span>
+<span class="line"><span style="color:#79B8FF">command</span><span style="color:#79B8FF"> -v</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">cm</span><span style="color:#E1E4E8">d</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">                                                 # PATH 生效的是哪一份</span></span>
+<span class="line"><span style="color:#B392F0">readlink</span><span style="color:#79B8FF"> -f</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">bi</span><span style="color:#E1E4E8">n</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">                                                # 符号链接真实落点</span></span></code></pre>
+<h3 id="3-多-node-环境下-npm--g-一律显式---prefix">3. 多 node 环境下 npm -g 一律显式 <code>--prefix</code></h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">/.nvm/versions/node/v22.22.3/bin/npm uninstall -g </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">pkg</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> --prefix </span><span style="color:#F97583">~</span><span style="color:#E1E4E8">/.nvm/versions/node/v22.22.3</span></span></code></pre>
+<h3 id="4-排查起手式先查落点别先查逻辑">4. 排查起手式：先查落点，别先查逻辑</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">which</span><span style="color:#79B8FF"> -a</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">cm</span><span style="color:#E1E4E8">d</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">            # 机器上有几份同名命令</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> config</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> prefix</span><span style="color:#6A737D">     # 全局装的落点在哪</span></span>
+<span class="line"><span style="color:#B392F0">ls</span><span style="color:#79B8FF"> -la</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">install-di</span><span style="color:#E1E4E8">r</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">      # 文件时间戳能不能对上"我刚更新过"</span></span></code></pre>
+<p>文件时间戳是最硬的证据：服务端文件停在 8/26、而 update 发生在 9/11 → 一眼看穿“根本没更新”。</p>
+<h2 id="预防规则建议上浮-l1">预防规则（建议上浮 L1）</h2>
+<ul>
+<li><strong>铁律：CLI 报成功 ≠ 生效。</strong> 凡涉及“改运行时 / 装包 / 装服务”，必须用<strong>独立命令</strong>验证目标状态（job 列表、进程命令行、文件时间戳、符号链接指向），不得引用被操作方自己的输出。</li>
+<li><strong>多运行时机器上，<code>npm -g</code> 必须显式 <code>--prefix</code></strong>；<code>which -a</code> + <code>npm config get prefix</code> 是前置检查。</li>
+<li>同一工具只允许一种安装形态；发现两种并存，先收敛再操作。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/.openship/cli-install.json</code>（分布标记，决定 update 走哪条分支）</li>
+<li><code>~/.openship/bin/openship</code>（launcher）、<code>~/.openship/cli/current</code>（软链）</li>
+<li><code>~/Library/LaunchAgents/io.openship.up.plist</code></li>
+<li>迁移前备份：<code>~/.openship/data.bak.20260911-0957</code>（60M，内嵌 PostgreSQL 数据目录）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p008-批量升级ai-cli的假成功与超时治理/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人</span></a><a class="post-nav-item post-nav-next" href="/pits/p010-非默认端口下的来源校验与重启丢环境变量/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P010 · 改了端口，服务却按默认端口校验来源：Origin 403 与「重启丢环境变量」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

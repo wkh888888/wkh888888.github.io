@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则 · walker</title><meta name="description" content="本机 150+ 个 git 仓库，全局 [user] 一直是公司身份 吴科桦 <walker.wu@eoitek.com>。要求「个人项目统一用 walker <walkerhua@vip.qq.com>」时，第一反应是"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p007-git%E6%8F%90%E4%BA%A4%E8%BA%AB%E4%BB%BD%E5%88%86%E5%B1%82%E4%B8%8Eincludeif%E7%9B%AE%E5%BD%95%E5%8C%B9%E9%85%8D/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则 · walker"><meta property="og:description" content="本机 150+ 个 git 仓库，全局 [user] 一直是公司身份 吴科桦 <walker.wu@eoitek.com>。要求「个人项目统一用 walker <walkerhua@vip.qq.com>」时，第一反应是"><meta property="og:url" content="https://wkh888888.github.io/pits/p007-git%E6%8F%90%E4%BA%A4%E8%BA%AB%E4%BB%BD%E5%88%86%E5%B1%82%E4%B8%8Eincludeif%E7%9B%AE%E5%BD%95%E5%8C%B9%E9%85%8D/"><meta property="og:image" content="https://wkh888888.github.io/og/p007-git%E6%8F%90%E4%BA%A4%E8%BA%AB%E4%BB%BD%E5%88%86%E5%B1%82%E4%B8%8Eincludeif%E7%9B%AE%E5%BD%95%E5%8C%B9%E9%85%8D.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则 · walker"><meta name="twitter:description" content="本机 150+ 个 git 仓库，全局 [user] 一直是公司身份 吴科桦 <walker.wu@eoitek.com>。要求「个人项目统一用 walker <walkerhua@vip.qq.com>」时，第一反应是"><meta name="twitter:image" content="https://wkh888888.github.io/og/p007-git%E6%8F%90%E4%BA%A4%E8%BA%AB%E4%BB%BD%E5%88%86%E5%B1%82%E4%B8%8Eincludeif%E7%9B%AE%E5%BD%95%E5%8C%B9%E9%85%8D.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则</h1><p>本机 150+ 个 git 仓库，全局 [user] 一直是公司身份 吴科桦 &lt;walker.wu@eoitek.com&gt;。要求「个人项目统一用 walker &lt;walkerhua@vip.qq.com&gt;」时，第一反应是</p><div class="hero-meta"><span>踩坑于 2026-09-08</span><span>约 6 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#历史提交改写法含统计口径坑">历史提交改写法（含统计口径坑）</a><a class="toc-l2" href="#预防规则已上浮-l1">预防规则（已上浮 L1）</a><a class="toc-l2" href="#边界提醒">边界提醒</a><a class="toc-l2" href="#相关文件">相关文件</a><a class="toc-l2" href="#附不值得记录的反例">附：不值得记录的反例</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-08</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>低（认知补齐，但配错会污染提交历史）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>git、user.name、user.email、includeIf、gitdir、conditional include、提交身份、个人/公司分离、local 优先级</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>本机 150+ 个 git 仓库，全局 <code>[user]</code> 一直是公司身份 <code>吴科桦 &lt;walker.wu@eoitek.com&gt;</code>。要求「个人项目统一用 <code>walker &lt;walkerhua@vip.qq.com&gt;</code>」时，第一反应是逐仓库 <code>git config --local</code>，但：</p>
+<ul>
+<li>个人仓库分散在 <code>~/projects/{server-apps,open-source,agent-skills,local-server}</code>、<code>~/docs</code>、<code>~/codebuddy</code>，逐个设漏一个就是一个坑；</li>
+<li>未来新建仓库还会漏；</li>
+<li>已经有一批仓库设了 local（mind-harbor、walkerhua.com 等），再来一遍容易设歪。</li>
+</ul>
+<p>排查时还撞到两个反直觉点：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>实际结果</th>
+<th>直接原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/projects/local-server/ai-upgrader</code> 设了 walker 但仍是 <code>Claude &lt;claude@anthropic.com&gt;</code></td>
+<td>includeIf <strong>不生效</strong></td>
+<td>该仓库有 local <code>[user]</code>，local 优先级最高</td>
+</tr>
+<tr>
+<td><code>~/Code/blog</code> 看着像个人博客，该不该改个人身份</td>
+<td><strong>不能改</strong></td>
+<td>remote 是 <code>git@192.168.1.18:eoi/up-frontend.git</code>，公司项目，目录名骗人</td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<p><strong>一句话：Git 的 <code>[user]</code> 是“最后读取者胜”的单值覆盖模型，不是继承合并模型；要让身份随目录自动变化，只能用 <code>includeIf</code> 在全局层做条件注入，而 <code>.git/config</code> 的 local 值永远压在最上面。</strong></p>
+<p>展开：</p>
+<ul>
+<li><strong>直接原因</strong>：全局 gitconfig 只有一个 <code>[user]</code> 兜底，没有按路径分流的机制。谁后写谁生效 —— 所以 includeIf 段落必须放在 <code>~/.gitconfig</code> <strong>末尾</strong>，写在 <code>[user]</code> 之前会被覆盖回去（这是最容易犯的错）。</li>
+<li><strong>根本原因</strong>：Git 配置有 4 层，<code>system &lt; global &lt; local &lt; 命令行 -c</code>。<code>includeIf</code> 注入的内容算在<strong>引入它的那一层</strong>（写在 global 里就属于 global 层），因此<strong>任何 local 值都能盖掉它</strong>。这不是 bug，是设计。</li>
+<li><strong>认知坑</strong>：目录名 / 仓库名不可作为归属判据。公司代码可能被 clone 到叫 <code>blog</code>、<code>test</code> 的目录下（本机 <code>~/Code/blog</code> 就是 <code>eoi/up-frontend</code>）。</li>
+</ul>
+<h2 id="解法">解法</h2>
+<p><strong>1. 备份（改全局配置前必做）</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cp</span><span style="color:#9ECBFF"> ~/.gitconfig</span><span style="color:#9ECBFF"> ~/.gitconfig.bak.</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">date</span><span style="color:#9ECBFF"> +%Y%m%d</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>2. 建个人身份文件</strong> <code>~/.gitconfig-personal</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="ini"><code><span class="line"><span style="color:#B392F0">[user]</span></span>
+<span class="line"><span style="color:#F97583">	name</span><span style="color:#E1E4E8"> = walker</span></span>
+<span class="line"><span style="color:#F97583">	email</span><span style="color:#E1E4E8"> = walkerhua@vip.qq.com</span></span></code></pre>
+<p><strong>3. 在 <code>~/.gitconfig</code> 末尾</strong>（注意是末尾）追加条件包含</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="ini"><code><span class="line"><span style="color:#6A737D"># 个人项目统一身份：walker &lt;walkerhua@vip.qq.com&gt;</span></span>
+<span class="line"><span style="color:#6A737D"># 放在文件末尾，确保覆盖上面的全局 [user]</span></span>
+<span class="line"><span style="color:#B392F0">[includeIf "gitdir:~/projects/**"]</span></span>
+<span class="line"><span style="color:#F97583">	path</span><span style="color:#E1E4E8"> = ~/.gitconfig-personal</span></span>
+<span class="line"><span style="color:#B392F0">[includeIf "gitdir:~/docs/**"]</span></span>
+<span class="line"><span style="color:#F97583">	path</span><span style="color:#E1E4E8"> = ~/.gitconfig-personal</span></span>
+<span class="line"><span style="color:#B392F0">[includeIf "gitdir:~/codebuddy/**"]</span></span>
+<span class="line"><span style="color:#F97583">	path</span><span style="color:#E1E4E8"> = ~/.gitconfig-personal</span></span></code></pre>
+<p>Git ≥ 2.13 支持。本机 2.39.1。</p>
+<p><strong>4. 清掉挡路的 local</strong>（关键一步，只加 includeIf 不清理等于白做）</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 找出所有仍带 local user 的仓库</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> $(</span><span style="color:#B392F0">find</span><span style="color:#9ECBFF"> ~/projects</span><span style="color:#9ECBFF"> ~/docs</span><span style="color:#79B8FF"> -maxdepth</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> -type</span><span style="color:#9ECBFF"> d</span><span style="color:#79B8FF"> -name</span><span style="color:#9ECBFF"> .git</span><span style="color:#79B8FF"> -not</span><span style="color:#79B8FF"> -path</span><span style="color:#9ECBFF"> "*/node_modules/*"</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#9ECBFF"> 's#/.git$##'</span><span style="color:#E1E4E8">); </span><span style="color:#F97583">do</span></span>
+<span class="line"><span style="color:#E1E4E8">  n</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --local</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.name</span><span style="color:#F97583"> 2&gt;</span><span style="color:#9ECBFF">/dev/null</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  [ </span><span style="color:#F97583">-n</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ] &amp;&amp; </span><span style="color:#79B8FF">printf</span><span style="color:#9ECBFF"> "%-40s %s &lt;%s&gt;\n"</span><span style="color:#9ECBFF"> "${</span><span style="color:#E1E4E8">d</span><span style="color:#F97583">#</span><span style="color:#E1E4E8">$HOME</span><span style="color:#F97583">/</span><span style="color:#9ECBFF">}"</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$n</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> "$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">" config </span><span style="color:#79B8FF">--local</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.email)"</span></span>
+<span class="line"><span style="color:#F97583">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 确认是个人项目后清掉，让它继承 includeIf</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">rep</span><span style="color:#E1E4E8">o</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --local</span><span style="color:#79B8FF"> --unset</span><span style="color:#9ECBFF"> user.name</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">rep</span><span style="color:#E1E4E8">o</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --local</span><span style="color:#79B8FF"> --unset</span><span style="color:#9ECBFF"> user.email</span></span></code></pre>
+<blockquote>
+<p>本机 2026-09-08 已执行完毕：<code>~/projects</code> / <code>~/docs</code> / <code>~/codebuddy</code> 下 8 个带 local 的仓库（cc-switch、mind-harbor、mind-helper、mindstack-deploy、services-hub-v2、skillhub/react-vite、walkerhua.com、wkh888888.github.io，另含一个卡着 <code>Claude &lt;claude@anthropic.com&gt;</code> 的 ai-upgrader）local 全部清除，个人项目区已无 local user 残留。</p>
+</blockquote>
+<p><strong>5. 验证</strong>：不只看配置值，要分三组对照（个人目录 / 公司目录 / 兜底新仓库）</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> ~/projects/server-apps/mind-harbor</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.email</span><span style="color:#6A737D">   # → walkerhua@vip.qq.com</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> ~/Code/ccdc/ucenter</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.email</span><span style="color:#6A737D">                  # → walker.wu@eoitek.com</span></span>
+<span class="line"><span style="color:#B392F0">mkdir</span><span style="color:#79B8FF"> -p</span><span style="color:#9ECBFF"> /tmp/_t</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /tmp/_t</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> init</span><span style="color:#79B8FF"> -q</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.email</span><span style="color:#6A737D">  # → 兜底值</span></span></code></pre>
+<p><strong>6. 盘一遍全机仓库</strong>（可选，但建议做完）</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> $(</span><span style="color:#B392F0">find</span><span style="color:#9ECBFF"> ~/projects</span><span style="color:#9ECBFF"> ~/Code</span><span style="color:#9ECBFF"> ~/codebuddy</span><span style="color:#9ECBFF"> ~/docs</span><span style="color:#79B8FF"> -maxdepth</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> -type</span><span style="color:#9ECBFF"> d</span><span style="color:#79B8FF"> -name</span><span style="color:#9ECBFF"> .git</span><span style="color:#79B8FF"> -not</span><span style="color:#79B8FF"> -path</span><span style="color:#9ECBFF"> "*/node_modules/*"</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#9ECBFF"> 's#/.git$##'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sort</span><span style="color:#79B8FF"> -u</span><span style="color:#E1E4E8">); </span><span style="color:#F97583">do</span></span>
+<span class="line"><span style="color:#79B8FF">  printf</span><span style="color:#9ECBFF"> "%-8s | %-20s | %-28s | %s\n"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">    "$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">" config </span><span style="color:#79B8FF">--local</span><span style="color:#79B8FF"> --get</span><span style="color:#9ECBFF"> user.name </span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF">/dev/null </span><span style="color:#F97583">2&gt;&amp;1</span><span style="color:#9ECBFF"> &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> LOCAL </span><span style="color:#F97583">||</span><span style="color:#79B8FF"> echo</span><span style="color:#9ECBFF"> global)"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">    "$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">" config </span><span style="color:#79B8FF">--get</span><span style="color:#9ECBFF"> user.name)"</span><span style="color:#9ECBFF"> "$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">" config </span><span style="color:#79B8FF">--get</span><span style="color:#9ECBFF"> user.email)"</span><span style="color:#9ECBFF"> "${</span><span style="color:#E1E4E8">d</span><span style="color:#F97583">#</span><span style="color:#E1E4E8">$HOME</span><span style="color:#F97583">/</span><span style="color:#9ECBFF">}"</span></span>
+<span class="line"><span style="color:#F97583">done</span></span></code></pre>
+<h2 id="历史提交改写法含统计口径坑">历史提交改写法（含统计口径坑）</h2>
+<p><strong>坑：统计“某仓库有没有公司邮箱提交”时不能用 <code>git log --all</code>。</strong></p>
+<p><code>--all</code> = <code>refs/heads</code> + <code>refs/remotes</code> + <strong><code>refs/stash</code></strong> + <strong><code>refs/original</code></strong>（历史 filter-branch 备份）。本机 mind-helper 统计出「31 commit 里 8 个公司邮箱」，实际 8 个全在 <code>refs/stash</code> 和 <code>refs/original</code>，main 分支历史本来就是干净的 —— 虚惊一场，白改一遍。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --branches</span><span style="color:#79B8FF"> --format=</span><span style="color:#9ECBFF">'%ae%n%ce'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> eoitek</span><span style="color:#6A737D">   # 只看分支历史，正解</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --all</span><span style="color:#79B8FF"> --format=</span><span style="color:#9ECBFF">'%ae%n%ce'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> eoitek</span><span style="color:#6A737D">        # 含 stash/original/remote，会虚高</span></span></code></pre>
+<p><strong>脏工作区下安全重写（工作区一个文件都不碰）</strong>：<code>filter-branch</code> 拒绝在未提交改动的仓库上跑，<code>git stash</code> 又有风险。解法是在<strong>临时裸克隆</strong>里重写，再回灌 refs：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">REPO</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">~/projects/xxx</span><span style="color:#E1E4E8">; NAME</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">basename</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">); BR</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> symbolic-ref</span><span style="color:#79B8FF"> --short</span><span style="color:#9ECBFF"> HEAD</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> clone</span><span style="color:#79B8FF"> --bare</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> /tmp/gitid-rewrite/</span><span style="color:#E1E4E8">$NAME</span><span style="color:#9ECBFF">.git</span><span style="color:#79B8FF"> -q</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /tmp/gitid-rewrite/</span><span style="color:#E1E4E8">$NAME</span><span style="color:#9ECBFF">.git</span></span>
+<span class="line"><span style="color:#E1E4E8">FILTER_BRANCH_SQUELCH_WARNING</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">1</span><span style="color:#B392F0"> git</span><span style="color:#9ECBFF"> filter-branch</span><span style="color:#79B8FF"> --env-filter</span><span style="color:#9ECBFF"> '</span></span>
+<span class="line"><span style="color:#9ECBFF">  if [ "$GIT_AUTHOR_EMAIL" = "walker.wu@eoitek.com" ]; then</span></span>
+<span class="line"><span style="color:#9ECBFF">      export GIT_AUTHOR_NAME="walker"; export GIT_AUTHOR_EMAIL="walkerhua@vip.qq.com"; fi</span></span>
+<span class="line"><span style="color:#9ECBFF">  if [ "$GIT_COMMITTER_EMAIL" = "walker.wu@eoitek.com" ]; then</span></span>
+<span class="line"><span style="color:#9ECBFF">      export GIT_COMMITTER_NAME="walker"; export GIT_COMMITTER_EMAIL="walkerhua@vip.qq.com"; fi</span></span>
+<span class="line"><span style="color:#9ECBFF">'</span><span style="color:#79B8FF"> --tag-name-filter</span><span style="color:#9ECBFF"> cat</span><span style="color:#79B8FF"> --</span><span style="color:#79B8FF"> --all</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> for-each-ref</span><span style="color:#79B8FF"> --format=</span><span style="color:#9ECBFF">'%(refname)'</span><span style="color:#9ECBFF"> refs/original</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> xargs</span><span style="color:#79B8FF"> -n1</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> update-ref</span><span style="color:#79B8FF"> -d</span><span style="color:#6A737D">   # 关键：否则验证时新旧 commit 混在一起，看着像没改</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 回灌：先留备份 ref，再 soft reset（不动工作区）</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> update-ref</span><span style="color:#9ECBFF"> refs/backup/pre-rewrite-20260908</span><span style="color:#E1E4E8"> $(</span><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> rev-parse</span><span style="color:#9ECBFF"> HEAD</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> fetch</span><span style="color:#9ECBFF"> /tmp/gitid-rewrite/</span><span style="color:#E1E4E8">$NAME</span><span style="color:#9ECBFF">.git</span><span style="color:#9ECBFF"> '+refs/heads/*:refs/rewritten/*'</span><span style="color:#79B8FF"> --force</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> reset</span><span style="color:#79B8FF"> --soft</span><span style="color:#9ECBFF"> refs/rewritten/</span><span style="color:#E1E4E8">$BR</span></span></code></pre>
+<p><strong>验证三件事</strong>：① <code>git log --branches</code> 里 eoitek 归零；② <code>git rev-parse HEAD^{tree}</code> 与旧值一致（证明只改元数据、内容零变化）；③ <code>git status --porcelain | wc -l</code> 回灌前后数字相同（证明工作区未损）。</p>
+<blockquote>
+<p>本机 2026-09-08 执行结果：9 个个人仓库中 <strong>5 个实际改写</strong>（wkh888888.github.io 6 commit、agent-skills 5、ccb-web 1、port-manager 1、wkh/ai/test4 1），另 4 个（mind-helper、services-hub-v2、skillhub/react-vite、walkerhua.com）分支历史本就干净，HEAD hash 未变。<strong>未 force-push</strong>，本地与 origin 已分叉（如 wkh888888.github.io 为 6/6）。备份 ref：<code>refs/backup/pre-rewrite-20260908</code>；临时裸克隆留在 <code>/tmp/gitid-rewrite/*.git</code>。</p>
+</blockquote>
+<p><strong>回退</strong>：<code>git reset --soft refs/backup/pre-rewrite-20260908</code>。</p>
+<h2 id="预防规则已上浮-l1">预防规则（已上浮 L1）</h2>
+<p>抽象成检查项，精简后写入 <code>~/.workbuddy/MEMORY.md</code>：</p>
+<ol>
+<li><strong>个人项目统一 <code>walker &lt;walkerhua@vip.qq.com&gt;</code>，公司项目保持 <code>吴科桦 &lt;walker.wu@eoitek.com&gt;</code>。</strong></li>
+<li><strong>新增个人项目目录 → 往 <code>~/.gitconfig</code> 末尾加一条 includeIf，不要逐仓库设 local。</strong></li>
+<li><strong>优先级：local &gt; includeIf &gt; 全局。发现身份不对，先查 <code>git config --local --get-regexp '^user\.'</code>。</strong></li>
+<li><strong>判归属不看目录名，一律先 <code>git remote -v</code>。</strong></li>
+<li>includeIf 段落<strong>必须放在全局文件末尾</strong>，否则被前面的 <code>[user]</code> 覆盖。</li>
+<li><strong>统计提交身份用 <code>git log --branches</code>，不要用 <code>--all</code></strong>（后者混入 stash 与 refs/original，数字虚高）。</li>
+</ol>
+<h2 id="边界提醒">边界提醒</h2>
+<ul>
+<li>改身份<strong>只影响之后的提交</strong>，历史 commit 的作者信息不变。要改历史得重写 + force-push，会改变所有 commit hash。</li>
+<li>重写后本地与远端<strong>完全分叉</strong>，推送必须用 <code>git push --force-with-lease</code>（比 <code>--force</code> 安全，远端有新提交时会拒绝）。多人协作仓库推之前先打招呼。</li>
+<li><strong>stash 和 refs/original 里的旧身份不建议改</strong>：stash 是未完成的活，refs/original 是历史备份，动了得不偿失。</li>
+<li>提交要在 GitHub 贡献图显示，邮箱必须已加进 GitHub → Settings → Emails。否则提交能推，但绿格子不算。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/.gitconfig</code></td>
+<td>全局，保留公司身份兜底 + 末尾 3 条 includeIf</td>
+</tr>
+<tr>
+<td><code>~/.gitconfig-personal</code></td>
+<td>新建，个人身份片段</td>
+</tr>
+<tr>
+<td><code>~/.gitconfig.bak.20260908</code></td>
+<td>改动前备份，回退用 <code>cp</code> 覆盖回去</td>
+</tr>
+<tr>
+<td><code>~/.ssh/config</code></td>
+<td>无关但相关：github.com 走 <code>ssh.github.com:443</code> 绕 22 端口封锁</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附不值得记录的反例">附：不值得记录的反例</h2>
+<ul>
+<li>一次性环境噪音（磁盘满、网络抖动、手误）</li>
+<li>读文档即可得知的事实（“git config user.name 能设用户名”这种）</li>
+<li>纯操作步骤，不含“为什么会错”</li>
+<li>只对单个项目适用、换项目即失效 → 写 <code>.workbuddy/memory/YYYY-MM-DD.md</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p006-主md不适用skill单一源/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝</span></a><a class="post-nav-item post-nav-next" href="/pits/p008-批量升级ai-cli的假成功与超时治理/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P008 · 批量升级 AI CLI：exit 0 不等于升级成功，超时/缓存/代理三个默认值都在骗人</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

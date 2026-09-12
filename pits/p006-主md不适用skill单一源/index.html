@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝 · walker</title><meta name="description" content="盘点本机 AI agent 主 md 时，用 md5 比对找出 3 组内容完全相同的文件，随即按 P002 的「单一源 + 软链」约定提议收敛。逐组查证文件性质后发现：三组全部不该改。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p006-%E4%B8%BBmd%E4%B8%8D%E9%80%82%E7%94%A8skill%E5%8D%95%E4%B8%80%E6%BA%90/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝 · walker"><meta property="og:description" content="盘点本机 AI agent 主 md 时，用 md5 比对找出 3 组内容完全相同的文件，随即按 P002 的「单一源 + 软链」约定提议收敛。逐组查证文件性质后发现：三组全部不该改。"><meta property="og:url" content="https://wkh888888.github.io/pits/p006-%E4%B8%BBmd%E4%B8%8D%E9%80%82%E7%94%A8skill%E5%8D%95%E4%B8%80%E6%BA%90/"><meta property="og:image" content="https://wkh888888.github.io/og/p006-%E4%B8%BBmd%E4%B8%8D%E9%80%82%E7%94%A8skill%E5%8D%95%E4%B8%80%E6%BA%90.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝 · walker"><meta name="twitter:description" content="盘点本机 AI agent 主 md 时，用 md5 比对找出 3 组内容完全相同的文件，随即按 P002 的「单一源 + 软链」约定提议收敛。逐组查证文件性质后发现：三组全部不该改。"><meta name="twitter:image" content="https://wkh888888.github.io/og/p006-%E4%B8%BBmd%E4%B8%8D%E9%80%82%E7%94%A8skill%E5%8D%95%E4%B8%80%E6%BA%90.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CTP5Vh69.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P006 · 主 md 文件不适用 Skill 单一源：内容相同 ≠ 同一资产的拷贝</h1><p>盘点本机 AI agent 主 md 时，用 md5 比对找出 3 组内容完全相同的文件，随即按 P002 的「单一源 + 软链」约定提议收敛。逐组查证文件性质后发现：三组全部不该改。</p><div class="hero-meta"><span>踩坑于 2026-09-04</span><span>约 3 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/Skill 管理/">Skill 管理</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#各组查证依据">各组查证依据</a><a class="toc-l2" href="#铁律">铁律</a><a class="toc-l2" href="#正确做法">正确做法</a><a class="toc-l2" href="#相关">相关</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-04</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / Skill 管理</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（未执行即发现；若执行会造成跨工具规范污染）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>主md、AGENTS.md、CLAUDE.md、GEMINI.md、软链、symlink、单一源、概念误用、P002、兼容性投影</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（2026-09-04 查证，三组均未改动）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>盘点本机 AI agent 主 md 时，用 md5 比对找出 3 组内容完全相同的文件，随即按 <code>P002</code> 的「单一源 + 软链」约定提议收敛。逐组查证文件性质后发现：<strong>三组全部不该改</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>组</th>
+<th>文件</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><code>~/.claude/AGENTS.md</code> ≡ <code>~/.everything-claude-code/AGENTS.md</code></td>
+<td>不动</td>
+</tr>
+<tr>
+<td>B</td>
+<td><code>~/.gemini/GEMINI.md</code> ≡ <code>~/.config/opencode/AGENTS.md</code></td>
+<td>不动</td>
+</tr>
+<tr>
+<td>C</td>
+<td><code>~/.cloudbase-mcp/web-template/AGENTS.md</code> ≡ <code>.../CLAUDE.md</code></td>
+<td>不动</td>
+</tr>
+</tbody>
+</table>
+<p>错误已写入 <code>~/docs/AI-Agent主MD文件清单.md</code>（2026-09-03 初版），2026-09-04 已更正并记录推翻理由。</p>
+<h2 id="根因">根因</h2>
+<p><strong>把「内容相同」等同于「同一资产的多份拷贝」，混淆了两类对象。</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Skill 目录</th>
+<th>主 md 文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性质</td>
+<td>同一份<strong>可复用资产</strong></td>
+<td>各工具的<strong>独立配置入口</strong></td>
+</tr>
+<tr>
+<td>存在多份的含义</td>
+<td>冗余拷贝 → 应收敛</td>
+<td>每个工具本就该有一份 → 正常</td>
+</tr>
+<tr>
+<td>内容相同说明什么</td>
+<td>指向同一资产</td>
+<td>只是「碰巧引用了同一段公共规范」</td>
+</tr>
+<tr>
+<td>软链后果</td>
+<td>✅ 消除版本漂移</td>
+<td>❌ 强制两个工具永远不能分叉</td>
+</tr>
+</tbody>
+</table>
+<p>P002 的软链约定是针对 <strong>Skill</strong> 建立的。类比推广到主 md 时，只比对了 md5，没有检查<strong>对象性质</strong>——这是典型的类比误用。</p>
+<h2 id="各组查证依据">各组查证依据</h2>
+<p><strong>A 组</strong>：<code>~/.everything-claude-code/</code> 是<strong>完整第三方仓库</strong>（含 <code>LICENSE</code>/<code>CHANGELOG</code>/<code>VERSION</code>/<code>CONTRIBUTING</code>）。更关键的是——<strong>Claude Code 读 <code>CLAUDE.md</code>，不读 <code>AGENTS.md</code></strong>，所以 <code>~/.claude/AGENTS.md</code> 是随仓库带来的、无人读取的副本。软链它：零收益，却把 <code>~/.claude/</code> 挂到了一个可能被删除的第三方仓库上。</p>
+<p><strong>B 组</strong>：两者都是<strong>各自工具真实读取的主入口</strong>。内容 1181 字符全部由 <code>CODEGRAPH</code> + <code>AGENT-SKILL-ROOT-POLICY</code> 两个公共规范块构成，无任何宿主专属内容——这是「多入口共享公共片段」，不是「同一文件两份拷贝」。软链后，给 Gemini 加专属配置会直接污染 opencode。</p>
+<p><strong>C 组</strong>：文件正文自述 <em>“This file is a <strong>compatibility projection</strong> of the CloudBase routing contract”</em> —— 第三方模板<strong>刻意设计的双名兼容投影</strong>，供不同工具按各自约定的文件名读取。改软链会破坏模板复制：copy 到新项目时软链指向错乱或悬空。</p>
+<h2 id="铁律">铁律</h2>
+<blockquote>
+<p><strong>md5 相同只证明「内容一样」，不证明「该合并」。合并前必须回答：这是同一资产的多份拷贝，还是多个消费者各自持有的一份？</strong></p>
+</blockquote>
+<p>判定检查项（<strong>动手前逐条过</strong>）：</p>
+<ol>
+<li><strong>看文件自述</strong>：有没有 “compatibility projection”、“generated”、“do not edit” 之类的声明？有 → 不动。</li>
+<li><strong>看所属目录性质</strong>：是不是第三方包/仓库（含 <code>LICENSE</code>/<code>VERSION</code>/<code>CHANGELOG</code>）或模板目录？是 → 不动。</li>
+<li><strong>看宿主归属</strong>：各工具实际读哪个文件名？（Claude→<code>CLAUDE.md</code>、Codex→<code>AGENTS.md</code>、Gemini→<code>GEMINI.md</code>、opencode→<code>AGENTS.md</code>）若某份根本不被读取 → 收敛零收益。</li>
+<li><strong>看内容构成</strong>：是否全部由公共规范块构成、无宿主专属内容？是 → 属于「共享片段」，应当抽取公共源，而非软链。</li>
+<li><strong>问分叉风险</strong>：将来会不会给其中一个加专属配置？会 → 软链就是埋雷。</li>
+</ol>
+<h2 id="正确做法">正确做法</h2>
+<p>针对「公共规范在多处重复」这个真问题，收敛方式不是软链，而是：</p>
+<ol>
+<li><strong>公共源 + 导入</strong>：把公共规范块抽成单一源文件（如 <code>~/.agents/shared/agent-norms.md</code>），各工具主 md 用 <code>@</code> 导入（Codex 支持 <code>@绝对路径</code>）引用。</li>
+<li><strong>生成脚本</strong>：从单一源生成各工具主 md，改源后跑一次脚本重写所有投影。</li>
+</ol>
+<p>两者都能消除重复，且<strong>保留各工具主 md 的独立性</strong>。软链做不到后者。</p>
+<h2 id="相关">相关</h2>
+<ul>
+<li><a href="P002-Skill%E5%8D%95%E4%B8%80%E6%BA%90%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%AE%BF%E4%B8%BB%E5%88%86%E5%8F%89.md">P002 · Skill 单一源对齐与宿主分叉</a> —— 软链约定<strong>仅适用于 Skill 目录</strong></li>
+<li><code>~/docs/AI-Agent主MD文件清单.md</code> —— 本机主 md 台账，含本条更正</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p005-openclaw升级后config失效与gateway崩溃循环/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P005 · openclaw 升级后 config invalid / gateway 崩溃循环</span></a><a class="post-nav-item post-nav-next" href="/pits/p007-git提交身份分层与includeif目录匹配/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P007 · 上百个仓库逐个设 local user 不可行：`includeIf` 按目录切 Git 身份，但 local 会盖掉规则</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
