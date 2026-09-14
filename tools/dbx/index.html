@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>dbx：让 Spark 项目像普通工程一样本地开发、版本化发布 · walker</title><meta name="description" content="Databricks Labs 出品的 CLI 扩展，把 Notebook 原型迁到本地 IDE 开发、多环境部署和版本化发布串成一条命令，适合已有 Databricks 作业工程化的团队。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/dbx/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="dbx：让 Spark 项目像普通工程一样本地开发、版本化发布 · walker"><meta property="og:description" content="Databricks Labs 出品的 CLI 扩展，把 Notebook 原型迁到本地 IDE 开发、多环境部署和版本化发布串成一条命令，适合已有 Databricks 作业工程化的团队。"><meta property="og:url" content="https://blog.walkerhua.com/tools/dbx/"><meta property="og:image" content="https://blog.walkerhua.com/og/dbx.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="dbx：让 Spark 项目像普通工程一样本地开发、版本化发布 · walker"><meta name="twitter:description" content="Databricks Labs 出品的 CLI 扩展，把 Notebook 原型迁到本地 IDE 开发、多环境部署和版本化发布串成一条命令，适合已有 Databricks 作业工程化的团队。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/dbx.png"><script>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DBX：20MB 装下 90 种数据库的开源客户端 · walker</title><meta name="description" content="Rust 原生驱动、不依赖 JVM 的轻量数据库客户端。SQL 编辑、数据网格、ER 图、Schema 对比迁移一应俱全，还自带 MCP Server 让 coding agent 直接连库，18k+ star 全平台开源。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/dbx/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="DBX：20MB 装下 90 种数据库的开源客户端 · walker"><meta property="og:description" content="Rust 原生驱动、不依赖 JVM 的轻量数据库客户端。SQL 编辑、数据网格、ER 图、Schema 对比迁移一应俱全，还自带 MCP Server 让 coding agent 直接连库，18k+ star 全平台开源。"><meta property="og:url" content="https://blog.walkerhua.com/tools/dbx/"><meta property="og:image" content="https://blog.walkerhua.com/og/dbx.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DBX：20MB 装下 90 种数据库的开源客户端 · walker"><meta name="twitter:description" content="Rust 原生驱动、不依赖 JVM 的轻量数据库客户端。SQL 编辑、数据网格、ER 图、Schema 对比迁移一应俱全，还自带 MCP Server 让 coding agent 直接连库，18k+ star 全平台开源。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/dbx.png"><script>
       (function () {
         try {
           var t = localStorage.getItem('theme');
@@ -6,53 +6,81 @@
           document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         } catch (e) {}
       })();
-    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>dbx：让 Spark 项目像普通工程一样本地开发、版本化发布</h1><p>它不替你写 Spark 代码，只解决「本地写完怎么可靠地跑到集群上、还留得下版本」这件脏活。</p><div class="hero-meta"><span>第 3 期</span><span>发布于 2026-09-14</span><span>约 2 分钟</span><a class="tag" href="https://github.com/databrickslabs/dbx" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/数据/">数据</a><a class="tag" href="/tags/Databricks/">Databricks</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/CI/">CI</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它的位置">先说清楚它的位置</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#使用前的两个提醒">使用前的两个提醒</a><a class="toc-l2" href="#适合谁--不适合谁">适合谁 / 不适合谁</a><a class="toc-l2" href="#上手">上手</a></aside><article class="card prose"><h2 id="先说清楚它的位置">先说清楚它的位置</h2>
-<p>dbx 全称 Databricks CLI eXtensions，是 Databricks Labs（官方实验室，非商业支持）维护的开源 CLI。它<strong>不是</strong> Databricks CLI 的替代品 —— 恰恰相反，它重度依赖后者的 SDK 和认证。它也不是 MLflow CLI 或 Terraform Provider 的替代品：不碰基础设施，只管作业的打包、部署、启动与版本化。</p>
-<p>一句话概括它的工作：<strong>把你从「在 Notebook 里点来点去」过渡到「本地 IDE 写代码、命令行发布、CI 里自动跑」</strong>。</p>
-<h2 id="它解决什么痛点">它解决什么痛点</h2>
-<p>用 Databricks 的团队基本都经历过这个演变：</p>
-<ol>
-<li>数据科学家在 Notebook 里跑通了逻辑；</li>
-<li>要上生产，得把 Notebook 变成作业，参数、依赖、集群配置全靠界面点；</li>
-<li>开发/测试/生产三套环境，配置靠人肉复制，改一处漏两处；</li>
-<li>出问题时问「现在线上跑的是哪个版本」，没人答得上来。</li>
-</ol>
-<p>dbx 针对的就是 2~4：本地代码打包上传、多环境配置集中管理、部署带版本号、可以在 CI 里一键完成。</p>
-<p>典型命令长这样：</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">dbx</span><span style="color:#9ECBFF"> deploy</span><span style="color:#79B8FF"> --environment=prod</span><span style="color:#6A737D">      # 按环境部署，自动生成版本化目录</span></span>
-<span class="line"><span style="color:#B392F0">dbx</span><span style="color:#9ECBFF"> launch</span><span style="color:#79B8FF"> --environment=prod</span><span style="color:#6A737D">      # 在目标集群上启动作业</span></span>
-<span class="line"><span style="color:#B392F0">dbx</span><span style="color:#9ECBFF"> sync</span><span style="color:#9ECBFF"> repo</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> my-repo</span><span style="color:#79B8FF"> --source</span><span style="color:#9ECBFF"> .</span><span style="color:#6A737D">  # 本地改动实时同步到工作区</span></span></code></pre>
-<p><code>dbx sync</code> 是我认为最实用的一条：本地改完立刻同步到工作区，保留了 Notebook 快速迭代的手感，又不用放弃 IDE 的重构和补全。</p>
-<h2 id="使用前的两个提醒">使用前的两个提醒</h2>
-<p><strong>第一，新项目请先看 Asset Bundles。</strong> Databricks 官方已经把 dbx 的文档标记为 retired，明确推荐新项目用 Declarative Automation Bundles（DAB，已内置进新版 Databricks CLI）。如果你是全新起步，直接上 DAB 更稳；dbx 的价值主要在：已有 dbx 工作流要维护、或者团队习惯了它的项目模板与 CI 写法。</p>
-<p><strong>第二，交互调试不是它的活。</strong> dbx 没有交互式断点调试能力，要单步调试得配合 Databricks Connect。它管的是「部署与启动」，不是「调试」。</p>
-<h2 id="适合谁--不适合谁">适合谁 / 不适合谁</h2>
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>DBX：20MB 装下 90 种数据库的开源客户端</h1><p>不用装 JRE、不用按数据库买授权，一个 20MB 的安装包把 MySQL 到 Redis 到国产库都收进去 —— 还顺手给 agent 开了个 MCP 口子。</p><div class="hero-meta"><span>第 3 期</span><span>发布于 2026-09-14</span><span>约 2 分钟</span><a class="tag" href="https://dbxio.com/cn" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/数据库/">数据库</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/SQL/">SQL</a><a class="tag" href="/tags/效率/">效率</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#它是什么">它是什么</a><a class="toc-l2" href="#日常用起来是什么手感">日常用起来是什么手感</a><a class="toc-l2" href="#一个容易被忽略的亮点mcp-server">一个容易被忽略的亮点：MCP Server</a><a class="toc-l2" href="#谁适合换过去">谁适合换过去</a><a class="toc-l2" href="#上手">上手</a></aside><article class="card prose"><h2 id="它是什么">它是什么</h2>
+<p>DBX（官网 dbxio.com，仓库 <code>t8y2/dbx</code>，18.1k+ star，完全开源）是一个跨平台的数据库客户端。体积约 20MB，支持 <strong>90+ 种数据库引擎</strong>：MySQL、PostgreSQL、SQLite、SQL Server、Oracle 这些常规项之外，Redis、MongoDB、Elasticsearch、ClickHouse、DuckDB 这类非关系型也包了，达梦、人大金仓、高斯、OceanBase、TiDB、PolarDB 等国产库是原生支持。</p>
+<p>它最直接的对比对象是 DBeaver 和 Navicat：</p>
 <table>
 <thead>
 <tr>
-<th>适合</th>
-<th>不适合</th>
+<th>维度</th>
+<th>DBX</th>
+<th>DBeaver</th>
+<th>Navicat</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>已有 Notebook 项目要工程化、要进 CI</td>
-<td>全新项目（优先 DAB）</td>
+<td>体积</td>
+<td>~20MB</td>
+<td>数百 MB</td>
+<td>较大</td>
 </tr>
 <tr>
-<td>Python / JVM 项目多环境发布</td>
-<td>R 项目（只能部署，无交互开发）</td>
+<td>运行时依赖</td>
+<td>无</td>
+<td>需 JRE</td>
+<td>无</td>
 </tr>
 <tr>
-<td>需要部署版本可追溯</td>
-<td>想要基础设施即代码（用 Terraform Provider）</td>
+<td>数据库支持</td>
+<td>90+</td>
+<td>80+（国产库多要自己配 JDBC）</td>
+<td>有限</td>
+</tr>
+<tr>
+<td>Redis / Mongo</td>
+<td>专用浏览器</td>
+<td>支持有限</td>
+<td>常需单独购买</td>
+</tr>
+<tr>
+<td>AI 助手</td>
+<td>内置 + MCP Server</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>免费开源</td>
+<td>免费 / 付费版</td>
+<td>年费订阅</td>
 </tr>
 </tbody>
 </table>
+<h2 id="日常用起来是什么手感">日常用起来是什么手感</h2>
+<p><strong>写 SQL</strong>：CodeMirror 6 编辑器，补全带元数据（列名、表别名自动带出来），支持格式化、查询历史、选中部分 SQL 单独执行 —— 不用为了跑片段再复制一遍。</p>
+<p><strong>看数据</strong>：虚拟滚动的数据网格，大表翻页不卡；行内编辑、WHERE / ORDER BY 可视化控制、SQL 预览、导出（CSV / Excel / SQL inserts）都在手边。</p>
+<p><strong>看结构</strong>：侧边栏直接浏览库 / Schema / 表 / 字段 / 索引 / 外键 / 触发器，ER 图可视化表关系。</p>
+<p><strong>对比与迁移</strong>：Schema diff、表导入、数据库导出、SQL 文件执行、跨引擎数据传输。做环境对齐或换库时这类功能省的时间最多。</p>
+<h2 id="一个容易被忽略的亮点mcp-server">一个容易被忽略的亮点：MCP Server</h2>
+<p>DBX 自带一个 Rust 原生实现的 MCP Server。配到 Claude Code、Cursor 这类 agent 里之后，agent 能<strong>直接读数据库上下文、执行 SQL、打开表结构</strong>，不用你手动复制 DDL 和字段名喂给它。</p>
+<p>权限分三级：<code>read_only</code> / <code>safe_write</code> / <code>high_risk_write</code>，可以精细控制 AI 能碰什么数据 —— 这条我认为是区分「玩具」和「能用在生产」的分界线。对现在满地跑 agent 的工作流来说，这个口子比 AI 生成 SQL 本身更值钱。</p>
+<h2 id="谁适合换过去">谁适合换过去</h2>
+<p><strong>适合</strong>：</p>
+<ul>
+<li>同时连好几种数据库（尤其是混合了关系型 + Redis/Mongo + 国产库）；</li>
+<li>嫌 DBeaver 启动慢、要配 JVM 和 JDBC；</li>
+<li>想让 coding agent 直接访问数据库上下文；</li>
+<li>需要轻量、能 Docker 自托管的团队方案（它有桌面和 Docker 两种模式）。</li>
+</ul>
+<p><strong>不必换</strong>：</p>
+<ul>
+<li>只连一种数据库、且官方工具已经够用；</li>
+<li>需要非常深度的数据库专有能力（如 PL/SQL 调试、厂商特化管理功能），这类还是官方工具或付费软件更全；</li>
+<li>已在 Navicat 上买了多年授权且用得顺手。</li>
+</ul>
 <h2 id="上手">上手</h2>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> dbx</span></span>
-<span class="line"><span style="color:#B392F0">dbx</span><span style="color:#79B8FF"> --version</span><span style="color:#6A737D">        # 需 0.8.0 以上</span></span></code></pre>
-<p>认证复用 Databricks CLI 的 <code>.databrickscfg</code>（<code>DATABRICKS_HOST</code> + <code>DATABRICKS_TOKEN</code>，或用配置 profile）。装完先跑 <code>dbx sync</code> 感受一下本地与工作区的同步，再谈部署。</p>
+<p>官网直接下对应平台安装包（macOS 分 Apple Silicon / Intel，Linux 有 x64 / ARM64，Windows 有常规与内网离线包）。装好建第一个连接，先试两个动作：一次跨引擎的数据导出，一次把 MCP Server 接到你常用的 agent 上 —— 这两件事最能说明它和传统客户端的区别。</p>
 <nav class="post-nav"><a class="post-nav-item" href="/tools/cc-switch/"><span class="post-nav-label">上一期</span><span class="post-nav-title">CC Switch：给八个 AI 编程工具装一个「总闸」</span></a><a class="post-nav-item post-nav-next" href="/tools/orcaterm/"><span class="post-nav-label">下一期</span><span class="post-nav-title">OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
       document.querySelector('.theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;
