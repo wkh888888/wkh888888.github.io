@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P015 · Astro 构建被本机安全删除守卫拦截：清理自己的临时目录也要过阈值 · walker</title><meta name="description" content="在 WorkBuddy 会话里执行 npm run build（Astro 5.x），构建到一半报错退出："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://wkh888888.github.io/pits/p015-astro%E6%9E%84%E5%BB%BA%E8%A2%AB%E5%AE%89%E5%85%A8%E5%88%A0%E9%99%A4%E5%AE%88%E5%8D%AB%E6%8B%A6%E6%88%AA/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P015 · Astro 构建被本机安全删除守卫拦截：清理自己的临时目录也要过阈值 · walker"><meta property="og:description" content="在 WorkBuddy 会话里执行 npm run build（Astro 5.x），构建到一半报错退出："><meta property="og:url" content="https://wkh888888.github.io/pits/p015-astro%E6%9E%84%E5%BB%BA%E8%A2%AB%E5%AE%89%E5%85%A8%E5%88%A0%E9%99%A4%E5%AE%88%E5%8D%AB%E6%8B%A6%E6%88%AA/"><meta property="og:image" content="https://wkh888888.github.io/og/p015-astro%E6%9E%84%E5%BB%BA%E8%A2%AB%E5%AE%89%E5%85%A8%E5%88%A0%E9%99%A4%E5%AE%88%E5%8D%AB%E6%8B%A6%E6%88%AA.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P015 · Astro 构建被本机安全删除守卫拦截：清理自己的临时目录也要过阈值 · walker"><meta name="twitter:description" content="在 WorkBuddy 会话里执行 npm run build（Astro 5.x），构建到一半报错退出："><meta name="twitter:image" content="https://wkh888888.github.io/og/p015-astro%E6%9E%84%E5%BB%BA%E8%A2%AB%E5%AE%89%E5%85%A8%E5%88%A0%E9%99%A4%E5%AE%88%E5%8D%AB%E6%8B%A6%E6%88%AA.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.WxORJjbQ.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><span class="badge">踩坑经验</span><h1>P015 · Astro 构建被本机安全删除守卫拦截：清理自己的临时目录也要过阈值</h1><p>在 WorkBuddy 会话里执行 npm run build（Astro 5.x），构建到一半报错退出：</p><div class="hero-meta"><span>踩坑于 2026-09-12</span><span>约 2 分钟</span><a class="tag" href="/tags/构建/">构建</a><a class="tag" href="/tags/Agent 沙箱/">Agent 沙箱</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防--检查项">预防 / 检查项</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-12</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>构建 / Agent 沙箱</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（构建中断，发布链路卡死；非数据风险）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>astro build、safe-delete、SAFE_DELETE_BULK_CONFIRM_REQUIRED、dist/.prerender/.vite、CODEBUDDY_SAFE_DELETE_BULK_THRESHOLD、blog-publish、阈值、批量删除守卫</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>在 WorkBuddy 会话里执行 <code>npm run build</code>（Astro 5.x），构建到一半报错退出：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[ERROR] [vite] ✗ Build failed in 475ms</span></span>
+<span class="line"><span>[safe-delete][SAFE_DELETE_BULK_CONFIRM_REQUIRED] {"count":50,"threshold":50,"scope":"turn",</span></span>
+<span class="line"><span>  "targets":["/Users/kehua/projects/server-apps/astro-blog/dist/.prerender/.vite/"],"targetCount":1}</span></span>
+<span class="line"><span>  at deleteViteFolder (node_modules/astro/dist/core/build/vite-plugin-ssr-assets.js:89:23)</span></span></code></pre>
+<p><code>[content] Syncing content</code>、<code>[types] Generated</code> 都已通过，<strong>卡在 <code>Building static entrypoints</code> 之后</strong>。</p>
+<h2 id="根因">根因</h2>
+<p>Astro 构建会在 <code>dist/.prerender/</code> 下生成一套预渲染产物，构建结束时由 <code>deleteViteFolder()</code> 调 <code>fs.rm</code> 清掉 <code>.vite</code> 子目录。</p>
+<p>WorkBuddy 的 CLI 在 Node 层挂了 <code>node-safe-delete-shim</code>，拦截 <code>fs.rm</code> 并调用批量删除守卫；守卫对<strong>单个 turn 内的删除总数</strong>计数，<code>总数 ≥ 阈值</code>（默认 50）就抛错阻断。Astro 那个临时目录的文件数正好在 50–92 之间，必然越线。</p>
+<p><strong>关键点：清缓存无效。</strong> 先把 <code>dist/.prerender</code> 删掉再构建，构建过程中照样会重新生成，触发时文件数反而更多（实测第二次 92 个）—— 这不是“残留导致的偶发”，是 Astro 构建流程与本机守卫的<strong>结构性冲突</strong>，每次构建都会撞。</p>
+<h2 id="解法">解法</h2>
+<p>守卫<strong>没有路径白名单</strong>，唯一正规出口是它自己的阈值环境变量（<code>CODEBUDDY_SAFE_DELETE_BULK_THRESHOLD</code>，默认 50）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">CODEBUDDY_SAFE_DELETE_BULK_THRESHOLD</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">500</span><span style="color:#B392F0"> bash</span><span style="color:#9ECBFF"> ~/.agents/skills/blog-publish/scripts/publish.sh</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> "AI 日报 2026-09-12"</span></span></code></pre>
+<ul>
+<li>只对<strong>这一条命令</strong>生效，不改全局配置、不动宿主设置。</li>
+<li>删除动作仍然走回收站路由，只是不再因“文件多”被拦；安全语义没变。</li>
+<li>相关开关（<code>.cjs</code> 里读到的）：<code>CODEBUDDY_SAFE_DELETE_ENABLED</code>、<code>CODEBUDDY_SAFE_DELETE_BULK_GUARD</code>、<code>CODEBUDDY_SAFE_DELETE_BULK_STATE_DIR</code>。守卫无路径白名单，别指望加例外。</li>
+</ul>
+<h2 id="预防--检查项">预防 / 检查项</h2>
+<ol>
+<li><strong>凡是跑前端构建（Astro / Vite / Next）都预判这一条</strong>，尤其是构建产物目录被清理时。</li>
+<li>报错关键词认准 <code>SAFE_DELETE_BULK_CONFIRM_REQUIRED</code> —— 看到它就知道是守卫，不是内容或依赖问题，别去翻文章 diff。</li>
+<li><strong>失败后重跑要把三路走全</strong>：<code>blog-publish</code> 是「先推 GitLab → 再同步日报 → 再构建」，第一次在构建阶段挂掉时，日报文件<strong>并未</strong>进 GitLab 源码仓。重跑必须用完整脚本，<strong>不要加 <code>--skip-gitlab</code></strong>，否则源码仓会永远缺这一期。</li>
+<li>重跑时日志打印「工作区干净，跳过 commit」+「Everything up-to-date」是正常的（上次已提交），判断发布真伪看 <code>xxx..yyy main -&gt; main</code> 这一行（参见 blog-publish skill 的踩坑实录）。</li>
+</ol>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/projects/server-apps/astro-blog/dist/.prerender/.vite/</code>（每次构建重建的临时目录）</li>
+<li><code>/Applications/WorkBuddy.app/Contents/Resources/app.asar.unpacked/cli/vendor/shim/node-safe-delete-shim.cjs:198</code>（<code>checkBulkDeleteGuard</code>）</li>
+<li><code>/Applications/WorkBuddy.app/Contents/Resources/app.asar.unpacked/cli/vendor/shim/safe-delete-bulk-guard.cjs:350</code>（阈值判定）</li>
+<li><code>~/projects/server-apps/astro-blog/node_modules/astro/dist/core/build/vite-plugin-ssr-assets.js:89</code>（触发点）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p014-dom自动化假成功_节点数量与queryselector/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P014 - DOM 自动化里的两类「假成功」：节点数量判状态 &amp; querySelector 取首个元素</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
