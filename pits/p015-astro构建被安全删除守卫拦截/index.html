@@ -40,7 +40,7 @@
 <p>在 WorkBuddy 会话里执行 <code>npm run build</code>（Astro 5.x），构建到一半报错退出：</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[ERROR] [vite] ✗ Build failed in 475ms</span></span>
 <span class="line"><span>[safe-delete][SAFE_DELETE_BULK_CONFIRM_REQUIRED] {"count":50,"threshold":50,"scope":"turn",</span></span>
-<span class="line"><span>  "targets":["/Users/kehua/projects/server-apps/astro-blog/dist/.prerender/.vite/"],"targetCount":1}</span></span>
+<span class="line"><span>  "targets":["~/projects/server-apps/astro-blog/dist/.prerender/.vite/"],"targetCount":1}</span></span>
 <span class="line"><span>  at deleteViteFolder (node_modules/astro/dist/core/build/vite-plugin-ssr-assets.js:89:23)</span></span></code></pre>
 <p><code>[content] Syncing content</code>、<code>[types] Generated</code> 都已通过，<strong>卡在 <code>Building static entrypoints</code> 之后</strong>。</p>
 <h2 id="根因">根因</h2>
@@ -65,8 +65,8 @@
 <h2 id="相关文件">相关文件</h2>
 <ul>
 <li><code>~/projects/server-apps/astro-blog/dist/.prerender/.vite/</code>（每次构建重建的临时目录）</li>
-<li><code>/Applications/WorkBuddy.app/Contents/Resources/app.asar.unpacked/cli/vendor/shim/node-safe-delete-shim.cjs:198</code>（<code>checkBulkDeleteGuard</code>）</li>
-<li><code>/Applications/WorkBuddy.app/Contents/Resources/app.asar.unpacked/cli/vendor/shim/safe-delete-bulk-guard.cjs:350</code>（阈值判定）</li>
+<li><code>&lt;WorkBuddy 安装目录&gt;/cli/vendor/shim/node-safe-delete-shim.cjs:198</code>（<code>checkBulkDeleteGuard</code>）</li>
+<li><code>&lt;WorkBuddy 安装目录&gt;/cli/vendor/shim/safe-delete-bulk-guard.cjs:350</code>（阈值判定）</li>
 <li><code>~/projects/server-apps/astro-blog/node_modules/astro/dist/core/build/vite-plugin-ssr-assets.js:89</code>（触发点）</li>
 </ul>
 <nav class="post-nav"><a class="post-nav-item" href="/pits/p014-dom自动化假成功_节点数量与queryselector/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P014 - DOM 自动化里的两类「假成功」：节点数量判状态 &amp; querySelector 取首个元素</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
