@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-14 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#2d333b}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 14 日（周一）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：harness、账本、数据三件基础设施先被标准化、先算清</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① Agents API 开放</a>
+    <a href="#n2">② 同模型差 70 倍</a>
+    <a href="#n3">③ WPS 登顶 V2</a>
+    <a href="#n4">④ Motus2 世界模型</a>
+    <a href="#n5">⑤ 红杉押注数据</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>OpenAI Agents API 开放公测：Codex 背后的「harness」第一次被拆成可租用的托管云服务</h2>
+      <span class="tag t-code">AI Coding · 基础设施</span>
+    </div>
+    <div class="src">来源：OpenAI 官方公告《Introducing the Agents API》（9/10）· flowtivity.ai / devtoollab / genaidaily 技术解析（9/13）</div>
+    <div class="body">
+      <p>9 月 10 日 OpenAI 将 <strong>Agents API</strong> 开放给全体开发者公测。核心一句话：<strong>你指定 task / model / tools / environment，OpenAI 替你跑那个驱动 Codex 的执行系统（harness）</strong>——会话持久化、上下文压缩、subagent 编排、崩溃自动恢复、工具按需加载，全由它管。</p>
+      <table>
+        <tr><th>维度</th><th>这次给了什么</th></tr>
+        <tr><td>开源底座</td><td>API 由 <strong>开源的 Codex harness</strong> 驱动，开发者可翻阅协调模型调用、工具与上下文的核心逻辑，而非黑盒</td></tr>
+        <tr><td>三种环境</td><td><code>none</code>（纯工具调用，最便宜）/ <code>openai_hosted</code>（OpenAI 托管沙箱，跑脚本改文件）/ <code>self_hosted</code>（连自家 VPC，适合合规与 GPU 约束）</td></tr>
+        <tr><td>计费</td><td><strong>API 本身不额外收费</strong>，只按模型 token + 工具 + 容器（沙箱）计费；参考模型 <code>gpt-6-astra</code></td></tr>
+        <tr><td>四个对象</td><td>agent（模型+指令+工具+MCP）/ environment（代码在哪跑）/ session（跨任务持久）/ events（流式或 webhook 回传）</td></tr>
+      </table>
+      <p>harness 里三件「每家都重写的 plumbing」被做成原语：<strong>① 上下文压缩</strong>（接近上限自动 compaction，任务可跨多个上下文窗口）；<strong>② tool search</strong>（按需加载工具定义而非全塞进 prompt，省 token 保缓存）；<strong>③ subagents</strong>（两行配置即可并行拆分、各自独立上下文、主 agent 汇总）。官方引客户数据：评测分 0.71→0.85、subagent 延迟降 4×、案例审查成本降 60%、失败响应降 86%。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>这条把 09-12 那期反复出现的主线（<strong>能力在 harness 层产生，不在模型层</strong>）推到了产品化终点——OpenAI 的赌注很直白：<strong>「把语言模型变成可靠工人的那层，应该被租用，而不是每支团队重写一遍」</strong>。对国内做 Coding Agent 的团队，这意味着「自研 orchestration」的护城河被抽掉一层：要么认领 OpenAI 的托管 harness，要么去 fork 它的开源 Codex harness 自建。方向会朝「harness 即基础设施」收敛。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 客户数字（0.71→0.85、4×、60%、86%）均为<strong>厂商自述，非独立第三方基准</strong>。② <strong>锁定风险是真实代价</strong>：编排层依赖 OpenAI 实现并随其模型版本迭代，跨模型厂商的 agent 平台更可能直接采用开源 Codex harness 而非托管 API。③ beta 期<strong>数据在美国处理，即便 self_hosted 也不支持零数据保留</strong>；国内合规场景需先评估。
+    </div>
+    <div class="act">
+      <b>可做的动作：</b>① 长任务 agent 团队先用 <code>none</code> / <code>self_hosted</code> 模式接入，保留自有工具与 VPC，把「是否被 OpenAI 托管」当架构决策而非默认。② 把评估重点从「换更便宜的模型」转向「harness 的上下文压缩与缓存命中率」——这恰是今日第二条的题眼。③ 关注开源 Codex harness 仓库的公开演进，而非只看 API 文档。
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>InfoQ 实测：同一个模型，换不同编程工具，账单能差 70 倍——成本黑洞在「脚手架」不在模型</h2>
+      <span class="tag t-code">AI Coding · 成本账本</span>
+    </div>
+    <div class="src">来源：InfoQ《同模型 token 差 70 倍》汇编（6 月独立测试 + Composio 八框架横评 + Artificial Analysis 编码智能体指数，9/13）</div>
+    <div class="body">
+      <p>结论反直觉：<strong>AI 编程的成本差距主要来自模型外面那层「脚手架」，不是模型本身</strong>。把同一批基准换成完全不相关的模型重跑，工具间的排名几乎不变。</p>
+      <table>
+        <tr><th>口子</th><th>事实</th></tr>
+        <tr><td><strong>启动税</strong></td><td>每轮对话都要重带系统提示词 + 工具 Schema：Aider 约 700 token，OpenClaw 约 2.6 万 token；跑满 15 轮，光脚手架就烧掉约 39 万输入 token。「每轮固定上下文 × 调用轮数」与总消耗拟合优度 <strong>R²=0.99</strong></td></tr>
+        <tr><td><strong>缓存命中</strong></td><td>新输入价约为缓存输入的 5 倍；Claude Code 输入 token 仅 <strong>1.5% 命中缓存</strong>，Codex 约 70%——结果 Codex 计费 token 多一倍，真实账单反而更便宜</td></tr>
+        <tr><td><strong>贵≠好</strong></td><td>同模型跑 8 框架 / 30 企业工作流 / 240 次：单次成功成本从 PI Agent 的 0.028 美元到 Claude Code 的 0.195 美元，差近 7 倍；通过率从 OpenCode 的 46.7% 到 PI Agent 的 66.7%</td></tr>
+        <tr><td><strong>MCP 叠加</strong></td><td>每多挂一个 MCP 服务器，每轮就多读一份工具说明书——工具越多，固定开销越大</td></tr>
+      </table>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>它把「AI 编程贵不贵」从情绪问题变成了<strong>可核算问题</strong>，正好接住第一条（harness 决定成本）。选型该先看三件事：<strong>单轮固定携带多少 token、一个任务要跑多少轮、缓存命中率</strong>——这往往比换一个更便宜的模型更有效。整条线和 09-13 的「验收权外移·账本外移」是连续的：今天连「花了多少钱、花在哪一层」都被摊开了。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 「差 70 倍」是<strong>跨框架跨配置的总区间</strong>，不是同任务同配置下的对比，不能直接当某两个工具的倍数。② 三组测试口径不同，绝对值不可横向硬比；R²=0.99 说明的是「固定上下文×轮数」这一单一变量的解释力，不代表其他变量无关。③ 缓存命中率高度依赖具体工作流，别人的数字不遗传到你的仓库。
+    </div>
+    <div class="act">
+      <b>可做的动作：</b>① 平台团队对账先查两项——单轮固定 token、缓存命中率，再看模型报价。② 挂 MCP 前先算「每轮工具说明书」的开销，按需懒加载而非全量挂载。③ 把「单次成功成本 / 通过率」双轴纳进工具选型，不只看标价。
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>WPS 表格 Agent 登顶 SpreadsheetBench V2：国产垂类 Agent 第一次在端到端榜单跑赢国际大厂</h2>
+      <span class="tag t-code">AI Coding · 垂类 Agent</span>
+    </div>
+    <div class="src">来源：中国电子报 / 观察者网 / 三湘都市报（9/11–9/13）· SpreadsheetBench V2 Full 官方榜单</div>
+    <div class="body">
+      <p>国际表格 AI 评测 SpreadsheetBench 更新 <strong>V2 Full</strong> 榜单，<strong>WPS 表格 Agent 以 50.86% 登顶并通过官方 Verified 验证</strong>；Claude Opus 4.6、GPT-5.2、Gemini 3.1 Pro 分别以 34.89% / 26.79% / 23.68% 列于其后。</p>
+      <p>这是 WPS 三个月内<strong>第三次登顶权威评测</strong>，恰好拼成三级能力验证：</p>
+      <table>
+        <tr><th>时间</th><th>榜单</th><th>验证什么</th></tr>
+        <tr><td>6 月</td><td>SpreadsheetBench V1 Full（73.46%，超人类专家基准线 71.33%）</td><td><strong>会做</strong>（需求理解 + 表格操作 + 公式交付）</td></tr>
+        <tr><td>7 月</td><td>TableBench（72.54 分）</td><td><strong>会想</strong>（事实核验 / 数值推理 / 分析 / 可视化）</td></tr>
+        <tr><td>本次</td><td>SpreadsheetBench V2（50.86%）</td><td><strong>做完</strong>（端到端业务工作流交付）</td></tr>
+      </table>
+      <p>V2 把考题从局部操作推向端到端：321 项任务，平均每项涉及 <strong>11.8 个工作表、593.5 个单元格修改</strong>，「局部正确 ≠ 最终正确」。能力已进入产品：8/28 WPS AI NEXT「灵感应用」亮相，北京昌平区教育局骨干教师评审、北师大珠海校区实习管理已接入真实业务流程。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>稀罕的不是 50.86%，而是它出现在<strong>端到端业务工作流榜</strong>——拼的不再是一次推理，而是对文件结构的理解、对软件能力的调用、对结果的自我校验。通用大模型在收敛，而垂类厂商手里的<strong>场景数据 + 工具链 + 交付闭环</strong>正变成短期难复制的壁垒。对打工人更直接：办公 Agent 的考核标准已从「生成得像」变成「交付得对」。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 50.86% 的<strong>绝对水平仍低</strong>，说明端到端复杂表格任务远未解决，「登顶」是相对当前所有参评模型的相对第一。② 榜单任务分布偏商业工作簿，「会做会想做完」三级用的是不同榜单，不是同一份试卷的纵向追踪。③ 产品落地（昌平教育局等）为具体场景接入，不等于通用办公全面替代。
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>生数 Motus2 世界模型：让机器人先「在心里推演动作后果」再动手，朝递归自我改进迈出第一步</h2>
+      <span class="tag t-emb">具身智能 · 世界模型</span>
+    </div>
+    <div class="src">来源：量子位《Shengshu's New World Model Enables Robots to Begin Self-Evolution》（9/13）· 生数科技发布</div>
+    <div class="body">
+      <p>生数科技发布 <strong>Motus2 世界模型</strong>，核心是把机器人从「照指令执行」升级为「先预测动作后果、再自我评估」：形成 <strong>预测—执行—评估</strong> 的闭环，并朝 <strong>递归自我改进（RSI）</strong> 迈出初步一步，真实任务成功率明显提升。</p>
+      <p>关键定位：它把「世界模型」从<strong>视频生成</strong>延伸到<strong>机器人决策</strong>——模型不再只是生成一段看起来合理的画面，而是内部推演「如果我这么做，世界会变成什么样」，再决定要不要做。这与开源三维感知（今日速览 · 蚂蚁 LingBot-Map）是同一条逻辑：把「空间理解 + 动作预判」变成可复用的基础设施。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>具身「大脑」侧补上了最关键的一环——<strong>机器人开始有「后果意识」</strong>。这正好对着 09-13 那期具身资本信用的核心矛盾（银河通用的「数采收入该不该打折」）：当真机遥操数据严重短缺、数采经济学被拷问时，<strong>世界模型代表的「用更少真机数据撬动更好泛化」的路线</strong>，是另一条能绕开「数据—收入」死结的可能。与 09-12 的 HuRo（用人类视频做 VLA 预训练）是同一困境的两种解法：一个靠数据量，一个靠模型内的推演。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 论文表述 RSI 是「<strong>初步一步</strong>」，并非已闭环的自我进化系统，宣传语里的「自我进化」要打折扣读。② 真实任务成功率「明显提升」未给统一基准数字，跨任务幅度不可直接比较。③ 仍是研究原型，离工厂 7×24 稳定运行还隔着可靠性与异常处理。
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>红杉领投 Mecka AI 近 5 亿美元：具身智能的瓶颈正从「硬件造不出」转向「数据喂不饱」</h2>
+      <span class="tag t-emb">具身智能 · 数据瓶颈</span>
+    </div>
+    <div class="src">来源：TechCrunch（9/11）· 国家数据局具身智能座谈会（9/10）· 36 氪 / 量子位相关报道</div>
+    <div class="body">
+      <p>据 TechCrunch，机器人训练数据公司 <strong>Mecka AI</strong> 正以约 <strong>5 亿美元估值</strong>完成红杉资本领投的新一轮融资（3 个月前 Framework Ventures 领投 6000 万美元）。模式很直白：<strong>付普通人用身体传感器 + 手机录制日常动作（做咖啡、修车等），形成第一人称（egocentric）运动数据集卖给机器人公司与 AI 实验室</strong>；公司称预计 2026 年底达 1 亿美元年化收入。</p>
+      <p>赛道在升温：竞品 <strong>XDOF 传出接近 12 亿美元估值</strong>，Scale AI、Micro1 也向物理世界数据扩张。国内同步补规则：<strong>国家数据局 9/10 召开具身智能座谈会，表示将适时推动具身智能数据标准建设</strong>；触觉传感赛道 7 月以来至少 8 笔融资、合计超 25 亿元。</p>
+    </div>
+    <div class="why">
+      <b>为什么值得关注：</b>红杉买的不是机器人，而是<strong>把人类日常动作变成可训练数据的那条流水线</strong>——这等于公开给行业定了性：瓶颈正从「硬件造不出来」转向「数据喂不饱」。两个信号明确：① 数据来源的<strong>合规与稀缺性</strong>将成为核心竞争力；② 规则要开始定了——座谈会开在<strong>数据局而非工信部</strong>，意味着「谁采集、谁标价、数据怎么流通」即将有标准。这恰好是 09-13 银河通用「数采收入该不该打折」争议的<strong>上游解法</strong>：先把数据源头的合规与定价理清楚，下游 IPO 的「收入实质」拷问才有答案。
+    </div>
+    <div class="caveat">
+      <b>口径边界：</b>① 估值与收入均为融资方 / 媒体口径，未独立审计。② 警惕「数据 = 新石油」叙事下的估值泡沫——外滩大会上清华许华哲已提出反方：<strong>百万小时数据不必然带来更好模型</strong>，按市价一小时数据数百元计、百万小时投入可达数亿元，应先确认「什么数据有效」再放量。③ 「数采收入该不该打折」的质疑（见 09-13⑤）在数据源头同样适用：数据公司的收入质量也需看客户独立性与复购实质。
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+
+    <div class="m emb">
+      <h3>蚂蚁 LingBot-Map 开源：普通摄像头实时重建 3D 空间，入选 ECCV Oral，GitHub 16.9K Star</h3>
+      <p>蚂蚁「灵波」开源 <strong>LingBot-Map</strong>，用普通摄像头即可实时重建三维空间，论文入选 ECCV Oral，GitHub 已收 16.9K Star，开发者用于机器人导航与空间理解。这是灵波系列继 LingBot-VLA 2.0、LingBot-World 2.0 后的第三弹——<strong>开源三维感知工具正从研究原型走向工程可用</strong>，为具身智能的低成本空间建模提供新路径，与今日主榜④（Motus2 世界模型）同属「大脑/感知基础设施开源化」一条线。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>特斯拉向 Optimus 核心供应链下约 5000 台批量订单：量产 S 曲线拐点，但灵巧手仍是最大瓶颈</h3>
+      <p>据浙商证券研报与界面/证券时报，特斯拉 9/7 向 Optimus 核心供应商一次性下达约 <strong>5000 台批量订单</strong>，是今年 4 月量产指引以来首笔千台级；要求 9 月周产能拉到 1000 台、年底 2000–2500 台（年化约 10 万）、2027 年 50–100 万台，Gen-3 BOM 已压到约 2.8 万美元。但马斯克承认<strong>灵巧手是最大瓶颈</strong>（试产单台成本 4–5 万 vs 2 万目标，关节寿命约 1 年 vs 工业 5 年标准），量产节点已多次跳票。对照 09-13④ 小鹏 IRON「官宣量产但未披露产量」——特斯拉给出的是真实批量订单，但伴随明确的工程瓶颈。</p>
+    </div>
+
+    <div class="m code">
+      <h3>麦肯锡 2026 AI 状态：32% 组织跳过采购改用 agentic coding 工具自建（科技界 41%）</h3>
+      <p>麦肯锡年度报告显示，今年 <strong>32% 的组织跳过现成采购改用 agentic coding 工具自建</strong>，科技界比例更高达 41%。同期 YC 总裁 Garry Tan 称，借助 vibe coding 与 Agent 编程，今天一个人可能抵得上 9 个月前的 400 个自己，并建议把「一次成功的工作流」沉淀为可重复、可修复的技能文件。这与 09-13① 工信部「2 万家规上企业覆盖」目标互相印证：政策驱动与市场自发自建率，都在把「自己造 agent」变成常态。</p>
+    </div>
+
+    <div class="m code">
+      <h3>OpenAI 同日暂停 $200 Pro 订阅：Astra 算力告急，与 Agents API 开放形成张力</h3>
+      <p>9/10 起 OpenAI 暂停 200 美元/月的 ChatGPT Pro 档新订阅与升级（购买页置灰），Codex 产品负责人 Tibo 称 Astra 需求前所未有、暂停是维持广泛访问的最小措施，公司正加紧扩算力；同期用户晒出前后对比质疑 Astra 生成质量退化，OpenAI 回应模型上线以来未做任何改动、正在调查。这与今日主榜①（Agents API 开放）是<strong>同一天的正反两面</strong>：一边把 harness 开放给开发者，一边自家算力吃紧——基础设施开放的速度，卡在了底层算力供给上。</p>
+    </div>
+
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系（避免被误判为重复）</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>① OpenAI Agents API</td><td>09-12 ① Devin Fusion（lead+sidekick）<br>09-12 ② <code>claude plugin eval</code></td><td><strong>同层不同面</strong>：都讲能力在 harness 层；OpenAI 把 harness 产品化为托管服务，方向是「agent loop 不该被每队重写」</td></tr>
+        <tr><td>① Agents API（开源底座）</td><td>09-10 ③ superpowers 28.4 万星<br>09-11 ③ Subagents vs Skills</td><td><strong>同题不同进</strong>：开源 Codex harness 给「自建 harness」提供了底层选择，补上生态层拼图</td></tr>
+        <tr><td>② 同模型差 70 倍</td><td>09-12 ② plugin eval（Δ 成本）<br>09-13 ③ BenchShield（成本 -65%）</td><td><strong>同主线不同切面</strong>：把「成本」从相对分差变成可核算账本——单轮固定 token / 轮数 / 缓存命中率</td></tr>
+        <tr><td>③ WPS 登顶 V2</td><td>09-13 ① 工信部「人工智能+软件」<br>09-08 顺带 · 有道报告（编程占 38.5%）</td><td><strong>同题不同层</strong>：市场占比 → 国家政策 KPI → 国产垂类在端到端榜证实第一</td></tr>
+        <tr><td>④ Motus2 世界模型</td><td>09-13 ⑤ 银河通用数采争议<br>09-12 ⑤ HuRo（视频预训练）</td><td><strong>同层不同路线</strong>：世界模型内部推演后果 vs 真机视频数据堆量；都在解「数据喂不饱」，Motus2 是想用更少数据撬动更好泛化</td></tr>
+        <tr><td>⑤ Mecka 数据争夺</td><td>09-13 ⑤ 银河通用「数采收入该不该打折」<br>09-10 ⑤ 证监会收紧 IPO</td><td><strong>上游收束</strong>：从「下游收入实质」回溯到「数据源头的合规与定价标准」，数据局座谈会是解法前移</td></tr>
+        <tr><td>速览 · LingBot-Map</td><td>09-13 顺带 · Fanuc×Google 焊接智能体<br>09-12 ④ Skild「部署时代」</td><td><strong>同主线</strong>：开源感知工具工程可用，把空间理解变成可复用基础设施</td></tr>
+        <tr><td>速览 · 特斯拉 5000 台</td><td>09-13 ④ 小鹏 IRON（未披露产量）</td><td><strong>同题不同进度</strong>：从「宣布量产」到「真实批量订单 + 明确工程瓶颈」</td></tr>
+        <tr><td>速览 · 麦肯锡 32%</td><td>09-13 ① 工信部 2 万家目标</td><td><strong>同题互证</strong>：政策驱动与市场自发自建率，都指「自己造 agent」常态化</td></tr>
+        <tr><td>速览 · Pro 暂停</td><td>今日 ① Agents API</td><td><strong>同一天正反</strong>：开放 harness vs 自家算力告急，基础设施开放卡在算力供给</td></tr>
+      </table>
+      <p style="margin-bottom:0"><strong>今日主线一句话：</strong>昨天（09-13）那期判定「验收权外移·自证时代结束」——数字、结论、收入都要交出他证。今天再往前走了一步：<strong>能力竞赛的下半场，比的是谁先把三件基础设施标准化、算清楚</strong>。OpenAI 把 <strong>harness</strong> 变成可租用的云服务（交出去）；InfoQ 把 <strong>token 成本</strong> 变成可核算的账本（算清楚）；WPS 用端到端交付榜单证明垂类工具链是壁垒；具身侧则从「硬件造不出」转向「<strong>数据喂不饱</strong>」与「世界模型预测后果」。<strong>模型能力在收敛，胜负正在往 harness、账本、数据这三件底座上转移。</strong></p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-14 · 北京时间 09:55</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-13.html">← 2026-09-13</a></div>
+</body>
+</html>
