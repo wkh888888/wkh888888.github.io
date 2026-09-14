@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端 · walker</title><meta name="description" content="腾讯云遨驰终端。Web / 桌面客户端 / 微信小程序共用一份连接列表，基于 tmux 的会话可断线恢复，还带 AI 命令辅助与会话协作，基础版免费。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/orcaterm/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端 · walker"><meta property="og:description" content="腾讯云遨驰终端。Web / 桌面客户端 / 微信小程序共用一份连接列表，基于 tmux 的会话可断线恢复，还带 AI 命令辅助与会话协作，基础版免费。"><meta property="og:url" content="https://blog.walkerhua.com/tools/orcaterm/"><meta property="og:image" content="https://blog.walkerhua.com/og/orcaterm.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端 · walker"><meta name="twitter:description" content="腾讯云遨驰终端。Web / 桌面客户端 / 微信小程序共用一份连接列表，基于 tmux 的会话可断线恢复，还带 AI 命令辅助与会话协作，基础版免费。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/orcaterm.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端</h1><p>换台电脑不用重新导 SSH 配置、关掉浏览器长任务还在跑 —— 这两点就值回它占用的那点注意力。</p><div class="hero-meta"><span>第 4 期</span><span>发布于 2026-09-14</span><span>约 2 分钟</span><a class="tag" href="https://orcaterm.com" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/运维/">运维</a><a class="tag" href="/tags/SSH/">SSH</a><a class="tag" href="/tags/终端/">终端</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#它到底是什么">它到底是什么</a><a class="toc-l2" href="#1-连接跟着账号走不跟着机器走">1. 连接跟着账号走，不跟着机器走</a><a class="toc-l2" href="#2-会话与浏览器解耦">2. 会话与浏览器解耦</a><a class="toc-l2" href="#3-ai-与协作都在会话上下文里">3. AI 与协作都在会话上下文里</a><a class="toc-l2" href="#哪些人不必装">哪些人不必装</a><a class="toc-l2" href="#上手">上手</a></aside><article class="card prose"><h2 id="它到底是什么">它到底是什么</h2>
+<p>OrcaTerm（遨驰终端）是腾讯云做的统一终端入口，三种形态：网页端、桌面客户端、微信小程序。名字里带「云」但<strong>不限于腾讯云主机</strong> —— 支持 SSH、RDP 连任意第三方云或机房机器，也支持托管凭据。</p>
+<p>如果只是「另一个 SSH 客户端」，它不值得单独写一篇。真正让它不一样的是下面三件事。</p>
+<h2 id="1-连接跟着账号走不跟着机器走">1. 连接跟着账号走，不跟着机器走</h2>
+<p>传统 SSH 客户端的痛点：连接配置、私钥都存在本机，换电脑就要重新导，公司机和家里机两份配置常年不同步。</p>
+<p>OrcaTerm 把连接列表放在账号里，Web、客户端、小程序三端共用。在手机上收到告警，直接打开小程序就能进目标机器看日志 —— 不用在移动端配服务器地址和密钥。对腾讯云主机还可以走自动化助手（TAT）免密登录，本机连 SSH 客户端都不用装。</p>
+<h2 id="2-会话与浏览器解耦">2. 会话与浏览器解耦</h2>
+<p>它底层用 tmux 做会话恢复：跑备份、编译、数据迁移这类长任务时，关掉本地页面，任务在服务器侧继续跑，回来再接上原会话看进度。这一点对「跨国网络 + 长任务」的场景特别实用 —— 断网不再等于重来。</p>
+<p>顺带一提，它会自动识别 tmux 分屏并提供鼠标滚轮支持，不用自己改 <code>.tmux.conf</code>。</p>
+<h2 id="3-ai-与协作都在会话上下文里">3. AI 与协作都在会话上下文里</h2>
+<p>OrcaTerm 的 AI 侧栏能引用<strong>当前会话输出、脚本库、随手记</strong>作为上下文 —— 不用把报错复制到别的窗口问一遍再粘回来。生成的命令确认后直接发到当前会话。命令行里还有 Agent 模式（自然语言下任务）、命令预测、输错时的纠错引导。</p>
+<p>会话协作则是给多人排障用的：把链接发给同事，对方进的是同一个终端，看的是同一份实时输出和状态，比来回转发日志截图高效得多。操作结束后有会话审计可回溯。</p>
+<h2 id="哪些人不必装">哪些人不必装</h2>
+<ul>
+<li>只管两三台机器、且常年在同一台电脑上操作的人 —— 本地终端够用；</li>
+<li>需要精细控制 SSH 配置、端口转发策略的重度用户 —— 客户端的自由度不如 iTerm2 + 自己的 config；</li>
+<li>对「连接配置经过云」有顾虑的场景 —— 自建环境请评估清楚再上。</li>
+</ul>
+<h2 id="上手">上手</h2>
+<p>网页端直接可用，不用装客户端。基础版免费（含凭证托管 3 个、会话协作、AI 助手 1000 次/月等），专业版和企业版按需。先把常用连接录进去，再用小程序试一次「离开工位后处理告警」，就能判断它对你值不值。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/dbx/"><span class="post-nav-label">上一期</span><span class="post-nav-title">dbx：让 Spark 项目像普通工程一样本地开发、版本化发布</span></a><a class="post-nav-item post-nav-next" href="/tools/cmux/"><span class="post-nav-label">下一期</span><span class="post-nav-title">cmux：为「同时跑好几个 agent」这件事重新设计的终端</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

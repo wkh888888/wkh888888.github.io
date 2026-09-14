@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Obsidian：把笔记还给你自己硬盘的「第二大脑」 · walker</title><meta name="description" content="本地 Markdown 文件夹 + 双向链接 + 图谱 + 上千插件。数据在你自己磁盘上，不绑定服务，换任何编辑器都能继续用 —— 这是它最被低估的优点。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/obsidian/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Obsidian：把笔记还给你自己硬盘的「第二大脑」 · walker"><meta property="og:description" content="本地 Markdown 文件夹 + 双向链接 + 图谱 + 上千插件。数据在你自己磁盘上，不绑定服务，换任何编辑器都能继续用 —— 这是它最被低估的优点。"><meta property="og:url" content="https://blog.walkerhua.com/tools/obsidian/"><meta property="og:image" content="https://blog.walkerhua.com/og/obsidian.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Obsidian：把笔记还给你自己硬盘的「第二大脑」 · walker"><meta name="twitter:description" content="本地 Markdown 文件夹 + 双向链接 + 图谱 + 上千插件。数据在你自己磁盘上，不绑定服务，换任何编辑器都能继续用 —— 这是它最被低估的优点。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/obsidian.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>Obsidian：把笔记还给你自己硬盘的「第二大脑」</h1><p>它的核心不是双链也不是图谱，是「你的笔记就是一堆 .md 文件」—— 这个决定让所有花哨功能都变得可逆。</p><div class="hero-meta"><span>第 6 期</span><span>发布于 2026-09-14</span><span>约 2 分钟</span><a class="tag" href="https://obsidian.md" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/笔记/">笔记</a><a class="tag" href="/tags/效率/">效率</a><a class="tag" href="/tags/Markdown/">Markdown</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先讲它最值钱的那个决定">先讲它最值钱的那个决定</a><a class="toc-l2" href="#它擅长什么">它擅长什么</a><a class="toc-l2" href="#它不擅长什么">它不擅长什么</a><a class="toc-l2" href="#怎么用才不容易放弃">怎么用才不容易放弃</a><a class="toc-l2" href="#上手">上手</a></aside><article class="card prose"><h2 id="先讲它最值钱的那个决定">先讲它最值钱的那个决定</h2>
+<p>Obsidian 的 vault（库）本质上就是<strong>你硬盘上的一个普通文件夹</strong>，里面是一堆 <code>.md</code> 文件。没有私有格式、没有云端数据库、没有账号才能打开。</p>
+<p>这意味着：</p>
+<ul>
+<li>关掉 Obsidian，用 VS Code 照常读写，一份笔记都不损失；</li>
+<li>想同步就自己选：iCloud、Git、Syncthing、网盘，或者花钱用官方 Sync；</li>
+<li>哪天 Obsidian 不做了，你的知识库还在，格式是通用的 Markdown。</li>
+</ul>
+<p>很多人把 Obsidian 当成「有图谱的笔记软件」，其实真正让它长期可信的是这个决定。</p>
+<h2 id="它擅长什么">它擅长什么</h2>
+<p><strong>双向链接与图谱</strong>：<code>[[另一篇笔记]]</code> 就能建立链接，反向链接面板自动收集「谁引用了我」。写技术笔记时特别有用 —— 积累几十篇后，图谱和反向链接能帮你发现自己早就把某件事写过一遍。</p>
+<p><strong>插件生态</strong>：社区插件上千个。常用的几类：日历（Daily Notes）、看板（Kanban）、任务管理（Tasks）、导出（Pandoc / 站点生成）、模板（Templater）。装多了会拖慢启动，建议克制。</p>
+<p><strong>Markdown 原生</strong>：代码块、表格、Callout、嵌入图片和 PDF 都支持，写起来和 GitHub README 手感一致，复制出去也不丢格式。</p>
+<p><strong>多端可用</strong>：桌面免费，手机端也有（同步方式自选）。</p>
+<h2 id="它不擅长什么">它不擅长什么</h2>
+<ul>
+<li><strong>协作</strong>。它是单人的。多人编辑请找 Notion / 飞书文档。</li>
+<li><strong>开箱即用</strong>。默认状态下它很朴素，好看和好用基本都要靠插件与主题调 —— 有人管这叫可玩性，也有人管这叫折腾。想「装上就能用」的人会失望。</li>
+<li><strong>移动端体验弱于桌面</strong>。手机上更适合速记和查阅，不适合重度整理。</li>
+</ul>
+<h2 id="怎么用才不容易放弃">怎么用才不容易放弃</h2>
+<p>我的建议是<strong>先做减法</strong>：</p>
+<ol>
+<li>只建一个 vault，不要按项目分好几个库（跨库链接体验差）；</li>
+<li>文件夹结构保持两层以内，靠链接而不是目录来组织；</li>
+<li>日用只开三四个插件：Daily Notes + Templater + 一个任务类插件；</li>
+<li>同步优先用 Git（有版本历史，还能在提交里看笔记演化），其次 iCloud，最后才考虑付费 Sync；</li>
+<li>别在插件和主题上花超过一晚上 —— 那些时间不会变成笔记。</li>
+</ol>
+<h2 id="上手">上手</h2>
+<p>官网下载即用，个人免费（商业用途需授权）。先别装插件，写两周纯 Markdown 笔记，等你确实感到「找不到东西」了，再去装第一个插件。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/cmux/"><span class="post-nav-label">上一期</span><span class="post-nav-title">cmux：为「同时跑好几个 agent」这件事重新设计的终端</span></a><a class="post-nav-item post-nav-next" href="/tools/open-design/"><span class="post-nav-label">下一期</span><span class="post-nav-title">Open Design：把「你已有的 coding agent」变成设计引擎</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

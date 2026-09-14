@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>cmux：为「同时跑好几个 agent」这件事重新设计的终端 · walker</title><meta name="description" content="基于 libghostty 的开源 macOS 终端工作区。垂直标签、agent 等待时的通知环、可编程内置浏览器、完整 CLI 与 socket API，专治开了五六个 agent 却不知道谁在等你。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/cmux/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="cmux：为「同时跑好几个 agent」这件事重新设计的终端 · walker"><meta property="og:description" content="基于 libghostty 的开源 macOS 终端工作区。垂直标签、agent 等待时的通知环、可编程内置浏览器、完整 CLI 与 socket API，专治开了五六个 agent 却不知道谁在等你。"><meta property="og:url" content="https://blog.walkerhua.com/tools/cmux/"><meta property="og:image" content="https://blog.walkerhua.com/og/cmux.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="cmux：为「同时跑好几个 agent」这件事重新设计的终端 · walker"><meta name="twitter:description" content="基于 libghostty 的开源 macOS 终端工作区。垂直标签、agent 等待时的通知环、可编程内置浏览器、完整 CLI 与 socket API，专治开了五六个 agent 却不知道谁在等你。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/cmux.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>cmux：为「同时跑好几个 agent」这件事重新设计的终端</h1><p>iTerm2 是为人类设计的终端，cmux 是为「一排 agent 在等你」设计的终端 —— 这不是升级，是换场景。</p><div class="hero-meta"><span>第 5 期</span><span>发布于 2026-09-14</span><span>约 2 分钟</span><a class="tag" href="https://cmux.dev" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/终端/">终端</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/macOS/">macOS</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#它解决的那个具体瞬间">它解决的那个具体瞬间</a><a class="toc-l2" href="#它是什么">它是什么</a><a class="toc-l2" href="#现在的边界">现在的边界</a><a class="toc-l2" href="#上手">上手</a></aside><article class="card prose"><h2 id="它解决的那个具体瞬间">它解决的那个具体瞬间</h2>
+<p>你现在应该有过这个体验：同时起了三个 agent 跑不同任务，屏幕上一排标签页，每隔几分钟挨个切过去看进度。突然来一条系统通知「Claude is waiting for your input」—— 但<strong>不知道是哪个在等、等什么</strong>，只能挨个点开看。</p>
+<p>传统终端（包括 iTerm2）没有为这个场景设计过。cmux 就是冲着它来的。</p>
+<h2 id="它是什么">它是什么</h2>
+<p>cmux 是 manaflow-ai 开源的 macOS 原生终端工作区管理器，用 Swift + AppKit 写、基于 libghostty 渲染（不是 Electron，也不是 Ghostty 的 fork —— 是把 libghostty 当渲染库用，类似 App 用 WebKit）。</p>
+<p>四个我最看重的点：</p>
+<p><strong>通知环</strong>：某个 pane 里的进程需要输入时，pane 会亮起高亮环、侧栏出现未读徽章，还能带上上下文文字。配合 agent hooks 或标准 OSC 转义序列，Claude Code、Codex、OpenCode 都能自动触发。这是它和「一个好终端」最大的区别。</p>
+<p><strong>垂直标签侧栏</strong>：每个 workspace 旁边直接显示 git 分支、工作目录、端口、通知内容 —— 不用点进去就知道这一格在干什么。</p>
+<p><strong>内置可编程浏览器</strong>：可以分屏出一个真实浏览器 pane，通过同一套 socket API 导航、抓 DOM、点击、执行 JS、读 console 和网络请求。<strong>agent 能自己验证自己改的页面效果</strong>，不用你截图喂给它。</p>
+<p><strong>完整 CLI + Unix socket</strong>：创建 workspace、分屏、发输入、读屏幕内容、截图、驱动浏览器，全都能脚本化。比如批量起三个 agent：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cmux</span><span style="color:#9ECBFF"> create-workspace</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> "frontend"</span></span>
+<span class="line"><span style="color:#B392F0">cmux</span><span style="color:#9ECBFF"> send-input</span><span style="color:#79B8FF"> --workspace</span><span style="color:#9ECBFF"> "frontend"</span><span style="color:#79B8FF"> --input</span><span style="color:#9ECBFF"> "claude"</span></span>
+<span class="line"><span style="color:#B392F0">cmux</span><span style="color:#9ECBFF"> send-input</span><span style="color:#79B8FF"> --workspace</span><span style="color:#9ECBFF"> "frontend"</span><span style="color:#79B8FF"> --input</span><span style="color:#9ECBFF"> "重构登录页组件"</span></span></code></pre>
+<p>它还能把远端 SSH 会话当本地会话用（attach 到远程 tmux），让 agent 跑在远程机器上、你在本地驱动。</p>
+<h2 id="现在的边界">现在的边界</h2>
+<ul>
+<li><strong>只有 macOS</strong>（Linux / Windows 在路上）；有 iOS 伴侣 app 处于 beta。</li>
+<li>会话恢复能还原窗口布局、工作目录、滚动历史，但<strong>进程本身不自动恢复</strong>（Claude Code、vim 不会自己活过来）。</li>
+<li>浏览器 pane 还在成熟中；整体功能面比 iTerm2 小。</li>
+<li>它不是通用终端替代品。只跑一个 agent 的人，装它意义不大。</li>
+</ul>
+<h2 id="上手">上手</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> tap</span><span style="color:#9ECBFF"> manaflow-ai/cmux</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> --cask</span><span style="color:#9ECBFF"> cmux</span></span></code></pre>
+<p>终端渲染读你的 Ghostty 配置（主题、字体、光标直接继承），cmux 自己的设置在 <code>~/.config/cmux/cmux.json</code>。建议先只做一件事：把「同时跑三个任务」的场景搬进去，看通知环能不能替你省掉那些来回切换。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/orcaterm/"><span class="post-nav-label">上一期</span><span class="post-nav-title">OrcaTerm：把 SSH 会话从「本机配置」里解放出来的三端终端</span></a><a class="post-nav-item post-nav-next" href="/tools/obsidian/"><span class="post-nav-label">下一期</span><span class="post-nav-title">Obsidian：把笔记还给你自己硬盘的「第二大脑」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
