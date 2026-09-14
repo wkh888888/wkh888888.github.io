@@ -125,7 +125,7 @@
 <span class="line"><span style="color:#79B8FF">  "body"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"test"</span></span>
 <span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <ul>
-<li><code>to</code> / <code>cc</code> / <code>bcc</code> 是 <strong><code>{email, name?}</code> 对象数组</strong>，传 <code>["a@b.com"]</code> 会报 <code>schema_type: array field_type: string</code>。</li>
+<li><code>to</code> / <code>cc</code> / <code>bcc</code> 是 <strong><code>{email, name?}</code> 对象数组</strong>，传 <code>["user@example.com"]</code> 会报 <code>schema_type: array field_type: string</code>。</li>
 <li>首次调用必返 <code>42801</code> + <code>confirmation_token</code>（<strong>5 分钟有效</strong>）→ 必须展示 <code>operation_summary</code> → <strong>停下等用户明确许可</strong> → 再带 token 重发。禁止自己确认自己；token 过期就重新调用拿新的。</li>
 <li>发件别名 <code>walkerhua@agent.qq.com</code>，日配额 50 封（响应头 <code>x_dailyquota_remaining</code> 可见）。</li>
 </ul>

@@ -24,7 +24,7 @@
 </tr>
 <tr>
 <td>场景</td>
-<td>Playwright + CDP 操作泛微 OA 工时表单（<code>~/.agents/skills/timefill2</code>）</td>
+<td>Playwright + CDP 操作内部 OA 工时表单（<code>~/.agents/skills/timefill2</code>）</td>
 </tr>
 <tr>
 <td>关键词</td>
@@ -41,7 +41,7 @@
 脚本却显示 <code>set</code>。两类问题的共同点是——<strong>用 DOM 的“存在/数量”代替了“值”来判断状态</strong>。</p>
 <h2 id="案例-a用节点数量判断有没有校验错误--每条都被误杀">案例 A：用节点数量判断“有没有校验错误” → 每条都被误杀</h2>
 <p>表单里常驻 <strong>5 个</strong> <code>.cube-check-error</code> 容器，class 是
-<code>cube-card-editformitem2 fieldValue cube-check-error</code>（泛微<strong>字段值容器的通用类名</strong>，不是“有错误”的标志）。</p>
+<code>cube-card-editformitem2 fieldValue cube-check-error</code>（OA<strong>字段值容器的通用类名</strong>，不是“有错误”的标志）。</p>
 <p>实测这 5 个节点的属性：</p>
 <table>
 <thead>
@@ -150,7 +150,7 @@
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">chromium</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#F97583"> await</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/opt/homebrew/lib/node_modules/playwright/node_modules/playwright-core/index.mjs'</span><span style="color:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> info</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">await</span><span style="color:#B392F0"> fetch</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'http://[::1]:9223/json/version'</span><span style="color:#E1E4E8">)).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">();</span></span>
 <span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> b</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> chromium.</span><span style="color:#B392F0">connectOverCDP</span><span style="color:#E1E4E8">(info.webSocketDebuggerUrl);</span></span>
-<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> page</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> b.</span><span style="color:#B392F0">contexts</span><span style="color:#E1E4E8">()[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">].</span><span style="color:#B392F0">pages</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">p</span><span style="color:#F97583"> =&gt;</span><span style="color:#E1E4E8"> p.</span><span style="color:#B392F0">url</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'service.eoitek.com'</span><span style="color:#E1E4E8">));</span></span></code></pre>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> page</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> b.</span><span style="color:#B392F0">contexts</span><span style="color:#E1E4E8">()[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">].</span><span style="color:#B392F0">pages</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">p</span><span style="color:#F97583"> =&gt;</span><span style="color:#E1E4E8"> p.</span><span style="color:#B392F0">url</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'internal.example.com'</span><span style="color:#E1E4E8">));</span></span></code></pre>
 <blockquote>
 <p>注意：Chrome 调试端口可能只在 IPv6 上监听，<code>http://127.0.0.1:9223</code> 会 404，
 要用 <code>http://[::1]:9223/json/version</code> 动态取 <code>webSocketDebuggerUrl</code>。</p>
