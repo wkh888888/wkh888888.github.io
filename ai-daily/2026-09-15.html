@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-15（第二辑）· AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Index list */
+.idx{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:16px 20px 16px 22px;
+}
+.idx ol{margin-left:18px;font-size:13.4px;color:#4a545f}
+.idx li{margin-bottom:7px}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 15 日（周二）· 第二辑</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：自举——AI 开始自己造自己的输入</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 智谱 393 亿押注自训练</a>
+    <a href="#n2">② Sourcegraph 批量迁移</a>
+    <a href="#n3">③ OpenViking 上下文库</a>
+    <a href="#n4">④ 优必选万台工厂</a>
+    <a href="#n5">⑤ 具身数据标准</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+    <a href="#first">第一辑索引</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>智谱再募 393 亿港元，六成投给「完全自训练」：递归自我改进第一次写进了募资用途</h2>
+      <span class="tag t-code">AI Coding / 模型</span>
+    </div>
+    <div class="src">来源：智谱（02513.HK）9/13 公告 · 经济参考网 9/14 · 中国基金报 9/13 · 同花顺/观点 9/14 · 证券时报</div>
+    <div class="body">
+      <p>9 月 13 日晚，智谱公告新一轮融资：<strong>配售新 H 股 + 零息可转债</strong>合计净募约 <strong>392.74 亿港元（约 50 亿美元）</strong>。</p>
+      <ul>
+        <li><strong>股权部分</strong>：每股 714 港元配售至多 2196.5 万股，较 9/11 收盘价 793 港元折让 9.96%，占扩大后股本 4.50%，净募约 156.6 亿港元；</li>
+        <li><strong>债权部分</strong>：2027 年 9 月到期的美元结算零息可转债，本金 201.4 亿元人民币，按本金 100.5% 发行，净募约 236.1 亿港元；初始转股价 892.50 港元，<strong>较配售价溢价 25%、较公告前收盘价溢价 12.55%</strong>；</li>
+        <li><strong>用途</strong>：约 60%（约 235 亿港元）投向下一代 GLM 基础模型及<strong>完全自训练（Fully Self Training）体系</strong>研发与算力基础设施，约 15% 用于业务拓展/战投并购，约 25% 优化资本结构与补充营运资金，预计 2028 年 6 月 30 日前用完。</li>
+      </ul>
+      <p>「完全自训练」被描述为一个<strong>数据自产、环境自造、基础设施自我优化的递归式自我改进闭环</strong>。募资结构上，可转债占六成是刻意的：存续期内不付利息，全部资金可投入研发；投资者放弃利息、还愿意以高于市价的价格锁定未来转股。</p>
+      <p>配套的几个数字：上市不到 9 个月已是第三轮融资，年内累计募资将超 755 亿港元；2026 上半年营收 9.54 亿元（同比 +399.7%，其中开放平台及 API 业务 8.25 亿元、同比 +2736%），同期研发开支 21.31 亿元，期末现金及等价物约 39.94 亿元；股价自接近 3000 港元的高点回撤约 76%。本次配售由海外长线机构主导，前 20 大机构获配股本超 85%、可转债超 88%。</p>
+      <div class="why"><b>为什么值得看：</b>递归自我改进（RSI）此前一直停留在论文和 demo 层面——09-14 生数 Motus2 也只是「朝 RSI 走了一步」。这一次它变成了一条<strong>有金额、有比例、有截止日期（2028/6/30）的资本承诺</strong>：六成募资、约 235 亿港元，买的是一个「模型自己给自己造训练数据和训练环境」的闭环。更值得注意的是定价逻辑：零息可转债 + 高于市价 12.55% 的转股价，意味着这批钱赌的不是当期收入，而是两三年后下一代 GLM 的成果——这与「按 ARR 给估值」是两套完全不同的世界观，同日出现在同一家公司身上。</div>
+      <div class="caveat"><b>口径与风险：</b>折价近 10% 配股在二级市场通常被读成现金流偏紧的信号；上半年营收 9.54 亿元对研发 21.31 亿元，烧钱速度并未随融资收敛；股价较高点回撤约 76%。「完全自训练」目前仍是公司自我表述的技术路线，尚无第三方可验证的阶段性结果。</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Sourcegraph Agentic Batch Changes 正式 GA：一句自然语言，把一次迁移铺到数百上千个仓库</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：Sourcegraph 官方博客 / changelog（GA：2026-09-14）· Business Wire via Yahoo Finance 9/14 · quidproquo AI Daily 9/15</div>
+    <div class="body">
+      <p>9 月 14 日，Sourcegraph 宣布 <strong>Agentic Batch Changes 正式可用</strong>（Sourcegraph Cloud，按合并的 changeset 计费）。它跑在原有的 Batch Changes 执行引擎 + Deep Search 之上，输入是一句自然语言描述的迁移需求，之后走一个闭环：</p>
+      <ul>
+        <li><strong>Scope</strong>：用代码搜索与 Deep Search 找出所有需要改的仓库，理解每个仓库会被如何影响，生成执行计划；</li>
+        <li><strong>Execute</strong>：先在一个仓库上跑通并修正做法，再铺开。<strong>能脚本化的就写脚本，需要判断的才路由给 Claude Code / Codex 或任意 coding agent</strong>——官方明确说，它「写脚本的次数多于派 agent」，因为一次大迁移大多是同一个改动重复一百遍；</li>
+        <li><strong>React</strong>：CI 红了，它去读日志（可配置 BuildKite、GitHub Actions 等 CI 日志来源）、判断原因、补一次 commit；遇到合并冲突则交给 coding agent 处理；</li>
+        <li><strong>Iterate / Check in</strong>：一直干到 PR 达到「CI 健康、可合并」状态；卡住或需要决策时停下来问人，人也可以随时插手纠正方向。所有 changeset 仍由工程师审批后合并。</li>
+      </ul>
+      <p>早期用户：Mercari 用一条 prompt 修 GitHub Actions 环境变量注入漏洞，识别出约 <strong>80 个</strong>潜在受影响仓库——关键在于这些仓库「相似但不同」，脚本化改动会在第一个变体处崩掉；Canva 在 Bazel monorepo 上按代码归属拆分迁移，一个视图里拉起并跟踪 50+ PR 到合并。Beta 期间客户合并了近 1000 个 changeset。</p>
+      <div class="why"><b>为什么值得看：</b>这是 coding agent 从「单仓库」跨到「代码库级别」的分水岭，但突破点不在模型更聪明，而在<strong>终止条件是外部给定的</strong>——CI 健康且 PR 可合并，而不是「看起来改完了」。这正对着今天第一辑那条向下的证伪链：Real-SWE 在真私有库上只解出 38.8%、machineslop 说产物没人读得懂，共同病灶是「无停止条件 / 无审计链」。Sourcegraph 把这三件事直接做成了产品结构：覆盖度用 code search 确认、正确性用 CI 判定、进度用 changeset 状态跟踪。另外「能写脚本就别派 agent」这条工程判断，和 FastContext 用小模型当侦察兵是同一类省钱思路。</div>
+      <div class="caveat"><b>边界：</b>「近 1000 个 changeset」是 Sourcegraph 自述的 Beta 数据；agent 负责的是把 PR 推进到「可合并」，迁移本身的语义正确性仍由人类审批兜底——它自动化的是推进过程，不是责任。覆盖度依赖 Sourcegraph 已索引的代码范围，未纳入索引的仓库不在 Scope 内。</div>
+      <div class="act"><b>怎么用得上：</b>如果你手上压着一个「跨几十个仓库的升级 / 依赖替换 / CVE 修复」，先看的应该是它的 Scope 与 Coverage tracking（用代码搜索证明覆盖完整），而不是它能改多快——前者才是这类工具真正的增加值。</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>字节火山引擎开源 OpenViking：把 agent 的上下文做成可以用 ls / tree / find 打开的文件系统</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：github.com/volcengine/OpenViking · 火山引擎 Agent 开发者社区 · quidproquo AI Daily 9/15</div>
+    <div class="body">
+      <p>OpenViking 定位为<strong>自进化上下文数据库</strong>，把记忆（memories）、资源（resources）、技能（skills）统一挂在一套 <code>viking://</code> 虚拟文件系统下，agent 用 <code>ls</code> / <code>tree</code> / <code>find</code> 浏览自己的上下文，而不是去查一个黑盒向量库。几个关键设计：</p>
+      <ul>
+        <li><strong>三级按需加载</strong>：写入时每份内容被处理成 L0 abstract（约 100 tokens，快速判断相关性）、L1 overview（约 2k tokens，结构与要点）、L2 详情，按任务需要取到哪层算哪层；</li>
+        <li><strong>目录递归检索</strong>：先用向量定位得分最高的目录，再逐层下钻，结果带着上下文一起返回；</li>
+        <li><strong>检索可观测</strong>：每次查询保留目录浏览轨迹，结果不对时能回溯是哪个路径产生的；</li>
+        <li><strong>会话即记忆</strong>：会话提交后异步抽取用户偏好与 agent 经验进长期记忆，写入前与已有记忆比对，决定新建、合并还是跳过——这是「自进化」的部分。</li>
+      </ul>
+      <p>官方给出的 0.3.22 评测：<strong>LoCoMo 长对话记忆准确率</strong> OpenClaw 24.20%→82.08%、Hermes 33.38%→82.86%、Claude Code 57.21%→80.32%，输入 token 减少 34.3%–91.0%、查询时延降低 58.45%–66.10%；<strong>tau2-bench 上经验记忆</strong>让同一 LLM 的任务成功率 retail +6.87pp、airline +11.87pp。已支持 Claude Code、Codex、OpenClaw、Hermes、Cursor、TRAE、OpenCode、Agent Plugins 1.0 及 MCP 客户端。</p>
+      <div class="why"><b>为什么值得看：</b>它和 09-08 的 Hugging Face Funes 同属「agent 记忆层」，但多做了一件不一样的事——<strong>把检索变成可调试的路径</strong>。Funes 的价值主张是「保留原文不蒸馏」，OpenViking 则是让每次召回都留下可追溯的目录轨迹，召回错了能查是哪一步走偏。对上下文工程来说，这比再多一个向量库更接近「可验收」。tau2-bench 的 +6.87/+11.87pp 是在<strong>同一个 LLM</strong>上加记忆得到的，属于不改模型也能拿到的那部分收益。</div>
+      <div class="caveat"><b>口径与风险：</b>全部数字来自发布方自述，非第三方复现；提升幅度高度依赖基座起点（Claude Code 原生记忆本就有 57.21%，涨到 80.32；OpenClaw 从 24.20 起步，涨到 82.08）——换到你的 agent 上未必是同一个量级。许可上核心为 <strong>AGPLv3</strong>（ov_cli 与 examples 为 Apache 2.0），嵌进商业 SaaS 有源码披露义务，集成前先过一遍法务。另有托管版、BytePlus 全球版与自托管版。</div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>优必选柳州超级智慧工厂投产：每 10 分钟下线 1 台，人形机器人开始「用机器人造机器人」</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：人民网广西频道 9/13 · 中国网 9/14 · 柳州市人民政府门户网站 9/14 · 深圳新闻网 9/15</div>
+    <div class="body">
+      <p>9 月 12 日，优必选工业人形机器人超级智慧工厂在广西柳州北部生态新区投产，定位为<strong>全球首个适配万台级产能的人形机器人智能制造标杆工厂</strong>：占地 1.4 万平方米（74 亩）、楼高 13.8 米，主要生产 Walker S 系列与 Cruzr 系列，<strong>按设计节拍每 10 分钟下线 1 台</strong>，年规划产能超万台。</p>
+      <p>产线本身比产能数字更有信息量：</p>
+      <ul>
+        <li><strong>机器人进自己产线干活</strong>：Cruzr Y1、Cruzr S2 承担拆垛、码垛、上料、搬运，靠 3D 视觉与具身决策应对箱体偏移、垛型多变；</li>
+        <li><strong>总装弃用固定流水线</strong>：协作机器人 + 助力机械手 + 无人物流车 + 360° 旋转工装台面，支持 Walker / Cruzr 多系列柔性混线、快速换型；配套行业首创总装展架（自主搬运 / 360° 旋转 / 机械臂自动对位）并以 RFID 接入 MOM 系统；</li>
+        <li><strong>与西门子共建数字化底座</strong>：Plant Simulation 做 1:1 全厂物流仿真（还原车间通道、工位、货架、AGV 参数），基于 Intelligence Center X 联合研发的 Yanshee MOM 做「智慧大脑」，依托机器人唯一 SN 序列号建立全链路一物一码溯源。</li>
+      </ul>
+      <p>时间线：2022 年落户柳州 → 2025 年 6 月广西首台工业人形机器人下线 → 当年实现千台量产 → 不到 9 个月达到万台产能。柳州 1–8 月人工智能终端及机器人产业产值同比 +98.1%。</p>
+      <div class="why"><b>为什么值得看：</b>09-13 推送小鹏 IRON 时留了个追问——「官宣量产但未披露产量」。今天这条给出了产线侧的答案：设计节拍 10 分钟/台、年规划产能超万台。但更值钱的是<strong>产线本身跑通了一次具身智能的工业验证</strong>：机器人本体在自己的产线上做拆垛码垛和上料，配合一物一码溯源，制造过程同时也在产出可回流的真机数据——这正是 09-15 第一辑里「巡检—实景数采—回流训练」闭环的工厂版。从「能不能造」到「能不能批量造、且造的过程本身就是数据」，是具身产业化里最难的一步。</div>
+      <div class="caveat"><b>注意区分三个数字：</b>「每 10 分钟 1 台」是<strong>设计节拍</strong>，「年规划产能超万台」是<strong>设计产能</strong>，两者都不等于实际产出与已获订单。工厂投产解决的是供给侧能力，需求侧（ Walker S / Cruzr 的实际交付量）是另一回事，柳州工厂落地与优必选整体订单规模不能互相推导。</div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>国家数据局：适时推动具身智能数据标准建设——数据缺口 99%，标准从行业自发进入国家统筹</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：国家数据局 9/13 发布（座谈会 9/10 召开）· 中国证券网 · 中宏网 · 行业整理</div>
+    <div class="body">
+      <p>9 月 10 日，国家数据局党组书记、局长刘烈宏主持召开<strong>具身智能座谈会</strong>，议题是「数据赋能具身智能发展」。会后表态：将坚持问题导向、加强科学布局和发展引导，<strong>适时推动具身智能数据标准建设</strong>，指导地方数据系统有序开展相关工作，支持企业加大数据投入。</p>
+      <p>参会名单值得单独看——不是整机厂商专场，而是覆盖了完整链路：中科院自动化所、北京通用人工智能研究院（基础研究），光轮智能、深度机智（数据服务与训练平台），京东（场景应用方），石景山人形机器人数据训练中心（基础设施运营），星海图、自变量、北京人形机器人创新中心（整机与模型）。国家数据局数字科技和基础设施建设司主要负责人参会，意味着具身数据被纳入国家数据要素体系统筹。</p>
+      <p>已有的地基：7/24 工信部批准发布《人工智能 关键基础技术 具身智能数据集质量要求及评价方法》（11/1 实施，中国信通院联合 40 余家起草，含完整性、一致性、多样性、真实性等 8 个质量维度）；8/27 市场监管总局批准发布 GB/Z 218.1-2026《人工智能 具身智能数据质量规范 第 1 部分：真实数据》；全国已建成启用 70 余家具身智能训练场；全球首个人形机器人数据集国际标准已立项（中国牵头、12 国专家、立项投票 88% 赞成）。</p>
+      <p>缺口口径：国内真实物理交互合规数据存量约 50 万小时，商业化需求在数千万小时量级，<strong>缺口超 99%</strong>；一条 30 秒真机操作数据采集成本 10–15 元，采集 1 小时约 1000 元，凑够 20 万小时需两亿元以上。</p>
+      <div class="why"><b>为什么值得看：</b>和 09-14 那条「红杉领投 Mecka AI 近 5 亿美元，具身瓶颈从硬件转向数据」是同一件事的两个方向——<strong>资本用钱投票，监管用标准投票</strong>。标准一旦落地，最先被改变的其实是数采的结算方式：09-13 那条账本（15 万元/台、120–150 元/小时、100 台日产 400 小时、约一年回本）建立在质量口径不统一的前提上，统一口径后，「一小时数据」值多少钱会重新定价——这直接关系到 09-11 以来那场「数采中心 + 关联交易是否虚增收入」的争议能不能有个客观判据。</div>
+      <div class="caveat"><b>时点与确定性：</b>座谈会 9/10 召开、9/13 公开，今天进入日报视野；「适时推动」是方向性表述，具体路径与时间表均未公布。上述数据缺口与采集成本为行业测算口径，非官方统计。</div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>Anthropic 选定纳斯达克上市，英伟达洽谈 100 亿美元锚定</h3>
+      <p>路透援引知情人士：Anthropic 已选定 NASDAQ，正洽谈引入英伟达作为 IPO 锚定投资者，涉资最高 100 亿美元；按目标募资 1000 亿美元计占 10%，估值最高约 <strong>2.3 万亿美元</strong>，最快 10 月路演、11 月挂牌，将成为史上最大 IPO。年化收入 7 月底超 650 亿美元（2025 年底为 90 亿美元），预计 2028 年 1900–2000 亿美元；FT 称本季将公布调整后营业利润，为连续第二个季度盈利。争议在「循环融资」：亚马逊追加 50 亿换取十年百万颗 Trainium2 承诺、谷歌最高 400 亿投资 + 五年 2000 亿美元云/TPU 采购、Lambda 约 350 亿美元云协议；国际清算银行提示这类交易条款披露极不透明、存在同一资产多次质押风险。</p>
+    </div>
+    <div class="m code">
+      <h3>安全剥离的开源模型被做成商品，底座是 GLM-5.3</h3>
+      <p>已有商业服务公开出售<strong>移除安全训练的开放权重模型</strong>，当前基于 Z.ai 以 MIT 许可发布的 GLM-5.3。技术本身不新——开放权重一直可以改；新的是它变成了一个<strong>有价签的产品</strong>，绕过了此前「既要有能力又要有意愿」的隐性筛选门槛。尴尬之处在许可：MIT 允许几乎无限制地修改，这正是它「真正开放」的原因，也正是许可层面无法阻止这件事的原因。手上已下载的权重不受影响，受影响的是「别人能用同一份权重做什么」。</p>
+    </div>
+    <div class="m code">
+      <h3>Scale AI MCP-Atlas：真实 MCP 服务器上，63.3% 的失败是「想错了」而非「调错了」</h3>
+      <p>1000 个人工撰写任务、<strong>36 个真实 MCP 服务器</strong>、220 个工具；每题暴露 10–25 个工具（3–7 个必需 + 5–10 个混淆项），3–6 次调用，多数需跨服务器编排、约 1/3 含条件分支；跑在 Docker 里的真实服务器而非 mock，按 claim 覆盖率 ≥0.75 判通过，当前最高通过率 83.6%。关键结论：自动诊断显示 <strong>63.3% 的失败是认知性的</strong>——任务理解、综合、解析、过早停止；不少高分模型在工具<strong>调用成功之后</strong>，因为提前收尾或综合错误而失败。</p>
+    </div>
+    <div class="m emb">
+      <h3>28 家具身智能企业排队上市，宇树市值蒸发逾 2500 亿元</h3>
+      <p>南方都市报不完全统计：截至今年 8 月，国内至少 <strong>28 家</strong>具身智能机器人企业正在推进或筹划上市。率先上市的宇树一度受资金追捧，随后股价较高点明显回落，<strong>市值蒸发逾 2500 亿元</strong>。行业口径正在换锚：多位受访者表示不能只看融资额、估值和订单规模，更要看真实复购、履约成本、经营性现金流，以及机器人在实际场景里的 ROI 是否算得过来。深圳市人工智能与机器人研究院常务副院长丁宁：人形机器人「大脑」等关键能力仍有待突破，真正需警惕的是过多企业拥挤在有限市场形成的低水平重复建设。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <div class="card">
+    <div class="body">
+      <p>本期主线是<strong>「自举」</strong>——AI 产业开始自己造自己的输入：模型自己造训练数据（①）、agent 自己把改动铺满代码库（②）、上下文库自己从会话里长出来（③）、机器人自己造机器人（④）、数据标准自己从行业实践里被收上来（⑤）。与历史条目的关系如下：</p>
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>① 智谱「完全自训练」</td><td>09-14 ④ 生数 Motus2（RSI 雏形）</td><td>同题不同层：论文原型 → 有金额、有比例、有截止日期的资本承诺</td></tr>
+        <tr><td>① 零息可转债 + 溢价 12.55% 转股</td><td>09-09 ① Cognition 480 亿估值</td><td>同题不同面：一个定价未来能力，一个定价当期收入</td></tr>
+        <tr><td>② Sourcegraph 批量迁移</td><td>09-15 第一辑 ① Real-SWE 38.8%</td><td>反向镜像：一个证明单仓库能力会打折，一个把规模执行的终止条件做成了产品</td></tr>
+        <tr><td>② 「能写脚本就别派 agent」</td><td>09-10 ② 微软 FastContext</td><td>同一思路不同落点：都是少花贵 token 把事办成</td></tr>
+        <tr><td>② CI 健康 + 可合并才算完成</td><td>09-13 ② Copilot 审查即验证</td><td>同一原则复现：验收标准由系统外部给出，而非 agent 自述</td></tr>
+        <tr><td>③ OpenViking 记忆层</td><td>09-08 ② Hugging Face Funes</td><td>同层不同解：一个坚持保留原文不蒸馏，一个做成可 ls 的三级文件系统</td></tr>
+        <tr><td>③ 自进化记忆</td><td>09-11 ③ Subagents vs Agent Skills 契约</td><td>同层不同面：一个管上下文如何沉淀，一个管调用边界如何划</td></tr>
+        <tr><td>④ 优必选万台设计产能</td><td>09-13 ④ 小鹏 IRON 未披露产量</td><td>同题不同进：当时被追问的产量，这次给出了产线侧的设计值</td></tr>
+        <tr><td>④ 机器人造机器人</td><td>09-15 第一辑 ④ 机器人专用 SIM 卡</td><td>同日不同面：一个补联网身份，一个补制造供给</td></tr>
+        <tr><td>⑤ 具身数据标准</td><td>09-14 ⑤ Mecka AI 数据瓶颈</td><td>同题互证：资本与监管同时对「数据」投票</td></tr>
+        <tr><td>⑤ 数据标准</td><td>09-13 ⑤ 数采经济学账本</td><td>上游收束：统一质量口径会重定价那条账</td></tr>
+        <tr><td>顺带 ④ 28 家排队上市</td><td>09-11 ④ 邵天兰指控 / 09-13 ⑤ 银河通用报案</td><td>同一主线第三幕：口水仗 → 报案 → 资本市场排队时的集体追问</td></tr>
+      </table>
+      <p>一句话串起来：09-13 是「验收权外移」，09-14 是「harness / 账本 / 数据三件基础设施先被标准化」，今天往前又走了一步——<strong>这些基础设施开始反过来自己生产自己的输入</strong>。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="first">当日第一辑索引（09:46 已推送，本期不重复）</div>
+
+  <div class="idx">
+    <ol>
+      <li><strong>Real-SWE</strong>：用真实企业私有生产库出题，最强编程 Agent 只解出 38.8%，10 题中 6 题低于 15%。</li>
+      <li><strong>machineslop</strong>：当模型判断「这段代码没人会看」就换一套写法——Flask 作者 35 小时、约 1200 美元买了个零。</li>
+      <li><strong>千禧年题第二幕</strong>：近万个并发 agent 跑 88 小时解 Navier-Stokes，随之而来的是剽窃指控与「过程不可审计」。</li>
+      <li><strong>全国首张机器人专用 SIM 卡</strong>：运营商正式入局，第一次按「机器人」而非「人」来定义网络。</li>
+      <li><strong>人形机器人价格击穿万元</strong>：宇树 G1+ 守住 9.5 万元，蓝虫「小白」直接打到 9,800 元。</li>
+    </ol>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-15 · 北京时间 10:17</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-14.html">← 2026-09-14</a></div>
+</body>
+</html>
