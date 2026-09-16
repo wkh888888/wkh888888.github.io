@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P016 · 末尾健康检查失败，被判成整次发布失败（并静默吞掉收尾动作） · walker</title><meta name="description" content="发布脚本三路跑完，末尾报失败："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p016-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9C%AB%E5%B0%BE%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5%E5%90%9E%E6%8E%89%E6%94%B6%E5%B0%BE%E5%8A%A8%E4%BD%9C/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P016 · 末尾健康检查失败，被判成整次发布失败（并静默吞掉收尾动作） · walker"><meta property="og:description" content="发布脚本三路跑完，末尾报失败："><meta property="og:url" content="https://blog.walkerhua.com/pits/p016-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9C%AB%E5%B0%BE%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5%E5%90%9E%E6%8E%89%E6%94%B6%E5%B0%BE%E5%8A%A8%E4%BD%9C/"><meta property="og:image" content="https://blog.walkerhua.com/og/p016-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9C%AB%E5%B0%BE%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5%E5%90%9E%E6%8E%89%E6%94%B6%E5%B0%BE%E5%8A%A8%E4%BD%9C.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P016 · 末尾健康检查失败，被判成整次发布失败（并静默吞掉收尾动作） · walker"><meta name="twitter:description" content="发布脚本三路跑完，末尾报失败："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p016-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9C%AB%E5%B0%BE%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5%E5%90%9E%E6%8E%89%E6%94%B6%E5%B0%BE%E5%8A%A8%E4%BD%9C.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P016 · 末尾健康检查失败，被判成整次发布失败（并静默吞掉收尾动作）</h1><p>发布脚本三路跑完，末尾报失败：</p><div class="hero-meta"><span>踩坑于 2026-09-15</span><span>约 3 分钟</span><a class="tag" href="/tags/工具链/">工具链</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-15</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费时间 + 误导，且静默跳过收尾动作）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>流水线、后置验证、观测与执行分离、告警降级、set -e、收尾动作、留痕、DNS 抖动、假失败、blog-publish</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>发布脚本三路跑完，末尾报失败：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[github] 已推送 GitHub Pages（线上生效约 1-2 分钟）</span></span>
+<span class="line"><span>curl: (28) Resolving timed out after 10000 milliseconds</span></span></code></pre>
+<p>复核线上，<strong>三路其实全部成功</strong>：首页与目标页均 200，服务器文件时间戳也对得上。</p>
+<p>真正被这次「失败」连累的是它<strong>后面的动作全没执行</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>受影响</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发布记录自动留痕</td>
+<td>整段被跳过，当日记录缺失</td>
+</tr>
+<tr>
+<td>源码仓产物提交</td>
+<td>未提交（同步发生在 commit 之后）</td>
+</tr>
+</tbody>
+</table>
+<p>于是「发布没做」的假象成立 —— 实际只是最后一步观测失败。</p>
+<h2 id="根因">根因</h2>
+<p><strong>一句话：把「观测动作」放在了能终止「执行流程」的位置，而它下游还有收尾动作。</strong></p>
+<ul>
+<li>直接原因：瞬时 DNS 解析失败（<code>Resolving timed out</code>），curl 退出码非 0。</li>
+<li>根本原因：脚本用 <code>set -euo pipefail</code>，落位后的验证 curl 是普通语句，失败即 <code>exit 1</code>。此时犯了两层错：
+<ol>
+<li><strong>判定错位</strong> —— 部署动作（ssh + rsync）已完成，「落位是否成功」与「此刻能否立刻 curl 通」是两件事。一个网络观测动作拿到了否决整个发布的权力。</li>
+<li><strong>收尾被吞</strong> —— 留痕、补提交等收尾动作排在验证之后，验证一挂就全部不执行，失败被放大成「什么都没干」。</li>
+</ol>
+</li>
+</ul>
+<p>注意触发因素是噪音（DNS 抖动），<strong>但缺陷不是</strong> —— 换个网络抖动、证书续期、CDN 缓存任何一种都会复现。同类失误在任何「执行 → 验证 → 收尾」结构的脚本里都成立。</p>
+<h2 id="解法">解法</h2>
+<p>验证步与执行步分离，验证失败降级为告警：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#B392F0"> curl</span><span style="color:#79B8FF"> -fsS</span><span style="color:#79B8FF"> --connect-timeout</span><span style="color:#79B8FF"> 10</span><span style="color:#79B8FF"> --retry</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> --retry-delay</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> --retry-all-errors</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">     https://</span><span style="color:#F97583">&lt;</span><span style="color:#9ECBFF">站</span><span style="color:#E1E4E8">点</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF">/</span><span style="color:#F97583"> &gt;</span><span style="color:#9ECBFF"> /dev/null</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">  echo</span><span style="color:#9ECBFF"> "[server] 已部署并验证 https://&lt;站点&gt;/"</span></span>
+<span class="line"><span style="color:#F97583">else</span></span>
+<span class="line"><span style="color:#79B8FF">  echo</span><span style="color:#9ECBFF"> "[server] 部署已完成，但首页验证未通过（疑似瞬时 DNS/网络抖动），请人工复核"</span><span style="color:#F97583"> &gt;&amp;2</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span></code></pre>
+<p><code>--retry-all-errors</code> 需 curl ≥ 7.71（本机 8.7.1 已确认支持）。</p>
+<p><strong>在旧版本上撞到时，别急着重跑全流程</strong>（可能造成重复发布），先复核事实：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> /dev/null</span><span style="color:#79B8FF"> -w</span><span style="color:#9ECBFF"> '%{http_code}\n'</span><span style="color:#9ECBFF"> https://</span><span style="color:#F97583">&lt;</span><span style="color:#9ECBFF">站</span><span style="color:#E1E4E8">点</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF">/</span><span style="color:#F97583">&lt;</span><span style="color:#9ECBFF">目标</span><span style="color:#E1E4E8">页</span><span style="color:#F97583">&gt;</span><span style="color:#6A737D">   # 200 即已上线</span></span></code></pre>
+<p>确认已上线后，只补做被跳过的那两步（补提交 + 补记留痕）即可。</p>
+<h2 id="预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</h2>
+<blockquote>
+<p>本条暂留 L2：<code>~/.workbuddy/MEMORY.md</code> 于 2026-09-15 实测 5219 字符，超 4000 硬上限。
+当日已做第一轮瘦身（5219 → 4407，主压 CODEGRAPH 块与自有冗余节），<strong>仍差 407</strong>；
+按「达到软阈值后先迁移再新增」的规则，暂不上浮本节前两条，待 L1 达标后再补。</p>
+</blockquote>
+<ul>
+<li><strong>执行与观测分离</strong>：健康检查/验证类动作失败只告警，不作为流程终止条件。成败判定依据是「是否真正落盘」，不是「此刻能否探测到」。</li>
+<li><strong>收尾动作不能排在致命步骤之后</strong>：留痕、日志、提交这类收尾，要么前置，要么用 <code>trap ... EXIT</code> 兜底。</li>
+<li><strong><code>set -e</code> 下显式区分致命与非致命</strong>：非致命步骤写 <code>|| true</code> 或包进 <code>if</code>，别让它继承全局的「失败即死」。</li>
+<li>通用问法：<strong>这个报错的动作，是不是流程成败的依据？</strong> 不是，就别让它说话算数。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/.agents/skills/blog-publish/scripts/publish.sh</code>（第 3 路末尾验证，已修）</li>
+<li><code>~/docs/skill使用说明/blog-publish使用说明.md</code>（补「末尾验证 curl 误判整次发布」节）</li>
+<li><code>~/docs/发布记录/&lt;年-月&gt;.md</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p015-astro构建被安全删除守卫拦截/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P015 · Astro 构建被本机安全删除守卫拦截：清理自己的临时目录也要过阈值</span></a><a class="post-nav-item post-nav-next" href="/pits/p017-项目级skill跨宿主不可见/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P017 · 项目级 Skill 跨宿主不可见</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
