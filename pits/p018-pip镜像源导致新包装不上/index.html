@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P018 · pip 装新包报 &quot;No matching distribution found&quot;：本机默认走清华镜像，新包未同步 · walker</title><meta name="description" content="装小众/刚发布的 Python 包时，pip 直接报&quot;找不到版本&quot;，看起来像包不存在："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p018-pip%E9%95%9C%E5%83%8F%E6%BA%90%E5%AF%BC%E8%87%B4%E6%96%B0%E5%8C%85%E8%A3%85%E4%B8%8D%E4%B8%8A/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P018 · pip 装新包报 &quot;No matching distribution found&quot;：本机默认走清华镜像，新包未同步 · walker"><meta property="og:description" content="装小众/刚发布的 Python 包时，pip 直接报&quot;找不到版本&quot;，看起来像包不存在："><meta property="og:url" content="https://blog.walkerhua.com/pits/p018-pip%E9%95%9C%E5%83%8F%E6%BA%90%E5%AF%BC%E8%87%B4%E6%96%B0%E5%8C%85%E8%A3%85%E4%B8%8D%E4%B8%8A/"><meta property="og:image" content="https://blog.walkerhua.com/og/p018-pip%E9%95%9C%E5%83%8F%E6%BA%90%E5%AF%BC%E8%87%B4%E6%96%B0%E5%8C%85%E8%A3%85%E4%B8%8D%E4%B8%8A.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P018 · pip 装新包报 &quot;No matching distribution found&quot;：本机默认走清华镜像，新包未同步 · walker"><meta name="twitter:description" content="装小众/刚发布的 Python 包时，pip 直接报&quot;找不到版本&quot;，看起来像包不存在："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p018-pip%E9%95%9C%E5%83%8F%E6%BA%90%E5%AF%BC%E8%87%B4%E6%96%B0%E5%8C%85%E8%A3%85%E4%B8%8D%E4%B8%8A.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P018 · pip 装新包报 &quot;No matching distribution found&quot;：本机默认走清华镜像，新包未同步</h1><p>装小众/刚发布的 Python 包时，pip 直接报&quot;找不到版本&quot;，看起来像包不存在：</p><div class="hero-meta"><span>踩坑于 2026-09-16</span><span>约 2 分钟</span><a class="tag" href="/tags/运维/">运维</a><a class="tag" href="/tags/工具链/">工具链</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-16</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>运维 / 工具链</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（浪费时间，且易误判成“包不存在/项目没发布”）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>pip、清华镜像、pypi.tuna.tsinghua.edu.cn、No matching distribution found、from versions: none、skillopt、firecrawl-anydoc、新包未同步、-i <a href="https://pypi.org/simple">https://pypi.org/simple</a></td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>装小众/刚发布的 Python 包时，pip 直接报“找不到版本”，看起来像包不存在：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple</span></span>
+<span class="line"><span>ERROR: Could not find a version that satisfies the requirement skillopt (from versions: none)</span></span>
+<span class="line"><span>ERROR: No matching distribution found for skillopt</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>第几次</th>
+<th>结果</th>
+<th>直接原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1（2026-09-16 anydoc）</td>
+<td>清华源找不到 <code>firecrawl-anydoc</code></td>
+<td>镜像未同步</td>
+</tr>
+<tr>
+<td>2（2026-09-16 skillopt）</td>
+<td>清华源找不到 <code>skillopt</code>（PyPI 上 v0.2.0 已发布）</td>
+<td>同上，同一天同一坑</td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<p><strong>本机 pip 默认 index 是清华镜像（<code>pypi.tuna.tsinghua.edu.cn</code>），镜像对冷门/新发布包有同步延迟甚至长期不收录。</strong></p>
+<ul>
+<li>直接原因：镜像 index 里没有该包的任何版本 → <code>(from versions: none)</code>。</li>
+<li>根本原因：把“镜像里没有”误读成“PyPI 上没有”。二者的处置完全不同 —— 前者换源即可，后者才会去看项目是否改名/未发布/需要源码安装。</li>
+<li>判定要点：<strong><code>Looking in indexes:</code> 那行就是证据</strong>，报“No matching distribution”时先看它。</li>
+</ul>
+<h2 id="解法">解法</h2>
+<p>换官方源重装（包已在 venv 里，换源不影响其它已装依赖）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> --index-url</span><span style="color:#9ECBFF"> https://pypi.org/simple</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">pk</span><span style="color:#E1E4E8">g</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#6A737D"># 或 -i https://pypi.org/simple</span></span></code></pre>
+<p>官方源直连耗时参考：本次 30 个依赖约 2m05s，可接受；不要用长超时去死等清华源“过会儿就好了”。</p>
+<h2 id="预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</h2>
+<p>可抽象成铁律，但 <strong>L1 当前 4407 字符已超硬上限 4000</strong>，暂不新增块，留在本库：</p>
+<blockquote>
+<p>本机 <code>pip install</code> 报 <code>No matching distribution found</code> / <code>from versions: none</code>，
+先读 <code>Looking in indexes:</code> 那行；若是镜像源，直接 <code>-i https://pypi.org/simple</code> 重试，
+不要据此判定“包不存在”。</p>
+</blockquote>
+<p>待 L1 瘦身到软阈值以下后，再把上面这条压成一行上浮。</p>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/docs/踩坑经验/INDEX.md</code> —— 归入「网络 / 运维」区</li>
+<li>本机 pip 配置（决定默认 index）：<code>~/.pip/pip.conf</code> 或 <code>~/Library/Application Support/pip/pip.conf</code></li>
+<li>本次两个踩坑包的落点：
+<ul>
+<li><code>~/.workbuddy/binaries/python/envs/skillopt</code>（skillopt v0.2.0 专用 venv）</li>
+<li><code>~/.workbuddy/binaries/python/envs/default</code>（firecrawl-anydoc）</li>
+</ul>
+</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p017-项目级skill跨宿主不可见/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P017 · 项目级 Skill 跨宿主不可见</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

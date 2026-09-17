@@ -264,7 +264,7 @@
 <li>OrbStack 默认不开机自启，重启后 edge 掉线；应用本身不受影响（仍 <code>127.0.0.1:&lt;port&gt;</code>）。</li>
 </ol>
 <p><strong>教训：</strong> ①「恒定短路」类结论要标注前提条件——分支顺序里只要有更高优先级的出口，前提一变结论就翻。②平台的安装 API 被提权门锁死时，读它的 <code>ensure*</code> 实现，里面的降级路径（<code>rootOrDegrade</code>）往往才是真实的最小需求。③<code>.localhost</code> 域名注定无 HTTPS，别再为它点 Verify。</p>
-<nav class="post-nav"><a class="post-nav-item" href="/pits/p012-同文件并行编辑导致改动被吞/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P012 · 同一文件并行发两个编辑请求：一个成功一个被吞，工具双双报「成功」</span></a><a class="post-nav-item post-nav-next" href="/pits/p014-dom自动化假成功_节点数量与queryselector/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P014 - DOM 自动化里的两类「假成功」：节点数量判状态 &amp; querySelector 取首个元素</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p012-同文件并行编辑导致改动被吞/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P012 · 同一文件并行发多条编辑请求：只有末条生效，工具条条报「成功」</span></a><a class="post-nav-item post-nav-next" href="/pits/p014-dom自动化假成功_节点数量与queryselector/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P014 - DOM 自动化里的两类「假成功」：节点数量判状态 &amp; querySelector 取首个元素</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
       document.querySelector('.theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;
         var next = root.dataset.theme === 'dark' ? 'light' : 'dark';

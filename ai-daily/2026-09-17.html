@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-17 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 17 日（周四）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：五条都在接管「想」与「做」之间的接缝</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① Zed Delta 弃用 PR</a>
+    <a href="#n2">② Grok Build 跨会话记忆</a>
+    <a href="#n3">③ Harness 沉进手机 OS</a>
+    <a href="#n4">④ Astra + π0.5 混合架构</a>
+    <a href="#n5">⑤ 端侧推理 278ms→26ms</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Zed 发布 Delta 公测：关掉自家仓库的 PR，33 人零 PR 落地 570 次改动</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：Zed 官方博客 9/17《Replacing Pull Requests with Delta》· The New Stack（Paul Sawers）· AlphaSignal · 中文聚合转述</div>
+    <div class="body">
+      <p>Zed（GitHub Atom 团队创业）今天开放 <strong>Delta 公开测试版</strong>，macOS / Linux / Windows 桌面端 + Web + 移动浏览器只读跟进。一句话概括：把协作单元从 pull request 换成 <strong>thread（线程）</strong>。最硬的一条证据是——上周他们<strong>关掉了 Delta 自家仓库的 PR</strong>，此后 <strong>33 名开发者向 main 落地了 570 次改动，一次 PR 都没用过</strong>。CEO Nathan Sobo 对 The New Stack 说，离开 GitHub「只差几个月」。</p>
+      <p>底层是 <strong>DeltaDB</strong>：在 Git 的内容寻址之上加一层增量版本，记录 commit 与 commit 之间的<strong>编辑级事件</strong>，连同人和 agent 的消息一起存下来。commit 仍然是你 push / pull / build 的检查点，DeltaDB 保留的是检查点之间发生的事。审查在<strong>子线程</strong>里做，每个 review 拿到父线程 worktree 的隔离副本，可以自己开 agent 试改而不打断原作者；发现问题可以 request revision，也可以自己用 agent 修完再并回父线程。</p>
+      <p>Zed 给的理由很直接：agent 把 diff 撑大了，把大 diff 拆成堆叠分支只解决「好不好翻」，不解决「为什么这么写」。审查者可以把你的 diff 再喂给一个 agent 去理解，但<b>那个 agent 得重新猜一遍你已经走过的推理</b>。行业背景是提交量的量级变化——据 The New Stack 及二手转述，GitHub 月提交量已从约 10 亿量级涨到 2026 年中的约 29 亿，API 错误率一度达到 20%。路线图上还有 Claude Code 插件（把对话写进 DeltaDB）、MCP 支持、基于 GitHub 权限的仓库级访问控制、远程运行时与沙箱。</p>
+      <div class="why"><b>为什么值得看：</b>这是 15 年来第一次有人从正面拆 PR 这个协作基元，而且不是嘴上拆——自家仓库已经关了。核心判断是「<b>当推理发生在对话里、diff 只是结果，传统 review 天然丢上下文</b>」。它和 09-15 第二辑的 Sourcegraph Agentic Batch Changes 是同题不同层：Sourcegraph 解决的是「批量改完能不能合」，Zed 解决的是「改的过程怎么被审」。对整个工具链的含义是：如果 thread 成为基本单元，那么 CI、代码托管、企业内部研发流程的审计对象都得跟着换——今天 Zed 的做法是让 agent 触发一次外部 CI 并在落地前检查结果，长期则想把 content-based build 直接搬进线程。</div>
+      <div class="caveat"><b>口径与风险：</b>Delta 仍建立在 Git 仓库之上，branch / commit / remote 照常，所以它目前是「加一层」而非「换掉 Git」。Zed 的公开仓库 <code>zed-industries/zed</code> 短期留在 GitHub（每月数百名外部贡献者依赖该流程），Sobo 明确说「不会因为想证明什么就把贡献者晾在一边」。仓库级权限与 agent 沙箱<b>还在路线图上、尚未交付</b>——处理敏感代码的团队在公测期要自己评估共享边界与执行控制。公测免费，付费计划待推出。29 亿月提交与 20% 错误率为媒体转述，未见 GitHub 官方口径。</div>
+      <div class="act"><b>怎么用得上：</b>不必全团队迁移也能试：让贡献者在提交 PR 的同时贴一条 Delta thread，把 agent 会话暴露给审查者，其他人看到的仍是普通 Git 仓库。真正该验收的是三件事——① 你能不能问 agent「为什么这里用 Mutex 而不是 RwLock」并拿到当时的推理；② 审查子线程能不能独立跑测试而不污染原工作区；③ 断线后同事能不能接着同一个 thread 继续。这三件事跑通，才算「对话进了版本库」。</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>xAI 给 Grok Build 装上跨会话记忆：约定与决策自动写成 markdown，下次自己读回来</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：x.ai/news/grok-build-memory（9/16 官方发布）· AGI Hunt 9/17 · Unite.AI 9/16 · toolbit.ai 产品沿革梳理</div>
+    <div class="body">
+      <p>9 月 16 日 xAI 官方宣布 <strong>Grok Build 跨会话记忆</strong>正式可用。Grok Build 是其终端编码 agent，一条 <code>curl -fsSL https://x.ai/cli/install.sh | bash</code> 安装，现由 Grok 4.6 驱动，可免费试用。</p>
+      <p>机制不复杂但落点很准：<strong>每个 turn 结束后在后台复盘这一轮</strong>，把「约定、决策、项目事实」写成 markdown，一个主题一个文件；分 workspace scope（每项目一套）和 global scope（全局偏好一套）。命令集是 <code>/memory</code> 只读浏览全部记忆文件、<code>/dream</code> 周期性把新观察归并进主题文件、<code>/flush</code> 立即落盘、<code>/remember</code> 直接记一条。官方示例很能说明问题：orbit 项目里 agent 跑 <code>cargo test</code> 失败（143 过 5 失败，postgres 连不上），用户纠正「用 <code>just test</code>，它先起测试库」；这条约定被写进 <code>testing.md</code>；几天后另一次会话改 webhook 重试逻辑时，agent <strong>主动回忆起该用 just test 验证</strong>，跑出 151 过。</p>
+      <p>明确不记的有四类：任务状态、临时结论、密钥、以及仓库或文档里已经写过的东西。冲突规则是<strong>当前对话的指令优先于任何笔记</strong>。同一产品的其他三个设计也值得留意：<code>/skillify</code> 把任意一次会话存成可复用 skill；marketplace 可以托管在任意 git repo 自分发；以及最关键的——<strong>零配置直接读取 Claude Code 的 marketplace、plugins、skills、MCP、agents、hooks 与 <code>CLAUDE.md</code> / <code>.claude/rules/</code></strong>，指向一个已配好 Claude Code 的仓库就能直接跑。</p>
+      <div class="why"><b>为什么值得看：</b>这条和 09-15 第二辑的 OpenViking 是同题不同解——都把「记忆」从模型内部的隐式状态，变成<b>可浏览、可编辑、可版本化的文件</b>。OpenViking 是开源方案且主打三级加载省 token，Grok Build 是厂商内置且主打零配置接管既有生态。真正的信号在两处：一是记忆被定位成「随时间增值的资产」（官方原话是「越用越好」），agent 从一次性工具往长期同事挪；二是 xAI 选择<b>整包兼容 Anthropic 的 skill 格式而不是另建生态</b>，与 09-16 谷歌向全体工程师开放 Claude Opus 5 是同一条主线的第三幕——模型与工具链都不再是必须自研的护城河，「接进来」比「造出来」快得多。</div>
+      <div class="caveat"><b>口径与风险：</b>这是「记录」不是「理解」——笔记由模型自己写，官方也说明全局记忆索引由 Grok 生成、<b>不应手工编辑</b>，写错了要靠 <code>/memory</code> 找到文件手动改正文。更要紧的是历史：2026 年 7 月安全研究者 cereblab 发布 wire-level 分析，称 Grok Build 会把完整 Git 仓库（含 commit 历史与可能内嵌的凭据）上传到 xAI 服务器；xAI 于 7/12 关闭默认数据保留，7/15 以 Apache 2.0 开源整套 harness（约 84.45 万行 Rust）。所以在开启记忆前要想清楚的是：这些项目事实存在哪、谁能读、出网不出网。另外「越用越好」为厂商表述，无第三方长期评估。</div>
+      <div class="act"><b>怎么用得上：</b>把「哪些事应该进记忆」当一条显式规范来定：跑测试的正确命令、某子系统的位置、团队的评审习惯——这三类是官方点名的高价值项，也正是新人最常踩的坑。反过来，把任务状态与临时结论挡在外面，否则记忆库会迅速变成噪音。仓库里已经有的东西不要重复记（官方明确排除），真需要的话应该去改文档而不是改记忆。</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>vivo 把 Harness 写进系统内核：6000+ 原子技能变工具，手机厂商集体下场抢这一层</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">来源：2026 vivo 开发者大会 9/16（腾讯新闻 / 速途网 / 中国经济新闻网 / 同花顺财经）· 金融界 9/15 荣耀 MagicOS 11 报道</div>
+    <div class="body">
+      <p>9 月 16 日 vivo 开发者大会发布四款蓝心大模型（端到端语音 <strong>BlueLM-RealTime</strong>、端侧 <strong>BlueLM-Nano</strong>、云侧 <strong>Flash / Pro</strong>）、原系统 7 与蓝河操作系统 4，重点是新增了<strong>系统级蓝心 Harness</strong>。</p>
+      <p>它的定位是「把手机的能力变成大模型的手和脚」：Harness <strong>深入原系统内核层</strong>，把系统、应用、设备能力封装成智能体可理解和可调用的工具，<strong>已接入 6000 多项原子技能，组合后支持超万种任务</strong>；同时串起感知—记忆—规划—执行的主循环，并为每位用户建立系统级感知与个人记忆库，提供连续可控的个人上下文。vivo 把这层拆成三层兼容：底层是内核级融合（不是安卓框架外挂一层 AI 壳），中间是端云一体调度（简单任务端侧、复杂任务上云、用户无感切换），上层是开放平台（支持 Agent / Skill / MCP / 原子技能快速接入，并开放端侧推理与训练引擎）。</p>
+      <p>生产力侧同时给了三件事：原生编程智能体 <strong>BlueCode 预览版</strong>（探索在移动端完成大型代码工程）、<strong>小V Cowork</strong>（用手机查看并处理 PC 端 agent 任务）、以及预研中的<strong>蓝心 30B MoE 端侧大模型</strong>（探索手机独立跑长链路复杂任务）。前一天（9/15）荣耀发布 MagicOS 11，落地其自称的「行业首个系统级 Agent Harness 商用方案」，主打从被动问答转向主动办事。</p>
+      <div class="why"><b>为什么值得看：</b>Harness 正在从「agent 内部的一个实现细节」变成「操作系统的组成部分」。这是 09-11「harness 层成为主战场」→ 09-14「harness 被做成托管云服务（OpenAI Agents API）」之后的第三步，方向是<b>往下游沉</b>。谁掌握这一层，谁就决定了 AI 在你设备上能碰到什么、以什么方式碰。对 coding 的直接含义是工具调用面的量级差：手机 OS 能给 agent 的是 6000+ 个系统原子能力，而一个终端 CLI agent 手里通常只有几十个工具——这是两种完全不同量级的行动空间。另一个观察点是端云调度：它把「哪个模型在哪跑」变成了系统内部的调度问题，而不是开发者的架构决策。</div>
+      <div class="caveat"><b>口径与风险：</b>6000+ 原子技能、万种任务、30B MoE 均为厂商大会口径，无第三方复现；BlueCode 为<strong>预览版</strong>，不是可用产品；荣耀「行业首个商用」为其自述。更实质的空缺是：手机 OS 级 agent 的权限边界、调用审计与失败回滚机制，目前没有公开的第三方评估——一个拿到 6000 个系统能力的 agent 出错时的爆炸半径，比一个只能读写文件的 CLI agent 大得多。vivo 提到配套了「智能体安全架构」，但未披露可验证细节。</div>
+      <div class="act"><b>怎么用得上：</b>评估任何「系统级 agent」时问三个问题：① 原子技能的权限是逐项授予还是整包开放；② 每一次工具调用有没有可查的审计记录；③ 端云切换时数据边界在哪（哪些在国内端侧处理、哪些上云）。这三条答不上来，能力清单再长也只是演示。</div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Astra + π0.5 混合架构 RoboDojo 拿 62.6 分领先 64%：但大模型只改了 14.4% 的控制步</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：银河通用团队匿名报告（GitHub / anonymous-report-421）· 腾讯科技 9/16《OpenAI 狂砸百亿剑指具身智能》· 中华网 9/17 · 具身算法研究员天南的逐项复盘 · RoboDojo 发起人陈天行对报告性质的说明</div>
+    <div class="body">
+      <p>一份由银河通用团队撰写、第一作为创始人兼 CTO 王鹤教授博士生的匿名仿真测评报告，近日在具身圈引发震动。它把 <strong>GPT-6 Astra 与 π0.5 绑成混合架构</strong>，在 RoboDojo 十个双臂任务上跑出 <strong>平均 Score 62.60、成功率 48%</strong>；第二名 Galaxea G0.5 为 38.26，Astra 单独直控（Direct）为 37.81 / 26%。</p>
+      <p>设计上最有信息量的一点：<strong>没有让 Astra 直接操控机械臂</strong>。每个决策时刻，π0.5 先生成 50 步候选动作；Astra 看同一份画面、执行历史和候选轨迹，然后二选一——沿用 π0.5 的前 1–15 步，或自己出 1–5 步末端位姿修正。走完一段再看新画面重新决定。结果是：<strong>50 条混合轨迹共 42,750 个控制步，Astra 实际只改了 6,174 步，占 14.4%</strong>。</p>
+      <p>逐任务分布把能力边界画得很清楚。<strong>语义 / 记忆 / 规则类</strong>（按语言指令分类、看一遍示范再按顺序摆、用数字块拼最大数）：端到端模型原本基本在 0–8 分趴着，混合架构拉到 38–53。<strong>接触与稳定类</strong>：搭塔 G0.5 拿 82.93、混合 64、Astra Direct 只有 12；麻将杠牌 G0.5 拿 90、混合 40、Astra Direct 是 0。柔性物体上互补最明显：叠衣服 Astra Direct 40 分，加上 π0.5 后 100 分。单臂 RoboLab 补充实验里，Astra Direct 49/50（98%），π0.5 + Astra 46/50，而 π0.5 单独只有 18/50。</p>
+      <p>代价同样刺眼：混合架构 50 条轨迹消耗约 <strong>6.25 亿 token</strong>（每条约 1250 万），Direct 超 11.3 亿；按报告口径折算，每条轨迹机器人真正在动的时间平均只有 <strong>约 34 秒</strong>。而且模型在动作段边界思考时，仿真器是 pending 等待的——公开视频已做过处理，中间停顿一帧都没剪出来。</p>
+      <div class="why"><b>为什么值得看：</b>即便把「翻倍」的幅度打个折扣，方向信号依然很清楚——<b>具身的大脑大概率不用自己从头造了，但「手」更值钱了</b>。受冲击的是 VLA 里的 VL（语义理解、记忆、长程规划），A（动作先验）反而变贵。报告里还有一条容易被忽略的硬约束：RoboLab 中一个单独只有 36% 成功率的 π0.5 接上 Astra，结果<b>比 Astra 单干还低 3 条</b>——小脑一弱，大脑不但帮不上忙，还会帮倒忙。这与 09-16 智元龙旗真实产线 99.99% 是同题不同面且不可互替：那条证明的是稳定性，这条证明的是架构分工。</div>
+      <div class="caveat"><b>口径与风险（这条必须看）：</b><b>这不是官方评测</b>。RoboDojo 发起人陈天行已明确说明「不是官方评测，作者自己测试的」，数据对不上官方榜单，官方结果预计两天后发布。报告自身的限制还有：十个任务是按 π0.5 官方成功率分四档挑的（6/2/1/1），<b>专门偏向 π0.5 的弱项</b>；每任务只跑 5 次；Direct 与混合两组之间同时改变了三件事（动作先验有无、动作接口、每段执行长度），<b>没有做消融</b>；基线分数是从公开榜按这十个任务重算，未用同种子重跑。所以 62.6 分适合用来观察能力上限，<b>不能当严格的同条件排行榜成绩用</b>。另外全部在仿真中完成，未涉及真机的相机噪声、机械误差与延迟。</div>
+      <div class="act"><b>怎么用得上：</b>如果你在做具身大脑选型，这份报告给出的是一条分工线而非采购清单：① 语义 / 记忆 / 长程纠错可以外采通用大模型，不必自研；② 高成功率且有泛化的底层技能（接触、力控、柔性物体）是护城河，也是被接入的资格；③ 评估任何一个「大脑 + 小脑」方案时，先单独测小脑的成功率——低于某个水位，接上大脑反而更差。④ 1250 万 token 换 34 秒动作，真机部署前必须先算这笔账。</div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>APXInf 开源：π0.5 端侧推理从 278ms 压到 26ms，机器人进入实时控制区间</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">来源：机器人前瞻 / 智东西 9/15 · 无问芯穹联合清华大学、上海交通大学开源 · GitHub RLinf/APXinf-robo · 腾讯研究院 AI 速递 9/16 · 同花顺财经 9/17 转述</div>
+    <div class="body">
+      <p>9 月 15 日，<strong>无问芯穹联合清华大学、上海交通大学开源具身端侧推理引擎 APXInf</strong>，支持 RTX 4090、Jetson Orin、Jetson Thor 等主流平台，覆盖从模型开发、效果验证到本体部署的完整链路。核心数字：在 <strong>Jetson AGX Thor 上，Pi 0.5 FP8 的端到端推理延迟从 278ms 降至 26ms 以内，推理频率达 38.46Hz，降幅约 10.7 倍</strong>——面向 Batch=1、多视角实时控制，已进入机器人实时控制区间。</p>
+      <p>性能来自全栈协同而非单点优化：Pipeline / Graph / Kernel / 量化多层优化，加上 <strong>Agent4Kernel</strong> 技术做融合算子的极限挖掘；架构上用 <strong>Rust 构建极简运行时</strong>（所有权、Result 与安全 API 提前暴露错误，unsafe 收口在固定的 FFI 边界），上层用 Python 接口封装，沿用算法团队熟悉的模型加载、前后处理与推理调用方式，并与 PyTorch Reference 衔接便于本体联调。部署侧不需要 Docker 与外部框架依赖，避免数 GB 镜像占用。</p>
+      <p>首发支持 <strong>Pi 0.5 与 WALL-OSS</strong> 两款具身模型；Roadmap 包括 VLA / VLM / 世界模型（已在适配 Qwen、Groot）、极致的 nvfp4 性能优化、国产芯片算力后端与国产机器人操作系统、以及 AMD 等主流芯片。它同时是 <strong>RLinf 开源生态的端侧推理首发项目</strong>——RLinf 是 2025 年 9 月无问芯穹联合清华等开源的具身大模型强化学习后训练框架，APXInf 把这条链从训练、评测延伸到了本体部署。</p>
+      <div class="why"><b>为什么值得看：</b>这条和主榜 ④ 是同一道题的正反两面。④ 说的是「大模型能进策略层，但要付 1250 万 token 换 34 秒动作」；⑤ 说的是「把 π0.5 这类模型压到 26ms，就能进实时控制区」。合在一起看，具身竞争正在<b>从「模型谁更强」落到「谁能把模型塞进本体的功耗 / 延迟 / 成本预算里」</b>。这也是 09-15 机器人专用 SIM 卡（压网络）、万元整机（压硬件）的同层延续——三条都在压部署侧成本，只是一个压网络、一个压硬件、一个压推理延迟。Rust 运行时这个选择也值得注意：它针对的不是峰值性能，而是长时间运行下的抖动、内存错误与并发风险——这正是机器人「连续干活」和「演示一次」的区别所在。</div>
+      <div class="caveat"><b>口径与风险：</b>26ms / 38.46Hz 是厂商公布的<b>单平台（Jetson AGX Thor）+ 单模型（Pi 0.5 FP8）</b>数据，无第三方复现；首发仅支持两款模型，Roadmap 上的国产芯片与国产机器人 OS 尚未交付。真实机器人上的长期稳定性、轨迹抖动、内存与功耗占用目前没有公开的长跑数据——官方自己也说「答案只能在物理世界中得到」。<b>另请注意不要与 ④ 混用</b>：④ 是仿真环境的能力边界测试，⑤ 是端侧真机推理，两套数字分属完全不同口径，不能互相印证。</div>
+      <div class="act"><b>怎么用得上：</b>如果你在把 VLA 模型往本体上搬，26ms 这个数可以直接当预算基准线：先量自己模型在目标硬件上的端到端延迟（含前后处理），低于 30ms 才谈得上实时闭环。工程上可复用的是它的分层思路——Python 接口保留开发效率，热路径下沉到 Rust 原生运行时；以及「无需 Docker」这一点，对本体存储空间紧张的现场部署是实打实的收益。</div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+
+    <div class="m code">
+      <h3>上海 AI Lab 开源 Atria Dawn：744B agentic MoE，MIT 许可</h3>
+      <p>基于 GLM-5.2 后训练的 744B 参数 agentic MoE 预览版，面向智能体任务设计，采用 MIT 许可，<strong>先于论文发布权重</strong>。延续近期大模型「先开源权重、后发论文」的发布节奏，便于社区在合规前提下先行试用与复现。</p>
+    </div>
+
+    <div class="m code">
+      <h3>DeepSeek Harness：插件化到「连对手都能跑」</h3>
+      <p>8 月 13 日以 MIT 开源 v0.1（<strong>非当日新闻</strong>，本周因 O'Reilly 九月技术雷达收录再受关注）。几乎一切能力都是插件；内置 38–40+ 家模型厂商路由，国产约占 15 条；<strong>专门给 Claude Code 和 Codex 写了可选「子代理」插件</strong>，可把竞品当一等公民调度。所有运行轨迹汇入同一条 append-only 事件流，会话恢复 / 分叉 / 回放都建立在其上。多 Agent 编排以层级 Supervisor–Worker 为主，兼容 parallel / pipeline / Ralph 循环。</p>
+    </div>
+
+    <div class="m code">
+      <h3>Jev：不生成文本，直接输出结构化判断</h3>
+      <p>前 OpenAI 研究员 Diogo Almeida（TypeSafe AI）推出的<strong>决策模型</strong>——不生成自然语言，直接并行采样输出结构化判断与概率，面向分类、路由、评分、信息抽取、护栏检测。同期完成 <strong>4000 万美元种子轮</strong>（DCVC 领投）。自称特定工作流快近 200 倍、便宜 400 多倍，0% 错误率来自 schema 机制——<strong>均属自建评测，待独立验证</strong>。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>芝诺机器人数亿元种子轮 + 2040 年 2600 万台预测</h3>
+      <p>杭州芝诺未来完成数亿元种子轮，舜宇光学、沐曦股份、中网银新、赛意产业基金、和利资本参投。已推 3B 参数协作智能基础模型 <strong>Zeno-1</strong>，去中心化架构——无中央控制器，机器人凭视觉与交互历史自主决策，支持跨场景 / 跨任务 / 跨本体，真机连续运行超 10 分钟完成 8 个子任务，澳新已启动 PoC。同期 Berg Insight（9/15）预测人形机器人年出货从 2026 年 1.6 万台增至 2040 年 2600 万台，市场 8.9 亿 → 5540 亿美元，CAGR 63.7%。</p>
+    </div>
+
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>① Zed Delta</strong></td>
+            <td>09-15② Sourcegraph Agentic Batch Changes GA</td>
+            <td>同题不同层：Sourcegraph 解决「批量改完能不能合」，Zed 解决「改的过程怎么被审」</td>
+          </tr>
+          <tr>
+            <td><strong>① Zed Delta</strong></td>
+            <td>09-13③ BenchShield / 09-11① GitSpawn</td>
+            <td>同层不同面：都在争「过程可信」——BenchShield 从基础设施侧取证，Zed 把过程本身变成版本化的一等公民</td>
+          </tr>
+          <tr>
+            <td><strong>② Grok Build 记忆</strong></td>
+            <td>09-15②③ OpenViking <code>viking://</code></td>
+            <td>同题不同解：都把记忆做成可浏览、可编辑的文件；OpenViking 开源且主打三级加载省 token，Grok Build 厂商内置且主打零配置接管既有生态</td>
+          </tr>
+          <tr>
+            <td><strong>② 兼容 Claude Code 生态</strong></td>
+            <td>09-16② 谷歌向全体工程师开放 Claude Opus 5</td>
+            <td>同主线第三幕：模型与工具链不再是必须自研的护城河，「接进来」比「造出来」更快</td>
+          </tr>
+          <tr>
+            <td><strong>③ vivo / 荣耀 Harness</strong></td>
+            <td>09-14① OpenAI Agents API（托管环境）</td>
+            <td>上游收束：harness 从 agent 内部 → 被做成托管云服务 → 沉进 OS 内核与端侧芯片</td>
+          </tr>
+          <tr>
+            <td><strong>④ Astra + π0.5</strong></td>
+            <td>09-16④ 智元龙旗产线 99.99%</td>
+            <td>同题不同面且不可互替：④ 是仿真里的架构分工证据，智元是真实产线的稳定性证据</td>
+          </tr>
+          <tr>
+            <td><strong>④ Astra + π0.5</strong></td>
+            <td>09-15②⑤ 国家数据局数据标准 / 09-14⑤ Mecka AI</td>
+            <td>同一结论再深一层：能力根源是数据；今天多出「大脑可以外采、动作先验必须自攒」这一分工判断</td>
+          </tr>
+          <tr>
+            <td><strong>⑤ APXInf</strong></td>
+            <td>09-15④ 机器人专用 SIM 卡 / 09-15①⑤ 万元整机</td>
+            <td>同层不同面：都在压部署侧成本，一个压网络、一个压硬件、一个压推理延迟</td>
+          </tr>
+          <tr>
+            <td><strong>⑤ APXInf</strong></td>
+            <td>09-11「harness 成为主战场」/ 09-14「基础设施标准化」</td>
+            <td>三幕：说它重要 → 把它标准化 → 把它下沉到 OS 与端侧芯片</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:6px">一句话串起来：<strong>五条都在接管「想」与「做」之间的同一类接缝</strong>——对话与 diff 的缝隙（Zed）、会话与会话的缝隙（Grok Build）、模型意图与系统能力的缝隙（vivo / 荣耀）、语义与动作的缝隙（Astra + π0.5）、模型与本体算力的缝隙（APXInf）。前三条是把接缝变成可版本化、可持久化、可调度的资产；后两条则证明接缝还在——大脑仍换不来手感，模型仍塞不进本体预算。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-17 · 北京时间 10:35</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-16.html">← 2026-09-16</a></div>
+</body>
+</html>
