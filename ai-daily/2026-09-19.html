@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-19 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 19 日（周六）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：五条都落在「喂进去什么」这一层</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① Plugin4Shell 四大代理同源漏洞</a>
+    <a href="#n2">② Claude Code 支持 AGENTS.md</a>
+    <a href="#n3">③ Dream-RSI 历史即模拟器</a>
+    <a href="#n4">④ Figure Helix 2.5 迁移缩放律</a>
+    <a href="#n5">⑤ 丰田 40 万台机器人</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Plugin4Shell：四大编程代理同源漏洞，攻击面从模型移到了「插件市场」</h2>
+      <span class="tag t-code">AI Coding · 供应链安全</span>
+    </div>
+    <div class="src">来源：The Register（9/17）· Air 安全公司报告（9/17）· zeroday.news · TokenPost · 网易/金融界中文转述（9/18）</div>
+    <div class="body">
+      <p>网络安全初创公司 <strong>Air</strong>（专注企业 Agent 防护）的三位研究员 <strong>Or Nevo、Dor Granat、Niv Hoffman</strong> 披露了一枚影响全部主流编程代理的零点击远程代码执行漏洞，命名为 <code>Plugin4Shell</code>，并称其为「首起 AI 供应链攻击」。受影响名单是：<strong>Anthropic 的 Claude Code、OpenAI 的 Codex、Google 的 Gemini CLI、以及微软/GitHub 的 Copilot</strong>。</p>
+      <p>成因不落模型，落在「插件市场怎么防止货物被掉包」。 <strong>SHA pinning</strong> 的设计意图是：把插件锁死在某一个不可变的 commit 哈希上，而不是可被移动的分支名或版本号——这样即使公开插件仓库被攻破，agent 跑的仍是当初审计过的那份代码。Air 发现的是：<strong>agent 确实按市场固定的那个 commit 去检出，却从不校验内容是否真的落在那里</strong>。攻击者只要控制了插件仓库，就能让 checkout 解析到恶意代码，而 pin 看起来依然被遵守。原文一句说得很直白：「代理检出的是市场固定的精确 commit，但从不验证它落在那里，于是攻击者控制插件仓库后，让检出指向恶意代码，同时 pin 看上去依然有效。」</p>
+      <p>之所以是<strong>零点击</strong>，是因为 Claude 与 Codex 的插件自动更新<strong>默认开启</strong>：上游把被 pin 的 commit 内容换掉，本地插件就在下一次自动更新时被替换成恶意版本。两种攻击路径——① 先向可信市场提交良性插件通过审核，之后再换成恶意内容；② 直接劫持原作者仓库，把恶意版本推给所有已安装的 agent（即绕过 SHA pinning 本身）。第二种已被 Air 此前的 <code>SkillJacking</code> 与 <code>RepoJacking</code> 概念验证演示过。</p>
+      <p>修复进度严重不齐，这是本条最实的信息：<strong>Anthropic 已在 Claude Code 2.1.179 修补</strong>，<strong>OpenAI 已在 Codex 0.146.0 修补</strong>；<strong>Google 已弃用 Gemini CLI，明确表示不打补丁，建议迁移到 Antigravity</strong>——因此所有存量 Gemini CLI 安装仍然脆弱；<strong>微软至今未给 Copilot 发布修复</strong>，Air 称早在 6 月就已通报但未获回应。微软自己的口径是近 <strong>90% 的财富 500 强</strong>在用 Copilot。GitHub 发言人则称 GitHub 不允许创建形似 commit SHA 的分支或标签名，所以「该漏洞无法在 GitHub 上被利用」；Air 反驳：插件市场也可以托管在 Bitbucket 等平台，而 Copilot 同样支持这些平台，因此暴露面还在。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>攻击者的目标第一次从「模型」移到了「分发通道」。这已经是两周内的第三起 agent 供应链事件（前有 GitSpawn 的 <code>.git/config</code> 一键劫持、再有 PaperCut 的数百个 agent 协同攻击 7 分钟拿下域管），三者指向同一件事——<strong>agent 时代的新攻击面，就是 agent 信任并自动执行的每一份外部内容</strong>。四家厂商校验设计雷同也说明这不是单点失误，而是行业在「先解决能不能用」时形成的路径依赖：NPM 生态十年前就已把锁文件与哈希校验做成了肌肉记忆，agent 生态却还没有。</p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 升级到含补丁的版本（Claude Code ≥ <code>2.1.179</code>、Codex ≥ <code>0.146.0</code>），仍在使用 Gemini CLI 的存量实例<strong>迁移到 Antigravity</strong>；② Copilot 用户不能等官方补丁，先把插件/市场源收敛到自建可控仓库，并关闭自动更新或改用受控白名单；③ 把 agent 的插件与配置文件纳入和 CI 脚本同级的 Code Review——今天一份 skill 的更新比一次依赖库升级更危险；④ 给 agent 的高危动作（外发文件、调用生产凭据）加人工确认门，不要只依赖来源校验。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>中文二手源普遍写成「除 GitHub 外其余三家已修复」，<strong>与一手报道不符</strong>。以 The Register 与 Air 报告为准：Google 明确不打补丁（Gemini CLI 已废弃）、微软未修 Copilot。另需注意：Claude Code 2.1.179 / Codex 0.146.0 是<strong>修补落地时的版本号</strong>，与今天在跑的 2.1.277 已相差近百个版本，说明补丁早已在流中——真正要确认的是你自己的实例有没有跑在含补丁的版本之后。GitHub 与 Air 对「GitHub 平台是否可利用」存在<strong>公开分歧</strong>，在未确认之前按「可利用」处理。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Claude Code 2.1.277 起支持 AGENTS.md：不是向 OpenAI 低头，是遵守自己参与共建的规则</h2>
+      <span class="tag t-code">AI Coding · 配置标准</span>
+    </div>
+    <div class="src">来源：Thariq Shihipar（@trq212）X 帖（9/18–19）· anthropics/claude-code 仓库 mods/agents-md · TPS Report · ExplainX · Simon Willison 转述 · IT之家 / 头条「人工智能学家」（9/19）</div>
+    <div class="body">
+      <p>Claude Code 团队工程师 <strong>Thariq Shihipar</strong> 宣布：从 <code>2.1.277</code> 起，若目录中没有 <code>CLAUDE.md</code>，Claude 会检查并改用 <code>AGENTS.md</code>，也可在 <code>/config</code> 中关闭该行为。分工被明确划开：<strong>CLAUDE.md 承载 Claude Code 特有的工作流、MCP、Sub-agent 与命令配置；AGENTS.md 是让不同工具共享的项目级基础规则</strong>——官方网站直接称它是「给 agent 的 README」。两者的关系不是谁替代谁，<strong>CLAUDE.md 存在时仍然优先</strong>，AGENTS.md 只是 fallback。</p>
+      <p>比兼容本身更值得注意的是<strong>实现方式</strong>：Anthropic 没有把它硬编码进核心，而是做成一个<strong>内置的 Claude Code Mod</strong>。Mods 是即将推出的 harness 定制层，与既有 skills 体系不同，瞄的是「会话外壳与 harness 行为」而非模型能力。源码已公开在 <code>anthropics/claude-code</code> 的 <code>mods/agents-md</code>，由社区贡献者 poteat 提交、官方合并；该 mod 提供 <code>claude-md</code>、<code>claude-md-or-agents-md</code>（默认）、<code>claude-md-and-agents-md</code>、<code>managed-only</code> 四种模式，想两份同时加载或完全回到老规矩都可以自己选。用自家第一方功能跑通这套 mod 机制，等于给第三方写了一个公开参考实现。</p>
+      <p>背景值得一说。AGENTS.md 于 <strong>2025 年 8 月由 OpenAI 联合 Cursor、Google、Factory、Amp</strong> 推出；到 2025 年 12 月已被<strong>超过 6 万个开源项目与 agent 框架</strong>采用（含 Gemini CLI、Devin、VS Code），唯独 Claude Code 读自家格式。为此不少团队靠符号链接或导入语句土法并轨——2025 年 8 月 21 日有人在 Claude Code 仓库提了支持请求，一年多累积了 <strong>5000+ 表情反馈、300+ 评论</strong>，是该仓库最受关注的未满足需求之一。OpenAI Codex 负责人 Tibo 也在评论区留了句「欢迎来到光明的一边」。</p>
+      <p>但把它读成「Anthropic 低头」只读了一半： <strong>2025 年 12 月 9 日 Linux 基金会成立 Agentic AI Foundation，Anthropic、OpenAI、Block 同为联合创始成员</strong>——Anthropic 捐出 MCP，OpenAI 捐出 AGENTS.md，Block 捐出 goose。AGENTS.md 早已躺在中立基金会里，接入它是遵守自己参与共建的游戏规则，路径与当年各家接入 MCP 一样。同期 Claude Code 还把 <strong>Projects 从存放提示词与文档的静态文件夹</strong>重构为对话驱动的多 Agent 协作中心：协调器拆解目标，调度多个运行在云端隔离环境的实例并行干活，各自持有独立代码副本与 Git 分支，完成后自动提 PR，线程在用户关掉笔记本后继续在云端跑。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条和主榜①是同一枚硬币的两面——① 讲「agent 读的那份外部内容会被投毒」，② 讲「同一类文件正在被收敛成一份公共说明书」。真正在移动的是<strong>格式竞争结束、能力竞争开始</strong>：一份 Markdown 靠它筑护城河既困难也不划算，格式统一后，用户比拼的是模型能力、上下文管理与工程体验。对企业还有一层好处——规范写在同一处，审计与更新成本随之下降；对开源维护者更是如此，他们无法预知访客用哪款工具，统一文件名等于统一了接待礼仪。</p>
+      </div>
+      <div class="act">
+        <p><b>三条立刻可落地：</b>① 已标准化 AGENTS.md 的仓库不必再为 Claude Code 维护第二份 CLAUDE.md；② 需要 Claude Code 同时加载两份时用 <code>claude-md-and-agents-md</code> 模式，企业内统一下发可用 <code>managed-only</code>；③ 注意 <code>AGENTS.md</code> 也要按「会被 agent 自动执行的内容」来治理——如果这条生效后被塞进任意构建/提交指令，它就是 CI 脚本，得走同级评审。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径与边界：</b>① 日期有冲突——英文源记为 9 月 18 日发布/宣布，IT之家等中文源记为 9 月 19 日的 X 帖发布，取 9 月 18–19 日区间更安全。② 嵌套目录中的 AGENTS.md <strong>只在文本读取时才附带加载</strong>，上下文压缩后需等下一次读取才会重新附带，与原生 CLAUDE.md 的处理并不完全相同。③ Mods 尚未有正式文档说明其 API 边界与 GA 时间，官方也未承诺第三方 mod 的支持范围，不要把生产流程建立在它上面。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Dream-RSI：把探索历史变成可回放模拟器，并把「历史总结」证明是有害的</h2>
+      <span class="tag t-code">AI Coding · 自我改进</span>
+    </div>
+    <div class="src">来源：arXiv:2609.14858（9/14 上线，9/16 二次传播）· Google / Google DeepMind / 马里兰大学 / 弗吉尼亚大学 17 人团队 · CellCog · AlexTech · AILog · AIGC 深度中文解读</div>
+    <div class="body">
+      <p>Google、Google DeepMind 与马里兰大学、弗吉尼亚大学的 <strong>17 人团队</strong>于 <strong>9 月 14 日</strong>把 <strong>Dream-RSI</strong>（arXiv:2609.14858，《Recursive Self-Improvement through Evolving Worlds》）挂上 arXiv。它问的是一个很朴素的问题：跑过千百次「生成—评估」循环之后，那段昂贵历史为什么只能被认真读一次？</p>
+      <p>做法不是学一个新世界模型，而是<strong>承认跑完的探索历史本身就是那个可以反复进入的世界</strong>。一次在线探索会长出一棵「发现树」：根节点是初始工作区，此后每一次「生成、评估」尝试都接进树里，节点记录<strong>父节点、工作区快照、评估器诊断与分数</strong>。换一个探索策略，就是在这棵树上换分支子集、换顺序、换并行分组、换停止点。因为每个节点的结果早已落盘，<strong>评估一条新策略只是读记录，既不重新调用 discovery agent，也不重跑评估器</strong>——论文明确写道，回放本身不执行任何新的发现尝试，因此是确定性的。</p>
+      <p>三段循环：在线探索扩张发现树 → 把树转成回放模拟器池 → 候选策略在模拟器里「做梦」并被评分与挑选，胜出的策略代码回到第一步。<strong>整个系统只改探索策略的代码，底层模型、评估器与执行接口都不动</strong>（发现侧是 Gemini 3.1 Pro 与 Gemini 3.7 Flash，经 Gemini CLI）。三条战线上的结果：<strong>Lasso 求解器</strong>用 317 次调用拿到优于 SimpleTES（51,200 次生成）的平均运行时间，差约 162 倍；<strong>三项数学优化</strong>每题都控制在 1000 代以内，而 SimpleTES 单项预算是 51,200 代；<strong>KernelBench 四个 kernel</strong>，VGG16 少用约 2.43 倍、LayerNorm 少用约 1.79 倍代次达到同等性能，ConvDiv 与 ConvMax 在相近预算下性能分别提高约 2.09 倍与 1.44 倍。</p>
+      <p>两个反直觉结论才是这篇论文的真正增益。其一，<strong>把历史压缩成摘要塞进 prompt 当语义指引，效果比不用引导还差</strong>——两条加了引导的对照线都低于各自对照组。解释是：长程发现本来就并行开着多条线，此时对「未来该往哪搜」施加过强的语义偏置，会把搜索空间压得过窄，牺牲了探索多样性。其二，<strong>策略自己学会了调节算力</strong>：ConvDiv 上前四个外层轮次每轮评测尝试次数从 110 次主动降到 50 次，第 5 轮性能增速放缓后投入又回到 92 次——被优化的对象不是答案质量，而是「怎么分配算力」本身。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>它把「历史」从一次性开销变成了可复用的资产，这对于任何正在烧钱做长时程 agent 探索的团队都是成本结构的改变——过去评价一条新探索策略必须完整跑一段真实探索，现在同一段历史能支撑数千次近乎零成本的离线比较。更重要的是那个消融结论：业界默认做法（把经验总结成 few-shot 或系统提示）在这套设置里<strong>是负收益</strong>。这与最近一周好几条新闻共同指向同一个原则——历史要保持可重演的形态，不要急着压成结论。</p>
+      </div>
+      <div class="act">
+        <p><b>三条立刻可落地：</b>① 把发现树当一等公民来建：保存父节点、工作区快照、评估诊断与分数四件套，并留出回放接口；② 历史优先做成<strong>可重放环境</strong>而不是 prompt 摘要——本文给了明确的反例；③ 除最终分数曲线外，单独画一张「每轮评测尝试次数」曲线，它往往比分数更早告诉你策略有没有真的在变。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径与边界：</b>① <strong>162 倍不是同模型同预算对比</strong>——SimpleTES 用 GPT-OSS-120B，Dream-RSI 用 Gemini 系列，两者相差 162 倍说的是量级差距；真正同等条件下的对照是同一行的固定探索基线，Gemini-3.1-Pro 下 550 次 → 317 次，仅 <strong>1.7 倍</strong>。② 数学三项的结果是<strong>一胜一平一负</strong>：Sum-Difference 1.145427 略胜 SimpleTES 的 1.143975，圆堆叠 2.635983 追平最强报告值，而自相关不等式 1.456375 逊于 SimpleTES 的 1.453675（越低越好），论文自己也只说「保持竞争力」。③ 回放是<strong>只读的</strong>：历史里没走过的分支，回放进不去，任务太短则树还没长起来就结束了。④ 论文 9/14 上线、9/16 在 X 上二次传播（单帖十余万浏览），属本周热点而非当日首发；代码截至 9/16 仍在准备中。⑤ arXiv 上编号相近的 2609.14857（ModularRSI）是<strong>另一批作者的不同论文</strong>，两组数字不可互引。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Figure Helix 2.5：进 30 个陌生家庭零样本做家务，并第一次给出「人→机器人」迁移缩放律</h2>
+      <span class="tag t-emb">具身智能 · 数据与泛化</span>
+    </div>
+    <div class="src">来源：Figure 官方博客 Helix 2.5: Zero-Shot 30-Home Generalization（9/17）· 机器人前瞻 · Superpower Daily · AIBase · AGI Hunt 转载 Adcock 周报</div>
+    <div class="body">
+      <p>9 月 17 日 Figure 发布 <strong>Helix 2.5</strong>，称是其迄今最先进的神经网络。评测设计比常见的 demo 严得多：把搭载该模型的 Figure 03 开进 <strong>30 个此前从未采集过数据的旧金山湾区民居</strong>，在这些家里<strong>不采一条数据、不做任何微调或适配</strong>，让机器人完成三项全身长程任务——<strong>整理客厅</strong>（把散落的 13–15 件玩具全部收进人类递来的篮子）、<strong>叠毛巾</strong>（4 条全部叠好并放进篮子）、<strong>铺床</strong>（枕头与被子四角归位、被子铺平）。</p>
+      <p>判定标准毫不留情：<strong>不给部分分</strong>，全程只用一个固定的模型权重（checkpoint）跑完 30 家，不针对任何一个家调参。为杜绝「背答案」，评测用的玩具、毛巾、床品在实验前单独隔离，并用 AI 加人工复核确认它们从未出现在任务数据里。</p>
+      <p>最关键的是那个归因实验：架构、优化方式、超参数、下游任务数据、评估条件<strong>全部固定</strong>，唯一变量是初始化方式——从随机权重开始训练的策略零样本成功率 <strong>9%</strong>（35/420），从 Index 预训练模型初始化的策略达到 <strong>56%</strong>（237/420）。官方强调预训练刻意做得很「宽」：<strong>任何一个评测任务在 Index 数据中的占比都不超过 1.90%</strong>。因为预训练是唯一变量，这道鸿沟直接量出了人类行为数据的贡献。配套的数据效率结论同样锋利：Helix 2.5 <strong>只用 Helix 02 一半的适配数据</strong>就取得相当成功率——而 Helix 02 当年是直接在评测环境里采数据训练的。</p>
+      <p>这次真正的方法论旗帜是<strong>第一条「人→人形机器人」迁移缩放律</strong>。研究团队训练 4 个模型，分别喂 Index 数据的嵌套子集，数据量跨越 <strong>8 倍区间</strong>，同时保持模型规模与下游训练方式固定。结果是：每翻倍一次 Index 数据，留出集上的<strong>动作预测损失</strong>可预测地下降；更有价值的是可外推性——只用较小规模的几次训练，就能在开跑前把最大规模那轮的测试损失<strong>预测到小数点后四位</strong>，而预测误差仅占整个 8 倍区间变化量的 <strong>0.54%</strong>。弹药方面：Index 于 2026 年 8 月 25 日发布，Figure 已承诺投入 <strong>35 亿美元</strong>（约 234 亿元）算力，2025 年 9 月完成 10 亿美元以上 C 轮（投后 390 亿美元），2026 年 9 月与 Nscale 签约将在 NVIDIA Vera Rubin 平台部署最多 10 万张 GPU。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>语言模型敢堆算力，靠的就是有一条能外推的损失曲线——「再加一倍数据能换来多少」可以被预先算进预算表。具身智能现在说自己也有一条。9%→56% 是具体任务的一次胜利，<strong>0.54% 才是给钱的人看的那个数字</strong>：它意味着在这条曲线上追加投入不再是赌，而是可以算账。另外它把数据路线与遥操作路线的对比摆到了桌面上——9% 那一侧不是模型不行，而是缺那种「从小就见过别人怎么干活」的经验。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径与边界（三处）：</b>① <strong>Index 数据速率三源打架</strong>——机器人前瞻引官方称「每秒约产出 35 分钟新人类经验数据」，AGI Hunt 引 Adcock 周报称「每秒 53 分钟、本周 240 万段视频、11.5 万周活」，AIBase 则称「累计 1600 万段视频、26.4 万次下载、4.4 万周活」。三组数字互不一致，<strong>采用前请自行核对官方原文</strong>。② 缩放律度量的是<strong>预测记录的机器人动作的 loss</strong>，不是任务完成率，不能直接换算成「数据翻倍成功率涨多少」。③ 56% 只覆盖三项家务任务，且「零样本」指的是家庭与物体没见过，不是说能响应任意请求；距离敢让它进你家独自干活，中间还隔着可靠性、安全、成本与长尾。此外该成果<strong>未开源、未见 arXiv 论文</strong>，细节以官方博客与附录为准。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>丰田 2028 年起每年 1 万亿日元、引进约 40 万台机器人：把具身热度换算成一笔资本开支</h2>
+      <span class="tag t-emb">具身智能 · 产业落地</span>
+    </div>
+    <div class="src">来源：路透社（9/18，Daniel Leussink 报道）· 丰田公告 · KSL/观点 · 新浪财经 · AGI Hunt · Bernstein 研报评论</div>
+    <div class="body">
+      <p>9 月 18 日丰田汽车宣布：预计<strong>自 2028 年起每年投入约 1 万亿日元（约 64 亿美元，按 1 美元 = 157.18 日元）</strong>用于丰田、集团企业与主要零部件供应商的工厂现代化改造。这笔估算月初已与投资者沟通过，覆盖工业机器人、自动化物流与未来的人机协作产线；为实现该自动化水平，<strong>大约需要 40 万台机器人</strong>。</p>
+      <p>这里的口径必须校准：<strong>40 万台不是「40 万台人形机器人」</strong>。路透原文明写，这个数量<strong>包含既有设备的替换与新增、人形与非人形都算</strong>，且丰田<strong>既未确认一定执行，也未说明会持续多少年</strong>。真正的人形代表机型是 <strong>ELEY</strong>（Embodied Learning robot for Enhanced Yield），2012 年生活支援机器人 HSR 的升级版：<strong>两只手各两根手指、整机约 50 公斤、电池或外接电源供电、轮式全向底盘而非双腿</strong>，身高可调，既能拾地面物件也能触及高处。</p>
+      <p>技术核心是丰田研究院（TRI）的 <strong>Large Behavior Models（LBM）</strong>——一种生成式物理 AI，让机器人从传感器数据直接学习复杂行为，无需大量传统编程即可适应不同环境并持续改进。学习闭环很具体：<strong>工人佩戴仿照 ELEY 手指设计的装置照常作业，机器人在旁观察学习</strong>；叠 T 恤这项技能经过约两周、约 <strong>1500 次</strong>重复练习后准确率接近 100%。技能一旦学会，<strong>相关数据可以传输到其他工厂的同型机器人</strong>，这套回路还能反过来用于培训新员工。</p>
+      <p>参考坐标：丰田全球运营 <strong>60 家工厂</strong>，拥有约 <strong>1.8 万名</strong>内部称为「匠人（takumi）」的资深技工；截至今年 3 月底集团全球员工约 <strong>39.1 万人</strong>（其中约 34.4 万隶属汽车业务）。副社长兼 CTO 中岛裕树给出的定位是「创造机器人与人类共存、而非机器人取代人类的生产环境」。值得注意的是丰田同时在跑两条相反的路：在加拿大 RAV4 工厂以「机器人即服务」方式<strong>租用 Agility 的 Digit</strong>（7 台用于制造、供应链与物流），而在全球主战场自研 ELEY 的硬件与控制软件。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这是迄今最大规模的工业机器人部署计划之一，且第一次把「具身智能」从一个叙事换算成了<strong>有年度金额、有十年周期的资本开支</strong>。更值得琢磨的是那条路线分叉：租 Digit 买的是「当下算得过来的账」，自研 ELEY 买的是「没人能替我造、也没人能替我定价的规模」——连丰田级别的工程资源都不认为单一采购策略够用，这对上游执行器、传感器、电池供应商是个明确的价格信号：真正的需求方开始变成能谈下十年产能承诺的整车厂。而 LBM 那条「技能数据跨厂下发」的链路，是<strong>可迁移能力的第一次大规模工业化验证</strong>：一旦成立，产线效率提升就不再依赖逐工位编程，而是靠数据下发——这与主榜④的缩放律正好互为供需两端。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径与边界：</b>① 40 万台含既有设备替换与非人形机器人，<strong>不要当成 40 万台 ELEY</strong>；② ELEY 是<strong>轮式双指</strong>形态，不是双足人形，「40 万台人形」是常见误读；③ 丰田未确认执行与否，1 万亿日元是<strong>年度估算</strong>而非已批准预算；④ 中文源普遍给出「约 67 亿美元」，路透按当日汇率折算为 64 亿美元，取哪个都对，但要写明汇率；⑤ Agility Digit「约每小时 30 美元、目标两年回本」为二手转述，以 Agility 与丰田官方披露为准。另参考坐标：中国厂商 2026 年人形机器人全年产量整体预计约 10 万台——丰田一家这张饼，是这个量级的数倍。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>中国电信开源 Xing4.0-29B-A4B：全栈国产算力训练的轻量代码智能体模型</h3>
+      <p>9/17 发布，已在 GitHub/Hugging Face/Gitee/魔搭/魔乐开放权重。MoE 架构<strong>总参数 29B、每 token 仅激活 4B</strong>，mHC + MLA + MTP，40 层、隐藏维度 3584、64 路由专家 + 1 共享专家，原生 256K 上下文（可扩展至 512K）。官方称是<strong>国内首个端到端基于昇腾 910C 集群与 MindSpore/MindFormers 完成训练</strong>的百亿参数级模型，经细粒度 MoE 通信优化、选择性重计算、DVM 图算融合等联合优化，训练吞吐较开箱即用提升约 96%。评测：SWE-bench Verified 75.0、<strong>Terminal-Bench 2.1 57.5</strong>（同级 Gemma4-26B-A4B 为 30.0）、SWE-bench Multilingual 66.0、Claw-Eval 76.55、AIME2026 90.0，整体与 Qwen3.6-35B-A3B 基本相当。已适配 OpenCode、Claude Code、OpenClaw、Hermes 等 agent 框架，量化后可在消费级显卡本地运行。看点是三部分同时成立：小激活、终端执行能力过硬、训练全流程不依赖英伟达软硬件栈。</p>
+    </div>
+    <div class="m emb">
+      <h3>信通院《具身智能训练场研究报告（2026 年）》首次晒家底：超 70 家、仍有数量级缺口</h3>
+      <p><strong>注：报告为 8 月 18 日发布，本周转述再传播，非当日首发。</strong>由信通院人工智能所联合人形机器人（上海）有限公司、具身智能测试实验室发布。截至 2026 年 6 月底，全国建成启用<strong>超 70 家</strong>训练场，在建或规划 46 家，覆盖过半省级行政区，形成长三角/京津冀/珠三角三集群；浙江 14 个最多，江苏、北京、广东、山东各 8 个。场景上<strong>工业制造占 86%</strong>，综合类占六成以上而行业垂类不足两成。缺口是核心：具身基础模型要迎「ChatGPT 时刻」至少需<strong>千万小时级</strong>真实数据，而当前全球可用高质量真实数据仅<strong>数十万至百万小时级</strong>；按单台每天有效工作 2 小时、每年 300 天算，需超两万台机器人连续干满一年。报告判断行业正从「建设热潮期」向「能力沉淀期」过渡，明确提出须打造从采集、清洗标注、质检到训练验证的<strong>数据工程化流水线</strong>；配套的「具身智能数据集质量要求及评估方法」行业标准将于 <strong>11 月 1 日</strong>实施。中文聚合源流传的「275 元/小时有效成本」未在上述权威源中出现，采用前请核对。</p>
+    </div>
+    <div class="m code">
+      <h3>WetRobo + Ken Goldberg：瓶颈是软件工程，不是 10 万小时人类示教</h3>
+      <p><strong>WetRobo</strong>（arXiv:2609.18435，Sherry Yang 等）是一套<strong>可复现的湿实验室 kit</strong>：机械臂、培养箱、试剂瓶、培养皿，加上预录的遥操作演示与共享 skill 文件，同一套可在不同实验室间迁移。生物学家用自然语言描述任务，coding agent 观察真实湿实验室、写机器人程序、执行、再按物理世界的试错结果迭代——<strong>不需要现场遥操作采集，也不需要新训一个网络</strong>。同期 Berkeley 的 <strong>Ken Goldberg</strong> 把争论挑明了：「Agentic Robotics 的瓶颈是软件工程，不是 10 万小时人类示教」——多 agent coding 写<strong>确定性程序</strong>、离线纠正、部署轻量边缘代码，<strong>模型不坐在内层控制回路里</strong>；Stanford 的 Chris Manning 谈 Moonlake 时同样拒绝「一个大神经网络」的押注，理由是物理精度与长程一致性还没到。这与今天主榜②（规则写成 Markdown 而非塞进模型）、③（确定性逻辑外置）是同一件事在不同层的复现。</p>
+    </div>
+    <div class="m code">
+      <h3>Meta 发布 Muse for Mac：桌面级个人智能体落地，AI 从聊天框走向操作系统</h3>
+      <p>Meta 官宣 Muse for Mac 即日起推出，个人智能体可在<strong>用户明确授权</strong>下直接在电脑上完成任务，首批能力包括整理下载文件夹、查找丢失的文件、总结消息与笔记，官方称更多功能即将推出。这条与前日的 vivo 蓝心 Harness、荣耀 MagicOS 11 是同一个趋势：模型不再只是被调用的 API，而是被接进操作系统、获得真实执行权限的一层。差别在于 Meta 走的是「用户明确授权 + 有限的本机任务」这类轻量起步，而 vivo 是把 6000+ 原子技能沉进内核层——授权粒度与能力边界会是这条路上真正的分水岭。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>① Plugin4Shell 四大代理同源漏洞</td><td>09-10 ① GitSpawn（<code>.git/config</code> 一键劫持）</td><td>同一主线的第二幕：两起都<strong>以文件形态抵达</strong>本地即触发，共同的病灶是「agent 信任并自动执行的外部内容」</td></tr>
+        <tr><td>① Plugin4Shell</td><td>09-11 ② PaperCut（数百 agent 协同攻击）</td><td>同层不同方向：09-11 是 attacker <strong>用</strong> agent 攻，今天是<strong>攻</strong> agent 自己</td></tr>
+        <tr><td>① Plugin4Shell</td><td>09-13 ③ BenchShield / 09-11 ① SWE-Bench Pro</td><td>同层不同面：那两条解决「评测结果能不能信」，今天解决「<strong>喂进去的内容能不能信</strong>」</td></tr>
+        <tr><td>② Claude Code 支持 AGENTS.md</td><td>09-17 ② Grok Build 跨会话记忆（零配置读取 CLAUDE.md / MCP / hooks）</td><td>同一 convergence 的两个方向：Grok Build 是<strong>单向兼容别人的格式</strong>，今天 Anthropic 是<strong>双向接入公共标准</strong>，且路径由 Linux 基金会基金会托管</td></tr>
+        <tr><td>② Claude Code Mods</td><td>09-10 ③ obra/superpowers 28.4 万星</td><td>同层不同层：superpowers 是<strong>社区在 skill 层</strong>系统化流程，mods 是<strong>官方在 harness 层</strong>开放定制，后者改的是会话外壳本身</td></tr>
+        <tr><td>③ Dream-RSI</td><td>09-18 ① 智谱 GLM-5.3 Infra Agent（十万卡自建推理栈）</td><td>同题不同路：智谱是让 agent 改<strong>外部系统</strong>（运行自己的基础设施），Dream-RSI 是让 agent 改<strong>它自己的探索方式</strong>——同一 RSI 主线的两条不同路径</td></tr>
+        <tr><td>③ Dream-RSI「摘要反而更差」</td><td>09-12 ① Cognition Devin Fusion（交接只传简报保 cache）</td><td>反向镜像：Fusion 用<strong>简报</strong>换 cache 命中，Dream-RSI 的实验证明在长程探索里<strong>摘要会过早剪枝</strong>，两者结论冲突，取舍取决于是否需要保持搜索多样性</td></tr>
+        <tr><td>③ Dream-RSI「历史可重放」</td><td>09-18 ③ Terminal-Universe（359,593 轨迹回放成环境）</td><td>同层不同面：Terminal-Universe 把别人的轨迹变成<strong>训练环境</strong>，Dream-RSI 把自己的探索史变成<strong>策略评估环境</strong></td></tr>
+        <tr><td>④ Figure Helix 2.5</td><td>09-12 ⑤ HuRo（5 类人视频 → 63 万条机器人对齐片段）</td><td>同题不同进：HuRo 是「人视频对齐后可预训练」的<strong>早期证据</strong>，Helix 2.5 把同一条路走到了<strong>可外推、可标价的曲线</strong></td></tr>
+        <tr><td>④ Figure Helix 2.5</td><td>09-15 第二辑 ⑤ 国家数据局具身数据标准 / 09-13 ⑤ 数采经济学账本</td><td>同题不同层：政策与成本侧在解决「<strong>数据够不够</strong>」，Figure 解决「<strong>多一倍数据能换来多少</strong>」</td></tr>
+        <tr><td>⑤ 丰田 40 万台</td><td>09-16 ④ 智元 8 台精灵 G2 龙旗产线连续五个月（99.99%）</td><td>同层不同面：智元靠<strong>连续运行时长</strong>自证单点可用，丰田靠<strong>资本开支规模</strong>证明已到工业化采购阶段</td></tr>
+        <tr><td>⑤ 丰田 40 万台</td><td>09-15 第二辑 ④ 优必选柳州万台级超级工厂</td><td>同题不同角色：优必选是<strong>供给侧</strong>备产能，丰田是<strong>需求侧</strong>给订单——两边同时动，这条产业链才算真的闭合</td></tr>
+      </table>
+      <div class="why">
+        <p><b>五条读成一条链：</b>今天的这条主线可以压缩成一句话——<strong>输入端第一次同时被攻击、被标准化、被外推、被采购</strong>。① 外部 Skills 是 agent 会自动执行的输入，而它能被掉包；② 项目规则这种输入正在从厂商私有格式收敛成基金会托管的公共格式；③ agent 自己的探索历史也是一种输入，而<strong>重放比摘要有用</strong>（论文给的是反例，不是建议）；④ 人类行为视频作为输入，第一次有了能把小数点后四位算出来的转化曲线；⑤ 而学会的技能数据，可以跨 60 座工厂下发。把这五条放在一起看，承的是 09-13「验收权外移·自证时代结束」的下一问：<strong>自证之后，人们开始争夺「喂进去什么」的所有权与定价权</strong>——谁能定义输入，谁就能定义产出。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-19 · 北京时间 09:42</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-18.html">← 2026-09-18</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-20.html">2026-09-20 →</a></div>
+</body>
+</html>
