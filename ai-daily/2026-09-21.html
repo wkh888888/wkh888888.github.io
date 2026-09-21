@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-21 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 21 日（周一）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：能跑通已经不值钱，值钱的是谁来校验它真的跑通了</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 微软用 Agent 重写 Copilot 内核</a>
+    <a href="#n2">② GAVEL 外部校验层</a>
+    <a href="#n3">③ ChatGPT 的 __obi 跨站标识</a>
+    <a href="#n4">④ Astra 真把机械臂开动起来</a>
+    <a href="#n5">⑤ 300 台机器人进主题乐园</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>微软用 Agent 把 Copilot 运行时从 TypeScript 重写成 Rust：43 万行、12 万美元、15.9 倍，以及几十个「编译通过但语义错了」</h2>
+      <span class="tag t-code">AI Coding · 自主重构</span>
+    </div>
+    <div class="src">来源：微软杰出工程师 Stephen Toub 技术长文 · The Register（Joab Jackson，9/18）· Solidot · AI and Tech News · 搜狐 / 网易中文转述（9/19–21）</div>
+    <div class="body">
+      <p>支撑 GitHub Copilot 以及一大票微软产品的<strong>软件运行时，现在整个是用 Rust 写的</strong>，而移植工作的大部分是 AI Agent 干的。微软杰出工程师 <strong>Stephen Toub</strong> 把全过程写了出来。</p>
+      <p>规模先摆在桌上：Agent 把 <strong>43 万行 TypeScript 转换成了 80 万行生产级 Rust</strong>。过程不是一次性重写，而是<strong>逐模块替换</strong>，跨越 <strong>14.5 周、135 次发布，平均每天开约 1.3 个移植 PR</strong>。成本是 <strong>约 12 万美元的 AI Token，外加一名开发者约三周的时间</strong>。Toub 的对照是：这件事如果人工做，<strong>要几年、要几百万美元</strong>。用到的模型点名了 <strong>GPT-5.6 Sol 与 Claude Opus 4.8</strong>，按各自擅长分配任务——也就是「用 Copilot 重写 Copilot」。</p>
+      <p>收益是真的。基准测的是「共享客户端 + 100 条并发管道下完成 1000 次单轮会话生命周期」：原 TypeScript 实现每秒完成 <strong>7.55</strong> 次，进程内运行的 Rust 每秒 <strong>120</strong> 次，<strong>15.9 倍</strong>。内存更夸张：10 个客户端的一批 Agent，TypeScript 吃掉 <strong>1383 MB</strong>，Rust 只吃 <strong>126 MB</strong>，而且任务保持在进程内完成，不用像 TypeScript 那样去拉起外部后台进程。</p>
+      <p>最有信息量的部分是两个反直觉观察。其一，<strong>Agent 花在「收集信息」上的时间远远多于写代码</strong>——Toub 说「AI 狂喷代码」的流行印象几乎正好是反的，实际工作模式更像迭代式调查：检查状态、形成假设、针对性修改、清洗、重试。他举的极端例子是 <code>session.ts</code>，一个三万多行的 TypeScript 文件：<strong>整场转换耗时 25 小时，开头 56 分钟只用来读文档、做了 122 次工具调用，然后派生出 15 个子会话，各自建 worktree 并互相通信</strong>。</p>
+      <p>其二，也是这条的题眼：<strong>几十个代码回归（regressions）</strong>。在 Rust 里，代码能编译，模型就当它是对的。Toub 原话——<strong>「if it compiles, it is correct 只适合当笑话讲」</strong>。他归因于四类：语义含混、分支漂移、功能缺失、行为不一致。RustConf 上顾问 <strong>Lisa Crossman</strong> 给了同样方向但更锋利的表述：<strong>Rust 能挡住内存不安全的代码，但挡不住 Agent 写出一个「语法正确、但根本不是你要的那个程序」。</strong> Toub 也明确划了界：「这绝不是说每个大型 TypeScript 程序都该变成 Rust」，真正的动因是需求——<strong>通过 C ABI 嵌入、低启动与稳态开销、可预测的资源占用</strong>。另外要留意：<strong>这次只做了逐模块对等替换，没有优化运行时结构本身，那是下一步。</strong></p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这是目前公开材料里<strong>规模最大、账目最完整的一次「Agent 重写生产系统」</strong>——不是 demo，是一个嵌在 VS Code、Visual Studio、Excel、Outlook、PowerPoint 和无数云服务里的真实运行时。它第一次把这类工作的成本结构摆到了台面上：<strong>43 万行、14.5 周、12 万美元 Token + 3 周人力</strong>，这个数字组合会直接改写「要不要做大规模重构」的决策（过去这类项目通常因为「算不过来账」被无限期推迟）。但真正值得记的是它的<strong>负结果</strong>：<strong>编译器不是验收方</strong>。几十个 regression 全部通过了编译，全部是语义层面的错。这把问题精确地推到了下一层——<strong>当产出的速度快到人类读不过来时，什么才算「验收」</strong>。微软的答案是「让它跑起来 + 人盯回归」，但 Toub 自己也承认 Agent 主要时间在读文档而不是写代码，说明这个流程里的<strong>人类注意力仍然是不可替换的瓶颈</strong>。还有一条容易被忽略：他们<strong>刻意没做结构优化</strong>。也就是说这 15.9 倍来自纯粹的语言与运行时特性，<strong>架构层面的收益还完全没吃到</strong>。</p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 用「<strong>编译通过 ≠ 正确</strong>」重排你的 Agent 代码评审：类型检查与构建只配当第一道筛子，必须叠加独立的语义验证（行为对比测试、属性测试、旧实现双跑）。② 别指望「不带凭据」的旁路能救你——这次是<strong>加载脚本那一瞬间凭证就出去了</strong>（与第 ③ 条同构）。③ 大规模迁移优先选<strong>「逐模块对等替换 + 后续优化」</strong> 的节奏，比一次性重写更容易验收，也更容易回滚。④ 重新算一遍你手上那些「算不过来账」的重构项目——<strong>12 万美元对 43 万行</strong>这个锚点会让很多结论翻转。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>15.9 倍与 1383→126 MB 都是单一基准下的数据</strong>（1000 次单轮会话生命周期 / 10 客户端批处理），不代表整体性能提升 16 倍。② <strong>$120,000 是 Token 成本，不是项目总成本</strong>——另需约三周开发者时间，且不含回归修复与后续优化。③ <strong>80 万行 Rust ≠ 43 万行 TS 的等价物</strong>：Rust 语言本身更冗长，行数增长部分是语言特性，不能读成「Agent 把代码写膨胀了一倍」。④ 「<strong>几十个 regression</strong>」来自 Toub 自述，微软未公布完整清单与发现方式（人工审查 / 测试 / 线上）。⑤ 本条事件 <strong>The Register 于 9/18 首发，9/19–21 中文源集中转述</strong>，按本周披露处理，不是当日新发。⑥ Toub 明确<strong>反对推广</strong>：「绝不是每个大型 TypeScript 程序都该变成 Rust」。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>GAVEL：一个权重都没动，靠外挂的图世界模型把 Qwen3-8B 从 41.2% 抬到 91.8%</h2>
+      <span class="tag t-code">Agent 架构 · 校验外包</span>
+    </div>
+    <div class="src">来源：arXiv:2609.19315《GAVEL: Graph World Models for Verified and Efficient Long-Horizon LLM Task Planning》· dair-ai 推荐（9/19）· AGI Hunt · MarketBrief · Vuink</div>
+    <div class="body">
+      <p>这篇论文的卖点可以压成一句话：<strong>模型一个权重都没改，成功率从 41.2% 涨到 91.8%。</strong> 涨的部分全部来自模型外面那层。</p>
+      <p>GAVEL 做的是长时程机器人任务规划。它维护一个<strong>显式的图世界模型</strong>，里面存三样东西：<strong>对象之间的关系、每个动作的前置条件与效果、以及对「没看见的物体在哪」的概率信念</strong>。LLM 每生成一个动作，这张图先在<strong>执行之前</strong>预测这个动作的后果；发现违规就拦下来；<strong>凡是能直接由世界模型推出的修正，就地改掉，不再回问 LLM</strong>；只有那些需要语义推理的错误，才交还给 LLM 重新规划。</p>
+      <p>数字（BEHAVIOR-1K）：<strong>100 个长时程单任务，成功率 41.2% → 91.8%</strong>；<strong>500 条多任务指令，19.9% → 92.6%</strong>。副产品是，按「物体可能在哪儿」的分布重排剩余子任务，<strong>行进距离比静态版本少约 5.4%</strong>。</p>
+      <p>注意<strong>模型是 Qwen3-8B</strong>——一个紧凑的开源小模型。作者的落点也正是这个：<strong>大部分提升来自 harness 的质量，而不是模型的能力</strong>。换言之，很多被归因为「模型不行」的失败，其实是「外面没有约束层」。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条和昨天那条微软重写是<strong>同一个问题的两种解法，方向正好相反</strong>。微软的做法是让 Agent 产出更多代码，然后用编译器当校验器——结果证明<strong>编译器只能验类型，验不了语义</strong>，几十个 regression 就这么漏过去的。GAVEL 的做法是<strong>干脆把校验器放到模型外面，做成一个可以被单独检查、单独修改、单独替换的显式结构</strong>：图里写着前置条件和效果，动作对不对是查得出来的，不需要问模型。这直接回答了当前 Agent 工程最贵的一个问题——<strong>涨点到底该买更大的模型，还是该补外面的约束层</strong>。在 8B 这个体量上，答案是后者，且幅度大到不像调参（41%→92%）。另一个值得抄的设计是它的<strong>分流</strong>：能从世界模型推出来的修正不回问模型，只有需要语义判断的才回去。这给「校验成本」设了上限，否则每次动作都回问 LLM，等于把省下来的钱又花掉。还有一层更长远的意思：<strong>显式世界模型是「可审计」的</strong>——它写下来了机器人以为世界是什么样，出错时能回放；而 LLM 权重里的「世界知识」没法拿来当证据。</p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 遇到 Agent 长任务掉链子，<strong>先别换模型</strong>——先问「有没有一个显式的状态图 / 前置条件表可以让它自查」。② 把校验做成<strong>分层</strong>：能用规则推出的就地修，只有语义层才回模型，控制住回问次数。③ 需要证明「为什么这么做」的场景（合规、安全、审计），优先选<strong>显式结构</strong>，因为权重无法作为证据出示。④ 关注点从「单次成功率」移到「<strong>失败能否在执行前被拦下</strong>」——这才是部署场景真正要的指标。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>全部结果来自 BEHAVIOR-1K 仿真环境</strong>，不是真实家庭机器人。评论者 <code>@jinnibot</code> 明确提示「把它当成仿真 harness 的结果，不是已部署的家务机器人」。② 论文的图世界模型<strong>需要人工提供对象关系、前置条件与效果</strong>——这是本体与场景相关的工程投入，不是零成本插件，跨场景迁移的代价未被计入那些百分比。③ 「<strong>模型权重未改动</strong>」指底座 LLM 未微调；GAVEL 本身是一个新增的外部框架，整体系统的复杂度是上升的。④ 论文 9/19 前后进入传播，<strong>arXiv 编号 2609.19315</strong>，未见第三方复现。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>一枚只活 60 秒的令牌，换回一枚活一年的跨站标识：ChatGPT 的 __obi cookie 与「拒绝营销也没用」</h2>
+      <span class="tag t-sec">Agent 安全 · 隐私边界</span>
+    </div>
+    <div class="src">来源：独立安全研究者 buchodi（Buchodi's Threat Intel）9/20 抓包报告《ChatGPT 现在知道你在别的网站做了什么》· Hacker News 当日榜首 · explainx.ai / genztech / prismix 技术拆解 · 码农早餐（9/21）</div>
+    <div class="body">
+      <p>9 月 20 日，独立安全研究者 <strong>buchodi</strong> 发布了一份抓包报告，当天冲上 Hacker News 榜首。结论一句话：<strong>OpenAI 能把你在别的网站上的行为，对应回你的 ChatGPT 账号。</strong> 他把整条链路在自己的安卓手机上完整复现，用两种独立抓包方法互验，再对上几个月的观测流量——覆盖 <strong>936 个广告像素、1,029 个主机名、23,929 条请求</strong>。</p>
+      <p>机制分三步，没有一步需要用户参与。<strong>第一步</strong>，你在 <code>chatgpt.com</code> 上时，客户端生成 16 字节随机数，请求后端签发一个 <strong>RS256 JWT</strong>：签发方 <code>chatgpt-wadi</code>，受众 <code>bzr.openai.com</code>，用途 <code>obi_sync</code>，里面同时装着 <strong>你的账号标识 <code>sub</code> 和标识符 <code>obi</code></strong>，<strong>60 秒过期</strong>。（<code>bzr</code> 是 OpenAI 内部对广告平台「bazaar」的简称，<code>wadi</code> 是签发服务名——这套系统在内部是有正式命名的。）<strong>第二步</strong>，客户端把这个令牌跨站提交给 <code>bzr.openai.com/v1/obi/sync</code>，响应回写：<code>Set-Cookie: __obi=…; Domain=.openai.com; HttpOnly; Max-Age=31536000; Path=/; SameSite=none; Secure</code>。<code>SameSite=none</code> 加 <code>Secure</code> 正是 cookie 能跟着跨站请求一起发出去的必要配置，<code>Max-Age</code> 是一年。<strong>第三步</strong>，任何在 ChatGPT 投过广告的公司都会在自己站点装 <code>oaiq.min.js</code>（和 Meta Pixel 一个路数），浏览器去加载这段脚本的那一刻就自动带上 <code>__obi</code>。</p>
+      <p>这里有个技术细节值得单独记：<strong>SDK 里其实有一条「不带凭据」的代码路径，但它救不了你</strong>——因为浏览器是在<strong>加载脚本那一瞬间</strong>就把 cookie 附上去的，那时 OpenAI 的代码一行都还没执行。作者原话是「光是加载这个标签，身份就已经泄露了」。同一批请求里，OpenAI 其余标识 cookie 全被浏览器拦下了（<code>oai-did</code>、<code>oaicom-stable-id</code> 是 <code>SameSite=Lax</code>，会话类域名不匹配），<strong><code>__obi</code> 是唯一一枚被配成跨站共享的 OpenAI 标识 cookie</strong>。</p>
+      <p>顺手带走的东西比想象中多。SDK 还会从广告主页面刮身份信息，按 OpenAI 自己的标签分四类：<code>in</code> 是广告主主动传的，<code>fm</code> / <code>ht</code> / <code>js</code> 分别是从<strong>表单字段、渲染后的页面文本、tag manager 数据总线</strong>里刮的。实测流量里<strong>刮来的比主动给的多：685 起对 255 起</strong>；最大的邮箱来源是 tag manager 数据总线——SDK 直接替换了 <code>window.dataLayer.push</code>，还读 <code>adobeDataLayer</code>，并解析 <code>gtm.js</code> 的 <code>l=</code> 参数专门找改过名的 GTM 层。邮箱、电话、姓名发出前做 SHA-256；<strong>国家、地区、城市、邮编是明文</strong>，邮编最常被刮（28 个站点、100 次）。URL 被裁到「域名 + 路径」，23,929 条里没有一条带查询串——<strong>但路径活了下来，而采集端收到的路径里出现过一种疾病、一个债务处理漏斗页、一份诉讼咨询表单</strong>。881 个能看到配置的像素里 <strong>638 个开了自动匹配</strong>，观测到的信贷与借贷广告主无一例外。</p>
+      <p>最刺眼的是<strong>同意开关的设计</strong>。OpenAI 的 cookie 政策把 <code>__obi</code> 归在<strong>「分析类（Analytics）」</strong>下——它是这一栏里唯一的一条；而分析和营销是两个独立的同意开关。作者解码的<strong>每一个同步令牌都带着 <code>consent_decision: analytics_allowed</code></strong>，也就是说：<strong>同意分析、拒绝营销的用户，照样会拿到这枚跨站标识。</strong> 面向广告主的开发者文档里，只列了第一方 cookie <code>__obref</code>（最长 365 天）和广告点击参数 <code>oppref</code>（30 天），<strong>对负责跨域穿透的 <code>__obi</code> 只字未提</strong>。9 月 14 日作者把机制和两个问题发给了 OpenAI 的 press 与 privacy 邮箱，回复来自客服：确认收到、会转内部复核，<strong>两个问题都没有回答</strong>。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>先说清楚——<strong>这套机制本身是标准广告技术</strong>，作者自己也这么定性：登录账号 + 像素触发时的第三方 cookie + 站外转化归因，Meta 多年前就做过结构等价的东西。<strong>没有先例的不是这套机制，而是把它跑在一个 AI 聊天产品上。</strong> 差别在于输入的内容：人在搜索引擎里输入关键词时知道自己站在公共网络上，在社交平台点赞时知道那是广场；但对着一个对话窗口，人们说出来的是家庭变故、心理焦虑、职业危机，是还没整理过的话。而 AI 聊天产品正从「回答你」走向「替你做事」，<strong>需要给的上下文只会越来越多，这个池子是活的</strong>。同一周还有一条反向新闻可作坐标：9 月 20 日晚<strong>智谱宣布 MaaS 平台上线「数据内容不留存」</strong>——开通后输入输出不做静态存储，只在当次推理内存里用一次，也不用于模型迭代（例外：Batch API / File API 这类本身要求持久化的形态不覆盖，法律要求或核查违规时可留存 30 天以上）。同一周里，<strong>一边是消费端一枚有效期一年的跨站标识在安静工作，一边是国内厂商把「不留存」做成卖点</strong>，而零留存本身也不是新概念（OpenAI 与 Anthropic 早就为企业客户提供过同类选项，同样申请制、同样保留合规例外）。<strong>差别只在于：付费企业客户可以要求「用完即焚」，普通用户手里握着的是一个「同意分析、拒绝营销」的开关，而那个开关管不住这枚 cookie。</strong></p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 用 ChatGPT 处理敏感内容的人，考虑<strong>拦截 <code>bzrcdn.openai.com</code></strong>（会牺牲部分站点功能，自行权衡）。② 浏览器侧：Safari ITP、Firefox Total Cookie Protection、Brave <strong>默认已拦</strong>；Chrome 用户需自行配置第三方 cookie 阻断。③ 做广告归因的团队核对自己的 pixel 配置——<strong>「自动匹配」在 638/881 个像素上是开着的</strong>，你可能并不知道自己在传什么。④ 记住这个工程教训：<strong>「不带凭据」的代码路径救不了你</strong>，标签加载那一刻凭证就已经出去了；同理适用于任何第三方脚本。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要，本条尤其需要）：</b>① <strong>全部观测出自单一研究者、单一设备（Android 版 Chrome）</strong>，桌面版 Chrome 未测。② <strong>Safari 的 ITP 会拦掉所有第三方 cookie，iOS 上任何浏览器都跑在 WebKit，因此该机制在任何 iOS 浏览器上都不成立</strong>；Firefox 与 Brave 默认拦截。③ <strong>命中率有限</strong>：约每五个 ChatGPT 会话才产生一个同步令牌，ChatGPT 移动网页版会投广告但根本不做同步；「加载脚本即泄露」这条观测<strong>需要浏览器里已经存有 <code>__obi</code></strong>。④ <strong>最关键的一条：归并这一步没有被观测到。</strong> <code>202</code> 只说明采集端收下了一个带着 cookie 的事件，<strong>OpenAI 服务端有没有真把它算到账号头上，是从设计推出来的，作者明确写了自己没有看着这件事发生。</strong> ⑤ 932 个解码令牌中 736 个标 <code>account_user</code>、196 个标 <code>anonymous</code>，匿名标识同样稳定（一台设备一个，至少留存 27 天）。⑥ <strong>0.1.31 版本曾连姓名与地理位置一并采集，范围在 8 月 27 日收窄</strong>——描述的是历史版本行为，不是当前版本。⑦ 各源对 HN 热度口径不一（592 分 / 315 评论 与 424 分 / 224 评论 并存），不影响结论。⑧ 本条转述自独立研究者的公开报告，<strong>OpenAI 未公开回应</strong>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>OpenAI 的 Astra 真把机械臂开动起来了：一次成功很惊艳，但演示和产线之间隔着几个数量级</h2>
+      <span class="tag t-emb">具身智能 · 大脑接管身体</span>
+    </div>
+    <div class="src">来源：AGI Hunt 9/21 日报 · FutureX Physical AI Daily Issue 126（09/21）· 机器之心 · CMU 机器人研究者 Wenli Xiao 公开实验 · Retrocausal 联创 Zeeshan Zia 评论</div>
+    <div class="body">
+      <p>OpenAI 把 Astra 定位成「能在电脑上做你能做的任何事」，<strong>而这周它开动了一条真实的机械臂</strong>。目前社区里主要有两种用法：把 Astra 当 <strong>policy</strong>（从相机观测直接输出动作），或者当 <strong>agent</strong>（先规划、写代码，再调用下层 policy）。</p>
+      <p>最引人注目的一个实验来自 CMU 机器人研究者 <strong>Wenli Xiao</strong>：他<strong>录一段人做某个新任务的视频，喂给 Codex，再让 Astra 控制机械臂复现，一次就成功了</strong>——他管这叫<strong>「物理 ICL（physical in-context learning）」</strong>。如果这个结果站得住，含义相当直接：<strong>教机器人做新动作的那套「数据采集—遥操作—训练」流程，可能第一次出现了一条绕过去的捷径。</strong></p>
+      <p>速度上另有对照。在一条 <strong>AgileX 机械臂</strong>上做「把红方块放进盒子」：<strong>Jev 用了 27 秒，GPT-6 Astra 用了 1 分 11 秒</strong>（出于安全，臂速被限制在 10%）。</p>
+      <p> robotics 研究圈现在最关心的问题变成了数据来源：<strong>Astra 的训练数据里到底有没有机器人数据？</strong> 一份 786 人的投票里，<strong>84% 认为「肯定有」</strong>。Amazon Alexa 首席科学家、Retrocausal 联创 <strong>Zeeshan Zia</strong> 的评价更直白：<strong>「看起来机器人领域的 OpenAI 可能就是 OpenAI，而不是 Physical Intelligence 或 Skild。」</strong></p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条的价值不在「Astra 会开机械臂了」，而在<strong>它把「通用模型能不能直接当机器人大脑」从立场之争变成了可复现的实验</strong>——录段视频、喂进去、一次成功，任何人都能照着做一遍。真正需要冷静的是<strong>验收尺度</strong>：FutureX 的定性很准，<strong>「20 次单任务的演示」和产线上用的「上万次试验的成功率统计」，中间差着好几个数量级</strong>。一次成功能证明「存在这条路」，证明不了「这条路能承载生产」。这也正好把今天的主线拉出来了：<strong>演示不需要校验器，部署需要</strong>。目前这条链路上没有一层是负责校验的——视频到动作的映射没有置信度，模型不会告诉你它不确定，机械臂也不管自己是不是在安全边界内（这次还得靠把臂速压到 10% 来保证安全）。换句话说，<strong>能力已经跨过来了，校验还留在对岸。</strong> 对国内做具身的团队，这条还有一层压力测试的含义：如果通用大模型确实开始吃机器人能力，那「我们有多少小时真机数据」这个护城河的估值需要重算。</p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 先按「<strong>能力演示</strong>」而非「<strong>可用方案</strong>」读这类结果——要求发布方给出<strong>多次试验的成功率分布</strong>，而不是单次成功视频。② 想复现的话，从<strong>短时程、物体少、失败代价低</strong>的任务开始，别一上来挑产线动作。③ 任何让通用模型直控本体的实验，<strong>先做物理限速与急停</strong>（本例把臂速限制在 10% 就是这个作用）。④ 关注后续：<strong>训练数据里是否含机器人数据</strong>目前仍是圈内推测（84% 投票），等 OpenAI 明确披露再据此做选型判断。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>「一次成功」是单次实验结果，非统计意义上的成功率</strong>——与产线口径不可比，请勿换算。② Jev 与 Astra 的 <strong>27 秒 vs 1 分 11 秒</strong>为单次对照，且<strong>机械臂被限速至 10%</strong>，绝对时间不反映实际节拍。③ <strong>「84% 认为 Astra 训练含机器人数据」是一份 786 人的社区投票，是猜测不是证据</strong>，OpenAI 未披露训练数据构成。④ Zeeshan Zia 的评价是<strong>个人观点</strong>。⑤ 本条经由 AGI Hunt / FutureX 的当日汇总传播，原始实验细节以研究者公开材料为准，未见同行评议。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>300 台机器人进主题乐园：具身智能第一次被放进一个年客流千万、天天开门的考场</h2>
+      <span class="tag t-emb">具身智能 · 规模化运营</span>
+    </div>
+    <div class="src">来源：上证报中国证券网（9/20，记者宋薇萍）· 广州日报 / 大洋网 · 重庆日报转文汇报 · 深圳商报·读创 · 大河财立方（9/20）· Counterpoint Research 出货统计</div>
+    <div class="body">
+      <p><strong>9 月 24 日</strong>，由智元（AGIBOT）与长隆集团联手打造的<strong>全球首个大型具身智能主题乐园</strong>将在<strong>珠海横琴长隆飞船乐园</strong>启幕。开园当日，<strong>超 300 台智元全系机器人集体「上岗」</strong>，<strong>超 100 个机器人交互体验点</strong>同步开放，覆盖<strong>七个核心场景</strong>：机器人文娱商演、科普研学、导览导购导引、服务零售站、智能伴游、酒店场景、体育竞技。园方设计了<strong>数百个有独立姓名、不同性格的机器人角色</strong>，做全域沉浸式体验。开园当天，智元与长隆共建的<strong>具身智能文旅联合研究院</strong>揭牌，<strong>全球首个文旅场景大规模 5G-A 具身智能创新应用</strong>等多个「行业首创」成果集中亮相。刚刚在世界人形机器人运动会拿下金牌榜、奖牌榜双第一的智元「冠军同款」机器人也会在园内常态化展示。</p>
+      <p>落地场景本身的量级值得注意：横琴长隆飞船乐园是<strong>全球最大的室内主题乐园</strong>，以沉浸式宇宙探索和海洋生态科普为核心，<strong>开园以来累计接待游客超 1000 万人次</strong>。</p>
+      <p>把机器人放进乐园并不新鲜——迪士尼 1963 年就在加州乐园的「魔法提基屋」用了 Audio-Animatronics，近两年其 BDX 机器人已能与游客互动；日本长崎豪斯登堡的「海茵娜酒店」2015 年开业、2017 年推出无人酒吧；国内黄鹤楼的「李白机器人」、秦始皇帝陵的「机器人 + AR」导览、恩施大峡谷的「小青」、上海迪士尼的保洁机器人也都是先例。<strong>但这些案例的规模普遍在数台到数十台，功能多集中在讲解、表演、巡逻或保洁中的一项。</strong> 横琴项目的差别在两点：<strong>规模（300 余台 + 100 余个交互点被纳入同一套园区运营体系）</strong>与<strong>性质（强调「常态化」运营，而非单次展演）</strong>。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条最值得看的不是「机器人会跳舞」，而是<strong>验收尺度变了</strong>。过去一年具身智能的自证方式是发一段视频、跑一个基准、办一场演示——这些都<strong>可以被挑选、可以重来、可以在最理想条件下拍</strong>。主题乐园不接受这套：<strong>它天天开门、客流密集、游客年龄与需求极其分散、机器人要连续运行数月</strong>。对智元而言这是一个<strong>年客流千万级的真实数据场</strong>；对整个行业而言，这是第一次把数百台机器人放进同一个<strong>不可控、不可暂停、且失败会被游客当场看见</strong>的环境里。还有一层是组织难度：<strong>从单台设备执行固定任务，到数百台同时进园，中间隔着设备调度、内容更新、现场安全、运维响应这一整套运营体系</strong>——这些在实验室和工厂里都不算主要矛盾。所以这条真正的观察指标不是开园那天的表演，而是<strong>三个月后的可用率、故障响应时间和每台机器人的日均人工干预次数</strong>。如果这几个数字能公布，它会成为这个行业第一个真正有分量的规模化落地口径；如果公布不出来，那开园本身也只是又一场大号演示。</p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 观察指标换成<strong>运营口径</strong>：可用率、MTBF、日均人工干预次数、单机日均服务人次——比任何演示视频都有信息量。② 做文旅 / 零售场景方案的团队，重点看<strong>「多机调度 + 内容更新 + 现场安全」</strong>这套运营体系怎么搭，而不是单台能力。③ 注意 <strong>5G-A 在文旅场景的规模化应用</strong>是本次的隐藏看点（与 09-15 的机器人专用 SIM 卡是同一条线的不同落点）。④ 对照历史先例（迪士尼 1963、海茵娜 2015）判断「常态化运营」的成色——<strong>机器人酒店最终大量撤下机器人的教训不要忘</strong>。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>9 月 24 日启幕是未来事件（本日报发布于 9/21）</strong>，本条按官方预告收录，现场实际投入数量、运行状态与体验效果<strong>需以开园后实际为准</strong>。② <strong>出货数据两源冲突</strong>：深圳商报引智元口径为「2026 上半年人形机器人出货 8400 台、全球份额 44%」；大河财立方引 Counterpoint Research 为「约 9700 台、全球份额超 43%」——<strong>两套口径分属不同统计机构与统计方式，不要混用</strong>。③「全球首个 / 规模最大 / 场景最丰富 / 技术最先进」「全球最大规模人机共演」「全球首次机器人空中飞人」「全球首个文旅场景大规模 5G-A 应用」<strong>均为公司 / 媒体口径</strong>，无第三方认证。④ 智元此前主要布局工业制造、商业服务、科研教育，<strong>文旅消费场景为首次较大规模进入</strong>，运行效率、维护成本与游客接受度仍待检验。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带 · 4 条</div>
+  <div class="mini">
+    <div class="m emb">
+      <h3>X Square QUANTA X1 Pro 进了 Lululemon 武汉配送中心，开始日常分拣</h3>
+      <p>轮式双臂机器人 <strong>QUANTA X1 Pro</strong> 已在 Lululemon 武汉配送中心<strong>投入日常运营</strong>，负责搬运与分拣包裹。该中心 <strong>9 月 16 日</strong>启用，是与<strong>顺丰物流</strong>的合作项目，跑 RFID 流程。X Square 此前在世界机器人大会做过双臂物流演示，这次是<strong>从展台走进真实仓库</strong>。同日新加坡 Doozy Robotics 发布面向工厂与仓储场景的 Doozy-V1（1.76m / 185kg / 23 自由度 / 5kg 负载 / 1.2m/s / 约 4 小时续航），印度 xTerraRobotics 推出轻量轮足四足 DHAV-Hy，主打巡检。</p>
+    </div>
+    <div class="m emb">
+      <h3>奥比中光发布全模态数采硬件平台：「视觉和触觉差 15 毫秒就已经错了」</h3>
+      <p>发布<strong>全模态、跨本体</strong>的数采硬件平台，覆盖四种形态：第一人称视角、手持操作、腕部近场、多设备同步。产线测试：<strong>连续录制 37 小时零丢帧、多相机硬件同步误差 &lt;1 毫秒、出厂标定误差 &lt;0.3 像素</strong>。创始人<strong>黄源浩</strong>在世界机器人大会主论坛给出门槛：视觉与触觉数据若相差 15 毫秒就已经不可用。同期签约它山科技（视觉 + 触觉）、灵犀智能（3D 视觉与物理世界模型）、灵初智能（手眼协调），并深化与地平线（地瓜机器人）合作。<strong>H1 2026 营收 4.38 亿元、归母净利 4164 万元</strong>，机器人视觉方案收入同比翻倍以上。</p>
+    </div>
+    <div class="m emb">
+      <h3>智身科技完成数亿元 B 轮；行业口径与政策框架同步更新</h3>
+      <p>Stone Venture 领投，洪山资本、粤科金融、东软集团等跟投。同期公开的一组行业坐标：<strong>优必选全尺寸工业人形销量 1079 台</strong>（全球首个千台级交付）；云深处截至 2025 年底四足 / 轮足累计产量超 5500 台；工信部 2026 年 2 月发布<strong>《人形机器人与具身智能标准体系（2026 版）》</strong>（首个全产业链、全生命周期标准顶层设计，6 个部分）；深圳 2026 年 9 月印发<strong>《推动智能机器人产业高质量发展工作方案（2026—2028 年）》</strong>；TrendForce 预估 <strong>2026 年中国人形机器人市场规模 150 亿元</strong>、2027 年增速至少 60%+。华泰证券提示：<strong>单纯以融资轮次与技术叙事定价的方式难以延续</strong>。</p>
+    </div>
+    <div class="m code">
+      <h3>Google AI Studio 的「删除」被指是假的，举报者 60 秒内被自动封号</h3>
+      <p>一名独立研究者在 Medium 发文称，<strong>Google AI Studio 的删除 UI 返回一个伪造的 404，但 prompt 数据仍保留在 Google 后端</strong>；Google 开发者论坛的多个佐证帖子把该行为定性为<strong>免费层级的 GDPR 第 17 条删除失效</strong>。更受争议的是：<strong>Google 的漏洞奖励计划（VRP）在提交后 60 秒内自动封禁了报告者</strong>。该帖在 HN 有 45+ 分，<strong>Google 尚未公开回应</strong>。需明确：这是<strong>单一研究者的指控，未获独立证实</strong>。但它与今日第 ③ 条构成同构——<strong>「你以为关掉了 / 删掉了」与「实际发生了什么」之间，缺一个可验证的确认环节</strong>。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与前几期主线的承接</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>① 微软 Agent 重写 Copilot 运行时</td><td>09-15 一辑 ② machineslop（Ronacher 35 小时无人值守、净增 7.5 万行 / Earendil 测「冗长度侵蚀约为人类仓库 2 倍」）</td><td>同题不同层：那条问「<strong>agent 写的代码算不算数</strong>」，今天给的是正面样本——算数，而且上了生产，但代价是<strong>几十个编译通过的语义回归</strong></td></tr>
+        <tr><td>①「if it compiles it is correct 只适合当笑话」</td><td>09-12 ② <code>claude plugin eval</code>（Δ 才是分数）</td><td>同构：两条都在说<strong>不能拿单一自动信号当验收</strong>——Δ≈0 说明 skill 没触发，编译通过说明不了一个程序是对的</td></tr>
+        <tr><td>② GAVEL 外部图世界模型</td><td>09-11 ③ Subagents vs Agent Skills（胜负取决于有无显式输入输出契约）</td><td>同题不同进：那条的结论是「<strong>契约决定效果</strong>」，今天把契约做成了<strong>可执行、可检查的显式结构</strong>（前置条件 / 效果 / 概率信念）</td></tr>
+        <tr><td>②「多数提升来自 harness 而非模型」</td><td>09-19 ③ Dream-RSI（只改探索策略代码，模型 / 评估器 / 执行接口不动）</td><td>同向互证：Dream-RSI 在<strong>发现侧</strong>证明改外层就够，GAVEL 在<strong>执行侧</strong>证明改外层就够</td></tr>
+        <tr><td>② 41.2% → 91.8%（8B 小模型）</td><td>09-15 一辑 ① Real-SWE（Fable 5.1 仅 38.8%，10 题里 6 题 &lt;15%）</td><td>反向镜像：Real-SWE 说明<strong>真场景里模型掉得有多狠</strong>，GAVEL 说明<strong>补上外面那层能涨回来多少</strong></td></tr>
+        <tr><td>③ <code>__obi</code> 跨站 cookie</td><td>09-20 ② Gemini 自主越界（「提示词不是安全边界」）</td><td>同构：两者都是<strong>声明与实现不一致</strong>——沙箱声明「没公网」却漏了网线，cookie 政策声明「分析类」却能跨站识别</td></tr>
+        <tr><td>③「加载标签即泄露」</td><td>09-19 ① Plugin4Shell（SHA pinning 不校验内容是否真落在那里）</td><td>同构：<strong>都有一条形同虚设的防护</strong>——SDK 的「不带凭据」分支、插件市场固定的 commit SHA</td></tr>
+        <tr><td>④ Astra 开动机械臂 / 物理 ICL</td><td>09-19 ④ Figure Helix 2.5（人 → 人形迁移 Scaling Law）</td><td>同题不同路：Figure 解决「<strong>数据从哪来</strong>」（人类视频可预训练），Astra 路线是「<strong>能否干脆不训练，现场给一段视频就复现</strong>」</td></tr>
+        <tr><td>④ 20 次演示 vs 上万次产线统计</td><td>09-16 ④ 智元龙旗（5 个月并线、64,828 次质检、99.99%）</td><td>同题不同尺度：智元给的是<strong>产线口径</strong>，Astra 目前给的是<strong>演示口径</strong>——这正是「验收尺度」的差别</td></tr>
+        <tr><td>⑤ 300 台机器人进主题乐园</td><td>09-16 ④ 智元龙旗工厂 · 09-15 一辑 ④ 机器人专用 SIM 卡</td><td>同公司不同场：从<strong>受控工厂</strong>到<strong>开放客流</strong>，验收方从质检标准变成游客</td></tr>
+        <tr><td>⑤「常态化运营」</td><td>09-19 ⑤ 丰田 40 万台 / 09-15 ②辑 ④ 优必选柳州万台产能</td><td>同题不同端：那两条备的是<strong>产能</strong>，这条第一次给出<strong>运营侧的持续暴露</strong>（天天开门、千万客流）</td></tr>
+        <tr><td>今日整体</td><td>09-13「验收权外移 · 自证时代结束」→ 09-20「输出端归谁管」</td><td>递进：前两期问「<strong>由谁验收</strong>」「<strong>输出端归谁</strong>」，今天落到<strong>校验器本身在哪一层</strong></td></tr>
+      </table>
+      <div class="why">
+        <p><b>五条读成一条链：</b>今天的主线可以压成一句话——<strong>「能跑通」已经不值钱了，值钱的是谁来校验它真的跑通了。</strong> ① 43 万行被 Agent 重写完毕、性能涨了 15.9 倍，而校验器是<strong>编译器</strong>——它只能证明类型与内存是对的，于是留下了几十个语义回归，Toub 自己把「能编译就对了」定性为笑话；② 给出的是<strong>正解</strong>：把校验器从模型里拿出来，做成一个显式、可检查、可单独修改的图世界模型，<strong>一个权重没动，41.2% 变 91.8%</strong>，而且只有需要语义判断的错误才回问模型（给校验成本设了上限）；③ 是<strong>反例</strong>：用户侧根本没有人校验——你以为关掉了营销 cookie，其实一枚归类为「分析」、有效期一年的跨站标识在干活，SDK 里那条「不带凭据」的分支形同虚设（和第 ① 条「加载脚本那一刻凭证就出去了」是同一个病灶），而且连「有没有真归并到账号」这一步都<strong>没人观测到</strong>；④ 是<strong>能力先到、校验没到</strong>：Astra 一段视频一次成功很惊艳，但 20 次演示与产线上的上万次成功率统计之间是几个数量级，演示不需要校验器；⑤ 是今天唯一<strong>校验尺度真实</strong>的一条——300 台机器人、年客流千万、天天开门、失败会被游客当场看见，它逃不掉。把五条放在一起，承的是 09-13「验收权外移」和 09-20「输出端归谁管」的下一问：<strong>验收方已经找到了，现在的问题是校验器装在哪一层</strong>——装在编译器里只能验类型，装在模型外面的显式结构里才能验前置条件，装在 cookie 政策里什么都验不了，只有装在时间和客流里才验得出可靠性。<strong>今天五条分别给出了这四种答案的价格。</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-21 · 北京时间 10:13</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-20.html">← 2026-09-20</a></div>
+</body>
+</html>
