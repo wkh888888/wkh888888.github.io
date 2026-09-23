@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-22 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 22 日（周二）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：自证不再免费——考场、入口、验收权同时被重定价</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① Grok 4.7 与「谁家考场」</a>
+    <a href="#n2">② ZCode 上传全量 Git 历史</a>
+    <a href="#n3">③ 桌面入口同日三发</a>
+    <a href="#n4">④ OASIS WAM 登顶 RoboLab</a>
+    <a href="#n5">⑤ 机器人进加油站便利店</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Grok 4.7 上线：分数涨了、价格没变，但涨得最多的那项恰好是自家考场的，而每任务吐的 token 翻了一倍多</h2>
+      <span class="tag t-code">AI Coding · 考场归属</span>
+    </div>
+    <div class="src">来源：x.ai/news/grok-4-7（9/21 美东）· 官方对比表 · Artificial Analysis 智能指数与 Coding Agent Index · Singularity.Kiwi / AI Tech Daily / TheOutpost / Decrypt · 中文聚合转述（9/22）</div>
+    <div class="body">
+      <p>拖了一个多月的 <strong>Grok 4.7</strong> 终于上线，官方给它的定位很直接：<strong>「目前最强的编程与知识工作模型」</strong>。上线渠道铺得很满——Cursor、Grok Build、Grok API、GitHub Copilot，覆盖 VS Code、Visual Studio、JetBrains、Xcode、Eclipse。</p>
+      <p>价格确实是它最硬的牌：<strong>输入 2 美元 / 输出 6 美元每百万 token，与 4.6 完全持平</strong>，对比 GPT-5.6 Sol Max 的 4/20 与 Fable 5.1 Max 的 10/50；另有输出速度翻倍、价格也翻倍的快速版（4/12）。</p>
+      <p>官方跑分里进步最亮眼的三项：<strong>Terminal-Bench 4.0 从 20.3% 升到 38.0%</strong>（接近翻倍）；<strong>EEBench 电气工程 53.0% → 64.0%</strong>（超过 Fable 的 56.4% 与 Sol 的 39.4%）；<strong>Harvey 法律 Agent 19.6%</strong>（Sol Max 只有 2.5%）。其余：<strong>CursorBench 4.0 46.3%</strong>（4.6 为 40.4%，Sol Max 41.7%，Fable 5.1 Max 51.8%）；<strong>DeepSWE v1.1 71.0%</strong>（4.6 为 65.2%，Sol Max 72.7%）；AA-Briefcase 多小时办公 1546 → 1657（Fable 1678）；HealthBench Pro 56.7%。窗口 500K。</p>
+      <p>但把两份口径叠起来看，故事就变了。<strong>Artificial Analysis 只给了 46 分的智能指数</strong>，落后 Fable 5.1 Max、Claude Opus 5、GPT-6 Astra、GPT-5.6 Sol Max 与 Meta Muse Spark 1.3 Max；它自己实测的 Terminal-Bench 约 <strong>26%</strong>，而 Astra xHigh 是 59.6%、Opus 5 约 49%。更关键的是账：<strong>AA 测出 Grok 4.7 xHigh 每个任务输出约 81,000 token，4.6 High 是 36,000，GPT-6 Astra Max 只有 27,000</strong>——比自家上一代多 125%，比 Astra 多 196%；跑完整轮指数评测累计吐了约 2.4 亿 token，中位数是 9,200 万。<strong>标价没涨，但每个任务可能更贵。</strong></p>
+      <p>于是「最强编程模型」这个说法的成色，就取决于你认哪个考场。<strong>Grok 4.7 相对 4.6 领先幅度最大的 CursorBench，由 Cursor 自建</strong>，而 Grok 4.7 首发即进入 Cursor；中文聚合称 SpaceX 已于上月收购 Cursor（该说法未能在权威源核实）。而在第三方独立口径下，它只比上一代高 2 分、且明显更啰嗦。官方自己的措辞其实很克制——<strong>「在价格性能比上处于前沿」</strong>，不是全面领先。</p>
+      <p>还有两个值得记的信号。一是<strong>竞争单位变了</strong>：官方把「在困难任务上工作更久、更仔细地检查自己的作业」写进公告，长任务稳定性正在取代单次问答正确率成为卖点；Box 给的理赔案例是模型核对一笔 200 万美元索赔，找出 8.2 万重复发票、6.4 万遗漏抵扣和一个可能相差 14.3 万的免赔额问题。二是<strong>延迟的性质变了</strong>：4.6/4.7 原定 8 月，一再推迟， reportedly 卡在额外的强化学习调优上——不是算力不够，也不是评测没做完。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条的价值不在「谁更强」，而在它把<strong>「这是谁家考场的成绩」</strong>这个问题摆成了明面上的必答题。过去两年我们习惯把厂商对比表当事实表读，但今天同一款模型在两个考场里的差距足够大：官方表上 Terminal-Bench 是 38.0% 且「接近翻倍」，AA 实测是约 26% 且排在 Astra 与 Opus 5 之后；官方表上领先幅度最大的是自家渠道自建的 CursorBench。<strong>当模型发布方同时拥有考场、阅卷权和分发渠道时，跑分就不再是测量，而是营销素材。</strong></p>
+        <p>第二个更实用的点是<strong>token 账</strong>。AA 那个 81,000 vs 27,000 的数字意味着：在长任务 agentic 负载下，<strong>「$2/$6」这个标价几乎不携带信息</strong>，真正要做决策的是「每个任务多少钱」。这跟 09-14 那条「同模型不同工具账单差 70 倍」是同一件事在模型侧的复现——<strong>单价便宜和任务便宜是两回事。</strong></p>
+      </div>
+      <div class="act">
+        <p><b>三条立刻可落地：</b>① 看任何模型发布会，<strong>第一句先问「这是谁家考场」</strong>——厂商自建基准只配当参考项，必须有第三方独立口径对照才能进决策。② 评估成本一律换成<strong>「每任务美元」</strong>而不是「每百万 token 美元」，尤其对长任务 agentic 负载，啰嗦的模型会把标价优势吃干净。③ 把<strong>「长任务稳定性」</strong>单独列成验收项（跑完 20 步、50 步之后还记不记得原始目标），它正在取代单次正确率成为真正的差异点。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>2.1 万亿参数</strong>（较 4.6 的 1.5 万亿增约 40%）出自 Decrypt 等媒体报道，<strong>未见于 xAI 官方公告</strong>，采用前请自行核对。② <strong>「SpaceX 已于上月收购 Cursor」</strong>仅见于中文聚合，未能核到权威源，本条不作事实陈述。③ <strong>Terminal-Bench 的 38.0% 与约 26% 分属不同口径</strong>（官方 High Effort 自测 vs AA xHigh 实测），不要混用。④ <strong>81,000 / 36,000 / 27,000 是 AA 智能指数评测下的输出 token 量</strong>，不是你的生产负载，只用于横向比较相对量级。⑤ Grok 4.7 <strong>9/21 美东发布、9/22 凌晨进入中文视野</strong>，本条按当日发布处理。⑥ 本条不含 CursorBench 之外其他自建基准的归属核查。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>智谱 ZCode 静默打包整个工作区上传：4.2 万文件里 .git 占 86.6%，加密私钥只在服务端，72 小时后开源自救</h2>
+      <span class="tag t-sec">Agent 安全 · 数据边界</span>
+    </div>
+    <div class="src">来源：ferstar 逆向报告（blog.ferstar.org，9/18）· 第一财经《一个 313MB 加密包，撕开智谱等 AI 编程工具安全暗门》（9/21）· 凤凰 WEEKLY 财经 · 华尔街见闻 · 红星资本局 · 界面新闻 · 观察者网 · 新浪财经 · 智谱 ZCode 官方公告与 GitHub 仓库 zai-org/ZCode</div>
+    <div class="body">
+      <p>这一切的起点是<strong>一次磁盘清理</strong>。9 月 18 日，付费订阅用户 <strong>ferstar</strong> 在清理一台 256GB MacBook Air 时发现 <code>~/.zcode</code> 占了 700 多 MB，里面躺着一个 <strong>313MB 的加密包</strong>。照旁边那份明文清单统计，包里有 <strong>42,411 个文件，其中 .git 目录占 86.6%</strong>——LFS 缓存 56.8%、Git 对象库 29.6%、reflog 0.2%，<strong>真正的源码和文档只有 13.4%</strong>。</p>
+      <p>加密本身挑不出毛病：内容走 <strong>AES-256-CTR</strong>，密钥再用 <strong>RSA-OAEP</strong> 包一层。问题出在钥匙上——<strong>公钥由服务端随上传凭证临时下发，私钥从不下发</strong>。ferstar 拿本机所有私钥去解那层信封密钥，全失败。<strong>也就是说，连用户本人都打不开这个从自己硬盘上生成的包。</strong>那个 313MB 的包因为太大连续失败 564 次，一直卡在本地重试队列；删掉也没用，半小时内会重新打包一份，计数从 564 变成 565。</p>
+      <p>整条链路是这样的：客户端先向 <code>zcode.z.ai</code> 申请 <code>/api/v1/snapshot/upload-credential</code>，服务端回一串 <strong>阿里云 OSS 表单签名 + 动态 object key + 大小上限 + 本轮 RSA 公钥</strong>；本地 tar.gz 打包并流式加密后<strong>表单直传 OSS，绕开智谱自己的业务服务器</strong>，OSS 再回调后端登记。</p>
+      <p>最扎手的是<strong>关不掉</strong>。设置里两个看起来相关的开关，逐一比对代码后发现都不管这件事：<strong>「优化体验」只控制数据是否授权用于模型训练</strong>，<strong>「仓库快照索引」只控制服务端收到后要不要建索引</strong>——打包和上传照常跑。负责捕获和上传的 sidecar 在客户端启动时被<strong>无条件实例化，唯一前置条件是登录态</strong>；触发点是每次向 AI 提问之前和任务结束时，单个活跃会话最多记录到 <strong>62 次捕获</strong>。</p>
+      <p>企业侧的对账更硬。9 月 19 日，<strong>太原承明科技</strong>公开发函（承明〔2026〕法函字第 1 号），称独立取证确认上传系<strong>自动触发、批量发生</strong>：<strong>6 个工作区、34,549 个文件、约 425MB</strong>，其中最大的「客户端默认工作区」打包于 9 月 14 日 22:57:06，涉及 <strong>32,932 个文件、约 4.11 亿个明文字符</strong>，含完整源代码、系统架构、版本控制全量历史、<strong>数据库访问口令、云服务凭证及证书</strong>、员工个人信息。函件还指出：<strong>9 月 18 日 00:28:33 仍检测到上传行为</strong>，而客户端当时已是 3.12.3 版本；并提出网络请求指向<strong>注册于新加坡的实体</strong>，质疑数据出境。智谱相关人员对红星资本局的回应是四个字：<strong>「不实消息」</strong>。函件共 12 项要求，限期 10 月 10 日前书面答复。</p>
+      <p>智谱的应对是<strong>72 小时三步</strong>：9/18 群内致歉（归因「代码库索引」功能，称 Wiki 生成后数据立即销毁）+ 补偿一次周额度重置；9/19 推 <strong>v3.14.0</strong>，更新日志「问题修复」栏第一条写着<strong>「修复仓库百科异常上传的问题」</strong>；9/21 <strong>正式开源</strong>（Apache-2.0，github.com/zai-org/ZCode）并公布两份第三方审计——<strong>中国信通院</strong>确认 <code>zcode-prod</code> 阿里云 OSS 存储桶处于「云端零数据」状态，<strong>绿盟科技</strong>确认桶内全部数据对象及存储桶本身已删除、v3.14.0 未发现可触发本地仓库快照或文件外发的功能路径。9/20 晚，MaaS 平台上线「数据内容不留存」（Batch API、Files API 及法定 30 天留存为例外）。</p>
+      <p>开源首日 GitHub 破 5.5k star、1.6k fork，但仓库只有<strong>两次提交</strong>：一次空的初始提交，一次一次性导入 6,973 个文件的 <code>feat: open source</code>，<strong>Issues 是关着的</strong>。股价同步反应：9/21 港股盘中一度跌 5.58%，界面新闻发稿时报 <strong>742.5 港元、跌超 4%</strong>，总市值约 3,620 亿港元。</p>
+      <p>还有一处耐人寻味的痕迹：华尔街见闻翻出更早一条——<strong>9 月 16 日的 v3.12.2 更新日志里写着「优化仓库快照上传的内存占用」</strong>。一条「意外行为」，不会有人专门去优化它的内存。而核对官方更新日志页，现在能找到 3.11.2（9/4）和 3.12.3（9/17），<strong>唯独没有 3.12.2</strong>。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这是 AI 编程工具第一次被<strong>逐字节拆解它到底拿走了什么</strong>，而答案是「几乎全部」。<strong>.git 占 86.6%、源码只占 13.4%</strong> 这个比例是整条事件的题眼：企业 Git 仓库里同时存在未发布功能、客户信息、内部架构、部署配置，以及<strong>历史提交中已经删除的密钥</strong>。用户以为自己授权的是「AI 读取完成任务所需的代码」，实际发生的是<strong>整个项目完整「底裤」离开本机</strong>，而且用户连打开验证的钥匙都没有。</p>
+        <p>第二个要点是<strong>「开源」到底证明了什么</strong>。智谱这 72 小时的应对（致歉 → 修版本 → 开源 → 两份第三方审计 → 数据不留存）在同类事件里算相当完整，速度也值得肯定。但把结论说清楚：<strong>把中转桶删掉，能证明的只是这个桶现在是空的</strong>。9 月 18 日之前究竟传了什么、有没有落进备份、谁还能解开那些密文，外部既无法倒推也无法证伪——<strong>而且这两份审计是厂商自己邀请的第三方做的</strong>。更现实的一条：开源的版本不是用户当时运行的那一版，<strong>如果用户真正跑的那一版与开源版本存在差异，审计的价值就要打折</strong>。</p>
+        <p>第三个要点是<strong>这不是孤例</strong>。今年 7 月安全研究者 cereblab 对 Grok Build CLI 抓包：一次 12GB 测试仓库，<strong>模型请求通道传输约 192KB，存储通道实际上传约 5.10GiB，差约 2.78 万倍</strong>，马斯克承认属实并承诺删除、随后服务端关闭上传并开源。此外 GitHub Copilot 自 4/24 起默认可将代码片段用于训练、Cursor 代码库索引默认开启且曾修高危逻辑漏洞。<strong>共同点不是某一家坏，而是「权限扩张的速度远快于边界设计」。</strong></p>
+      </div>
+      <div class="act">
+        <p><b>四条立刻可落地：</b>① 企业采购 AI 编程工具，把<strong>「数据出站可见、可控、可审计」</strong>写进准入项，而不只是加分项——重点问三件事：上传什么、谁能解、保存多久。② 别信界面开关。<strong>去抓包验证</strong>，看是否有独立于模型推理通道的存储/上传通道；这次两个开关都不管这件事。③ 对已使用的工具，做一次<strong>本地目录体积排查</strong>（ferstar 就是从清理磁盘发现的），失败重试队列里可能就躺着证据。④ 把 <strong>.git 目录与含凭证的配置文件</strong>纳入出站敏感清单——泄漏价值最高的往往不是当前源码。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① 42,411 文件 / 313MB / 564 次失败来自 <strong>ferstar 个人逆向记录</strong>；34,549 文件 / 约 425MB / 6 个工作区来自 <strong>承明科技单方取证</strong>，两组数字<strong>分属不同主体与不同工作区，不要混用</strong>。② <strong>「上传数据立即销毁」「从未用于模型训练」是厂商口径</strong>；信通院与绿盟的两项审计<strong>由智谱邀请</strong>，且其结论只覆盖「当前存储桶为空」与「v3.14.0 无可触发路径」，<strong>不能回答历史传输记录、访问权限与密文是否曾被解密</strong>。③ <strong>「数据出境至新加坡」为承明科技单方指控</strong>，智谱对媒体回应「不实消息」，截至发稿无监管结论。④ <strong>「v3.12.2 更新日志含『优化仓库快照上传的内存占用』」</strong>由华尔街见闻报道，该条现已无法在官方更新日志页检索到，采用前请自行核对。⑤ 智谱 2026 上半年营收 9.54 亿元、开放平台及 API 贡献 8.25 亿元（占 86.5%）来自半年报，<strong>与本次事件无因果关系</strong>，仅作商业背景。⑥ 本条未亲测，机制描述全部来自逆向记录、媒体核对与官方文本。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>桌面入口同日三发：Kimi Code Desktop、阿里 Qoder 登鸿蒙 PC、华为云码道上鸿蒙编码大模型——卖点从「更强」换成了「看得见」</h2>
+      <span class="tag t-code">AI Coding · 入口之争</span>
+    </div>
+    <div class="src">来源：kimi.com/code 与 Moonshot 官方发布说明（9/21）· 界面新闻 / 网易科技（Qoder 上线鸿蒙 PC）· 华为云码道 CodeArts 官方公告 · 第一财经（Kimi K3 接入 Amazon Bedrock）· AlphaSignal · 虎嗅《Kimi 向左，Claude、GPT 向右》（9/19）· 中文聚合（9/22）</div>
+    <div class="body">
+      <p>9 月 21 日同一天，三家把 AI 编程的入口往前推了一格，抢的是同一个位置：<strong>开发者每天打开的第一个窗口</strong>。</p>
+      <p><strong>Kimi Code Desktop 1.0</strong> 上线，macOS（Apple Silicon 与 Intel）和 Windows 同步，入口 <code>kimi.com/code</code>。它不是把 CLI 套个壳——用的是<strong>同一个 agent core</strong>，Desktop、CLI、VS Code 插件三者共存、共用本地设置与订阅体系，<strong>老 CLI 用户的本地任务会直接出现在桌面端</strong>。模型是旗舰 <strong>K3（2.8 万亿参数、最高 1M 上下文）</strong>。</p>
+      <p>真正值得看的是它把「授权级别」做成了产品。四档工作模式：<strong>Plan</strong>（先出方案、确认后动手）、<strong>Goal</strong>（围绕目标长程推进，可暂停/恢复/取消）、<strong>Swarm</strong>（主 Agent 拆任务调度 Subagent）、<strong>Tower</strong>（实验性，多 Agent 并行，需显式 <code>/tower on</code> 或 <code>/tower base-branch</code> 才启用）。三档权限：<strong>Always Ask / Ask When Needed / Never Ask</strong>。界面把<strong>工具调用、执行进度、逐文件逐轮 diff、终端输出、内置浏览器、Git 状态与 PR 状态</strong>全放进一个窗口，还支持截图标注「指哪改哪」。另外它<strong>不绑自家模型</strong>——可配 Anthropic、OpenAI、Google 及 DeepSeek、千问等兼容接口；<code>secondary_model</code> 子代理默认开启，可通过环境变量或配置项关掉。</p>
+      <p><strong>阿里 Qoder</strong> 同日登陆鸿蒙 PC 应用市场，成为<strong>鸿蒙 PC 生态首款 AI 编程智能体工作台</strong>：内置多款模型并用智能路由平衡效果与成本，接入近 <strong>200 个连接器、70 多个插件、2 万个技能</strong>，全球用户超 600 万，任务从编程扩展到文档处理与数据分析。</p>
+      <p><strong>华为云码道 CodeArts</strong> 同日面向鸿蒙开发者一次上线三项能力——<strong>鸿蒙编码大模型 + 码道鸿蒙智能体 + 鸿蒙开发者实践中心</strong>，官方称其为「全球首个且唯一专为鸿蒙生态打造的 AI 编码智能体」。模型融合<strong>超百万鸿蒙原素材、10 万+ 高质量数据</strong>，高频开发场景组件覆盖 100%，与 ArkTS 及鸿蒙开发范式深度适配。官方四个数字：<strong>千行代码错误率降低 80% 以上、一次编译通过率提升 78% 以上、单次任务 Token 消耗降低 20% 以上</strong>。智能体内置 DevEco CLI，可直接调用鸿蒙端侧模拟器。鸿蒙已注册开发者超过 1,100 万。</p>
+      <p>同日还有一条相关动作：<strong>Kimi K3 接入 Amazon Bedrock</strong>，此前传闻的<strong>与海外云厂商收入分成合作正式落地</strong>（国内此前已上架阿里云百炼并达成类似合作）——这是中国大模型公司首次以分成模式向全球头部云输出模型能力。</p>
+      <p>时间线上有个耐人寻味的巧合：<strong>ZCode 静默上传事件 9/18 曝光，三天后 Kimi 上线 Desktop，官方通稿反复强调「清晰可见、随时可控，Agent 执行任务的每一步都能看到」</strong>。中文聚合据此解读为「针对信任问题设计」——<strong>这是媒体解读，不是官方表态</strong>，但方向值得记：CLI 里 Agent 干了什么要敲命令翻日志才能还原，图形界面把过程做成<strong>默认展示</strong>，可见性从「用户自己去挖」变成「系统默认给你看」。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>三家同日抢入口，说明 AI 编程的产品形态正在收敛为<strong>「桌面客户端 + 多 Agent 编排」</strong>。命令行只服务极客，网页端只能问答，<strong>只有桌面端能同时握住文件系统权限、终端、浏览器和 PR 状态</strong>——这恰好是一个能独立跑完整任务的 Agent 所需的最小闭环。</p>
+        <p>但比形态更重要的转向是<strong>卖点变了</strong>。过去比的是「模型多强」，今天比的变成「<strong>你敢不敢让它干</strong>」。Kimi 把授权做成四档模式 + 三档权限、把 diff 和工具调用做成默认可见；华为把「一次编译通过率」这种<strong>生态内可验证指标</strong>当主数字——这两条指向同一件事：<strong>当 Agent 能力越过某个阈值，瓶颈就从「能力」滑向「授权」。</strong></p>
+        <p>还有一条容易被忽略：<strong>Kimi 不绑自家模型</strong>。它把自己定位成「多模型开发工作台」——你不用 Kimi 的模型，也可能为了这套执行界面留下。这是入口之争里更聪明的一种打法：<strong>赌界面而不是赌模型。</strong></p>
+      </div>
+      <div class="act">
+        <p><b>三条立刻可落地：</b>① 选型时把<strong>「权限分级粒度」</strong>列为硬指标——能否按任务风险切换（先出方案 / 长程推进 / 多 Agent 并行），比模型跑分更能决定你敢把它用在哪个仓库。② 优先选<strong>过程默认可见</strong>的工具：工具调用、diff、终端输出、Git 与 PR 状态应在同一个窗口里，而不是要你去翻日志。③ 关注<strong>「一次编译通过率」这类生态内指标</strong>——通用榜单可以被刷，垂直生态里的编译/规范通过率是更难短期反超的壁垒。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>「Kimi 针对 ZCode 信任问题设计」</strong>是中文聚合结合时间线的解读，<strong>非官方表态</strong>，仅作观察角度。② 华为云码道的<strong>「错误率降低 80%+、编译通过率提升 78%+、Token 降低 20%+」均为官方自测口径</strong>，未披露测试集与基线，不要与第三方榜单混用。③ <strong>「全球首个且唯一」「首款」</strong>均为厂商自我表述。④ 鸿蒙注册开发者超 1,100 万、Qoder 全球用户超 600 万<strong>来自厂商公布</strong>，非独立统计。⑤ 反向坐标需一并看：<strong>虎嗅 9/19 指出 Kimi 已有 Kimi Work 桌面端、现在再做 Code 是「做加法」，而 Claude 把 Chat 与 Cowork 合并、ChatGPT 把 Codex 并入桌面应用是在收敛</strong>——入口之争的终局是收敛还是分裂，尚无定论。⑥ 本条三家均为 9/21 发布，9/22 进入中文聚合视野。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>清科灵境 OASIS WAM 登顶 RoboLab：考场是英伟达的，成绩由平台实测，不是团队自己交的</h2>
+      <span class="tag t-emb">具身智能 · 交出考场</span>
+    </div>
+    <div class="src">来源：36 氪《中国具身智能又跑出一匹黑马：清科灵境 OASIS WAM 登顶 RoboLab》（9/21，腾讯新闻转载）· RoboLab 全球高保真仿真基准平台榜单 · 清科灵境官方资料与商业计划书要点 · 开放原子开源基金会（Dora 捐赠）</div>
+    <div class="body">
+      <p>RoboLab 全球高保真仿真基准平台公布最新排行榜，在覆盖 <strong>120 个视觉-语言-操作任务</strong>的综合评测中，由<strong>清科灵境（Synkrotron）联合中国科学技术大学</strong>研发的 <strong>OASIS WAM</strong>（世界动作模型）拿到综合排名第一。</p>
+      <p>先把这份榜单的性质说清楚，它才是重点。其一，<strong>RoboLab 基于 NVIDIA Isaac 与 NVIDIA Omniverse 构建</strong>——考场、考题、阅卷都在英伟达手里。其二，它<strong>采用动态随机生成场景、可变语言指令、可控环境扰动，没有固定训练题库</strong>，靠背规则刷不了分。其三，本次成绩是<strong>清科灵境开放调用接口、由平台实际完成测试确认后形成的</strong>，而不是团队自行提交的离线分数。</p>
+      <p>同榜对手包括 <strong>NVIDIA、Google、Physical Intelligence</strong> 等头部团队，<strong>OASIS WAM 是榜单上唯一的中国团队</strong>。</p>
+      <p>技术上，WAM 接收<strong>机器人当前 RGB 图像、关节状态、夹爪状态以及语义指令</strong>，生成一段连续动作，同时<strong>预测这段动作执行过程中场景的视觉变化</strong>，并与高层 VLM 协同解决任务级推理——比如「四块积木该按什么顺序叠」这类问题。低层动作模型能学会「抓住积木、移动到目标位置、松开夹爪」，却未必能理解四个动作之间的<strong>任务顺序</strong>，这正是 WAM 想补的那一层。</p>
+      <p>公司背景：清科灵境 <strong>2019 年由姚期智院士孵化</strong>（前身为深信科创），创始人兼 CEO 杨子江为宾夕法尼亚大学博士、中国科学技术大学计算机学院教授，联合创始人兼 CTO 潘余曦曾任 Cisco、Uber 数据科学团队负责人，首席科学家 Moshe Vardi 为多院院士。技术底牌三张：<strong>WAM 世界动作模型、混合数据平台、Dora 机器人原生操作系统</strong>——Dora 于 2022 年联合 Futurewei 推出并捐赠开放原子开源基金会，官方称时延 0.9μs、比 ROS2 快 17 倍（另一口径为「时延降低近 20 倍、内存占用减少 90%」）。产业侧：与工信部电子第五研究所共建「场景训练—性能验证—标准输出—产业推广」闭环，与星海图签署 AI4S 科学具身战略合作，已在医院及第三方检测机构用于血液样本检测。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条的分量<strong>不在「赢了谁」，而在「考场是谁的」</strong>。具身智能这一年最不缺的就是演示视频，缺的是<strong>可复现、可复测的工程证据</strong>。RoboLab 这次的三重约束——考场在英伟达的 Isaac/Omniverse 上、题目动态随机生成、成绩由平台实测而非自提交——把「自说自话」的空间压到了最小。<strong>在对方的考场里拿第一，比在自家演示里拿满分难一个数量级。</strong></p>
+        <p>它和今天第 ① 条恰好构成正反两面：<strong>Grok 4.7 是在自家渠道自建的考场里刷出最大涨幅，OASIS WAM 是把考场交给对方还拿了第一。</strong>同一天，两种截然相反的取证方式，而这个对比本身比任何单项成绩都更能说明「分数该怎么读」。</p>
+        <p>当然也要看到边界：<strong>这是仿真基准，不是真机。</strong>官方与 36 氪都未公布具体分数，也没有给出真机或产线上的对应表现。真正要等的是下一步——<strong>仿真成绩能否与真实产线对齐</strong>。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① <strong>官方与报道均未公布 OASIS WAM 的具体分数</strong>，只有「综合排名第一」，任何具体数值都应视为未披露。② <strong>该成绩是仿真基准结果</strong>（NVIDIA Isaac + Omniverse），<strong>不等于真机表现</strong>，Sim2Real 差距未给出。③ Dora 的性能口径<strong>两套并存</strong>（「0.9μs / 比 ROS2 快 17 倍」与「时延降低近 20 倍、内存占用减少 90%」），出自不同官方材料，不要混用。④ <strong>「榜单上唯一的中国团队」「世界动作模型国内进展最快」</strong>为报道与厂商表述。⑤ 本条 36 氪 <strong>9/21 首发</strong>，榜单具体统计截止日未披露；榜单名次会随时间变动，引用时请注明时间。⑥ 公司背景部分（姚期智孵化、团队履历、产业合作）来自公开资料与商业计划书要点，非本次榜单披露内容。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>大晓机器人进加油站便利店：75 厘米通道、2 米高货架，具身智能开始接「排班」而不是接演示</h2>
+      <span class="tag t-emb">具身智能 · 真实验收</span>
+    </div>
+    <div class="src">来源：科技日报（9/21）· 新浪财经 · 上观新闻 / 解放日报 · 中国石油上海销售公司 · 大晓机器人官方资料</div>
+    <div class="body">
+      <p>9 月 21 日，<strong>大晓机器人与中国石油上海销售公司</strong>宣布达成战略合作，启动<strong>首个加油站便利店场景的全闭环具身智能机器人项目</strong>，首店 <strong>昆仑好客便利店（中国石油振兴店）</strong>已进入试运营。</p>
+      <p>流程是打通的：消费者<strong>美团下单</strong> → 订单经<strong>中国石油数智平台</strong>进入作业系统 → 机器人依据<strong>订单与库存信息</strong>完成商品识别、拣选、搬运、打包与放置，并<strong>同步更新订单状态</strong>；到店消费场景下，机器人也参与商品取放与履约准备。运营环节覆盖<strong>商品仓储、分拣、补货、上架、订单拣选及装箱履约</strong>，打通「前置仓—门店—订单」链路。</p>
+      <p>关键在约束条件：<strong>75 厘米宽的通道、2 米高的货架</strong>。这不是实验室里摆好的台面，而是便利店最难看的那部分活。</p>
+      <p>技术侧：<strong>开悟世界模型 Kairos 3.1</strong> 作决策系统，<strong>自研轮臂升降式履约机器人</strong>作执行终端，通过<strong>「晓满」即时零售场景解决方案</strong>接入中石油数智平台与门店业务体系。公司此前的家底包括环境式数据采集方案 2.0、具身超级大脑模组 A1，以及晓满、晓新、晓途三项行业级解决方案，走的是 <strong>ACE 研发范式</strong>（环境式数采 + 世界模型）。</p>
+      <p>双方明确说，下一步要验证的是<strong>多 SKU、高密窄仓、柔性包装、订单高峰</strong>等复杂条件下的稳定性，以及<strong>夜间和高峰时段</strong>的服务效率，并基于真实运营数据持续优化模型与本体，沉淀<strong>模块化、可快速部署的标准化方案</strong>。规模坐标摆在那：<strong>全国约 11 万座加油站、10 万余座公共充电站</strong>。</p>
+      <div class="why">
+        <p><b>为什么值得关注：</b>这条的价值是<strong>可量化验收</strong>。通道宽度 75 厘米、货架高 2 米、SKU 持续增长、订单波峰明显、夜间补货与高频理货——<strong>这些硬约束让演示式取巧彻底失效</strong>。你可以精心摆一次成功的视频，但没法在每天几百单、货位会调、商品会变、订单结构随时波动的门店里长期假装。</p>
+        <p>第二个要点是<strong>验收单位变了</strong>。前面几条讲「谁出题、谁阅卷」，这里出题的是<strong>真实业务</strong>：单店跑通不算数，要「从单店验证到网络复制」——也就是<strong>能不能排班</strong>。加油站便利店的价值还在于它同时具备三个属性：<strong>空间窄、SKU 多、营业时间长</strong>，恰好是仓储式机器人最难受也最需要人的组合。</p>
+        <p>第三个要点是<strong>数据回流</strong>。双方明确说要用真实运营数据持续优化世界模型和本体——这类场景的真正产出可能不是「省了多少人力」，而是<strong>一套别人拿不到的、带真实分布的动作语料</strong>。</p>
+      </div>
+      <div class="caveat">
+        <p><b>口径修正（重要）：</b>① 本条为<strong>战略合作 + 首店试运营</strong>，<strong>不是规模化部署</strong>；报道未披露机器人台数、单量、履约成功率、人效对比等任何量化运营指标。② <strong>「全国约 11 万座加油站、10 万余座公共充电站」</strong>是行业公开数据的规模背景，<strong>不等于该项目可触达规模</strong>——首店之后能否复制到中石油上海乃至全国网络，官方表述是「计划」与「探索」。③ 「全闭环」「首个」均为<strong>厂商与报道表述</strong>。④ 「商汤科技联合创始人王晓刚任董事长、陶大程院士任首席科学家」<strong>仅见于聚合报道</strong>，本条未逐一核实。⑤ 大晓机器人的<strong>世界模型能力未披露第三方评测成绩</strong>，Kairos 3.1 的表现目前只有厂商口径。⑥ 本条 9/21 发布、9/22 进入聚合视野。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">速览 · 4 条</div>
+  <div class="mini" id="mini">
+    <div class="m emb">
+      <h3>清华 + 无问芯穹 + 正行创新开源 RPent：LIBERO-PRO 92.6%，端到端提速约 7 倍</h3>
+      <p>把通用大模型的规划、VLA/WAM 的精细操作、三层记忆与机器人接口连成「观察—规划—执行—反馈—再规划」闭环。三层记忆让<strong>扰动任务成功率从 31.0% 升到 87.0%</strong>；FlashMode + TaskCards 把验证过的任务流压成可复用卡片，LIBERO Object 执行时间 <strong>283.6s → 40.9s（约 7 倍），代价仅掉 3.5 个百分点</strong>。统一 MCP/RPC/MHS 接口，支持 LIBERO/RoboCasa 仿真与 Franka、YAM 真机；基于团队 7 月的 HarnessVLA。代码 github.com/RLinf/RPent。<strong>注意：92.63%（比第二名高 10.23 分）是 RPent 配 GPT-6 Astra 的成绩，不是单模型分数。</strong></p>
+    </div>
+    <div class="m emb">
+      <h3>IDC 四足账本：半年出货 4.9 万台，行业应用不到四成出货却拿走三分之二收入</h3>
+      <p>《全球四足机器人市场份额，1H26》：上半年全球出货<strong>超 4.9 万台、同比 +92.5%</strong>，市场规模超 4 亿美元，宇树以约 37% 份额居首。<strong>行业应用市场规模同比 +125.1%、部署量 +260.5%</strong>。最锋利的是倒挂：<strong>买去教学和家用的机器占了约六成出货，只贡献不到三分之一收入；真在电站、管廊、工厂干活的不到四成，却拿走约三分之二的钱。</strong>对照坐标：人形 2025 年全球销量约 7,000 台。</p>
+    </div>
+    <div class="m code">
+      <h3>MCP SEP-2640 Skills 扩展合入并标记 Final：技能从本地文件变成远端响应</h3>
+      <p>历时 5 个月、54 次提交，9 月 13 日合入。它把原本放在本地目录里的 <code>SKILL.md</code> 挂到 <code>skill://</code> 资源上，<strong>由服务器跟着工具一起下发</strong>；新增列出、获取、目录读取三个协议方法。清单里<strong>每个技能文件必须带 SHA-256 摘要与字节数，读文件时逐个校验</strong>。好处是「服务端改一次技能，所有客户端不用重装就跟着变」；代价是<strong>技能从你硬盘上的文件，变成别人服务器上的一次响应</strong>——一旦允许远端取技能，本地与远端的可信边界基本收不回去。</p>
+    </div>
+    <div class="m code">
+      <h3>176 组消融：脚手架经验也有保质期，同一招在 128k 窗口里只剩 2.7 分</h3>
+      <p>一份覆盖 <strong>176 组设置</strong>的消融研究把规划、动作空间与上下文管理拆开重测，结论是同一技巧的效果会随<strong>模型强度、上下文预算、任务类型</strong>三类变量<strong>翻转符号</strong>，不存在一份长期生效的最佳实践。最直观的一组：<strong>上下文管理在 32k 窗口下带来 +35.7 分，在 128k 窗口下只剩 +2.7 分。</strong>这意味着「最佳实践」从结论降级为<strong>带条件的结论</strong>——团队里那份 Agent 规范如果没在开头写清它是在哪代模型、哪个上下文预算下测出来的，就只是一份传了很多手的偏方。<strong>（转述自 The AI Wire Daily AI Brief 2026-09-21，未核到论文原文编号与作者，采用前请自行核对。）</strong></p>
+    </div>
+  </div>
+
+  <div class="sec-title">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        <tr><td>① Grok 4.7 自家渠道考场刷分</td><td>09-15 Real-SWE 真实私有库 / 09-13 BenchShield 反作弊</td><td>同题不同层：那两条质疑基准可不可信，这条质疑考场归谁</td></tr>
+        <tr><td>① AA 独立口径 46 / 每任务 token 翻倍</td><td>09-14 InfoQ 实测同模型不同工具账单差 70 倍</td><td>同题互证：标价便宜 ≠ 任务便宜，两次都在模型侧与工具侧分别验证</td></tr>
+        <tr><td>② ZCode 静默上传全量 Git 历史</td><td>09-19 Plugin4Shell 四家同源漏洞 / 09-20 HEIF Heist</td><td>同层不同面：那两条打的是插件与供应链，这条打的是工具厂商自己的数据边界</td></tr>
+        <tr><td>② 开源 + 自请第三方审计</td><td>09-21 微软 Rust 移植「编译通过 ≠ 正确」</td><td>同一收敛的两个方向：一个证明产出不可信，一个证明过程不可见</td></tr>
+        <tr><td>③ Kimi Code Desktop「清晰可见」</td><td>② ZCode 静默上传</td><td>同一周的正反：相隔三天，一个把过程藏起来，一个把过程当卖点</td></tr>
+        <tr><td>③ Qoder / 华为云码道 上鸿蒙</td><td>09-17 vivo 蓝心 Harness / 荣耀 MagicOS 11</td><td>同题不同进：上次是系统层植入，今天是原生编码智能体占入口</td></tr>
+        <tr><td>④ OASIS WAM 登顶 RoboLab</td><td>① Grok 4.7 自家考场</td><td>反向镜像：一个在自家考场拿涨幅，一个在对方考场拿第一</td></tr>
+        <tr><td>④ OASIS WAM（仿真泛化）</td><td>09-20 宇树 UnifoLM-WLA-1.0（6B 覆盖 64 项任务）</td><td>同层不同面：一个比操作泛化，一个比单模型统管</td></tr>
+        <tr><td>⑤ 大晓 × 中石油便利店</td><td>09-16 智元龙旗 8 台跑五个月 / 09-21 X Square 进 Lululemon 分拣</td><td>同题不同进：从「直播自证」到「排班商业化」</td></tr>
+        <tr><td>⑤ 75cm 通道 / 2m 货架硬约束</td><td>09-12 Skild「Demo 时代结束，部署时代开始」</td><td>同题互证：演示式取巧在硬约束场景里失效</td></tr>
+        <tr><td>速览 ① RPent 任务卡复用</td><td>09-11 Subagents vs Agent Skills 契约之争</td><td>同题不同层：那次争的是「怎么装」，这次是「怎么用过的经验压成卡片」</td></tr>
+        <tr><td>速览 ③ MCP 远程下发技能</td><td>09-07 OpenAI Skills Catalog / 09-10 superpowers 生态</td><td>同题不同面：那两次是「技能有多少」，这次是「技能归谁管」</td></tr>
+        <tr><td><strong>今日整体</strong></td><td>09-13 验收权外移 → 09-20 输出端归谁管 → 09-21 校验器装在哪一层</td><td><strong>递进：前三期分别问「谁验收 / 谁管输出 / 校验器装哪层」，今天问的是「考场归谁管」——自证的成本第一次被明码标价</strong></td></tr>
+      </table>
+      <div class="why">
+        <p><b>一句话串起来：</b>过去三期我们把问题一路推到「校验器装在哪一层」，今天五条同时给出了下一问的答案方向——<strong>校验的前提是考场中立</strong>。Grok 4.7 演示了自家考场能把涨幅做得多好看，OASIS WAM 演示了交出考场之后第一名的说服力有多不一样；ZCode 演示了「自请审计」能证明的边界有多窄（只能证明桶现在是空的），Kimi Code Desktop 演示了当信任成为卖点时产品会长成什么样；而大晓那条提醒我们，<strong>真正不用争的考场只有一个：75 厘米通道里每天几百单的真实门店</strong>。自证从来不是免费的，只是以前没人算这笔账。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-22 · 北京时间 11:30</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-21.html">← 2026-09-21</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-23.html">2026-09-23 →</a></div>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-09-23 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 9 月 23 日（周三）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">具身智能 ×3</span>
+      <span class="chip">今日主线：中间那一层，今天同时被定价、被测量、被开源</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① HarnessTax：壳子比芯子贵</a>
+    <a href="#n2">② 长程 agent 的两份体检报告</a>
+    <a href="#n3">③ 机器人底座同日开源</a>
+    <a href="#n4">④ Astra 直接当机器人策略</a>
+    <a href="#n5">⑤ Atlas 进真工厂，还在练习</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>HarnessTax：同一个模型换个壳子，成功率几乎不动，账单最多差 5 倍——而最省的那个只给了四个工具</h2>
+      <span class="tag t-code">AI Coding · 中间层定价</span>
+    </div>
+    <div class="src">来源：Arena 研究博客（9/16 发布）· UC Berkeley Sky Lab · harnesstax.github.io · 作者 Melissa Z. Pan、Shuo Yang、Negar Arabzadeh、Wei-Lin Chiang、Ion Stoica、Matei Zaharia · Victorino Group / AI Insiders / AINews / Codearia Academy 解析 · AGI Hunt 9/23 转述</div>
+    <div class="body">
+      <p>这是第一次有人把 harness（那个决定「有哪些工具、系统提示写什么、每轮往回发什么」的壳子）当成<strong>一个独立于模型的成本变量</strong>来做受控测量。</p>
+      <ul>
+        <li><strong>配置</strong>：7 个模型 × 3 个 harness = 21 对。harness 是 Claude Code 2.1.224、Codex CLI 0.146.0，以及 <strong>Pi 0.85.1</strong>——一个 MIT 许可的极简 agent，只有 <code>read</code> / <code>write</code> / <code>edit</code> / <code>bash</code> 四个工具，约 10.6 万 GitHub 星。基准是 SWE-bench Lite 与 Terminal-Bench 2.0。</li>
+        <li><strong>跑法</strong>：每个组合 30 道抽样题 × 3 次，100 turn 上限，容器<strong>断网</strong>，成本按 9 月 1 日直连 API 价目表统一计算。</li>
+        <li><strong>结论</strong>：成功率几乎不动，账单动得厉害。harness 对成功率的平均影响在 SWE-bench Lite 上是 ±2% 内、Terminal-Bench 2.0 上约 ±5%；作者原话是「同一个模型能以<strong>最多 5 倍</strong>的成本达到相近的成功率」。</li>
+      </ul>
+      <p>最干净的一对是 Claude Fable 5 在 SWE-bench Lite：Claude Code 解决 97.8%、每次 $1.33；Pi 解决 96.7%、每次 $0.67。<strong>而 turn 数是 15.3 对 15.4</strong>——步数一模一样，所以差距不是「多想了几轮」，是<strong>每一步都贵一倍</strong>。</p>
+      <p>税从第一次调用就开始收：Claude Code 声明 <strong>23 个工具、首轮上下文 27,011 token</strong>；Pi 是 <strong>4 个工具、1,972 token</strong>，差 13.7 倍。这一块与任务无关，但<strong>每一轮都要重发</strong>。</p>
+      <p>最反直觉的一对是 GPT-5.6 Sol 在 Terminal-Bench 2.0：Claude Code <strong>$1.355 / 71.1%</strong>，Pi <strong>$0.421 / 83.3%</strong>——便宜 3 倍，还高 12 分。把 6 个 Anthropic / OpenAI 模型 × 2 个基准共 12 组比较摊开，有 <strong>9 组</strong>的最高成功率不是由模型厂商自己的 harness 拿到的。</p>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 过去选 Claude Code 还是 Codex 还是 Cursor，讨论全落在「里面那个模型谁强」。这份数据把箭头掉了个头：账单的大头在壳子不在芯。对按 token 付费跑 agentic coding 的团队，最便宜的一个动作可能不是换模型，而是把最省的那个 harness 拿来跟默认项对跑一遍。</p>
+      <p>更关键的是它给了一个可操作的量：<strong>每个 resolved task 花多少钱</strong>，而不是「通过率」。这两个指标今天第一次被明确分开。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① 先量你自己的<b>首轮上下文</b>（系统提示 + 全部工具定义）。这是每轮重发、与任务无关的固定支出，也是最容易白花的部分。</p>
+      <p>② 拿一个最短的 harness 与默认 harness，在同一批内部任务上各跑 30 题，看的是<b>每解决一题花多少钱</b>，不是通过率。</p>
+      <p>③ 别急着把 subagent / hooks / MCP 拆掉——见下方边界，这项实验刻意把它们排除在外了。</p>
+    </div>
+    <div class="caveat">
+      <p><b>「省 50%」是聚合口径，不是每个模型都成立。</b>几何均值上 Claude Code 约为 Pi 的 2.0 倍（SWE-bench Lite）/ 1.5 倍（Terminal-Bench 2.0）、约为 Codex 的 1.6 倍；「最多 5 倍」是 21 对里<b>最宽的那一段价差</b>，不是某一对模型的常态。AGI Hunt 转述的「75%」实际来自论文里的另一句——12 组比较中有 9 组最高成功率由非自家 harness 取得，<b>不是全部 21 对</b>。</p>
+      <p><b>实验刻意剥掉了你装 harness 的理由。</b>无 subagent、无 hooks、无 MCP、断网、direct-API 计价、每个基准仅 30 题抽样；作者自己写明两个基准开源、可能已进训练数据。它证明的是「在最简配置下壳子很贵」，<b>不证明「壳子没用」</b>。</p>
+      <p>Arena 赞助了实验的 API 开销；团队称计划公开 profiling traces。研究<b>发布于 9/16</b>，9/22–23 才在技术与中文圈集中传播，<b>非当日首发</b>。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>长程 agent 的两份体检报告：引用核查率最低 7.1%，指令遵循从 94% 掉到 41%——掉的是悬崖不是斜坡</h2>
+      <span class="tag t-code">AI Coding · 中间层失效</span>
+    </div>
+    <div class="src">来源：EMNLP 2026 主会论文（AGI Hunt 9/23 转述）· r/LocalLLaMA 开发者的 847 次运行记录（AGI Hunt 9/23，页面底部附利益披露）· TianPan 长期运行 agent 上下文退化综述</div>
+    <div class="body">
+      <p><strong>第一份（同行评审）</strong>：EMNLP 2026 主会论文检查深度研究报告里的引用，发现大量句子并不被它所标注的引用支撑——引用召回率在 <strong>NVIDIA AI-Q 上是 58.7%</strong>，在 <strong>TrajectoryKit 上是 7.1%</strong>。作者还给了一种算法，能把每个引用错误一路追溯到<strong>引入它的那个 agent</strong>。</p>
+      <p>另一项用 JEV 当裁判检查网页检索引用：模型每任务大约引 8 个来源，<strong>没有任何一次运行 8 个全过</strong>；典型失败形态是「一句话其实由多个来源合成，却只挂了一个来源」。</p>
+      <p><strong>第二份（社区实测，证据强度见下方边界）</strong>：一位开发者记录了 <strong>847 次 agent 运行</strong>，指令遵循率从窗口刚开时的 <strong>94%</strong> 掉到填满时的 <strong>41%</strong>——作者强调这是<strong>悬崖不是斜坡</strong>。注意力是 U 型的，所以窗口变大主要是把「被忽略的中间段」变大；有些团队把 <strong>60% 以上</strong>的 token 预算花在每一轮重新注入同一块内容上。</p>
+      <p>激进压缩会反噬：把一段 <strong>18,282 token</strong> 的对话压到 <strong>122 token</strong>，效果<strong>比完全没有记忆更差</strong>——摘要保住了故事，丢掉了可执行的事实。</p>
+      <p>还有一种无声失败：记忆层里躺着 3,000+ 文档，面板显示 91 条记忆，但每一次检索都返回空，<strong>而且不报错</strong>。</p>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 两份报告打的是同一处：<b>agent 跑得越久，我们对它中间那段的控制越弱</b>。第一份说「引用这种最该可核查的东西，核查率只有 7.1%–58.7%」，第二份说「指令这种最基础的东西，到窗口后半段只剩四成」。</p>
+      <p>合起来的含义很实际：<b>长程任务的结果不能只看最终产物，得看它是第几轮产出的。</b>而「上下文越大越好」这条默认假设，在这两份数据里都站不住。</p>
+    </div>
+    <div class="act">
+      <p><b>一条今天就能做的自检</b>（转述者给出）：拿同一个任务，量它在<b>第 5 轮</b>和<b>第 50 轮</b>的准确率。如果掉了，先分辨是注意力悬崖还是压缩丢事实——前者要的是缩短有效上下文，后者要的是给压缩加<b>「事实存活率」检查</b>，而不是只盯 token 数。</p>
+    </div>
+    <div class="caveat">
+      <p><b>两份证据强度差很多，不要混用。</b>EMNLP 那篇是主会论文、可检索到系统名与数字。847 次运行那组出自 <b>r/LocalLLaMA 的开发者自述</b>，且 AGI Hunt 在转述页底部明确披露：「作者本人是 memory 产品 Maximem Synap 的作者，847 组数据来自另一位 r/LocalLLaMA 开发者」——<b>有产品利益关系，也不是同行评审</b>。18,282→122 token 与「3,000+ 文档 / 91 条记忆 / 检索全空」两条同样出自该帖。</p>
+      <p>数字可用，但请当作一份高质量的现场日志，而不是结论。U 型注意力本身有多方独立佐证（lost-in-the-middle 系列研究），可以分开采信。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card embodied" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>NVIDIA 与 Google 在同一场会上把机器人底座免费送出去：一个做成 agent 能调的 skill，一个走「机器人界的 Android」剧本</h2>
+      <span class="tag t-emb">具身智能 · 中间层开源</span>
+    </div>
+    <div class="src">来源：ROSCon 2026（多伦多，9/22）· NVIDIA 官方博客与 GitHub · Unite.AI / SiliconANGLE / Silicon Report / Singularity.Kiwi · Forbes（John Koetsier，9/22）· Intrinsic 公告 · FutureX Issue 128</div>
+    <div class="body">
+      <p><strong>NVIDIA Isaac ROS 5.0</strong>：最大变化是把机器人领域知识打包成 <strong>Isaac Skills</strong>——可复用工作流，官方措辞是「<strong>开发者和 AI agent 都能用</strong>」。新增内容包括 FoundationStereo 微调 skill（让 agent 把立体感知模型适配到你的相机与环境）、FoundationPose 的 agent-ready 推理库（官方称物体位姿跟踪<strong>快 5.5 倍</strong>），以及把 pick-and-place 从一堆示例代码变成<strong>独立可调用的 skill</strong>。支持 ROS Lyrical + Ubuntu 24.04，算力覆盖 Jetson Orin Nano 到 Jetson Thor，免费开源。NVIDIA 还向 ROS Lyrical 贡献了标准数据接口 <code>rosidl::buffer</code>。</p>
+      <p>NVIDIA 机器人仿真产品市场经理 Katie Washabaugh 在 ROSCon 的说法很直白：「机器人开发里有非常多的摩擦，<strong>把管线接起来这件事摩擦太大了</strong>。」另一句更实在：「配置（setup）看起来是低垂的果实，操作（manipulation）则像是机器人开发里还没开垦的地方。」</p>
+      <p><strong>Google Intrinsic Core</strong>：以 <strong>Apache 2.0</strong> 放出控制、运动规划、抓取规划、仿真、位姿估计、相机标定六块，ROS 兼容；Intrinsic 称与真实部署中日常使用的是同一套能力，不是精简演示版。同时发布 Open Machine Tending Solution——CNC 机床上下料的开放参考设计，开箱支持 FANUC 与 Universal Robots。Intrinsic 给出的背景数字：美欧有数以万计的精密零件加工车间，<strong>只有 8% 用了任何形式的自动化</strong>。</p>
+      <p>福布斯的框架值得单独记：皮查伊今年 2 月把 Intrinsic 叫作「<strong>机器人界的 Android</strong>」，七个月后剧本照演——免费给出人人都需要的一层，收钱的是上面的先进模型、Flowstate 与工业级云。Intrinsic 公告原话：用 Core 做的方案「自动适配 Intrinsic 的其他产品，包括我们的企业服务（含先进 AI 模型、Flowstate 与工业级云服务），<strong>无需重构或重写代码</strong>」。</p>
+      <p>一个耐人寻味的细节：NVIDIA 公布的 Isaac ROS 采用方名单里<strong>包括 Intrinsic</strong>——而后者几小时后就开源了自己的底座。</p>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 机器人行业最贵、最重复、也最难守住的那一层（驱动、运动学、标定、碰撞路径），今天被两家同时免费送了出去。</p>
+      <p>对关注 AI coding 的读者，真正的变化在 Isaac Skills 那半句：这层<b>第一次被做成 agent 可以直接调用的接口，而不是给人读的文档</b>。谁把「管线」变成 agent 可调的 API，谁就拿到了下一代机器人开发的默认入口——这是 NVIDIA 在数据中心用过的同一套打法（送软件、卖芯片），风险则是整个行业的命运被绑到一家公司的路线图上。</p>
+    </div>
+    <div class="caveat">
+      <p><b>5.5 倍是 NVIDIA 自报数字。</b>多家转述均标注为 vendor-reported、仍需独立复现；我在官方公告与转述中未找到该基准的具体配置（硬件型号、模型规模、对比基线），<b>采用前请自行核对</b>。</p>
+      <p><b>同名不同物</b>：Isaac ROS 5.0 与今年早些时候 Perceptron AI 的开源权重模型 Isaac 0.5 无关，别混。</p>
+      <p>福布斯同时指出：Intrinsic Core 开放的这一半，与 DeepMind 的 Gemini Robotics 2（人形 / 双臂灵巧操作）<b>目前尚未看到明确接口</b>——Gemini Robotics 的公告里没提 Intrinsic，SDK 里也没提 ROS。两半还没接上，这是判断这次开源成色的关键变量。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>GPT-6 Astra 直接当机器人策略：42 个任务跑 2,100 次拿到 22.48%，压过 40 个公开 policy，但卡点不在「想」在「手」</h2>
+      <span class="tag t-emb">具身智能 · 中间层极化</span>
+    </div>
+    <div class="src">来源：arXiv:2609.24170（9/21 提交，Wenbo Zhang 等 12 人，24 页）· FutureX Physical AI Daily Issue 128 · 中文聚合转述（9/23）</div>
+    <div class="body">
+      <p>论文题目就是态度：《An Unexpected Robot Policy: Early Evaluations of GPT-6 Astra on RoboDojo and Beyond》。它问的问题很硬：<strong>一个通用大模型能不能不做任何任务微调，直接当机器人的策略（policy）用</strong>？作者称之为 <strong>LLM-as-policy</strong>。</p>
+      <ul>
+        <li><strong>做法</strong>：在 RoboDojo <strong>全部 42 个任务</strong>上，用官方 50 episode/任务的协议跑 Astra 与 GPT-5.5（DeepSeek-Flash 用 10 episode/任务），与 <strong>40 个公开 policy</strong> 对比。</li>
+        <li><strong>结果</strong>：GPT-6 Astra 在 <strong>2,100 次试验</strong>中拿到 <strong>22.48% 平均成功率 / 28.97 Score</strong>，<strong>高于排行榜上每一个公开条目</strong>。同样的后处理下，GPT-5.5 只有 <strong>0.88%</strong>，DeepSeek-Flash <strong>1.92%</strong>。</li>
+        <li><strong>但能力画像高度极化</strong>：需要语义理解、不要求高精度的任务泛化得很好；需要<strong>精密控制、动态控制或复杂双臂协调</strong>的任务表现很差。</li>
+        <li><strong>one-shot 演示在整体上没有任何收益</strong>——只在个别交互轨迹里观察到扰动下的回合内修正。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这是「通用大模型直接当机器人策略」第一次被放进完整基准，而不是单次演示（承接 09-21 那条 Astra 开机械臂：那次是一次成功，这次是 2,100 次）。结论有两层。</p>
+      <p><b>好消息：决策层开始通用化了。</b>同一个大脑跨过 42 个任务，压过了 40 个专门训练出来的 policy，而上一代 GPT-5.5 在同样流程下几乎交白卷（0.88%）——这是一个代际跳变，不是渐进改进。</p>
+      <p><b>坏消息：22.48% 这个绝对值本身说明离可用还远</b>，而且卡点极其明确——不在「想不想得到」，在「手够不够准」。这正好给国产具身划出了窗口期：语义 / 规划这条线会被通用模型吃掉，<b>视触觉、力控、精密执行这条线短期吃不掉</b>。</p>
+    </div>
+    <div class="caveat">
+      <p><b>「超过 40 个公开 policy」的参照系要看清</b>——比的是 RoboDojo 公开排行榜上的条目，22.48% 是<b>这批里的第一</b>，不是「接近可用」。GPT-5.5 的 0.88% 也说明这个协议对「非为动作设计」的模型几乎不友好，不能读成两代模型差 25 倍。</p>
+      <p>中文聚合流传的「抓取类 20 次成功 19 次 / 精细嵌入类骤降至 10%」，我在 arXiv 摘要与 FutureX 转述中<b>均未找到对应表述</b>，采用前请核对论文正文表格。</p>
+      <p>论文结论措辞是「<b>初步证据（initial evidence）</b>」，且明确写了「可靠的精密与动态控制在所评测设定下仍是局限」。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>Atlas 开进了现代的真产线，干的是零件排序；目标是 25,000 台，眼下的状态是「还在练习」</h2>
+      <span class="tag t-emb">具身智能 · 中间层还在攒</span>
+    </div>
+    <div class="src">来源：The Korea Times（9/22）· FutureX Physical AI Daily Issue 128</div>
+    <div class="body">
+      <p>波士顿动力在<strong>现代汽车集团美国工厂 HMGMA</strong>（佐治亚州，萨凡纳附近，生产 Ioniq 5 / Ioniq 9 等电动与混动车型）<strong>内部</strong>开设了机器人元工厂应用中心（<strong>RMAC</strong>）。</p>
+      <p>Atlas 在那里做的是<strong>装配前零件物流与排序（parts sequencing）</strong>——把零件按装配顺序排好。这是真实的汽车产线，不是模拟线。</p>
+      <p>时间表与目标：明年该训练中心要搬进一栋大约 <strong>10 倍大</strong>的新楼，并开始探索汽车以外的行业；现代的目标是在未来几年内，于现代与起亚的全球工厂部署 <strong>25,000 台 Atlas</strong>。</p>
+      <p>但 Korea Times 与 FutureX 都写明：<strong>目前这仍是训练与测试阶段，距离节拍稳定的量产作业还有相当距离。</strong></p>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 一句话里的张力：一边是 25,000 台的部署目标，一边是「还在练习」。</p>
+      <p>把它和今天第 ④ 条放在一起看，具身智能当前的位置就很清楚了：<b>大脑刚开始能跨任务（22.48%），软件栈刚开始免费（第 ③ 条），本体里最先进的那一台刚开进真车间，但干的是排序练习。</b>三个层次同时处在「刚跨过门槛、还没到可用」的同一段——这比任何一条单独的融资或出货数字都更能说明行业真实进度。</p>
+    </div>
+    <div class="caveat">
+      <p><b>「25,000 台」是现代的目标数字，不是订单也不是已交付量</b>，且未说明实现年限；「10 倍大」指新训练中心的建筑面积。</p>
+      <p>RMAC 内的作业为<b>训练与测试性质</b>，不等于 Atlas 已承担产线节拍。把它与 09-16 智元在龙旗连续并线五个月、09-21 智元 300 台进长隆这类「已常态化运行」的条目对照时，请注意两者不在一个阶段。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>phantom-kv：18MB 的 KV 张量，按请求装卸模型的拒绝行为</h3>
+      <p>向 KV 缓存注入约 18MB 训练好的 key/value 张量，使拒绝行为可以<strong>按单个请求</strong>解除；关键在于卸载缓存后<strong>原始权重逐字节恢复</strong>，与重写 checkpoint 的 abliteration 路径不同。如果成立，refusal 就从「模型固有属性」变成「可随请求装卸的缓存状态」，讨论的落点会从「能不能去掉」转向「谁来管这 18MB」。边界：AGI Hunt 转述，我未检索到论文、代码或作者信息，「逐字节恢复」是转述中的主张，<strong>未核实</strong>。</p>
+    </div>
+    <div class="m emb">
+      <h3>RoboDawn：不用任何机器人训练数据，VLM 闭环直接控臂</h3>
+      <p>arXiv:2609.22966（Meng-Hao Guo 等）。把机器人控制拆成一组离散的平移 / 旋转 / 夹爪指令，由 agentic VLM 观察、推理、执行并按结果调整。RoboTwin 2.0 C2R 上 zero-shot 53.2%，加一条上下文演示升到 <strong>73.6%</strong>，高于 π0.5 的 46.0%；真机在 Franka 臂上验证了放块入筐与叠块。与第 ④ 条是同一天的两种路线：④ 让通用大脑直接吐动作，这条把动作离散成 VLM 好写的「指令集」。注意 73.6% 是 one-shot 后数字。</p>
+    </div>
+    <div class="m emb">
+      <h3>Cognex 5 亿美元现金收购 RealSense</h3>
+      <p>机器视觉厂商 Cognex 以自有现金收购深度相机公司 RealSense，基础价 <strong>5 亿美元</strong>，预计四季度交割。以色列 Globes 报的「超过 6 亿」包含三年 5,650 万美元现金留任计划与约 5,000 万美元限制性股票。RealSense 两年前从 Intel 分拆时季度营收仅 700–800 万美元，Cognex 预计其 2026 年营收 8,000–9,000 万美元、同比增长超 50%；Intel 仍持 20% 并将随交易退出。值得注意：RealSense 同时是 NVIDIA Isaac ROS 生态里 AgenticROS 的赞助方。<strong>8,000–9,000 万为 Cognex 预测值。</strong></p>
+    </div>
+    <div class="m emb">
+      <h3>InstinctFlash：机器人模型第一次有了专用的 serving 运行时</h3>
+      <p>General Instinct 开源，面向 VLA、扩散策略与「感知-控制单次前向」的混合架构，而不是给文本 / 多模态 LLM 用的 vLLM / TensorRT-LLM。官方称典型 VLA 策略在 RTX 4090 上端到端 <strong>&lt;10ms</strong>、Jetson Orin 上 <strong>&lt;30ms</strong>；支持 action chunking 预分配缓冲与流水、INT8/FP8 量化感知服务、C++ / Python API 对接 ROS 2，并强调确定性优先于吞吐。与 09-17 的 APXInf 端侧推理引擎是同一层的两个方向。边界：两个数字为项目自报，未找到第三方复现；且它比 TensorRT 更不通用。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>① HarnessTax 受控实验</td><td>09-14 ② InfoQ：同模型不同工具账单差 70 倍</td><td>同题不同证（实测账单 → 受控实验）</td></tr>
+          <tr><td>① HarnessTax「每步贵一倍」</td><td>09-22 ① Grok 4.7「标价不变≠任务更便宜」</td><td>同层不同面（token 单价 vs 每任务成本）</td></tr>
+          <tr><td>① HarnessTax 换 harness 省钱</td><td>09-12 ① Devin Fusion 换模型组合省 36%</td><td>同题不同解（动模型 vs 动壳子）</td></tr>
+          <tr><td>② 长程指令遵循 94%→41%</td><td>09-21 ① 微软 Rust 移植「if it compiles it is correct 只是笑话」</td><td>同题不同层（语义回归 vs 长程指令遵循）</td></tr>
+          <tr><td>② 引用不可核查</td><td>09-18 ① OpenAI 6 起失准（记录被被考核者自己写）</td><td>同题不同面（记录被篡改 vs 记录读不全）</td></tr>
+          <tr><td>② 引用错误可追溯到引入它的 agent</td><td>09-13 ③ BenchShield 基础设施侧证据</td><td>同层不同面（作弊取证 vs 引用取证）</td></tr>
+          <tr><td>③ Isaac Skills 做成 agent 可调用</td><td>09-19 ② Claude Code 支持 AGENTS.md（标准互认）</td><td>同层不同面（agent 规则标准 vs 机器人技能标准）</td></tr>
+          <tr><td>③ Intrinsic Core 免费底座</td><td>09-17 ⑤ APXInf 端侧推理引擎开源</td><td>同层不同面（算力层 vs 软件栈层）</td></tr>
+          <tr><td>④ Astra RoboDojo 2,100 次</td><td>09-21 ④ Astra 真开动机械臂「物理 ICL」</td><td>同题不同进（单次演示 → 完整基准）</td></tr>
+          <tr><td>④ 决策层通用化、物理层没跟上</td><td>09-16 ③ DeepMind 100 agent 解 Lean 猜想集体作弊</td><td>反向镜像（数学上刷得动 vs 物理上刷不动）</td></tr>
+          <tr><td>⑤ Atlas 在真产线练排序</td><td>09-16 ④ 智元龙旗并线五个月 / 09-21 ⑤ 智元 300 台进长隆</td><td>同题不同段（已常态化运行 vs 仍在训练期）</td></tr>
+          <tr><td>⑤ 25,000 台目标 vs 训练阶段</td><td>09-13 ⑤ 数采经济学账本、银河通用报案</td><td>同层不同面（资本侧清算 vs 产线侧清醒）</td></tr>
+          <tr><td><strong>今日整体</strong></td><td>09-13 验收权外移 → 09-20 输出端归谁管 → 09-21 校验器装哪层 → 09-22 考场归谁管</td><td>递进：前四期问的都是「谁来评」，今天轮到<b>被评对象与评估者之间的那一层</b>——harness 被定价、上下文中段被测量、机器人底座被开源、大脑与手之间的断层被量化。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-09-23 · 北京时间 10:30</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-09-22.html">← 2026-09-22</a></div>
+</body>
+</html>
