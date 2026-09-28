@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable · walker</title><meta name="description" content="blog-publish 三路发布跑到「同步产物回提交」这一步突然中止，退出码 1："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p019-%E5%8F%98%E9%87%8F%E5%90%8D%E7%B4%A7%E8%B7%9F%E5%85%A8%E8%A7%92%E6%8B%AC%E5%8F%B7%E8%A2%AB%E5%90%9E%E5%AD%97%E8%8A%82/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable · walker"><meta property="og:description" content="blog-publish 三路发布跑到「同步产物回提交」这一步突然中止，退出码 1："><meta property="og:url" content="https://blog.walkerhua.com/pits/p019-%E5%8F%98%E9%87%8F%E5%90%8D%E7%B4%A7%E8%B7%9F%E5%85%A8%E8%A7%92%E6%8B%AC%E5%8F%B7%E8%A2%AB%E5%90%9E%E5%AD%97%E8%8A%82/"><meta property="og:image" content="https://blog.walkerhua.com/og/p019-%E5%8F%98%E9%87%8F%E5%90%8D%E7%B4%A7%E8%B7%9F%E5%85%A8%E8%A7%92%E6%8B%AC%E5%8F%B7%E8%A2%AB%E5%90%9E%E5%AD%97%E8%8A%82.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable · walker"><meta name="twitter:description" content="blog-publish 三路发布跑到「同步产物回提交」这一步突然中止，退出码 1："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p019-%E5%8F%98%E9%87%8F%E5%90%8D%E7%B4%A7%E8%B7%9F%E5%85%A8%E8%A7%92%E6%8B%AC%E5%8F%B7%E8%A2%AB%E5%90%9E%E5%AD%97%E8%8A%82.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable</h1><p>blog-publish 三路发布跑到「同步产物回提交」这一步突然中止，退出码 1：</p><div class="hero-meta"><span>踩坑于 2026-09-27</span><span>约 3 分钟</span><a class="tag" href="/tags/脚本/">脚本</a><a class="tag" href="/tags/工具链/">工具链</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#铁律">铁律</a><a class="toc-l2" href="#半成品状态的处置">半成品状态的处置</a><a class="toc-l2" href="#同类隐患一并修掉">同类隐患一并修掉</a><a class="toc-l2" href="#相关">相关</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-09-27</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>脚本 / 工具链</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（脚本中途 exit 1，已完成的前置动作留下半成品状态，且报错本身极具误导性）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>bash 3.2、set -u、unbound variable、LANG=C、locale、全角括号、多字节、变量名解析、publish.sh、同步产物回提交</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p><code>blog-publish</code> 三路发布跑到「同步产物回提交」这一步突然中止，退出码 1：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[redact] 无 P0/P1 命中，继续构建</span></span>
+<span class="line"><span>/Users/kehua/.agents/skills/blog-publish/scripts/publish.sh: line 117: MSG&lt;乱码&gt;: unbound variable</span></span></code></pre>
+<p>两处误导：</p>
+<ol>
+<li><strong>报错里变量名是乱码</strong>（<code>MSG</code> 后面粘了一个不可见字节），看起来像变量真的没赋值 —— 但 <code>MSG</code> 明明由 <code>-m</code> 传入且前面几步已正常用过。</li>
+<li><strong>失败点在整条流水线的 2/3 处</strong>：GitLab 已 commit + push、日报已 sync、脱敏门禁已过；但构建、GitHub Pages、服务器 rsync 全没跑。<strong>只看到 <code>exit 1</code> 会以为“发布失败什么都没发生”，实际是“发了一半”。</strong></li>
+</ol>
+<p>出问题的代码：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> commit</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> "sync: 栏目同步产物 </span><span style="color:#E1E4E8">$TODAY</span><span style="color:#9ECBFF">${</span><span style="color:#E1E4E8">MSG</span><span style="color:#F97583">:</span><span style="color:#9ECBFF">+（</span><span style="color:#E1E4E8">$MSG</span><span style="color:#9ECBFF">）}"</span></span></code></pre>
+<h2 id="根因">根因</h2>
+<p><strong>bash 解析 <code>$MSG）</code> 时，把紧跟其后的全角右括号 <code>）</code> 的首字节（0xEF）当成了变量名的一部分</strong>，于是变量名变成 <code>MSG\xEF</code> → 未定义 → 在 <code>set -u</code> 下报 unbound variable。</p>
+<p>关键前提是 <strong>locale</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th><code>LANG=C</code>（本次）</th>
+<th><code>LANG=en_US.UTF-8</code>（此前各次）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bash 对 0xEF 的判断</td>
+<td>单字节表里 <code>0xEF</code> 是“字母”（Latin-1 的 ï）</td>
+<td>多字节感知，正确整体切出全角字符</td>
+</tr>
+<tr>
+<td>结果</td>
+<td>吞进变量名 → 崩</td>
+<td>正常</td>
+</tr>
+</tbody>
+</table>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 复现（本机 bash 3.2.57，macOS 自带）</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> LANG=C</span><span style="color:#9ECBFF"> bash</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> 'set -euo pipefail; MSG=x; echo "${MSG:+（$MSG）}"'</span></span>
+<span class="line"><span style="color:#B392F0">bash:</span><span style="color:#9ECBFF"> MSG</span><span style="color:#F97583">&lt;</span><span style="color:#9ECBFF">乱</span><span style="color:#E1E4E8">码</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF">:</span><span style="color:#9ECBFF"> unbound</span><span style="color:#9ECBFF"> variable</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 加花括号界定变量名即安全，与 locale 无关</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> LANG=C</span><span style="color:#9ECBFF"> bash</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> 'set -euo pipefail; MSG=x; echo "${MSG:+（${MSG}）}"'</span></span>
+<span class="line"><span style="color:#B392F0">（x）</span></span></code></pre>
+<p><strong>为什么以前没炸</strong>：该行 2026-09-16 加入，此后 09-16/17/18/20/21/23 各期都正常 —— 那几次的 <code>LANG</code> 不是 <code>C</code>（IDE/登录 shell 注入 UTF-8 locale）。本机 bash 3.2（11 年前的版本，多字节支持有先天缺陷）不会跟着脚本走，只跟着调用时的 locale 走，<strong>所以这是一个“平时看不见、换环境必炸”的定时炸弹</strong>。</p>
+<h2 id="铁律">铁律</h2>
+<ol>
+<li>
+<p><strong>脚本里 <code>$VAR</code> 后面紧跟非 ASCII 字符（中文、全角标点）时，一律写成 <code>${VAR}</code>。</strong> 不要依赖 locale 正确 —— 花括号是零成本的显式边界。</p>
+</li>
+<li>
+<p>反向自查命令（<code>$VAR</code> 后直接跟非 ASCII 字节的行）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">grep</span><span style="color:#79B8FF"> -nE</span><span style="color:#9ECBFF"> '\$[A-Za-z_][A-Za-z0-9_]*[^A-Za-z0-9_"'"'"'$/{}().,:;= \t-]'</span><span style="color:#9ECBFF"> script.sh</span></span></code></pre>
+</li>
+<li>
+<p><strong><code>set -u</code> 是放大器</strong>：同样的解析错误在没开 <code>-u</code> 时只会静默展开成空串（提交信息里少一段），开 <code>-u</code> 就直接中止整条流水线。开 <code>-u</code> 是好事，但要接受它把“此前静默的问题”升级为“硬失败”。</p>
+</li>
+</ol>
+<h2 id="半成品状态的处置">半成品状态的处置</h2>
+<p>脚本中途死掉时，<strong>先看它死在哪一步再决定重跑方式</strong>，不要无脑重跑全流程：</p>
+<table>
+<thead>
+<tr>
+<th>已完成的动作</th>
+<th>残留状态</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitLab commit + push</td>
+<td>已在远端</td>
+<td>幂等，重跑会打印 <code>Everything up-to-date</code>，不用回滚</td>
+</tr>
+<tr>
+<td>sync 已改写产物</td>
+<td>产物已被 <code>git add -A</code> <strong>暂存</strong>（未提交）</td>
+<td>人工补一次 commit 保住规范的两个提交（源码 commit + <code>sync:</code> commit），再重跑</td>
+</tr>
+<tr>
+<td>脱敏门禁已扫</td>
+<td>无副作用</td>
+<td>—</td>
+</tr>
+<tr>
+<td>构建 / GitHub / 服务器</td>
+<td><strong>完全没跑</strong></td>
+<td>重跑脚本补齐</td>
+</tr>
+</tbody>
+</table>
+<p>本次处置：修脚本 → 人工补 <code>f02b3e8 sync: 栏目同步产物 ...</code> 并 push → 重跑脚本（<code>EXIT=0</code>，<code>GitLab=done GitHub=done Server=done</code>）。历史分两笔提交的结构得以保持，与 09-23 期形态一致。</p>
+<h2 id="同类隐患一并修掉">同类隐患一并修掉</h2>
+<p>同一个脚本里还有两处相同写法，都藏在<strong>很少走到的分支</strong>里，这次一起改成 <code>${VAR}</code>：</p>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>位置</th>
+<th>触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>54</td>
+<td><code>（本地多 $LEFT / upstream 多 $RIGHT）</code></td>
+<td>与 upstream 双向分叉时（警告 + exit）</td>
+</tr>
+<tr>
+<td>99</td>
+<td><code>（退出码 $RC），放行</code></td>
+<td>脱敏扫描<strong>异常</strong>（非 0/1）时</td>
+</tr>
+<tr>
+<td>117</td>
+<td><code>$TODAY${MSG:+（$MSG）}</code></td>
+<td>每次有同步产物变更时（本次踩的）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>教训</strong>：只修炸掉的那一行是不够的 —— 报错点只是<strong>第一个被走到</strong>的同类隐患。用上面的 grep 正则扫全文件，一次清干净。</p>
+<h2 id="相关">相关</h2>
+<ul>
+<li>脚本头部变更日志已补：<code>2026-09-27 / 修 $VAR 紧跟全角括号被 LANG=C 下的 bash 3.2 吞字节致 unbound variable（3 处改用 ${VAR} 包裹）</code></li>
+<li>流水线收尾动作被吞的同类问题见 <code>P016-流水线末尾验证失败吞掉收尾动作.md</code> —— 那条讲“失败点之后的正经动作被跳过”，本条讲“失败点之前的动作留下半成品”，可以对着看。</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p018-pip镜像源导致新包装不上/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P018 · pip 装新包报 &quot;No matching distribution found&quot;：本机默认走清华镜像，新包未同步</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
