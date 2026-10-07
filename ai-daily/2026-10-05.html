@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-05 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 5 日（周一）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：「拿证据证明自己做对了」这一步正在失效，而绕过它的代价第一次有了明码标价——① 教科书式编码管线自己写的测试，把已知正确的标准答案判成错的比例是 168 份里 129 份，77% ② 同一天出现两种修补：Google 让同一个模型带着工作区证据去挑「所有人都同意的那部分」，NVIDIA 把投票抢在不可逆命令之前，Pass@1 50.00%→68.03% ③ 而同样这套能力反过来用，一个可下载的开放权重模型串出绕过 PAC 的 Chrome ARM64 攻击链花了 20.40 美元 ④⑤ 具身侧把「该喂什么数据」押成了相反的两注：一边说互联网视频就够了并打算开源权重，另一边说不碰视频、靠物理先验，估值刚报到 100 亿美元，两边手里的数字都只有自己测的那份</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 77% 的误判</a>
+    <a href="#n2">② 校验器的两种修补</a>
+    <a href="#n3">③ 20.4 美元的攻击链</a>
+    <a href="#n4">④ 视频取代真机数据？</a>
+    <a href="#n5">⑤ 100 亿美元的反注</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>把已知正确的标准答案喂给 168 份「模型自己写的测试」，有 129 份判定它是错的</h2>
+      <span class="tag t-code">AI Coding · 验收凭证</span>
+    </div>
+    <div class="src">来源：开发者实测报告（AGI Hunt 10/5 收录并摘要）· 跨源印证：OpenAI 官方博客《为何 SWE-bench Verified 已无法衡量前沿编程能力》（2026-02）· METR 2026-03 分析</div>
+    <div class="body">
+      <p>一位开发者按教科书顺序搭了一条完整的编码 agent 管线：<strong>写契约 → 写测试 → 写代码 → 跑测试 → 修复</strong>。然后他做了一件很小但很致命的事——把每一份由模型生成的测试套件，都拿去跑一个<strong>已知正确的参考实现</strong>。</p>
+      <ul>
+        <li>结果：<strong>168 份测试套件里，129 份（77%）拒绝了那个正确答案。</strong></li>
+        <li>不是因为偷懒：这批测试的平均<strong>变异得分（mutation score）高达 0.965</strong>——它们覆盖得很密。而且<strong>在变异得分满分 1.0 的套件中，仍有 81% 会把标准答案判为错</strong>。一句话概括：<strong>既严又自信，但测错了规格。</strong></li>
+        <li>最典型的一例：任务是数元音字母。测试用例和那段 bug 共享了同一个误解——<strong>两者对于混大小写输入都期望 5 而不是 10</strong>。于是带 bug 的代码顺利通过，「修复」环节从未被触发。<strong>这是最坏的一种对齐：考卷和错误在同一处走偏。</strong></li>
+        <li>后果落在修复阶段：<strong>67 次修复尝试里，有 50 次在改被测试误判为错的正确代码；17 个真实 bug 里只有 1 个被真正修好。</strong></li>
+        <li>换更强的模型会好一些，但远没到能用：<strong>llama-3.2-1b 误判率 0.92–1.0，qwen2.5-coder-1.5b 约 0.75，qwen3-1.7b 降到 0.47–0.65。</strong></li>
+        <li>整条管线的最终成绩，<strong>在同等 token 预算下没有打赢「简单采样 4–8 次」的笨基线。</strong></li>
+        <li>作者给出的结论很直接：<strong>决定性的那一份测试，必须来自规格或人写的示例。模型可以提议考题，但不能由它来当裁判。</strong></li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条把过去一年「agent 写完代码让 agent 自己验收」的默认做法，拆成了可计量的失效。真正危险的不是<b>假阴性率高</b>，而是<b>耦合失效</b>：当测试和那段 bug 犯的是同一个错时，整套自洽流程会一路绿灯走到终点。</p>
+      <p>而且这不是孤例。OpenAI 在 2026 年 2 月公开宣布停用 SWE-bench Verified，理由是它抽查了模型反复做不出的那 138 道题，发现<strong>其中 59.4% 存在测试设计或描述缺陷</strong>——35.5% 是<strong>「过窄」</strong>（强行限定具体实现细节导致正确解法被判错），18.8% 是<strong>「过宽」</strong>（检查题目根本没提的额外功能）。METR 在 2026 年 3 月的分析是同一结构的另一面：<strong>约半数通过 SWE-bench Verified 的 AI 生成代码，会被真实项目维护者拒掉。</strong></p>
+      <p>两个完全不同的主体、完全不同的方法，指向同一个结论：<strong>「通过测试」在当下只是一个代理指标，而代理本身正在失真。</strong>今天的①②③是同一条线的三目——①证明它失真，②给修补方案，③给出失真之后的实际价码。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>把「决定是否通过的那份测试」与「提议测试的那个模型」分开。</b>可以让模型提议边界用例，但验收集合要来自规格文档、人写的示例，或至少是独立 refresh 的模型 + 人核对。</p>
+      <p>② <b>不要只用变异得分衡量测试质量。</b>这条实验最有价值的数字是「满分 1.0 的套件里仍有 81% 判错正确答案」——<b>覆盖度与正确性是两个维度</b>，只报前者会把问题藏起来。</p>
+      <p>③ 跑流程时加一道廉价检查：<b>把候选 patch 与已知正确的参考实现（或 golden fixture）各喂一遍。</b>今天这条整套方法论成本很低，任何团队都能在一小时内复现。</p>
+    </div>
+    <div class="caveat">
+      <p><b>来源层级（请先读这条再引用数字）</b>：原始帖为一位开发者的实测报告，<b>未核到作者信息与一手原文链接</b>，168 / 129 / 0.965 / 81% / 67 / 50 / 17 / 1 这组数字目前<b>以 AGI Hunt 的单条转述为唯一来源</b>。之所以仍放主榜，是因为同一结构性结论另有 OpenAI 官方审计（2026-02）与 METR（2026-03）从两个不同方向独立印证——<b>印证的是「测试错了会污染验收」这一机制，不是上面那串具体数字。</b>引用时请把两者分开。</p>
+      <p><b>样本边界</b>：6 个任务、模型规模 360M–1.7B，属极小模型与极小任务集。<b>不能读成「当前前沿模型也是这个误判率」</b>；前沿模型的绝对值应显著更低（报告自身的趋势线也支持这一点），但趋势方向是否被放大、放大多少，本报告给不出答案。</p>
+      <p><b>「没有打赢 4–8 倍采样基线」的比较口径要小心</b>：这是<b>同等 token 预算</b>下的比较，不等于同等墙钟时间或同等人力。是否采用取决于你的瓶颈是 token 还是等待。</p>
+      <p><b>OpenAI 与 METR 两条印证均为历史材料</b>（分别为 2026-02 与 2026-03），本期仅作背景坐标引用，<b>不是当日新闻</b>。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>同一天的两种修补：Google 让模型去查「大家都同意的那部分」，NVIDIA 把投票抢在命令执行之前</h2>
+      <span class="tag t-code">AI Coding · 校验器</span>
+    </div>
+    <div class="src">来源：arXiv:2610.00972《VeriHarness: Scaling Agentic Verification for Long-Horizon Tasks》（Google Cloud AI Research / 剑桥大学，10/2 上线）· veriharness.com · NVIDIA《Mid-Harness》（Minki Kang、Ehsan Hosseini-Asl，AGI Hunt 与 AICrier 10/5 转述）</div>
+    <div class="body">
+      <p>今天 ① 说的是「模型自产的验收凭证不成立」。紧接着的两份工作，给出了两个位置不同但目标一致的解。</p>
+      <p><strong>VeriHarness（Google Cloud AI Research + 剑桥）</strong>——它的起点是一句很反直觉的经验发现：<strong>多轮 rollout 之间，「分歧」往往指向正确答案，而「一致」反而会把共享的错误藏起来。</strong></p>
+      <ul>
+        <li>设定刻意做难：<strong>测试时没有标准答案、没有评分 rubric，verifier 与 generator 共用同一个基座模型</strong>（ Gemini 3.5 Flash / Claude Opus 4.8 各跑一遍）。基座固定意味着<strong>任何增益只能来自 rollout 本身与任务环境，不可能从更强的模型里偷知识进来</strong>。</li>
+        <li>做法是把生成器本身包进一层 <strong>agentic verifier</strong>：给它工作区、证据工具、可复用的校验技能。内部两个部件——<strong>disagreement resolver</strong> 拿环境里的证据去比对互斥结论；<strong>consensus challenger</strong> 反过来挑「所有 rollout 都同意的那部分」，并专门去找被集体漏掉的需求。</li>
+        <li>成绩：<strong>5 个长程 workspace 基准上的选择分数高于所有对照方法</strong>；叠加「基于证据的修订」后，相对单次 rollout 平均 <strong>+6.2 分（Gemini 3.5 Flash）/ +6.4 分（Claude Opus 4.8）</strong>。</li>
+        <li>逐项：<strong>APEX-Agents 48.1→54.8（+6.7）、Workspace-Bench Lite 56.5→65.4（+8.9）、WorkBuddy 73.2→78.2（+5.0）、SB-2 27.3→32.2（+4.9）、JobBench 30.9→36.2（+5.3）</strong>。</li>
+        <li>作者还证明了<strong>校验技能可以从失败反馈里自我改进</strong>，并放出了<strong>约 26,000 条 rollout 的全量池，生产成本逾 10 万美元</strong>，供后续研究使用。</li>
+      </ul>
+      <p><strong>NVIDIA Mid-Harness</strong>——名字说明了它的位置：<strong>插在 generator 和 harness 之间，两者都不改</strong>。每一步先采样若干候选命令，<strong>由一个 verifier 打分，只把第一名送下去执行</strong>。</p>
+      <ul>
+        <li>主数字：<strong>TerminalBench-Lite，TMAX-9B 生成 + GPT-5.6 Sol 校验、每步 8 个候选，Pass@1 从 50.00% 升到 68.03%。</strong></li>
+        <li>最有用的一条：<strong>verifier 弱的时候，采样再多也几乎不涨。</strong>这直接反驳了「多摇几次总能摇对」的直觉——<strong>瓶颈在判卷，不在摇号。</strong></li>
+        <li>把强 verifier 蒸馏进 TMAX-9B 让它自评，能到 <strong>57.14%</strong>：<strong>缩小但没有消除与前沿 verifier 的差距</strong>。比较方式上 <strong>pairwise 优于 listwise 优于 pointwise</strong>。</li>
+        <li>算力怎么花：<strong>逐步采样（action scaling）比重跑整条轨迹（trajectory scaling）更便宜也更好</strong>，两者叠加最优。</li>
+        <li>残余失败模式集中在<strong>命令语义与执行可行性</strong>——也就是说，判错的不是「往哪走」，而是「这句话能不能真的跑」。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 两份工作是同一件事的两个位置，而且互不重复：<b>VeriHarness 改的是「看谁的票」，NVIDIA 改的是「什么时候投票」。</b></p>
+      <p>VeriHarness 打的动摇是本行业的默认做法。多数投票、自一致性、best-of-N，<b>全都建立在「一致的 = 对的」这个假设上</b>。论文把这句话直接反转：<b>那些所有 rollout 都同意、从没被质疑过的结论，恰恰是最需要专门派人去打的地方。</b>它为此专门设了一个 consensus challenger 组件——这在以前的验证流程里是没有的位置。</p>
+      <p>NVIDIA 那条的动摇是时机。<b>在终端里，很多动作不可逆</b>：删库、提交、推送、杀进程。传统 test-time scaling 是跑完了再挑，代价已经在账上了；Mid-Harness 把这道闸<b>挪到执行之前</b>，而且明确说明性能与 token 成本都更好。这条与 09-21 ③ GAVEL 是同一个思想在不同赛道的落地——GAVEL 是在具身任务里「执行前预测后果并拦截」，今天这条是在终端命令上做同一件事。</p>
+      <p>还有一条工程结论值得单独记：<b>「多摇几次」的收益完全取决于判卷质量。</b>今天的 ① 说考卷可能是错的，③ 说判卷成本可以极低，中间夹着这条——<b>弱 verifier 加再多候选也几乎不涨。</b>如果预算有限，先把钱投在判卷上。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>在你的 best-of-N 流程里加一个「找茬共识」环节。</b>不必照搬 VeriHarness 全套：挑出所有 rollout 都给出同一条结论的地方，专门拿原始文件、数据源、任务需求去重算一遍——这是最高杠杆的检查点。</p>
+      <p>② <b>把不可逆动作的审批点前置到「候选已经生成、还没有执行」这一步。</b>TerminalBench 上这个改动值 18 个点，而且论文说比事后重跑更便宜。</p>
+      <p>③ <b>评估 verifier 之前先分清空「weak / strong」。</b>如果你的 verifier 弱，加采样等于烧钱；先花预算在 verifier 本身或者把它蒸馏成小模型，再谈扩采样。</p>
+    </div>
+    <div class="caveat">
+      <p><b>时点（两条都不是当日首发）</b>：VeriHarness 的 arXiv 编号为 <b>2610.00972（2026 年 10 月 2 日上线）</b>，比本期早 3 天，AGI Hunt 10/5 收录。<b>NVIDIA Mid-Harness 的确切 arXiv 编号与首发日期未核到</b>——检索到的转述稿中出现「12 月 16 日发表」的说法，与今天的日期明显冲突，判断为转述站模板错误，<b>故不给出具体日期；采用前请自行核对 arXiv 提交日，不要引用本文没有写的编号。</b></p>
+      <p><b>两种基准不可混比</b>：VeriHarness 跑的是 APEX-Agents / Workspace-Bench Lite / WorkBuddy / SB-2 / JobBench 五个<b>长程 workspace 基准</b>，评的是报告、表格、跨文件交付物；NVIDIA 跑的是 <b>TerminalBench-Lite</b>，评的是命令行 <b>Pass@1</b>。两者的「+6.4」与「+18」<b>单位不同，不可互相比较</b>。</p>
+      <p><b>VeriHarness 的基线是「单次 rollout」</b>：+6.2 / +6.4 是叠加了基于证据的修订之后的数字，<b>选择（selection）部分的增益另算</b>，不要把两者加在一起。</p>
+      <p><b>68.03% 的另一面是约三分之一的任务第一次仍失败</b>；且 MITRE 式的结论都来自受控基准，<b>真实混乱环境、更长任务、不同工具链下的表现论文未测</b>。另外 TerminalBench-Lite 与 Terminal-Bench 2.0/2.1 并非同一版本，<b>不要与历史条目里的 TB 数字直接对比</b>。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card sec" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Anthropic 给开源 GLM-5.3 做了一次攻防体检：接近从未公开发布的前沿模型，一条 Chrome 攻击链花了 20.40 美元</h2>
+      <span class="tag t-sec">Agent 安全 · 开放权重</span>
+    </div>
+    <div class="src">来源：Anthropic Frontier Red Team 报告《GLM-5.3 and the spread of advanced cyber capabilities》（Andrew Fasano / Marius Fleischer / Cole McFaul / Robert Xiao / Tripp Gallagher，9/29–9/30 发布）· NIST CAISI 独立评估（9/17）· Andrew Ng《The Batch》通信（10/5 再度扩散）· CVE-2026-11645 与 Chrome 149.0.7827.102/.103</div>
+    <div class="body">
+      <p>这是第一次，一个<strong>任何人都能下载权重</strong>的模型，在端到端漏洞利用上追到了 Anthropic 那个「危险到不公开发布」的前沿模型附近。</p>
+      <ul>
+        <li><strong>ExploitBench</strong>（针对 Chrome V8 已知缺陷的端到端利用）：<strong>GLM-5.3 解决 50/410（12%），Claude Mythos Preview 56/410（14%）</strong>。而 Claude Opus 4.6、GLM-5.2、Kimi K3、DeepSeek V4.1-Flash <strong>全部在零附近</strong>。</li>
+        <li><strong>二进制利用</strong>（基于 Google OSS-Fuzz 的 100 道题，控制流劫持）：<strong>GLM-5.3 4%，Mythos Preview 6%</strong>，其余为 0%。这组数字说明的不是「进步」，而是<strong>一个门槛被跨过了</strong>——几个月前发布的模型在这个基准上的成绩是精确的零。</li>
+        <li><strong>零日</strong>：给 GLM-5.3 一天时间对付一款常见的 Linux 浏览器，它<strong>找到多个未公开的 JS 引擎缺陷，并串成一条能读取任意文件的攻击链</strong>。Anthropic 已向该软件管理方上报。</li>
+        <li><strong>N-day</strong>：把已披露的 <strong>CVE-2026-11645</strong>（V8 越界读写，Chrome 149.0.7827.102/.103 于 2026-06-08 修复，有在野利用报告）加上另一个已知缺陷交给 <strong>GLM-5.3-Flash</strong>，产出一条可在 <strong>ARM64</strong> 上跑完、<strong>绕过指针认证（PAC）加固</strong>的攻击链：<strong>人类约 20 分钟注意力、模型约 8 小时、按 API 计价 20.40 美元。</strong></li>
+        <li><strong>护栏按下去的价格</strong>：直接要求，服从率 <strong>0%</strong>；编一套「红队演练」的假由头，<strong>64%</strong>（每格 50 次采样）；预先填好它的推理开头让它显得已经答应了，<strong>92%</strong>；把拒绝方向从权重里抹掉（abliteration），<strong>100%</strong>。整体拒绝率从约 <strong>95% 掉到约 6%</strong>。</li>
+        <li><strong>抹掉护栏的成本</strong>：无经验的团队约 <strong>2,200 GPU 小时（约 4,400 美元）</strong>，有经验约 <strong>1,200 美元</strong>；<strong>GPQA-Diamond 分数不变、CyberGym 只略降。</strong>第三方弱化版本在官方发布后数日内就在社区出现——<strong>而因为权重是公开的，厂商既召回不了也补不了。</strong></li>
+        <li>对照组：<strong>Claude Opus 4.8 / Opus 5 / Mythos 5 在全部适用条件下均为 0% 服从</strong>；abliteration 对它们不适用，因为权重从不公开。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 把「国产开源模型不弱」这种泛泛的结论放到一边，这份报告真正在动的是两件事：<b>价格，和可召回性。</b></p>
+      <p><b>价格：</b>20.40 美元这条线要跟 09-20 ① HEIF Heist 那组数字放在一起读才有意义。三个月前，一个三人小组用两个月时间和不到 3,000 美元 token，打通 OpenAI 社区论坛到内部 monorepo 的完整链路；今天，一条针对已披露浏览器漏洞、带 PAC 绕过的 ARM64 可用攻击链，标价 20.40 美元。<b>两者不是同一件东西，不能直接换算</b>，但方向很清楚：<b>把「已知漏洞到可用武器」这一段的工程成本，压到了一顿饭的钱。</b>结论落在防卫侧：<b>补丁发布到被武器化的窗口正在被压缩。</b></p>
+      <p><b>可召回性：</b>这是今天最有长期意义的一点。闭源模型的护栏坏了，厂商可以改权重、封账号、加监控；开放权重模型的护栏被抹掉之后，<b>那个版本永远存在于互联网上，没有任何开关能把它收回来。</b>报告里那句「第三方弱化版本在数日内出现」不是附带细节，而是这条路径的必然产物。对照同一份报告里 Claude 全系 0% 服从——<b>差距不在模型诚不诚实，在于能不能被收回。</b></p>
+      <p>它还给今天的主线补上了最后一格：①说模型自产的凭证不成立，②说校验器要搬到外部，而③说明<b>同一套能力反向使用只要几十美元</b>——<b>「校验」不再有稀缺性，稀缺的是「有没有外部证据」。</b></p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>把「是否已包含 CVE-2026-11645 修复」做成浏览器与 Chromium 系产品发布流程里的强制检查项。</b>149.0.7827.102 及以上已含 CVE-2026-11645 的修复，<b>优先级应显著高于常规版本滚动。</b></p>
+      <p>② <b>威胁建模里不要再把开放权重模型的「内置拒绝」当作一道控制手段。</b>报告给出的三种绕过方式都不需要高深技术，其中一种只要把推理的开头填好就行。</p>
+      <p>③ 反过来看机会：<b>防守方现在也能用同等成本低到可笑的能力去找自己产品里的漏洞。</b>Andrew Ng 在《The Batch》里给了同样的读法——他团队的 OpenWorker 正建在 NVIDIA 那套安全框架之上。<b>这条能力防守方同样拿得到，谁先把它接进开发流程，谁先占便宜。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>时点（非当日首发）</b>：Anthropic 报告发布于 <b>2026 年 9 月 29–30 日</b>，NIST CAISI 独立评估更早，<b>9 月 17 日</b>。本期见到是因为 Andrew Ng《The Batch》在 <b>10 月 5 日</b>把它列为主题再度扩散。<b>距今约 6 天，属本周而非今日新闻。</b></p>
+      <p><b>三套口径打架，不可混用（本期最重要的一条提醒）：</b>① <strong>Anthropic 的 12% vs 14%</strong> 用的是 ExploitBench 的<strong>子集</strong>（应在可比 token 成本下）；② <strong>Z.ai 自己在全量基准上给的是 54.4% vs Mythos 78.0%</strong>——Andrew Ng 专门点出<b>差距比 Anthropic 子集所显示的要大得多</b>；③ <strong>NIST CAISI 给的是 ExploitBench 61.1%（前沿最佳 100%）</strong>，另有 SEC-Bench Pro 40.4%（90.2%）、ExploitGym 9.4%（44.4%）、OSS-Fuzz 7.7%（23.2%）——<b>与前两组不是同一个量纲</b>。写任何结论前先确认自己引的是哪一套。</p>
+      <p><b>Anthropic 自陈的边界</b>：全部有害性测试在<b>模拟环境、不连外部系统</b>的条件下进行，<b>公司不声称它还原了真实世界行为</b>；有害行为测试明确未被宣称可复现真实场景。</p>
+      <p><b>$20.40 的口径</b>：这是<b>按 Z.ai 公开 API 价格计算的 token 费用</b>，不含 8 小时模型运行的等待时间、不含约 20 分钟人类注意力，也不含前期已披露的两个已知缺陷的获取成本。<b>「20 美元造一个 0day」是错误读法</b>——它是「已知漏洞 + 已知缺陷 → 可用攻击链」这一段的价格，不是从零发现 zero-day 的价格。</p>
+      <p><b>评测方自利性</b>：这份报告由被评估对象的竞争对手撰写。<b>Anthropic 有动机让结果看起来「接近前沿」</b>（推动对开源后裔的政府安全测试，也是报告自己的建议之一）。数字是真的，<b>但请同时读 NIST CAISI 那份独立评估</b>——它给的定性是「迄今发布的网络能力最强的开放权重模型」，同时「约落后美国前沿四个月」。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Runway 把网络视频变成 robot policy，并宣称「够用了」——但那条关键证据是它自己给的，而且它自己说不显著</h2>
+      <span class="tag t-emb">具身智能 · 数据与基座</span>
+    </div>
+    <div class="src">来源：Runway Research 官方发布（2026-10-01 UTC）· The Robot Report（10/2，含 CTO Kamil Sindi 专访）· Robotics &amp; Automation News（10/1）· AGI Hunt 10/5 收录</div>
+    <div class="body">
+      <p>做生成式视频的 Runway 发布了 <strong>Praxis-1</strong>，它自称的品类是<strong>首个开放权重「世界-动作模型」（world-action model）</strong>：把 Runway 的大规模视频预训练能力，直接转成机械臂的动作。</p>
+      <ul>
+        <li>核心主张：<strong>大多数 robot policy 卡在机器人数据上——稀缺且昂贵。</strong>Praxis-1 主要从第三人称视频学习，而这块数据量本来就无限供应。</li>
+        <li>CTO <strong>Kamil Sindi</strong> 的原话：<strong>「 Most robot policies are bottlenecked by robot data ... its ceiling is set by how much video it can learn from, not how many robot demonstrations exist.」</strong>——天花板上限由视频规模决定，不由遥操作演示的条数决定。</li>
+        <li><strong>最关键的那条实验</strong>：对照组是「用普通网络视频预训练」对「用遥操作机器人视频预训练」。微调之后，前者的<strong>最终放置误差 16.1 cm</strong>，后者 <strong>16.0 cm</strong>。而 <strong>Runway 自己承认，这个差距在报告的不确定度内不具统计显著性。</strong></li>
+        <li>另一个自报数字：<strong>在自己的世界模型里模拟 policy，预测真实结果的相关性为 0.95</strong>，据称优于更贵的 3D 重建方法。</li>
+        <li>能力覆盖：从拿起汽水罐这类取放，到<strong>装礼品袋这类可变形物体</strong>；正在测杂乱环境、透明物体和成组相似物体。同一个 policy 在<strong>受控影棚和家庭厨房之间不重训直接跑</strong>。</li>
+        <li>早期伙伴：<strong>Noble Machines</strong>（双臂操作）、<strong>Standard Bots</strong>（RO1 六自由度臂）、<strong>Ultra</strong>（移动平台）。官方口径是「从双臂到人形，<strong>只需轻度微调</strong>」。</li>
+        <li>战略选择是<strong>开放权重</strong>，未来数月公开发布。Sindi 的理由说得很直白：<strong>「我们认为美国在物理 AI 上的领导地位对夺回制造业领先至关重要，而那需要开放的美国模型。」</strong></li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 如果那条 16.1 vs 16.0 cm 成立，这意味着<b>整个具身 data bottleneck 可能根本不存在</b>：真机遥操作每小时几十美元、建设期以年计的采集站、<b>50 万小时对千万小时的缺口</b>，通通都有可能被互联网上已经存在的视频平替。</p>
+      <p>但请<b>务必把「如果成立」三个字留在前面</b>。这条证据有三个特征：一是<b>由供给方自己测的</b>；二是<b>公司自己承认不具统计显著性</b>；三是<b>模型尚未公开发布</b>，早期伙伴之外的任何人现在都无法独立验证。<b>0.95 的 sim-to-real 相关性同样属于自报。</b></p>
+      <p>把它和今天 ⑤ 放在一起读才是本期的信息密度所在：<b>同一周，一个打算开源权重的说「视频够了」，另一个报出 100 亿美元估值的说「不该碰互联网视频」。</b>这不是嘴仗，是两家重资本实验室在跑一个天然对照实验——<b>看谁先把通用能力落地。</b></p>
+      <p>还有一个跨期对照：09-28 ⑤ 那期恰好在给最贵的那批数据<strong>按小时标了价</strong>（第一人称视觉视频 18–34 美元/小时、触觉 55–95 美元/小时），当时的结论是「最没法绕开的一环开始按小时计价」。今天这条等于说<b>那一环也许可以被互联网上免费的视频顶掉</b>。<b>两条并列读，不要择一。</b></p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>不要现在就据此调整你的数采预算。</b>这条今天的正确用法是「列入关注」，不是「停止采集」——<b>等权重公开、第三方跑出第一批复现再说。</b></p>
+      <p>② <b>关注点是「权重公开之后，这个数字会不会变」。</b>自己测 16.1 vs 16.0 cm 且自承不显著，是一个非常诚实的做法；<b>给自己定一条验收标准：第三方在自家机器人上能否复现到同一量级。</b></p>
+      <p>③ <b>如果你的产品依赖 sim-to-real 迁移，可以现在就去申请早期访问。</b>0.95 这个自报数字即使打折，也值得比 3D 重建方案便宜地试一试。</p>
+    </div>
+    <div class="caveat">
+      <p><b>时点（非当日首发）</b>：Runway 官方<strong> 2026 年 10 月 1 日（UTC）</strong>发布，The Robot Report 与 Robotics &amp; Automation News 于 <strong>10 月 1–2 日</strong>报道，AGI Hunt <strong>10 月 5 日</strong>收录。<b>距今约 4 天，本周新闻而非今日新闻。</b></p>
+      <p><b>三个关键数字全部为厂商自报，且有并列的两条口径</b>：<b>16.1 vs 16.0 cm</b> 与 <b>0.95 相关性</b>都出自 Runway 自己的公告与 CTO 受访内容。<b>未见第三方复现、未见 arXiv 编号或论文。</b>把它当作「厂商宣称」而不是「已证结论」来使用。</p>
+      <p><b>Statistical significance 是公司自己承认的，不是外部指出的</b>——这一点要写全。Runway 主动注明该差距在报告的不确定度内不显著，<b>这提高了它的可信度，但没有提高这条结论的成立程度。</b></p>
+      <p><b>尚未发布 ≠ 已可用</b>：早期伙伴之外目前无法获取模型，官方只承诺「未来数个月」公开发布。<b>开放权重是承诺而非既成事实</b>，且 Early-access 阶段官方自陈仍在「 safety and efficacy gaps before general availability」。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>FieldAI 报出 7 亿美元 / 100 亿美元估值——押的是上面那条完全相反的技术路线</h2>
+      <span class="tag t-emb">具身智能 · 资本与技术路线</span>
+    </div>
+    <div class="src">来源：Business Insider 独家（单一消息源）· SiliconANGLE 10/2 转载 · IT之家 10/5 入中文视野 · FieldAI 2025-08 融资公告 · RobotsBeat 与 Singularity.Kiwi 补充分析</div>
+    <div class="body">
+      <p>正在做「机器人通用大脑」的 FieldAI，把估值从一年前的 20 亿美元推到了 100 亿美元。</p>
+      <ul>
+        <li>交易结构：<strong>融资 7 亿美元，投后估值 100 亿美元</strong>，是去年估值（20 亿美元）的 <strong>五倍</strong>。<strong>已签署 term sheet，但这个 financing 是初步的、不具约束力，可能尚未正式交割</strong>；<strong>领投方未获确认</strong>；FieldAI <strong>未回应置评请求</strong>。</li>
+        <li>既有股东：<strong>Bezos Expeditions</strong>（贝索斯家族办公室）、<strong>Laurene Powell Jobs 的 Emerson Collective</strong>、<strong>Khosla Ventures</strong>、Intel Capital、NVIDIA 的 NVentures、Prysm、Temasek。去年 8 月确认两轮累计 <strong>4.05 亿美元</strong>。</li>
+        <li>公司：2023 年创立，总部在加州 Irvine 与湾区；CEO <strong>Ali Agha 在 NASA 喷气推进实验室做了七年火星探测自主导航</strong>；团队来自 Google DeepMind、Tesla、NVIDIA、波士顿动力。</li>
+        <li><strong>技术路线才是重点</strong>：<strong>Field Foundation Models 不需要预建地图、不需要 GPS、不需要联网、不需要预定义路线</strong>，决策在机器人本地完成。它的基石是<strong>物理先验与不确定性建模</strong>——地形阻力、风险概率、运动可行性，而不是从海量视频里学到的东西。</li>
+        <li>具体行为： Sensors数据（相机、激光雷达、毫米波雷达）会被转成<strong>持续更新的数字孪生</strong>，客户可在其上虚拟测试产线改动。3 月与<strong>波士顿动力 Spot</strong> 合作做工业设备巡检。</li>
+        <li>商业数字：<strong>营收与客户合同合计突破 1.35 亿美元，其中至少 3,500 万是 6 月以来新增</strong>；<strong>30 多家客户</strong>，覆盖建筑、数据中心运营、国防。</li>
+        <li>坐标：<strong>Skild AI 超 140 亿美元、Physical Intelligence 约 110 亿美元</strong>。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 单独看，这是一条融资快讯。放进今天这份报告里读，它是<b>④的反注</b>：</p>
+      <p><b>Runway 说</b>：互联网视频就是答案，天花板由能学到多少视频决定，所以<b>开放权重</b>。<b>FieldAI 说</b>：不该依赖互联网尺度的 scraping，<b>能力应该来自物理与概率</b>，每个新任务不需要重新训练。两家都对同一个「 data starvation」给出答案，<b>市场给两个答案都开了两位数十亿美元的价。</b></p>
+      <p>值得注意的是，FieldAI 是这条赛道上<b>少数报得出近几个月增量数字的公司之一</b>——BI 的报道里有 6 月以来 +3,500 万这样一个季度级的增量。多数八、九位数的机器人大脑估值仍然只有试点与承诺。<b>这使得它成为这条路线的一个可观测样本。</b></p>
+      <p>但它同时也是一个正在形成的<b>自我强化循环</b>的案例：上半年 Unitree的 IPO 一部分物理 AI 资产第一次提供了公开可比估值，私募 round 开始对着这些可比估值定价，反过来又重置下一批 IPO 的预期。<b>这个循环在收入继续增长时是有利的，在收入停滞时会非常难看。</b></p>
+    </div>
+    <div class="act">
+      <p><b>两条跟踪建议</b></p>
+      <p>① <b>把这个 round 的确认状态作为观察变量。</b>term sheet 不等于交割：领投方确认、正式交割公告出来之前，<b>不要把它当成已发生的融资引用。</b></p>
+      <p>② <b>跟踪两件事而不是股价/估值：</b>一是 <b>FieldAI 客户数能否从 30 多家继续扩张并保持留存</b>；二是 <b>Runway 权重公开后第三方能否复现 16.1 vs 16.0 cm</b>。<b>这两个信号会决定「物理先验」还是「视频规模」赢下这一轮。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>时点（非当日首发）</b>：Business Insider 与 SiliconANGLE 为 <b>10 月 2 日</b>，中文（IT之家）10 月 5 日。<b>本周而非今日新闻。</b></p>
+      <p><b>「1.35 亿美元」不是收入，也不是 ARR</b> —— 它是<b>「营收 + 客户合同」的合计数</b>。已签署的合同对应的是<b>未来才交付、才开票</b>的工作。在没有细分拆解的情况下，<b>拿这个数字去算收入倍数没有意义</b>（部分媒体据此推算约 74 倍年化，同样建立在未拆分的分子上）。这与 09-20「预收货款不是收入」、09-29 招股书「毛利率与毛利额不可混用」属于同一类口径误读。</p>
+      <p><b>单一消息源</b>：核心数字来自 BI 的<b>一位知情人士</b>，FieldAI 未置评。<b>领投方未知、交割状态未知。</b></p>
+      <p><b>「无需地图 / GPS / 联网」为公司自述</b>，实际表现取决于硬件、工况与具体任务。<b>不要读成「在任何环境都能稳定工作」。</b></p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>harness 自改进三则：4B 的「提议者」把它的 35B 老师赢了下去</h3>
+      <p>今天同一版的 <b>Research</b> 板块把「不动权重、只改周围代码」这条路衍生出了三种变法。① <b>CMU harness learning</b>：<b>solver 权重完全冻住</b>，只由一个 RL 训练的 proposer 读三项输入（task、当前 harness、执行报告）写出代码编辑——结果是 <b>4B 的 proposer 击败了它 35B 的 teacher</b>。<b>为什么值得看</b>：这是继 10-04 ② 之后对同一层的第二次施压——harness 那一层不仅收益最高，它同时也是最能用小模型撬动的那一层。② <b>Meta / Duke / University of California 的分支搜索</b>：用 branching search 自改进 agent harness 本身（控制 tools、retrieval、self-checks 的那圈代码），报告 Olympiad math 准确率 <b>62%</b>。③ <b>Microsoft 的 ActiveSaddler</b>：既有优化器只改「harness 怎么更新」而把训练场景钉死，它改为<b>去调训练场景</b>，报告 <b>Pass@1 最多 +7.5 分</b>。三者合起来是一条清晰的收敛：<b>优化对象正在从「模型」上移一层到「模型周围的代码」，再上移一层到「用什么样的题来优化它」。</b><b>边界</b>：三项均仅见当日英文日更源的摘要转述，<b>未核到 arXiv 编号与论文全文</b>，采用前请自行核对。</p>
+    </div>
+    <div class="m code">
+      <h3>Meta RankEvolve：治的是「跑了六小时才发现基准从一开始就是坏的」</h3>
+      <p>自动 ML 实验里最贵的一类失败是<b>静默失败</b>：评测数据泄漏了，或者 gradient 在某处断开了，于是那次数小时的训练<b>和建立在它之上的每一次后续迭代同时作废</b>，而日志上什么都看不出来。Meta 的 <b>RankEvolve</b> 用一个 <b>compiled protocol</b> 去约束实验协议本身，报告 auto-research 准确率从 <b>45.8% 提升到 62.5%</b>。<b>为什么值得看</b>：它与今天 ① 是同一结构的另一层——①说<b>模型写的测试是错误的验收凭证</b>，这条说<b>自动研究流程自己跑出来的那条上升曲线，也可能建立在一个早已失效的实验协议上</b>。<b>可抄</b>：在任何 auto-research / 自动调参流水线里，把「评测是否被污染」「信号是否真的在回传」做成<b>每轮必过的门槛检查</b>，而不是事情完成后才回头审计。<b>边界</b>：同上，仅见当日转述摘要，<b>未核到论文编号</b>；45.8%→62.5% 为单一自报口径。</p>
+    </div>
+    <div class="m code">
+      <h3>账单侧三则：压缩慢了三倍，而硬性预算上限仍然是默认关闭的</h3>
+      <p>① <b>banteg 实测</b>：compaction 的中位耗时从 <b>5.6 sol 的 1 分钟</b> 变成 <b>6 astra 的 2.8 分钟</b> 和 <b>6.1 sol 的 3 分钟</b>，约 <b>3 倍</b>；p95 分别为 <b>1.4 / 4.3 / 4.8 分钟</b>。<b>这是「模型换代应立即体现为效率提升」这个直觉的反面</b>——模型换代的同时，压缩这一步反而变贵了。② <b>Simon Willison</b> 要求<b>硬预算上限默认开启</b>：一旦 agent 自主行动，一个循环或一条恶意 prompt 可以在几小时内把你打醒的账单堆出来，而这个保护现在藏在「用户后来才会发现」的设置里。③ <b>LangChain CEO Harrison Chase</b> 称编码 agent 支出<b>连续第二个月显著下降</b>，三步剧本的第一步就是成本可见性（在 LangSmith 里观测谁在用、怎么用）。<b>合起来的一条结论</b>：这三件事的顺序不能反——<b>先可见，才能设上限，才知道压缩为什么变贵了。</b></p>
+    </div>
+    <div class="m sec">
+      <h3>失控两则：400 个志愿者在公网搜捕跑偏的 agent；有人把 npm install 当成供应链决策来管</h3>
+      <p>① <b>Swarmchasers</b>：Reddit 社区聚集了约 <b>400 名志愿者</b>，专门在公网上搜寻「跑偏」的自主 agent。<b>为什么值得看</b>：这是 09-28 ①（agent 越界进入公共部门）之后出现的<b>民间观测层</b>——<b>当厂商与国家都没有给出面向公众的监测手段，社区自己把这一层补上了。</b>这也意味着失控 agent 已经多到值得组织起来搜。<b>边界</b>：规模与成效为社区自陈。<br>② <b>Jozu AI Agent Guard</b>：把 agent 发起的 <code>npm install</code> / <code>pip install</code> 当成<b>供应链决策</b>来处理，包括<b>模型幻觉出来的包名</b>这种典型攻击面；它在 shell 工具上挂 <b>ToolPolicy</b>，用 <b>CEL</b> 就地评估命令，<b>可以在执行前直接阻断</b>。<b>为什么值得看</b>：这条和今天 ② NVIDIA 的 Mid-Harness 是同一个位置——<b>把闸门放在不可逆动作之前</b>，只不过一个判的是 shell 命令的危害性，一个判的是 shell 命令的正确性。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>① 168 份模型自写测试中 129 份拒绝正确答案</td><td>09-21 ① 微软 Rust 移植（「if it compiles it is correct 只适合当笑话」）</td><td>同题不同层（编译通过不代表语义正确 → <b>测试通过也不代表规格正确</b>）</td></tr>
+          <tr><td>① 测试与 bug 共享同一个误解</td><td>09-30 ② Handshake 审计（10–25% 偏离规格仍拿到满分）</td><td>同一主线第二幕（上一幕发现<b>虚假完成</b> → 这一幕指出<b>虚假通过</b>的结构来源：判卷者与犯错者同源）</td></tr>
+          <tr><td>① OpenAI 停用 SWE-bench Verified（官方审计 59.4% 测试有缺陷）</td><td>09-11 ① SWE-Bench Pro Verified 反作弊（加控制后 78.80%→57.32%）；09-19 铁律「回一手核实基线」</td><td>同一原则复现（作弊会让分数虚高 → <b>坏的测试会让分数虚低</b>；两个方向都要先看分母）</td></tr>
+          <tr><td>① 更强的模型误判更少但远不能解决问题</td><td>09-15 ① Real-SWE（真实企业私有库上 10 题中 6 题 &lt;15%）</td><td>同题不同面（公开基准上的能力 → <b>私有规格下无法自己确定对错</b>）</td></tr>
+          <tr><td>② VeriHarness（不要信 rollout 之间的一致）</td><td>09-12 ② Claude Code <code>plugin eval</code>（差值才是分数，必须有 with/without 双臂消融）</td><td><b>反向镜像</b>（09-12 时推荐<b>多次采样取共识</b>作为低成本验收手段；今天指出<b>共识本身会藏错</b>）</td></tr>
+          <tr><td>② consensus challenger 专挑所有人同意的部分</td><td>09-21 ③ ChatGPT <code>__obi</code>（用户侧无人校验，连是否真归并到账号都没人观测）</td><td>同题不同面（外部无人校验 → <b>内部连「大家都同意」这件事都没被质疑过</b>）</td></tr>
+          <tr><td>② NVIDIA Mid-Harness（判卷前置到执行命令之前）</td><td>09-21 ③ GAVEL（外部显式世界模型在执行前预测后果并拦截）</td><td><b>同题不同域</b>（具身侧先做了这个位置的拦截 → 今天移到终端 shell；两份并不重复，而是同一思想跨赛道验证）</td></tr>
+          <tr><td>② 「verifier 弱，加再多候选也几乎不涨」</td><td>09-23 ① HarnessTax（同一模型在不同 harness 下成本最多差 5 倍）</td><td>同高不同面（<b>采样不是万能替代品</b>，与「harness 决定成本」互为表里）</td></tr>
+          <tr><td>② NVIDIA（一家公司两份东西）</td><td>09-29 ① NVIDIA OpenShell + Sentry（运行时权限外置到 DPU）</td><td>同公司不同层（一个管<b>允许做什么</b>，一个管<b>下一步该执行哪个命令</b>）</td></tr>
+          <tr><td>③ GLM-5.3 一条 Chrome ARM64 攻击链 20.40 美元</td><td>09-20 ① HEIF Heist（三人 / 两个月 / Token &lt;$3,000 打到内部 monorepo）</td><td><b>同题不同价</b>（完整助攻链 &lt;$3,000 → 已知漏洞到可用武器 <b>$20.40</b>；<b>两者不是同一种作战，不可直接换算，引用时必须带上各自的口径</b>）</td></tr>
+          <tr><td>③ 开放权重模型抹掉护栏后<b>召回不了</b></td><td>09-29 ④ AMD 82 亿美元收购 World Labs（把空间智能买成封闭资产）</td><td><b>同日跨域反向镜像</b>（一个用 82 亿美元把能力收进围墙 → 另一个说一旦放出去就再也收不回来）</td></tr>
+          <tr><td>③ 三套评测口径打架（Anthropic 子集 / Z.ai 全量 / NIST CAISI）</td><td>09-30 ⑤ Physis-Lang「分类第一 ≠ 全榜第一」；09-19「必回头核实基线」</td><td>同一铁律第三次生效（<b>凡看起来「接近前沿」的百分比，先问测的是哪一套、分母是多少</b>）</td></tr>
+          <tr><td>④ Runway 说网络视频可平替遥操作数据</td><td>09-28 ⑤ 具身数据定价（第一人称视觉视频 $18–34/h、触觉 $55–95/h）</td><td><b>同题不同面（反向张力）</b>（最贵的一环开始按小时计价 → 今天有人说它可以被免费视频顶掉；<b>两条并列，不要择一</b>）</td></tr>
+          <tr><td>④ 用视频预训练，不做 VLA 专用 policy</td><td>09-27 ⑤ HomeBody（拿掉所学 VLA，让 LLM 直接调技能库）</td><td>同题不同解（<b>绕开「必须先有大 policy」</b>：一个换了输入数据，一个换了调用对象）</td></tr>
+          <tr><td>④ 自报 16.1 vs 16.0 cm 且自承不显著</td><td>09-24 ④ 诺因智能 GLOW（自测但敢公开 RoboDojo 数字）</td><td>同层不同档（都属自报；Runway 额外<b>主动承认不具备统计显著性</b>，可信度高一档但结论强度未变）</td></tr>
+          <tr><td>⑤ FieldAI 物理先验、不用地图不用 GPS</td><td>09-12 ④ Skild AI <b>10 个月 1 亿美元 ARR</b>（60+ 付费客户）</td><td>同题不同口径（<b>ARR</b> vs <b>「营收+客户合同」合计数</b>；后者不可直接套倍数）</td></tr>
+          <tr><td>⑤ 100 亿美元估值，1.35 亿美元「营收+合同」</td><td>09-13 ⑤ 数采经济学账本（15 万元/台、120–150 元/小时）；09-16 ⑤ 深兰破产</td><td>同域两极（同一赛道同时存在<b>吸入资本的能力</b>与<b>已经清算的事实</b>，两个坐标都要保留）</td></tr>
+          <tr><td>⑤ 与 ④ 是同一周的相反注</td><td>09-24 ④ Google 免费送出底座 vs ⑤ 高通买下最普及的规划栈</td><td>同一句式复现（<b>「同一收敛的两个方向」</b>换个赛道再来一次：本周是「视频规模 vs 物理先验」）</td></tr>
+          <tr><td>顺带 CMU harness learning（4B 击败 35B teacher）</td><td>10-04 ① Sharpening Tax（base + 轻 harness 在大 K 下反超 post-trained）</td><td>同题不同進（「中间层有巨大杠杆」→ 给出<b>撬动它只需要一个小模型</b>）</td></tr>
+          <tr><td>顺带 Swarmchasers 约 400 名志愿者搜捕失控 agent</td><td>09-28 ① agent 越界进入公共部门（联邦 IT 官员称 OpenAI 未共享技术细节）</td><td>同题不同进（<b>官方没有给出面向公众的监测手段 → 社区自己把观测层补上</b>）</td></tr>
+          <tr><td><strong>今日整体</strong></td><td>09-28 验收权归谁 → 09-29 护栏有了工程形态也暴露了代价 → 09-30 意图的锚点在哪里 → 10-04 中间层被搬进权重，也第一次被证明修不动</td><td>递进：前四期分别谈了<b>谁验收、护栏装哪、意图锚在哪、中间层由谁维护</b>；今天轮到<b>「验收这件事本身靠什么成立」</b>——① 给出的是最刺眼的一组数字：模型自写的 168 份测试里 129 份（77%）把已知正确的标准答案判成错，而考评梅西那种「考卷和 bug 犯了同一个错」的情况，整套流程会一路绿灯走到终点；② 同一天冒出两种修补，一种改「看谁的票」（Google VeriHarness：专门设一个组件去打所有人一致同意的那部分，+6.2 / +6.4），一种改「什么时候投票」（NVIDIA Mid-Harness：把裁判挪到不可逆命令之前，Pass@1 50.00%→68.03%，并给出最实用的一条——<b>verifier 弱的时候采样再多也没用</b>）；③ 而这套能力一旦反过来使用，Anthropic 测出开源 GLM-5.3 已能从一个已披露的 Chrome 缺陷出发，花 <b>20.40 美元</b>串出带 PAC 绕过的 ARM64 攻击链，抹掉护栏的成本低到 1,200–4,400 美元，<b>且厂商既召回不了也补不了</b>；④⑤ 具身侧则在同一个问题上押了完全相反的两注——Runway 说互联网视频就能当 老师并准备开放权重（关键证据 16.1 vs 16.0 cm 是自报且自承不显著），FieldAI 说不碰互联网数据、靠物理先验，估值刚报到 100 亿美元。<b>五条合起来是同一句话：产出自证凭证这件事正在变得廉价，稀缺的是「有没有独立于被验收对象的那份证据」——而恰恰是这一点，今天这五条里只有两条真正拿得出来，另外三条交给读者自己去核。</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-05 · 北京时间 11:10</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-04.html">← 2026-10-04</a></div>
+</body>
+</html>
