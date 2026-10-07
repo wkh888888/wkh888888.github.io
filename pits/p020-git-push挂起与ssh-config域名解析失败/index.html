@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P020 · `git push` 卡住十几分钟：ssh config 映射 `ssh.github.com` + 本机 DNS 不可达 · walker</title><meta name="description" content="blog-publish 三路发布卡在 GitHub 段约 15 分钟，日志停在："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p020-git-push%E6%8C%82%E8%B5%B7%E4%B8%8Essh-config%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%A4%B1%E8%B4%A5/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P020 · `git push` 卡住十几分钟：ssh config 映射 `ssh.github.com` + 本机 DNS 不可达 · walker"><meta property="og:description" content="blog-publish 三路发布卡在 GitHub 段约 15 分钟，日志停在："><meta property="og:url" content="https://blog.walkerhua.com/pits/p020-git-push%E6%8C%82%E8%B5%B7%E4%B8%8Essh-config%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%A4%B1%E8%B4%A5/"><meta property="og:image" content="https://blog.walkerhua.com/og/p020-git-push%E6%8C%82%E8%B5%B7%E4%B8%8Essh-config%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%A4%B1%E8%B4%A5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P020 · `git push` 卡住十几分钟：ssh config 映射 `ssh.github.com` + 本机 DNS 不可达 · walker"><meta name="twitter:description" content="blog-publish 三路发布卡在 GitHub 段约 15 分钟，日志停在："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p020-git-push%E6%8C%82%E8%B5%B7%E4%B8%8Essh-config%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%A4%B1%E8%B4%A5.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CxyUYRer.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">归档</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P020 · `git push` 卡住十几分钟：ssh config 映射 `ssh.github.com` + 本机 DNS 不可达</h1><p>blog-publish 三路发布卡在 GitHub 段约 15 分钟，日志停在：</p><div class="hero-meta"><span>踩坑于 2026-10-07</span><span>约 3 分钟</span><a class="tag" href="/tags/网络/">网络</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#定位三条只读命令">定位（三条只读命令）</a><a class="toc-l2" href="#处置">处置</a><a class="toc-l2" href="#️-铁律github-段失败后重跑脚本推不上去">⚠️ 铁律：GitHub 段失败后，重跑脚本推不上去</a><a class="toc-l2" href="#已修复进脚本2026-10-07">已修复进脚本（2026-10-07）</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-07</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>网络 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（命令无限挂起，无报错无输出；且失败后不能靠重跑脚本自愈）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>git push、hang、ssh config、ssh.github.com、443、DNS 解析失败、dig 超时、GIT_SSH_COMMAND、ConnectTimeout、nc 探活、blog-publish、P004 同族</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（脚本侧已加超时保护；连接本身仍依赖网络）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p><code>blog-publish</code> 三路发布卡在 GitHub 段约 15 分钟，日志停在：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[main 73a49b2] Site updated: 2026-10-07 (AI 日报 2026-10-05)</span></span>
+<span class="line"><span> 6 files changed, 451 insertions(+), 4 deletions(-)</span></span>
+<span class="line"><span> create mode 100644 ai-daily/2026-10-05.html</span></span>
+<span class="line"><span>                              ← 之后长时间无输出</span></span></code></pre>
+<p>没有报错、没有超时退出，就是不动。</p>
+<h2 id="根因">根因</h2>
+<p>本机 <code>~/.ssh/config</code> 刻意把 GitHub 的 SSH 走 443（规避 22 端口封锁）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Host github.com</span></span>
+<span class="line"><span>    Hostname ssh.github.com</span></span>
+<span class="line"><span>    Port 443</span></span>
+<span class="line"><span>    User git</span></span></code></pre>
+<p>本次本机 DNS 服务器不可达（<code>dig +short ssh.github.com</code> 直接 <code>connection timed out</code>），<code>ssh.github.com</code> 无本地缓存 → 解析不出来。<strong>ssh 默认没有连接超时</strong>，于是进程挂在解析/连接阶段，表现为无限挂起。</p>
+<blockquote>
+<p>与 P004（git/curl 直连 GitHub hang 死）同族，但根因不同：P004 是「没注入代理」，本次是「<strong>DNS 解析失败 + 命令无超时</strong>」。</p>
+</blockquote>
+<h2 id="定位三条只读命令">定位（三条只读命令）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ps</span><span style="color:#79B8FF"> -ef</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#9ECBFF"> 'git-receive-pack'</span><span style="color:#6A737D">                   # 卡住的 ssh git-receive-pack 进程</span></span>
+<span class="line"><span style="color:#B392F0">dig</span><span style="color:#9ECBFF"> +short</span><span style="color:#9ECBFF"> +time=</span><span style="color:#79B8FF">3</span><span style="color:#9ECBFF"> ssh.github.com</span><span style="color:#6A737D">                  # 超时/无结果 → DNS 侧故障</span></span>
+<span class="line"><span style="color:#B392F0">nc</span><span style="color:#79B8FF"> -z</span><span style="color:#79B8FF"> -G</span><span style="color:#79B8FF"> 5</span><span style="color:#9ECBFF"> github.com</span><span style="color:#79B8FF"> 22</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> 22通</span><span style="color:#6A737D">               # 备用通道是否可用</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -C</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">pages-rep</span><span style="color:#E1E4E8">o</span><span style="color:#F97583">&gt;</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --oneline</span><span style="color:#79B8FF"> -1</span><span style="color:#6A737D">               # 确认 commit 已生成、只是没推出去</span></span></code></pre>
+<p>实测参考：<code>dig github.com</code> 也超时（DNS 服务器整个不可达），但 <code>nc -z github.com 22</code> 通 —— 说明系统解析器有缓存、纯 DNS 查询路径坏了。</p>
+<h2 id="处置">处置</h2>
+<p><strong>1. 中断卡死进程</strong>（<code>kill &lt;publish.sh pid&gt; &lt;git push pid&gt; &lt;ssh pid&gt;</code>），脚本随之退出。</p>
+<p><strong>2. 人工补推 Pages 仓</strong> —— 绕过坏掉的 config 直连可用通道：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> ~/projects/server-apps/wkh888888.github.io</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> core.sshCommand='ssh -F /dev/null -o BatchMode=yes -o StrictHostKeyChecking=accept-new'</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> origin</span><span style="color:#9ECBFF"> main</span></span></code></pre>
+<p>（<code>-F /dev/null</code> 忽略 ssh config，回落到默认 <code>github.com:22</code>；本机 <code>known_hosts</code> 已有 <code>github.com</code> 条目，不会交互提示。）</p>
+<p><strong>3. 人工补跑服务器段</strong>（参数与脚本一致）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> ~/projects/server-apps/astro-blog</span></span>
+<span class="line"><span style="color:#E1E4E8">STAGE</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/home/walker/.deploy/blog.walkerhua.com</span><span style="color:#E1E4E8">; ROOT</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/www/wwwroot/blog.walkerhua.com</span></span>
+<span class="line"><span style="color:#E1E4E8">O</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">-p</span><span style="color:#79B8FF"> 22222</span><span style="color:#9ECBFF"> -o</span><span style="color:#B392F0"> LogLevel</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">ERROR</span><span style="color:#9ECBFF"> -o</span><span style="color:#B392F0"> BatchMode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">yes</span><span style="color:#9ECBFF"> -o</span><span style="color:#B392F0"> ConnectTimeout</span><span style="color:#F97583">=</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">ssh</span><span style="color:#9ECBFF"> "${</span><span style="color:#E1E4E8">O</span><span style="color:#9ECBFF">[</span><span style="color:#F97583">@</span><span style="color:#9ECBFF">]}"</span><span style="color:#9ECBFF"> walker@192.0.2.10</span><span style="color:#9ECBFF"> "mkdir -p </span><span style="color:#E1E4E8">$STAGE</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#B392F0">rsync</span><span style="color:#79B8FF"> -az</span><span style="color:#79B8FF"> --delete</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> "ssh -p 22222 -o LogLevel=ERROR -o BatchMode=yes"</span><span style="color:#9ECBFF"> dist/</span><span style="color:#9ECBFF"> "walker@192.0.2.10:</span><span style="color:#E1E4E8">$STAGE</span><span style="color:#9ECBFF">/"</span></span>
+<span class="line"><span style="color:#B392F0">ssh</span><span style="color:#9ECBFF"> "${</span><span style="color:#E1E4E8">O</span><span style="color:#9ECBFF">[</span><span style="color:#F97583">@</span><span style="color:#9ECBFF">]}"</span><span style="color:#9ECBFF"> walker@192.0.2.10</span><span style="color:#9ECBFF"> "set -e; sudo -n mkdir -p </span><span style="color:#E1E4E8">$ROOT</span><span style="color:#9ECBFF">; sudo -n rsync -a --delete --exclude='.user.ini' --exclude='.well-known' </span><span style="color:#E1E4E8">$STAGE</span><span style="color:#9ECBFF">/ </span><span style="color:#E1E4E8">$ROOT</span><span style="color:#9ECBFF">/"</span></span></code></pre>
+<p><strong>4. 补记发布留痕</strong>（脚本第 5 段随中断被跳过）。</p>
+<h2 id="️-铁律github-段失败后重跑脚本推不上去">⚠️ 铁律：GitHub 段失败后，重跑脚本推不上去</h2>
+<p>脚本判断「要不要 push」用的是<strong>工作区是否干净</strong>（<code>git status --porcelain</code>），不是「本地是否领先远端」。</p>
+<p>PAGES 仓已 commit 未 push 时，工作区恰恰是干净的 → 重跑打印 <code>[github] 无变更，跳过 commit/push</code>，<strong>推送永远不会发生</strong>。</p>
+<p>所以这种情况必须人工 <code>git push</code>，别指望重跑自愈。</p>
+<h2 id="已修复进脚本2026-10-07">已修复进脚本（2026-10-07）</h2>
+<p><code>publish.sh</code> GitHub 段的 push 注入连接与存活超时：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">GIT_SSH_COMMAND</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"${</span><span style="color:#E1E4E8">GIT_SSH_COMMAND</span><span style="color:#F97583">:-</span><span style="color:#E1E4E8">ssh</span><span style="color:#9ECBFF">} -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=3"</span><span style="color:#B392F0"> git</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> origin</span><span style="color:#9ECBFF"> main</span></span></code></pre>
+<p>DNS/网络异常时 15 秒快速失败（脚本 <code>set -e</code> 随即退出），不再挂 15 分钟。<strong>注意这只缩短失败时间，不解决连通性</strong>；ssh config 的 443 映射保持不变。</p>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong>无超时的网络命令是定时炸弹</strong>。ssh / git push / rsync 默认都可能无限等，关键链路一律显式给 <code>ConnectTimeout</code>。</li>
+<li><strong>“卡住”和“报错”要分开处置</strong>：报错能看堆栈，卡住得先 <code>ps -ef</code> 找进程、再逐层探活（DNS → TCP → 认证）。</li>
+<li><strong>幂等重跑不是万能的</strong>：重跑能不能补漏，取决于脚本的判据是「状态干净」还是「目标一致」。判据是前者时，半完成状态会被判成“无需动作”。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p019-变量名紧跟全角括号被吞字节/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
