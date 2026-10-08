@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘 · walker</title><meta name="description" content="一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘 · walker"><meta property="og:description" content="一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。"><meta property="og:url" content="https://blog.walkerhua.com/blog/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86/"><meta property="og:image" content="https://blog.walkerhua.com/og/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘 · walker"><meta name="twitter:description" content="一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘</h1><p>一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 4 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#症状速查">症状速查</a><a class="toc-l2" href="#先找到失联的合规插件">先找到失联的合规插件</a><a class="toc-l2" href="#dns-残留如何影响直连应用">DNS 残留如何影响直连应用</a><a class="toc-l3" href="#实测记录2026-09-17">实测记录（2026-09-17）</a><a class="toc-l2" href="#恢复服务再验证连接">恢复服务，再验证连接</a><a class="toc-l2" href="#从日志确认而不是从报错猜测">从日志确认，而不是从报错猜测</a><a class="toc-l2" href="#排查过程中出现的-c0017">排查过程中出现的 C0017</a><a class="toc-l2" href="#长期修复该怎么提">长期修复该怎么提</a><a class="toc-l2" href="#下次清理启动项之前">下次清理启动项之前</a></aside><article class="card prose"><blockquote>
+<p>一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。</p>
+<p>日期：2026-09-30 · 故障记录：2026-09-17</p>
+</blockquote>
+<p>清理 Mac 启动项时，我关掉了一个看起来不起眼的合规插件启动项。随后，零信任客户端登录提示“请求超时 (esm)”，AI 编码工具也卡在“等待模型响应”。</p>
+<p>两个应用同时出问题，很容易先怀疑网络或账号。排查日志后，线索指向两件事：合规插件服务没有启动，以及 VPN 断开后仍残留的隧道 DNS。</p>
+<p>本文记录的是 2026-09-17 的本机故障与验证结果。同样的报错可能有其他原因，下面的证据链比报错文字本身更有参考价值。</p>
+<blockquote>
+<p>说明：文中不点名具体产品。客户端统一称“零信任客户端”，报错代号 <code>esm</code> 与错误码 <code>C0017</code> 保留原样——它们是故障现场的字面线索，也是搜索时能捞到这篇文章的关键词。</p>
+</blockquote>
+<h2 id="症状速查">症状速查</h2>
+<ul>
+<li>登录页显示“请求超时 (esm)”</li>
+<li>（排查时手动停掉守护服务后）出现过“系统错误 C0017”</li>
+<li>副作用：AI 编码工具会话长时间卡在“等待模型响应”，报网络错误 3002</li>
+</ul>
+<p>如果问题出现在清理启动项之后，先核对合规插件服务是否被禁用；仅凭 esm 超时提示，还不能确定根因。</p>
+<h2 id="先找到失联的合规插件">先找到失联的合规插件</h2>
+<p>一句话：我在某个清理工具的“开机启动项管理”里关掉了合规插件的启动项。</p>
+<p>它是零信任客户端的合规插件后台服务。本次日志显示，身份认证成功后向合规模块发送证书消息失败，随后出现插件连接失败和请求超时。服务被禁用与这条错误链相吻合。</p>
+<p>本次认证接口已经返回成功，所以后续排查重点转向本机插件连接。</p>
+<h2 id="dns-残留如何影响直连应用">DNS 残留如何影响直连应用</h2>
+<p>本次排查记录涉及三类网络变化：</p>
+<ul>
+<li>创建 WireGuard VPN 隧道接口</li>
+<li>把 macOS 默认 DNS 改成隧道 DNS <code>10.x.x.x</code></li>
+<li>注入部分经隧道访问的内网路由</li>
+</ul>
+<p>DNS 是系统级设置。一旦隧道、路由或这个 DNS 没能干净恢复，任何<strong>不走代理、依赖本机解析</strong>的应用都会受影响——“直接连接”模式的 AI 工具正是这类。</p>
+<p>本地功能、缓存和既有长连接可能还正常，所以现象会显得很随机：往往在启动、同步配置、刷新权限或调用云端服务时才炸。</p>
+<h3 id="实测记录2026-09-17">实测记录（2026-09-17）</h3>
+<ul>
+<li>VPN 状态已显示“已断开”，但 Wi-Fi DNS 仍是隧道 DNS，且到它的路由不再经过原隧道 → 向它查询外部域名超时</li>
+<li>AI 编码工具会话卡在“等待模型响应”，报网络错误 3002；日志里的真实错误是 <code>getaddrinfo ENOTFOUND &lt;目标域名&gt;</code> —— 目标域名压根没解析成功</li>
+<li>同一台机器上，绕过代理直连该域名在解析阶段就超时；走系统代理 <code>127.0.0.1:7890</code> 则能到达</li>
+<li>把“网络代理”改成“跟随系统”后，日志确认该域名从 <code>DIRECT</code> 变成 <code>PROXY 127.0.0.1:7890</code>；随后返回服务端 429 —— 说明这步已经绕过了 DNS 故障，429 是独立的额度限制</li>
+</ul>
+<p>这里有一个容易误判的地方：代理 curl 能通，不足以证明直接连接可用。<strong>应用走哪条链路，排查就验证哪条链路。</strong></p>
+<p>结论：这次故障已定位到“隧道 DNS 残留 + 直连方式”；但不能据此认为历史上每次 AI 工具超时都由同一个原因造成。</p>
+<h2 id="恢复服务再验证连接">恢复服务，再验证连接</h2>
+<ol>
+<li><strong>重新开启服务</strong>：清理工具 → 开机启动项管理 → 重新启用合规插件相关的启动项</li>
+<li><strong>重启 Mac</strong>，让合规插件和系统守护服务重新加载</li>
+<li><strong>重开客户端并登录</strong></li>
+<li>仍报 esm 超时：用客户端“发送诊断日志”，联系企业 IT / 安全客户端管理员，说明「合规插件服务已启用，仍连不上合规模块」</li>
+</ol>
+<p>网络侧的临时办法：本机代理可用时，把应用的“网络代理”设为“跟随系统”。本次实测有效，但它依赖代理常驻，也不修系统 DNS、不解决额度限制。</p>
+<h2 id="从日志确认而不是从报错猜测">从日志确认，而不是从报错猜测</h2>
+<p>客户端本地日志的顺序很清晰：</p>
+<ol>
+<li>设备授权与用户认证接口返回成功 → 认证服务和基础网络是通的</li>
+<li>发送 <code>certificates</code> 给合规模块时：记录「esm 断开连接，消息无法发送」</li>
+<li>随后：记录「连接 esm 失败：connect collect-plugin three port error」</li>
+<li>重试后：“合规插件连接失败”，约 11 秒后报「esm 请求超时」</li>
+</ol>
+<p>日志位置形如 <code>~/Library/Application Support/&lt;客户端&gt;/logs/zta.log</code></p>
+<blockquote>
+<p>日志可能含认证信息、证书或设备信息。对外发出前请用客户端自带的“发送诊断日志”，或先让 IT 脱敏。</p>
+</blockquote>
+<h2 id="排查过程中出现的-c0017">排查过程中出现的 C0017</h2>
+<p>排查时我手动停过系统守护服务（形如 <code>com.&lt;厂商&gt;.zta.Agent</code>），之后客户端连不上本机守护端口，就显示 C0017。</p>
+<p>它不是新的服务端错误：恢复守护服务或重启即可消除。</p>
+<h2 id="长期修复该怎么提">长期修复该怎么提</h2>
+<p>启动项误关在本机能修。DNS 和路由也是本机客户端 / 守护进程落地的，但是否由管理后台下发策略尚未核实，需企业 IT 或管理员确认。</p>
+<p>给 IT / 安全客户端管理员的一段话术，可直接贴：</p>
+<blockquote>
+<p>零信任客户端在 macOS 上把 Wi-Fi DNS 设为隧道 DNS。实测 VPN 显示断开后该 DNS 仍残留且查询超时，导致直连应用无法解析外部域名。建议先检查断开时的 DNS / 路由清理逻辑，再评估对内网域名走 split DNS 或提供可靠回退。请确认应由管理后台策略还是客户端修复。</p>
+</blockquote>
+<p>不建议手工改客户端的 DNS / 路由 / 隧道配置：可能被守护服务覆盖，也可能破坏所在组织的安全访问策略。</p>
+<h2 id="下次清理启动项之前">下次清理启动项之前</h2>
+<p>不要在清理工具的“开机启动项管理”里禁用来源不明的企业安全、VPN、合规或守护类服务。要清理后台项，先确认归属和用途——这类合规插件必须保持启用。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/ai怎么接管你的电脑从一张出差单拆解cua/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">AI 怎么接管你的电脑？从一张出差单拆解 CUA</span></a><a class="post-nav-item post-nav-next" href="/blog/换个模型还是换个工具四家ai编码客户端的同题实验/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">换个模型，还是换个工具？四家 AI 编码客户端的同题实验</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

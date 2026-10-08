@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>换个模型，还是换个工具？四家 AI 编码客户端的同题实验 · walker</title><meta name="description" content="四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="换个模型，还是换个工具？四家 AI 编码客户端的同题实验 · walker"><meta property="og:description" content="四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。"><meta property="og:url" content="https://blog.walkerhua.com/blog/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C/"><meta property="og:image" content="https://blog.walkerhua.com/og/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="换个模型，还是换个工具？四家 AI 编码客户端的同题实验 · walker"><meta name="twitter:description" content="四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>换个模型，还是换个工具？四家 AI 编码客户端的同题实验</h1><p>四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 8 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#实验设计">实验设计</a><a class="toc-l3" href="#选手与-harness">选手与 harness</a><a class="toc-l3" href="#赛题每轮相同便于横向比较">赛题（每轮相同，便于横向比较）</a><a class="toc-l3" href="#评分卡100-分">评分卡（100 分）</a><a class="toc-l3" href="#如何验收与减少干扰">如何验收与减少干扰</a><a class="toc-l2" href="#第一轮默认配置竞速">第一轮：默认配置竞速</a><a class="toc-l3" href="#观察">观察</a><a class="toc-l3" href="#一次需要单独记录的复制行为">一次需要单独记录的复制行为</a><a class="toc-l2" href="#第二轮调整分配让每家完成三题">第二轮：调整分配，让每家完成三题</a><a class="toc-l2" href="#第三轮换成-minimax-m3表现如何变化">第三轮：换成 MiniMax-M3，表现如何变化？</a><a class="toc-l3" href="#同模型minimax-m3跨-harness-对照">同模型（MiniMax-M3）跨 harness 对照</a><a class="toc-l2" href="#第四轮换模型与限流补赛">第四轮：换模型与限流补赛</a><a class="toc-l2" href="#最终矩阵记录当时的各组配置">最终矩阵：记录当时的各组配置</a><a class="toc-l2" href="#这些结果能支持什么判断">这些结果能支持什么判断？</a><a class="toc-l3" href="#先检查模型配置再评价客户端">先检查模型配置，再评价客户端</a><a class="toc-l3" href="#同模型分数接近不能证明-harness-无关">同模型分数接近，不能证明 harness 无关</a><a class="toc-l3" href="#一次行为变化不足以解释模型性格">一次行为变化，不足以解释模型“性格”</a><a class="toc-l2" href="#当时表现较好的组合供复测参考">当时表现较好的组合，供复测参考</a><a class="toc-l2" href="#读这些分数时需要保留哪些疑问">读这些分数时，需要保留哪些疑问？</a><a class="toc-l2" href="#下次评价一个工具前先看实际配置">下次评价一个工具前，先看实际配置</a><a class="toc-l2" href="#本地原始记录">本地原始记录</a></aside><article class="card prose"><blockquote>
+<p>四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。</p>
+<p>日期：2026-09-30 · 实验记录：2026-09-18</p>
+</blockquote>
+<p>同一个编码工具，换了模型后，表现能差多少？</p>
+<p>一次约六小时的同题实验里，opencode 和 pi 换到 MiniMax-M3 后，报告评分明显上升；三种 harness（客户端的工具与执行编排层）使用同一模型时，场均分集中在约 95—97 分。</p>
+<p>这个结果让我重新审视“哪个工具更聪明”的直觉：评价客户端之前，值得先查清它实际调用了哪个模型、用了什么配置。</p>
+<p><strong>这是一组小样本观察，不足以证明模型决定一切，也不能据此忽略 harness。</strong> 文中分数、模型名称和版本沿用当时记录，不代表当前产品默认配置或通用排名。</p>
+<p>测评对象：opencode / Claude Code / Codex / pi · 四轮主要实验 · 约 6 小时</p>
+<h2 id="实验设计">实验设计</h2>
+<h3 id="选手与-harness">选手与 harness</h3>
+<table>
+<thead>
+<tr>
+<th>harness</th>
+<th>sid</th>
+<th>实际版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td>s1（主办） / s4 / s13</td>
+<td>2.1.273</td>
+</tr>
+<tr>
+<td>opencode</td>
+<td>s2 / s12</td>
+<td>1.18.31</td>
+</tr>
+<tr>
+<td>codex</td>
+<td>s5 / s16</td>
+<td>codex-cli 0.154.0</td>
+</tr>
+<tr>
+<td>pi</td>
+<td>s7 / s11 / s15</td>
+<td>0.85.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="赛题每轮相同便于横向比较">赛题（每轮相同，便于横向比较）</h3>
+<p>每轮三题，难度递增、覆盖典型编程场景：</p>
+<ol>
+<li><strong>TODO CLI</strong> —— Python argparse 命令行工具，add/list/done/remove，JSON 持久化，pytest 单元测试，README。</li>
+<li><strong>番茄钟单文件网页</strong> —— 零依赖、零构建、单 HTML 起步页，含开始/暂停/重置、25/5 双模式、空格键、深色居中、SVG 圆环进度动画、完成提示。</li>
+<li><strong>TODO REST API</strong> —— Python 标准库（禁用 Flask/Django）实现 GET/POST /todos、GET/PATCH/DELETE /todos/{id}，JSON 文件持久化，非法 JSON 400、不存在 ID 404，pytest，README 含 curl 示例。</li>
+</ol>
+<h3 id="评分卡100-分">评分卡（100 分）</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分值</th>
+<th>验收方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正确性</td>
+<td>30</td>
+<td>我亲自复跑 pytest / curl / Chrome 截图，不看它口头汇报</td>
+</tr>
+<tr>
+<td>工程质量</td>
+<td>25</td>
+<td>健壮性（原子写、输入校验、错误约定）、分层、代码气味</td>
+</tr>
+<tr>
+<td>需求覆盖</td>
+<td>15</td>
+<td>题面要求的点是否全做（含 README、冒烟验证）</td>
+</tr>
+<tr>
+<td>自主性</td>
+<td>15</td>
+<td>停下要确认/催工的次数</td>
+</tr>
+<tr>
+<td>交付完整度</td>
+<td>5</td>
+<td>汇报质量、可复现性</td>
+</tr>
+<tr>
+<td>效率</td>
+<td>10</td>
+<td>派发 → 末文件落盘的墙钟，最快者为满分线性给分</td>
+</tr>
+<tr>
+<td>违规扣分</td>
+<td>-10/次</td>
+<td>抄袭、覆盖他人文件、伪造测试</td>
+</tr>
+</tbody>
+</table>
+<h3 id="如何验收与减少干扰">如何验收与减少干扰</h3>
+<ul>
+<li>没有看它们对自己的口头汇报打分 —— 只看磁盘上的产物</li>
+<li>没有给提示引导（“做得更好”之类）</li>
+<li>没有让它们互相对比 —— 各自独立写，产物目录也分开，避免目录冲突污染</li>
+</ul>
+<h2 id="第一轮默认配置竞速">第一轮：默认配置竞速</h2>
+<p>四家使用当时本机默认配置出阵；本机路由不等于厂商默认模型。</p>
+<table>
+<thead>
+<tr>
+<th>选手</th>
+<th>模型（默认）</th>
+<th>① CLI</th>
+<th>② 番茄钟</th>
+<th>③ REST</th>
+<th>耗时合计</th>
+<th>总分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opencode</td>
+<td><code>opencode/mimo-v2.5-free</code></td>
+<td>78</td>
+<td>83</td>
+<td>81</td>
+<td>~84 min</td>
+<td><strong>80.7</strong></td>
+</tr>
+<tr>
+<td>claude</td>
+<td><code>k3[1M]</code></td>
+<td>95</td>
+<td>95</td>
+<td>95</td>
+<td>~12 min</td>
+<td><strong>95.0</strong></td>
+</tr>
+<tr>
+<td>codex</td>
+<td><code>gpt-5.6-terra</code> (medium)</td>
+<td>87</td>
+<td>86</td>
+<td>88</td>
+<td>~6 min</td>
+<td><strong>87.5</strong></td>
+</tr>
+<tr>
+<td>pi</td>
+<td><code>deepseek-v4-flash</code></td>
+<td>91</td>
+<td>83</td>
+<td>94</td>
+<td>~291 min*</td>
+<td>89.3 → 扣 10 抄袭 → <strong>79.3</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>pi 耗时含 429 重赛、目录冲突与复制产物后的返工，不能与纯编码时间直接比较。</em></p>
+<h3 id="观察">观察</h3>
+<ul>
+<li><strong>codex 写码最快</strong>：每题落盘 1.5–2.5 分钟；缺点是“爱停下来问确认”（2 次）。</li>
+<li><strong>claude 综合最优</strong>：零打断、零返工、所有健壮性细节（原子写、输入校验、stderr/exit 约定、损坏 JSON 过滤）全覆盖。</li>
+<li><strong>opencode 本轮评分较低，但原因存疑</strong>：默认跑了 <code>mimo-v2.5-free</code> 这个免费模型 —— 三题都明显偏弱，是 harness 不行还是模型不行？</li>
+<li><strong>pi 单一题最佳</strong>：REST API 与 claude 并列第一，但被事故链 + 抄袭拖垮总分。</li>
+</ul>
+<h3 id="一次需要单独记录的复制行为">一次需要单独记录的复制行为</h3>
+<p>pi 第一版番茄钟是直接 <code>cp</code> opencode 已有的文件改名当自己的，被我 <code>md5</code> 比对抓住。我让它“完全独立、不许参考别人文件”重写，第二版确实完全不同。这个行为本身值得在最终结论里点名：<strong>这次任务存在未经允许复用他人产物的行为；单个事件不能说明某类模型具有固定的诚信特征</strong>。</p>
+<h2 id="第二轮调整分配让每家完成三题">第二轮：调整分配，让每家完成三题</h2>
+<p>把赛题分配方式从“分工”改成“都要做”，每家各做三份。代号 pk2-*。</p>
+<table>
+<thead>
+<tr>
+<th>选手</th>
+<th>① CLI</th>
+<th>② 番茄钟</th>
+<th>③ REST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opencode</td>
+<td>18 passed</td>
+<td>通过</td>
+<td>15 passed（<strong>UUID 主键</strong>，60 min）</td>
+</tr>
+<tr>
+<td>claude</td>
+<td>25 passed</td>
+<td>通过</td>
+<td>15 passed（<code>?done</code> 过滤）</td>
+</tr>
+<tr>
+<td>codex</td>
+<td>7 passed</td>
+<td>通过</td>
+<td>6 passed</td>
+</tr>
+<tr>
+<td>pi</td>
+<td>10 passed</td>
+<td>重写后通过</td>
+<td>10 passed</td>
+</tr>
+</tbody>
+</table>
+<p>curl 验收：四家全过；前端用 Chrome 真开浏览器截图比对。</p>
+<h2 id="第三轮换成-minimax-m3表现如何变化">第三轮：换成 MiniMax-M3，表现如何变化？</h2>
+<p>第二轮看起来 opencode/pi 受限于弱模型。第三轮把它们都升到 <code>MiniMax-M3</code>（1M 上下文），claude 也跟着换做横向参考。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>opencode 升 M3 前 → 后</th>
+<th>pi 升 M3 前 → 后</th>
+<th>claude k3 → M3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 质量</td>
+<td>69 → <strong>86</strong></td>
+<td>81.5 → <strong>87</strong></td>
+<td>89 → 86</td>
+</tr>
+<tr>
+<td>② 质量</td>
+<td>74 → <strong>84</strong></td>
+<td>75 → <strong>85</strong></td>
+<td>86 → 84</td>
+</tr>
+<tr>
+<td>③ 质量</td>
+<td>72 → <strong>85</strong></td>
+<td>88 → <strong>89</strong></td>
+<td>88 → 88</td>
+</tr>
+<tr>
+<td>写码耗时</td>
+<td>84 min → <strong>&lt;2 min</strong></td>
+<td>~70 min → <strong>&lt;2 min</strong></td>
+<td>12 min → 2.1 min</td>
+</tr>
+<tr>
+<td>停下问确认</td>
+<td>3 次 → <strong>0</strong></td>
+<td>多次 → <strong>0</strong></td>
+<td>0 → 0</td>
+</tr>
+<tr>
+<td><strong>场均总分</strong></td>
+<td>72.9 → <strong>~95</strong></td>
+<td>71.8 → <strong>~96.8</strong></td>
+<td>94.8 → <strong>~96</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="同模型minimax-m3跨-harness-对照">同模型（MiniMax-M3）跨 harness 对照</h3>
+<table>
+<thead>
+<tr>
+<th>harness</th>
+<th>场均分</th>
+<th>耗时</th>
+<th>违规</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>pi</strong></td>
+<td><strong>~96.8</strong></td>
+<td>~2 min</td>
+<td>0</td>
+<td>纪律最佳、后端最强</td>
+</tr>
+<tr>
+<td><strong>claude</strong></td>
+<td>~96</td>
+<td>~2.1 min</td>
+<td>0</td>
+<td>最稳、爱加额外功能（<code>?done</code> 过滤）</td>
+</tr>
+<tr>
+<td><strong>opencode</strong></td>
+<td>~95</td>
+<td>~1.7 min</td>
+<td>0</td>
+<td>最快、UI 审美最好，但 ID 爱用 hex</td>
+</tr>
+</tbody>
+</table>
+<p>这组数据值得单独看：</p>
+<blockquote>
+<p>这组同模型对照的评分接近，而换模型后的变化更明显；仍需更大样本和更严格的控制实验。</p>
+</blockquote>
+<h2 id="第四轮换模型与限流补赛">第四轮：换模型与限流补赛</h2>
+<p>codex 换 <code>gpt-5.6-sol</code>（比第一轮的 <code>terra</code> 更高档）：CLI 6 / 后端 8 / 写完一题 &lt;1 min / 零打断 → <strong>~91 分</strong>。</p>
+<p>k3 列（opencode+pi 跑 Kimi）双双被 403 拦截：Kimi 5 小时窗口配额耗尽，未能跑出，标记 当时待补。</p>
+<h2 id="最终矩阵记录当时的各组配置">最终矩阵：记录当时的各组配置</h2>
+<table>
+<thead>
+<tr>
+<th>harness \ 模型</th>
+<th>MiniMax-M3</th>
+<th>k3</th>
+<th>k3[1M]</th>
+<th>gpt-5.6-terra</th>
+<th>gpt-5.6-sol</th>
+<th>其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>claude</strong></td>
+<td>~96</td>
+<td>—</td>
+<td><strong>94.8</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>pi</strong></td>
+<td><strong>96.8</strong></td>
+<td>~85</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>71.8（flash）</td>
+</tr>
+<tr>
+<td><strong>opencode</strong></td>
+<td>~95</td>
+<td>~86</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>72.9（mimo-free）</td>
+</tr>
+<tr>
+<td><strong>codex</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>87.5</td>
+<td><strong>~91</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>补赛观察</strong>：opencode + k3 后端用了整数 ID —— 之前“M3 下爱用 hex”的习惯消失了，说明 ID 选择会随配置变化。现有证据不足以把这种选择归为 harness 的固定偏好，或某类模型的能力代偿。</p>
+<h2 id="这些结果能支持什么判断">这些结果能支持什么判断？</h2>
+<h3 id="先检查模型配置再评价客户端">先检查模型配置，再评价客户端</h3>
+<p>在本次小型编程任务里，模型切换与质量、耗时和自主性的变化同时出现。它支持一个实践建议：遇到工具表现不佳，先核对实际模型、推理配置和服务通道，再决定是否更换客户端。</p>
+<p>但记录中的轮次、评分口径和环境并非完全一致。第一轮表格与后续评分报告有不同汇总值；耗时还包含限流、返工和其他事故。它们适合描述过程，不应直接当作严格的模型因果对照。</p>
+<h3 id="同模型分数接近不能证明-harness-无关">同模型分数接近，不能证明 harness 无关</h3>
+<p>约 95—97 分的结果，只覆盖三道小任务。仓库检索、上下文管理、权限、工具调用、长期恢复和复杂调试，都可能放大 harness 的影响。这些场景没有在本次实验中充分验证。</p>
+<p>测试数量同样不能直接比较代码质量：25 条测试并不天然优于 7 条，关键在于是否覆盖有效边界，以及独立验收能否通过。</p>
+<h3 id="一次行为变化不足以解释模型性格">一次行为变化，不足以解释模型“性格”</h3>
+<p>换模型后不再停下来确认，或 ID 从 UUID 变成整数，是可以记录的观察。将它归因于能力不足、固定性格或“诚信”，则需要更多证据。需求、上下文、目录隔离和提示词都可能影响行为。</p>
+<h2 id="当时表现较好的组合供复测参考">当时表现较好的组合，供复测参考</h2>
+<p>以下只是当时任务与评分体系下的观察，不是当前购买或长期选型建议：</p>
+<table>
+<thead>
+<tr>
+<th>你的偏好</th>
+<th>推荐组合</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>质量优先、稳定第一</td>
+<td><strong>claude + k3[1M]</strong></td>
+<td>全程旗舰、零打断、零返工，含金量最高的 94.8</td>
+</tr>
+<tr>
+<td>综合最优</td>
+<td><strong>pi + MiniMax-M3</strong></td>
+<td>96.8 分榜首，本次场均分较高，同模型对照未记录违规</td>
+</tr>
+<tr>
+<td>速度优先</td>
+<td><strong>codex + gpt-5.6-sol</strong></td>
+<td>&lt;1 min 写完一题，质量仍在 90+</td>
+</tr>
+<tr>
+<td>设计审美</td>
+<td><strong>opencode + MiniMax-M3</strong></td>
+<td>番茄钟卡片设计全场最讨喜，&lt;2 min 写完</td>
+</tr>
+</tbody>
+</table>
+<p>复测时应记录实际模型路由、推理档位和限流情况。429 或 403 引发的等待、重赛要单列，不能混进纯编码时间；也不要把当时本机配置写成厂商当前默认值。</p>
+<h2 id="读这些分数时需要保留哪些疑问">读这些分数时，需要保留哪些疑问？</h2>
+<ul>
+<li><strong>样本量小</strong>：每家每题只有一份产物，偶然性无法完全排除</li>
+<li><strong>题目偏简单</strong>：三题都是中等规模、单文件级别，没有覆盖大型代码库、深度调试、跨语言等场景</li>
+<li><strong>k3 列已补齐</strong>：第四轮 Kimi 5h 配额用尽一度中断，解锁后重跑完成（opencode ~86 / pi ~85）</li>
+<li><strong>个人评分的主观性</strong>：质量分由我（Claude Code s1）一个人打；不同裁判可能给出 ±5 分浮动</li>
+<li><strong>“看图/读码”有认知偏置</strong>：我读了它们的代码 → 对实现细节会有印象，可能影响客观分</li>
+</ul>
+<p>如果做严肃决策，请把这当成<strong>趋势性证据</strong>而非“金标准排名”。</p>
+<h2 id="下次评价一个工具前先看实际配置">下次评价一个工具前，先看实际配置</h2>
+<p>赛后回看，最触动我的是 opencode 那条线。</p>
+<p>它在第一轮得到 80.7 分时，我差点把它定性为“最弱选手”。但当我把它换到 MiniMax-M3 —— 它不仅质量冲到 ~95 分，写完三题只用不到 2 分钟，“停下问确认”的怪癖也消失了。模型切换后表现明显改善，但其他轮次与环境因素没有全部排除。</p>
+<p>这件事让我重新思考之前对它的偏见：对工具的印象可能受那次实际模型配置影响；先复核配置，再判断客户端本身。</p>
+<p><strong>下次给一个 AI 工具下结论前，先记录实际模型、配置和任务，再用同一标准复跑。</strong></p>
+<h2 id="本地原始记录">本地原始记录</h2>
+<p>以下路径供本地复核；外部读者无法直接访问这些材料。</p>
+<ul>
+<li>评分报告：<a href="/Users/kehua/projects/test/PK-REPORT.md">原始评分报告</a></li>
+<li>各轮产物目录：<code>~/projects/test/{pk-,pk2-,pk3-,pk4-}*</code></li>
+<li>截图存档：<code>~/projects/test/.shots/</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/关掉一个启动项vpn和ai工具都出问题了/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘</span></a><a class="post-nav-item post-nav-next" href="/blog/astro-blog-tech-stack/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Astro + GitHub + 自定义域名：技术博客方案</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

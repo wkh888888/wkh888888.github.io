@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 会点网页，为什么还填不了你的 OA？一次出差申请带来的自动化选型思考 · walker</title><meta name="description" content="CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="AI 会点网页，为什么还填不了你的 OA？一次出差申请带来的自动化选型思考 · walker"><meta property="og:description" content="CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。"><meta property="og:url" content="https://blog.walkerhua.com/blog/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa/"><meta property="og:image" content="https://blog.walkerhua.com/og/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 会点网页，为什么还填不了你的 OA？一次出差申请带来的自动化选型思考 · walker"><meta name="twitter:description" content="CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>AI 会点网页，为什么还填不了你的 OA？一次出差申请带来的自动化选型思考</h1><p>CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 8 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#浏览器连对了自动化才真正开始">浏览器连对了，自动化才真正开始</a><a class="toc-l2" href="#四种名字几种不同的控制入口">四种名字，几种不同的控制入口</a><a class="toc-l2" href="#cua把当前窗口交给-ai-接着操作">CUA：把当前窗口交给 AI 接着操作</a><a class="toc-l2" href="#browserskill给-agent-一个共享登录态的工作窗口">BrowserSkill：给 Agent 一个共享登录态的工作窗口</a><a class="toc-l2" href="#bb-browser让-ai-用短命令操作网页">bb-browser：让 AI 用短命令操作网页</a><a class="toc-l2" href="#playwright让已经跑通的流程能够反复验证">Playwright：让已经跑通的流程能够反复验证</a><a class="toc-l2" href="#哪个更省-token先看模型参与了多少次">哪个更省 Token？先看模型参与了多少次</a><a class="toc-l2" href="#我的选择按任务频率和操作范围来分工">我的选择：按任务频率和操作范围来分工</a></aside><article class="card prose"><blockquote>
+<p>CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。</p>
+<p>日期：2026-09-30</p>
+</blockquote>
+<p>“我明明已经登录了，为什么你还让我重新登录？”</p>
+<p>一次看起来很简单的出差申请，卡在了这里。</p>
+<p>需求只有一句话：参考旧单，把出差时间改成指定的一周，五天，其他信息保持一致。旧单已经开在 Chrome 里，项目、城市、交通方式和预算都能看见。</p>
+<p>AI 用浏览器工具打开 OA，却返回了登录页。它据此判断需要用户登录，而原来的 Chrome 窗口明明已经登录。</p>
+<p>后来才发现：<strong>工具连到了另一套浏览器配置。</strong></p>
+<p>换成 CUA 原生窗口操作后，AI 读到了原窗口里的参考单，完成新建、填表、日期与行程核对，最后保存了草稿。</p>
+<p>这个小插曲，让几种浏览器自动化技术之间的差别变得具体起来。它们都能点击“保存”，但从接入现有工作，到重复执行测试，适合的任务并不相同。</p>
+<h2 id="浏览器连对了自动化才真正开始">浏览器连对了，自动化才真正开始</h2>
+<p>本机当时的 bb-browser 通过调试端口连接 Chrome，使用的是独立配置目录 <code>~/.bb-browser/browser/user-data</code>。这个会话没有 OA 登录态。</p>
+<p>日常使用的 Chrome 则是另一套会话，里面已经打开历史出差单。</p>
+<p>后来调用 CUA 工具的 <code>cua.getApp("Google Chrome")</code>，接入原生窗口，才继续了用户已经开始的工作。这是本次实际观测，不代表所有 bb-browser 安装都会使用独立配置。</p>
+<p>登录状态属于具体的浏览器配置和会话。一个工具“支持复用登录态”，意味着它具备这种能力；实际是否复用成功，还要看连接对象。</p>
+<p>选工具时，这个问题值得先问：<strong>它能不能接着我正在使用的账号和页面继续做事？</strong> 少一次错误连接，就少一轮登录排查、用户打断和无效模型调用。</p>
+<h2 id="四种名字几种不同的控制入口">四种名字，几种不同的控制入口</h2>
+<p>把 CUA、Playwright、CDP 和浏览器 CLI 放在同一张排行榜里，很容易比较错对象。</p>
+<p>CDP 是 Chrome 的调试协议，提供检查和控制浏览器的通道。Playwright 是自动化框架，使用程序组织操作、断言和测试。bb-browser 与 BrowserSkill 则把浏览器能力包装成方便 Agent 调用的工具。<a href="https://chromedevtools.github.io/devtools-protocol/index.html">CDP 官方文档</a></p>
+<p>CUA 描述的是 AI 观察和操作电脑的能力，具体入口可以不同。本文比较的是这次使用的原生窗口路径，而不是假设所有 CUA 都采用同一种实现。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>本次 CUA：    AI → 电脑操作工具 → macOS 窗口与控件 → Chrome 网页</span></span>
+<span class="line"><span>本机 bb-browser：AI → CLI → daemon → CDP → Chrome 网页</span></span>
+<span class="line"><span>BrowserSkill：AI → bsk CLI → daemon → 浏览器扩展 → CDP / 扩展 API → 网页</span></span>
+<span class="line"><span>Playwright：  脚本或 AI → 浏览器自动化框架 → 网页</span></span></code></pre>
+<p>这些入口会影响能观察到的信息、操作范围，以及如何接入现有会话。</p>
+<h2 id="cua把当前窗口交给-ai-接着操作">CUA：把当前窗口交给 AI 接着操作</h2>
+<p>这次原生窗口路径主要读取 macOS 的辅助功能信息。按钮、文本框、单选项和字段值，被工具整理成可供模型理解的控件树；模型再选择点击、设置文本或发送按键。Apple 的 AXUIElement 接口提供界面对象的辅助功能信息。<a href="https://developer.apple.com/documentation/applicationservices/axuielement">Apple 文档</a></p>
+<p>所以，这次填表并没有要求 AI 每一步都看截图猜坐标。它能读取“交付类是否选中”“日期是什么”“出差天数是多少”，再检查这些字段之间的关系。截图和坐标操作则可以补充结构化信息不足的地方。</p>
+<p>它的优势在于接近用户的实际工作现场：已经登录的页面、打开的窗口，以及网页之外的原生弹窗，都可能进入同一条流程。</p>
+<p><strong>临时处理一次 OA 单据，或者探索陌生软件，CUA 很合适。</strong> 但控件语义缺失、窗口变化和模型误判都可能影响稳定性。每天反复执行同一组测试时，需要考虑如何把流程固化。</p>
+<h2 id="browserskill给-agent-一个共享登录态的工作窗口">BrowserSkill：给 Agent 一个共享登录态的工作窗口</h2>
+<p>腾讯 BrowserSkill 使用浏览器扩展连接目标 Chrome 或 Edge 配置。Agent 的命令经过 CLI 和后台服务传到扩展，再通过 CDP 与扩展 API 操作网页。<a href="https://github.com/Tencent/BrowserSkill/blob/main/docs/architecture.md">官方架构说明</a></p>
+<p>它为任务提供独立、可见的代理窗口，并共享所选 Profile 的登录状态；需要操作原有标签页时，采用显式借用和归还机制。<a href="https://github.com/Tencent/BrowserSkill/blob/main/README.zh-CN.md">官方中文说明</a></p>
+<p>这对经常处理内部业务网站的人很有吸引力：Agent 有自己的任务窗口，用户可以继续使用其他页面。它还提供请求、响应与控制台等网页调试信息，适合调查“为什么保存失败”。</p>
+<p>不过，代理窗口共享账号权限，不能把窗口分开理解成权限隔离。是否选中了正确的浏览器配置，仍然需要核对。</p>
+<p>对于长期操作已登录的网页系统，我会优先考虑这种接入方式。<strong>这是基于架构的选型倾向；本次还没有用 BrowserSkill 完成同一任务，因此不能把它写成实测胜出。</strong></p>
+<h2 id="bb-browser让-ai-用短命令操作网页">bb-browser：让 AI 用短命令操作网页</h2>
+<p>bb-browser 提供打开页面、读取快照、点击和填写等 CLI 操作，项目文档也描述了 CLI、daemon 与 CDP 的连接方式。<a href="https://github.com/epiral/bb-browser">项目仓库</a></p>
+<p>它适合轻量网页查询、临时填表，以及已有网站适配器覆盖的任务。AI 不必为了一个小任务先搭建完整测试工程。</p>
+<p>这次连接错会话暴露的是配置核对问题，不能直接推出“bb-browser 不支持登录态”。使用它时，应先确认连接的实例和配置，再判断页面状态。</p>
+<h2 id="playwright让已经跑通的流程能够反复验证">Playwright：让已经跑通的流程能够反复验证</h2>
+<p>第一次探索业务流程，AI 可以边观察边决定下一步。到了每次发布都要跑的回归测试，流程与预期结果通常可以写成代码。</p>
+<p>Playwright 提供浏览器控制、断言、隔离、并行执行和报告，并支持 Chromium、Firefox 与 WebKit。<a href="https://playwright.dev/docs/intro">官方入门文档</a></p>
+<p>例如，把出差申请流程写成一个用例：选择项目，填入起止日期，验证主表与行程联动，保存，再重新打开检查数据。这样的用例可以重复执行，也能明确指出哪一步没有达到预期。</p>
+<p>Playwright 也可以通过 CDP 接入已有 Chromium。不过，官方提示这种连接的能力完整性低于 Playwright 自身协议连接，不能把两种方式完全等同。<a href="https://playwright.dev/docs/api/class-browsertype">BrowserType 文档</a></p>
+<p>它需要维护脚本、定位和测试数据，换来的是长期回归的可重复性。AI 仍然可以调用 Playwright，但如果每一步都让模型重新决策，就没有充分发挥固定用例的价值。</p>
+<h2 id="哪个更省-token先看模型参与了多少次">哪个更省 Token？先看模型参与了多少次</h2>
+<p>工具名称本身无法给出可信的 Token 排名。</p>
+<p>让 AI 每次观察页面、判断按钮、选择动作，再检查结果，会持续调用模型。把一段已确定的流程写成脚本，独立运行并完成断言，则可以减少这些重复决策。</p>
+<table>
+<thead>
+<tr>
+<th>执行方式</th>
+<th>影响模型用量的主要因素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUA 主要依靠截图</td>
+<td>图片处理方式、观察次数、动作重试</td>
+</tr>
+<tr>
+<td>CUA 主要读取 AX 树</td>
+<td>控件树大小、是否返回差异、上下文长度</td>
+</tr>
+<tr>
+<td>bb-browser 逐步操作</td>
+<td>快照范围、命令轮次、适配器是否减少步骤</td>
+</tr>
+<tr>
+<td>BrowserSkill 逐步操作</td>
+<td>观察结果、截图与调试证据的大小、模型轮次</td>
+</tr>
+<tr>
+<td>AI 逐步调用 Playwright/CDP</td>
+<td>返回的信息量，以及多少动作需要实时判断</td>
+</tr>
+<tr>
+<td>固定 Playwright 脚本独立运行</td>
+<td>没有模型调用时，执行本身的模型 Token 为零</td>
+</tr>
+</tbody>
+</table>
+<p>最后一行有一个边界：让 Codex 启动脚本、分析报告或修复失败，外围对话仍会产生模型用量。脚本运行的机器成本和维护成本，也需要另算。</p>
+<p>BrowserSkill 扩展本身不会自行调用 AI 提供商，模型用量产生在使用它的 Agent 一侧。<a href="https://github.com/Tencent/BrowserSkill/blob/main/README.zh-CN.md">官方说明</a></p>
+<p>精简的 AX 或页面快照有机会减少输入；反复返回完整树、长正文、全量请求或截图，则可能增加消耗。图片与文本没有适用于所有模型的固定换算比例，Token 数也不能直接等同于费用或套餐百分比。</p>
+<p>本次只实际完成了一条 CUA 保存路径，没有对各工具做同任务 Token 采样，因此没有实测排名，也没有节省百分比。</p>
+<p>要比较，至少统一模型、任务、起始登录状态和通过标准，并重复运行。记录成功率、模型输入输出用量、决策轮次、重试和耗时，把失败尝试也计入成本。少核验几个字段得到的低用量，不能当成更高效率。</p>
+<h2 id="我的选择按任务频率和操作范围来分工">我的选择：按任务频率和操作范围来分工</h2>
+<table>
+<thead>
+<tr>
+<th>你要完成的事</th>
+<th>我会优先考虑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接着当前窗口处理一次临时业务</td>
+<td>CUA 原生窗口路径</td>
+</tr>
+<tr>
+<td>长期操作已登录的 Chrome/Edge 内部网站</td>
+<td>BrowserSkill，先验证目标 Profile 与连接</td>
+</tr>
+<tr>
+<td>轻量网页任务或已有适配器支持的操作</td>
+<td>bb-browser</td>
+</tr>
+<tr>
+<td>每次发布重复执行相同验收流程</td>
+<td>Playwright 固定用例</td>
+</tr>
+<tr>
+<td>涉及浏览器之外的桌面软件和原生界面</td>
+<td>CUA 原生路径</td>
+</tr>
+</tbody>
+</table>
+<p>这几种方式可以组合。先让 AI 探索流程，找出日期联动、金额合计、保存回显等关键检查点；再把稳定路径写成回归用例。流程变化或测试失败时，AI 回到界面帮助复现和分析。</p>
+<p>出差申请里，“保存成功”只是一条提示。真正需要确认的，还包括日期与天数一致、项目编号正确、行程和预算回显无误，以及当前状态究竟是草稿还是已送审。</p>
+<p>这次自动化最终完成的是保存草稿。工具换了，登录态问题解决了，业务核验仍然需要一步步做完。</p>
+<p>如果你也准备让 AI 接管一个业务流程，可以先从一张可核验的草稿开始：连接正确的会话，完成一次操作，再重新打开检查结果。这个过程会比工具演示更直接地告诉你，哪条技术路径适合自己的系统。</p>
+<nav class="post-nav"><span></span><a class="post-nav-item post-nav-next" href="/blog/ai如何复用你已登录的浏览器拆解browserskill的连接链路/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">AI 如何复用你已登录的浏览器？拆解 BrowserSkill 的连接链路</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

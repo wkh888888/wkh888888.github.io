@@ -7,6 +7,41 @@
     <language>zh-CN</language>
     <atom:link href="https://blog.walkerhua.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>AI 会点网页，为什么还填不了你的 OA？一次出差申请带来的自动化选型思考</title>
+      <link>https://blog.walkerhua.com/blog/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa/</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>CUA、Playwright/CDP、bb-browser、BrowserSkill，都能操作网页。真正影响体验的，是它们连到了哪里、看到了什么，以及每一步是否还需要模型判断。</description>
+    </item>
+    <item>
+      <title>AI 如何复用你已登录的浏览器？拆解 BrowserSkill 的连接链路</title>
+      <link>https://blog.walkerhua.com/blog/ai%E5%A6%82%E4%BD%95%E5%A4%8D%E7%94%A8%E4%BD%A0%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8B%86%E8%A7%A3browserskill%E7%9A%84%E8%BF%9E%E6%8E%A5%E9%93%BE%E8%B7%AF/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/ai%E5%A6%82%E4%BD%95%E5%A4%8D%E7%94%A8%E4%BD%A0%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8B%86%E8%A7%A3browserskill%E7%9A%84%E8%BF%9E%E6%8E%A5%E9%93%BE%E8%B7%AF/</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>浏览器里已经登录了账号，AI 却又打开一个登录页。BrowserSkill 试图缩短这段距离：把 Agent 接到你正在使用的浏览器配置。</description>
+    </item>
+    <item>
+      <title>AI 怎么接管你的电脑？从一张出差单拆解 CUA</title>
+      <link>https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。</description>
+    </item>
+    <item>
+      <title>关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘</title>
+      <link>https://blog.walkerhua.com/blog/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/%E5%85%B3%E6%8E%89%E4%B8%80%E4%B8%AA%E5%90%AF%E5%8A%A8%E9%A1%B9vpn%E5%92%8Cai%E5%B7%A5%E5%85%B7%E9%83%BD%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86/</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>一次启动项清理引发的故障：沿着合规插件与 DNS 证据链，找回 VPN 和 AI 工具的连接。</description>
+    </item>
+    <item>
+      <title>换个模型，还是换个工具？四家 AI 编码客户端的同题实验</title>
+      <link>https://blog.walkerhua.com/blog/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/%E6%8D%A2%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%98%E6%98%AF%E6%8D%A2%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%9B%9B%E5%AE%B6ai%E7%BC%96%E7%A0%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%90%8C%E9%A2%98%E5%AE%9E%E9%AA%8C/</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>四种客户端、三道编程题：记录换模型前后的变化，也检验这些分数能支持多大的结论。</description>
+    </item>
+    <item>
       <title>Astro + GitHub + 自定义域名：技术博客方案</title>
       <link>https://blog.walkerhua.com/blog/astro-blog-tech-stack/</link>
       <guid isPermaLink="true">https://blog.walkerhua.com/blog/astro-blog-tech-stack/</guid>

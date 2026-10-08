@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker</title><meta name="description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta property="og:description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><meta property="og:url" content="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta name="twitter:description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>AI 怎么接管你的电脑？从一张出差单拆解 CUA</h1><p>从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 8 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#cua-是一种能力不是单一的控制协议">CUA 是一种能力，不是单一的控制协议</a><a class="toc-l2" href="#核心是一个不断核验的循环">核心是一个不断核验的循环</a><a class="toc-l2" href="#ai-怎样看见电脑">AI 怎样“看见”电脑？</a><a class="toc-l2" href="#macos-辅助功能接口怎样控制-chrome">macOS 辅助功能接口怎样控制 Chrome？</a><a class="toc-l2" href="#为什么原生窗口路径能复用登录态">为什么原生窗口路径能复用登录态？</a><a class="toc-l2" href="#模型如何理解复杂表单">模型如何理解复杂表单？</a><a class="toc-l2" href="#一次保存应该检查什么">一次保存，应该检查什么？</a><a class="toc-l2" href="#和-playwrightcdp-有什么区别">和 Playwright/CDP 有什么区别？</a><a class="toc-l2" href="#token-消耗发生在哪里">Token 消耗发生在哪里？</a><a class="toc-l2" href="#适合什么工作边界在哪里">适合什么工作，边界在哪里？</a></aside><article class="card prose"><blockquote>
+<p>从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。</p>
+<p>日期：2026-09-30</p>
+</blockquote>
+<p>“参考这张出差单，把时间改成国庆后第二周，五天，其他一样。”</p>
+<p>任务完成后，原来打开的 Chrome 里多了一张已保存的申请草稿。项目、城市和预算沿用参考单，主表和行程日期一致，出差天数回显为五天。</p>
+<p>这中间发生了什么？AI 怎么知道哪个框是日期，怎么按下保存，又怎么确认没有填错？</p>
+<p>把这次操作拆开，会发现 CUA 的关键在于不断读取界面、执行动作，再检查应用真正返回的结果。</p>
+<p>本文以一次真实的 OA 草稿填写为例，说明电脑操作能力的技术结构。涉及 Codex 工具的内容来自本次会话提供的工具文档和执行结果，不推断其未公开的内部实现。</p>
+<h2 id="cua-是一种能力不是单一的控制协议">CUA 是一种能力，不是单一的控制协议</h2>
+<p>Computer use 指的是 AI 通过工具观察和操作电脑界面的能力。在 OpenAI 的公开介绍中，CUA 指 Computer-Using Agent，工作过程包括感知、推理和动作的循环。<a href="https://openai.com/index/computer-using-agent/">OpenAI：Computer-Using Agent</a></p>
+<p>讨论时容易把几个层次混在一起：模型、工具、操作系统接口，以及被操作的软件。</p>
+<p>模型负责理解“申请五天出差”这样的目标。工具把电脑状态整理给模型，并执行模型选择的动作。操作系统或浏览器提供控制入口，最终由应用处理点击和输入。</p>
+<p>本次工具支持原生窗口与浏览器专用路径。下面重点拆解实际完成申请的原生窗口方式；其他实现可能采用不同的观察与控制入口。</p>
+<h2 id="核心是一个不断核验的循环">核心是一个不断核验的循环</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> LR</span></span>
+<span class="line"><span style="color:#FFAB70">    A</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">用户目标</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> B</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">观察当前界面</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    B </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> C</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">模型选择下一步</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    C </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> D</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">工具执行动作</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    D </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> E</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">获取新的界面状态</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    E </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> F</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">达到预期结果了吗</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    F </span><span style="color:#F97583">--&gt;|</span><span style="color:#9ECBFF">还没有</span><span style="color:#F97583">|</span><span style="color:#FFAB70"> C</span></span>
+<span class="line"><span style="color:#FFAB70">    F </span><span style="color:#F97583">--&gt;|</span><span style="color:#9ECBFF">已经核验</span><span style="color:#F97583">|</span><span style="color:#FFAB70"> G</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">报告结果</span><span style="color:#F97583">]</span></span></code></pre>
+<p>以填写日期为例，模型先发现“开始日期”控件；工具点击后打开日历；模型从新状态中找到日期输入框；工具输入日期并回车；模型再读取主表与行程行，确认联动结果。</p>
+<p>这与按顺序播放一组固定坐标不同。下一步取决于应用实际返回的状态：日历是否打开、字段是否可编辑、日期是否联动、系统有没有提示错误。</p>
+<p>模型发出一次点击，并不表示业务已经完成。只有重新观察并核对到目标状态，才有依据报告成功。</p>
+<h2 id="ai-怎样看见电脑">AI 怎样“看见”电脑？</h2>
+<p>电脑状态可以以不同形式提供给模型。最常见的是截图、辅助功能树和浏览器页面结构。</p>
+<p><strong>截图提供视觉信息。</strong> 模型可以分析页面布局、图标、文字、弹窗及控件位置。它适合缺少结构化信息的界面，但坐标定位受到缩放、遮挡和窗口布局影响；一次截图也无法保证捕捉到两次观察之间的短暂提示。</p>
+<p><strong>辅助功能树提供控件语义。</strong> 系统把界面中的对象表示成窗口、按钮、文本框、列表等元素。对象可能带有名称、当前值、是否禁用和可执行动作。Apple 的 AXUIElement 就是表示界面辅助功能对象的接口。<a href="https://developer.apple.com/documentation/applicationservices/axuielement">Apple：AXUIElement</a></p>
+<p><strong>浏览器结构提供网页信息。</strong> 专用浏览器工具可以读取 DOM 或提取语义快照，通过定位器或元素引用操作网页。它与读取 macOS 窗口的辅助功能树是不同入口。</p>
+<p>三种观察方式可以互补：结构化信息用于定位和读取字段，截图用于理解布局或检查结构化信息没有表达出来的内容。不能仅凭工具名判断它一定只使用其中一种。</p>
+<h2 id="macos-辅助功能接口怎样控制-chrome">macOS 辅助功能接口怎样控制 Chrome？</h2>
+<p>本次实际使用的是原生窗口路径：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>模型</span></span>
+<span class="line"><span>  ↓ 选择工具调用</span></span>
+<span class="line"><span>mcp__cua_repl 中的 cua.getApp("Google Chrome")</span></span>
+<span class="line"><span>  ↓ 读取窗口和控件信息、执行界面动作</span></span>
+<span class="line"><span>macOS 辅助功能接口与输入控制</span></span>
+<span class="line"><span>  ↓</span></span>
+<span class="line"><span>用户原来打开的 Chrome 窗口</span></span>
+<span class="line"><span>  ↓</span></span>
+<span class="line"><span>OA 出差申请页面</span></span></code></pre>
+<p>工具返回的状态大致长这样：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>34 按钮 保存</span></span>
+<span class="line"><span>54 文本栏（可设置） 出差申请单-申请人-日期</span></span>
+<span class="line"><span>82 单选按钮 交付类，Value: 1</span></span>
+<span class="line"><span>139 文本 2026-10-12</span></span>
+<span class="line"><span>146 文本 2026-10-16</span></span>
+<span class="line"><span>156 文本 5.00</span></span></code></pre>
+<p>这个片段是根据本次观测简化的示意，不是 Apple 原始 API 返回格式。数字由工具提供，用来在当前观察中引用元素。</p>
+<p>模型可以选择“点击保存按钮”或“给文本框设置值”。工具把这些请求转换为对应界面操作。若某个控件不支持直接设置，也可能需要聚焦、输入和按键，或者使用截图坐标。</p>
+<p>关键在于：这些数字不是永久稳定的业务标识。页面更新后，元素引用可能改变。所以动作之后要重新获取状态，再根据新的控件信息继续操作；旧观察中的数字不应无条件重复使用。</p>
+<p>这里可以确认的是工具暴露的 AX 读取和输入能力，以及实际执行结果。不能据此断言每一种点击在内部一定使用某个具体系统函数。</p>
+<h2 id="为什么原生窗口路径能复用登录态">为什么原生窗口路径能复用登录态？</h2>
+<p>因为它操作的就是已经登录的窗口。</p>
+<p>网页仍由原浏览器配置中的会话访问，点击与输入发生在那个窗口里。工具没有为了完成任务重新创建另一套账号，也不需要先导出 Cookie 再恢复到新浏览器。</p>
+<p>本次操作曾遇到一个很有代表性的问题：浏览器命令行工具连接的是独立 Chrome 配置，打开 OA 后显示登录页；用户的日常 Chrome 却已经登录，并打开参考单。</p>
+<p>换成原生窗口路径后，工具读到了原窗口的历史单，随后完成了新建、填写和保存。</p>
+<p>这个实例说明，<strong>登录态属于具体浏览器配置和会话，工具是否能复用登录态，首先取决于它连到了哪里。</strong> 独立窗口看到登录页，不能证明用户其他窗口也未登录。</p>
+<h2 id="模型如何理解复杂表单">模型如何理解复杂表单？</h2>
+<p>辅助功能树只告诉模型有什么控件，并不会自动理解企业业务规则。</p>
+<p>模型还需要把用户目标转成字段约束。例如，“除时间以外其他一样”，意味着参考中的项目、类型、城市、交通方式和预算保持一致；新申请的起止日期以当前指示为准，标题与申请日期通常由系统生成。</p>
+<p>遇到“国庆后第二周”这样的相对日期，还要先消除歧义。界面自动化只能填入一个日期，不能替代需求澄清。</p>
+<p>实际执行中，模型与应用共同完成工作：模型选择项目编号，系统联动项目经理；模型设置主表起止日期，系统联动行程；模型读取这些结果，再与任务要求比较。</p>
+<p>这种方式的可靠性取决于三件事：输入目标是否明确、控件是否定位正确、结果是否真正核验。模型“理解了需求”只解决了第一部分。</p>
+<h2 id="一次保存应该检查什么">一次保存，应该检查什么？</h2>
+<p>保存之前，需要验证字段之间的关系，而不仅是每个框里有没有文字。</p>
+<p>例如五天出差应满足：起止日期首尾都计入共五天；主表与行程日期一致；项目编号精确匹配；每行金额与合计一致。</p>
+<p>点击保存之后，还要读取新的页面状态。按钮暂时禁用可能只是处理中；页面生成单据标识并回显字段，才是进一步证据。保存草稿也不等于已经送审。</p>
+<p>如果网络超时，工具没有收到结果，不意味着服务端没有保存。因此应优先查看同一单据是否已创建，再决定下一步，避免重复申请。观察、操作、核验的循环不仅提高成功率，也帮助区分“没有执行”“正在执行”和“结果尚不确定”。</p>
+<h2 id="和-playwrightcdp-有什么区别">和 Playwright/CDP 有什么区别？</h2>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>本次 CUA 原生窗口路径</th>
+<th>Playwright/CDP 浏览器路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>控制入口</td>
+<td>操作系统窗口与控件</td>
+<td>浏览器自动化接口</td>
+</tr>
+<tr>
+<td>主要观察内容</td>
+<td>AX 树与截图</td>
+<td>网页结构、字段与浏览器信息</td>
+</tr>
+<tr>
+<td>控制范围</td>
+<td>可涉及浏览器外的原生界面</td>
+<td>主要围绕浏览器</td>
+</tr>
+<tr>
+<td>操作组织方式</td>
+<td>模型可根据界面逐步决定</td>
+<td>可由模型调用，也可运行固定脚本</td>
+</tr>
+<tr>
+<td>长期回归</td>
+<td>适合探索与异常复现</td>
+<td>适合维护稳定、重复执行的用例</td>
+</tr>
+</tbody>
+</table>
+<p>Playwright 支持通过 CDP 连接已有 Chromium，但 CDP 是连接协议，并不提供业务理解。<a href="https://playwright.dev/docs/api/class-browsertype">Playwright：BrowserType</a></p>
+<p>“CUA 有 AI，Playwright 没有 AI”也不是严谨的区分。模型同样可以调用 Playwright；差别在于控制入口、可获取的信息，以及流程是实时决策还是提前写好的脚本。</p>
+<h2 id="token-消耗发生在哪里">Token 消耗发生在哪里？</h2>
+<p>模型读取控件树、分析图片、选择下一步、理解工具结果和生成回复时，会产生模型用量。点击动作本身由工具执行，不能把“点击次数”直接等同于 Token 数。</p>
+<p>如果每一步都返回完整窗口树或大幅截图，模型需要处理的信息可能很多。差异状态、相关字段和明确定位有助于减少无关输入，但不能通过省略必要核验来换取表面上的低用量。</p>
+<p>固定脚本独立运行且不调用模型时，没有模型 Token 消耗；让 AI 编写、读取报告和修复脚本则另计。因此，一次临时业务操作与每天执行数百条回归测试，应选择不同的组织方式。</p>
+<h2 id="适合什么工作边界在哪里">适合什么工作，边界在哪里？</h2>
+<p>CUA 对已经登录的业务页面、跨桌面应用操作、陌生流程探索和界面问题复现很有价值。它能把“用户现在正在做的事”直接接入自动化，而不必先完成一套专用接口集成。</p>
+<p>它仍然会受到控件语义缺失、弹窗变化、坐标漂移、状态等待和模型误判的影响。界面保存成功也不能单独证明所有服务端规则都正确，必要时还要借助接口或其他可验证证据。</p>
+<p>应用界面与附件里的文字是业务数据，不应直接成为代理的新指令。操作权限也需要跟随用户目标：能点击提交，不代表这次任务授权了提交；保存草稿、送审和审批通过必须分别报告。</p>
+<p>CUA 的工程价值在于连接语言目标与现有软件界面。真正可依赖的实现，需要把观察、动作和结果证据连起来，让每个“完成”都有可检查的状态支撑。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/ai如何复用你已登录的浏览器拆解browserskill的连接链路/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">AI 如何复用你已登录的浏览器？拆解 BrowserSkill 的连接链路</span></a><a class="post-nav-item post-nav-next" href="/blog/关掉一个启动项vpn和ai工具都出问题了/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

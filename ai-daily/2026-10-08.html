@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-08 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 8 日（周四）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：答案全落在「这笔算力谁来付」上，而五家给了五个互斥的解 —— ① Anthropic 把最便宜的一档压到地板价，≤10 万 token 的请求输入 0.10 美元、输出 0.50 美元每百万，平均运行成本降约 75%，第一次让「十个便宜子 agent 并行试 86 种方案、再由大模型收敛」比「一个贵模型慢慢想」更划算；② Google 给的是完全相反的答案，单次输出上限从 6.4 万提到 100 万 token，把 80 万行的 C/C++ 到 Rust 迁移塞进一次航程，代价是除了 650 家安防守卫者之外今天没人能用；③ 微软的答案最彻底，例行编码不调云端了，改由本机 137B 总参 / 6.8B 激活的 MAI-Code-1.1 Flash 承担且不计推理费，配套的 MXC 容器沙箱同日脱离 beta 正式可用，而它的三种模式里明确留了一个「记录但不拦」；④ 具身侧是英伟达、微软旗下 M12、高通创投、三星同一天一起投了一家给人戴传感器录日常动作的公司；⑤ 另一拨人同日端出 617.5 小时光学动捕、其中 245.7 小时带物体网格的数据集。横向铺开、纵向拉长、搬到本机、锁定数据源、把精度做成标准 —— 五种解法同一天出现，恰恰说明这个行业对「agent 的钱该怎么花」还没达成任何共识</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 把最便宜的一档压到地板</a>
+    <a href="#n2">② 一次输出一百万 token</a>
+    <a href="#n3">③ 本机跑完、不再计费</a>
+    <a href="#n4">④ 四家芯片厂买数据源</a>
+    <a href="#n5">⑤ 精度做成标准</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Anthropic 发布 Claude Haiku 5.5：平均成本砍掉约 75%，第一次让「并行试一百种方案」比「慢慢想一遍」便宜</h2>
+      <span class="tag t-code">AI Coding · 模型定价</span>
+    </div>
+    <div class="src">来源：Anthropic 官方发布说明《Introducing Claude Haiku 5.5》（2026-10-08）与 Haiku 5.5 System Card · 交叉参考：站长之家 10-08、每日经济新闻《全球科技早参》10-08、Web AI News 10-08、releasebot 收录的发行说明全文</div>
+    <div class="body">
+      <p>Anthropic 在 10 月 8 日把家族里最轻的那一档正式换代，官方口径是「迄今最快、成本最低、能力最强的小模型」。真正值得读的不是这句口号，而是它的计价结构和那个藏在迁移指南里的三十个百分点。</p>
+      <ul>
+        <li><strong>两段计价，分界在 10 万 token 的 prompt</strong>：不超过 10 万的部分，输入 <strong>每百万 0.10 美元</strong>、输出 <strong>0.50 美元</strong>，官方称比 Haiku 4.5 的 1 美元 / 5 美元<strong>低 90%</strong>；超过 10 万的部分降到 0.50 / 2.50，官方称降 50%。缓存读 0.01、五分钟缓存写 0.125，批处理再减一半。约 <strong>90% 的 Haiku 4.5 请求落在 10 万 token 以内</strong>。</li>
+        <li><strong>而这些换算成「平均运行成本降约 75%」时，前提是按新分词器重算过</strong>——官方明确说<strong>同样的文本在新分词器下会比 Haiku 4.5 多算约 30% 的 token</strong>。降价与涨价是同一件事的两面。</li>
+        <li><strong>第一个带可调档位的 Haiku</strong>：从 Low 到 Max 共五档，API 默认 Medium，自适应思考默认开启。这意味着「便宜模型也能在需要时多想两步」第一次变成了拨钮而不是版本选择。</li>
+        <li>上下文 <strong>100 万 token</strong>，单次输出上限 <strong>12.8 万</strong>（批处理 beta 到 30 万），支持文本与图像输入，知识截止 <strong>2026 年 6 月</strong>，模型 ID 为 <code>claude-haiku-5-5</code>，同步上线自家平台、AWS、Google Cloud 与 Microsoft Foundry。</li>
+        <li><strong>顺手改了隔壁的价格</strong>：Sonnet 5.5 的<strong>缓存读价格减半到每百万 0.10 美元</strong>，官方称多数 agent 任务的运行成本因此<strong>再降约 20%</strong>；同时给 Claude Max 与 Team 订阅者新增月度 API 额度。</li>
+        <li>官方自报基准（见 system card）：OSWorld 2.1 离线子集 <strong>72.4%</strong>（GPT-6 Luna 48.9%、Haiku 4.5 15.7%）；Terminal-Bench 4.0 <strong>39.2%</strong>（Luna 16.4%、Haiku 4.5 为 0）；FrontierCode 1.1 主榜 <strong>46.4%</strong>（Luna 42.4%）；HLE 无工具 45.9% / 有工具 57.4%；GDPval-AA v2.1 得 1620（Luna 1437、Haiku 4.5 735）。</li>
+        <li>但同一张表里有句话更重要：<strong>Sonnet 5.5 每一行都仍然领先</strong>，Terminal-Bench 4.0 是 70.6%。Anthropic 自己也写明，复杂的 agent 编码仍然推荐 Sonnet 5.5 与 Opus 5.5。</li>
+        <li>产品定位因此很清楚：<strong>做 Opus 5.5 与 Sonnet 5.5 手下的子 agent</strong>，以及摘要、压缩、分类、数据库查询、实时客服、浏览器操作这类频率高、单价敏感的任务。官方举的例子是 Rogo——让 Haiku 5.5 的子 agent 去抽取 10-K 报表里的收入行，大模型负责做整套材料；Asana 的工程师则称任务完成延迟下降超过 30%、每个 agent 回合的推理最高快 2.5 倍。</li>
+        <li><strong>迁移有硬坑</strong>：非默认的 temperature、top_p、top_k 会<strong>直接返回 400</strong>；<code>budget_tokens</code> 换成自适应思考加 effort 档位；预填回复不可用；格式要求要改用结构化输出；电脑操作要换到新工具集；Priority Tier 暂不支持。官方在 Claude Code 里留了一句 <code>/claude-api migrate this project to claude-haiku-5-5</code> 让它自己改。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条要放在昨天那条主线的正对面读。昨天这栏的结论是「产出已经不是瓶颈，背书才是」；今天这一步，是把<b>「探索」这件事重新定价</b>了。</p>
+      <p>过去一个编码 agent 遇到难题，路径基本是「让它想久一点」，代价是付贵模型的钱、等更久。<b>Haiku 5.5 把另一条路变得可算了：同样的预算可以让十个便宜的实例并行各试一种写法，最后由大模型收敛。</b>官方转述的一个演示很直白——同一个装鸡蛋架子的任务，Opus 5.5 单干用了 3 分 37 秒、试了 25 种方案、花 0.47 美元；带 10 个 Haiku 5.5 子 agent 后只用了 58 秒、试了 86 种、花 0.14 美元。<b>钱少花了一半，时间是原来的四分之一，试的宽度是原来的三倍多。</b></p>
+      <p>把它翻译成研究者的话：<b>搜索的宽度第一次比深度便宜。</b>在此之前，编码 agent 的经济结构更接近一个耐心的专家；在此之后，它更像一轮并行的发散加一次收敛。这对所有依赖「让模型多想一会儿」来提分的流程都是一个提醒——那个「一会儿」现在有了替代品的报价。</p>
+      <p>还有一个不能漏的数字：<b>新分词器多算约 30% 的 token。</b>这既是「75% 是平均值而不是每个 prompt 都一样」的技术原因，也是一条采购纪律——任何基于 Haiku 4.5 做的成本预估今天全部作废，必须拿自己的真实语料重算。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>先用自己的 prompt 重算 token，别直接信「降 90%」。</b>三十个百分点的分词差异在长上下文任务上能吃掉大半收益；迁移前用真实请求跑一遍计数与 unit cost。</p>
+      <p>② <b>扫描一遍代码里非默认的 temperature / top_p / top_k。</b>这三项现在会直接返回 400，是本次升级最容易在生产上炸的一个点。</p>
+      <p>③ <b>把「单调用单价」换成「单任务总成本」来评估。</b>子 agent 并行会成倍增加调用次数，判断是否划算要看整条任务的钱和时间，而不是每百万 token 的报价。</p>
+    </div>
+    <div class="caveat">
+      <p><b>全部性能数字为 Anthropic 自报</b>：OSWorld、Terminal-Bench、FrontierCode、GDPval 的成绩均出自其 system card，<b>未见第三方复现</b>；比较对象（GPT-6 Luna、Haiku 4.5）由 Anthropic 自行挑选。</p>
+      <p><b>演示与证言要分开看</b>：上述「58 秒 / 86 种 / 0.14 美元」来自中文科技媒体对官方演示的转述，<b>本文未核到 Anthropic 的一手演示页面</b>，采用前请核实；Asana、Rogo、AlphaSense 等客户评价是<b>厂商挑选的推荐语</b>，AlphaSense 的「每周约 800 万次调用」为企业自述。</p>
+      <p><b>「平均降 75%」的三个限定</b>：一是按 token 加权平均而非每个请求都省这么多；二是 90% 与 50% 是<b>不同段落</b>的降幅，不要混用；三是<b>基于公开定价，未含任何批量折扣或企业协议</b>。</p>
+      <p><b>发布方也是受益方</b>：Anthropic 同时销售被推荐搭配的 Sonnet 5.5 / Opus 5.5，「复杂任务仍请用贵的那档」这一建议与其商业利益同向，读表时请把这一点算进去。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Google 的 Gemini 4 Argon 把单次输出上限从 6.4 万提到 100 万 token，代价是今天除了 650 家安防守卫者之外没人能用</h2>
+      <span class="tag t-code">AI Coding · 长周期任务</span>
+    </div>
+    <div class="src">来源：Google DeepMind 发布材料与了一手转述（technewshub、TUN 记为 2026-09-30 首发）· 今日集中解读：腾讯研究院《AI 速递 20261008》、钜亨网、TechNews Hub · 交叉核证：Vals AI Finance Agent v2 榜（2026-10-01）、Artificial Analysis 智能指数</div>
+    <div class="body">
+      <p>这是 Gemini 4 世代的第一款旗舰，Google DeepMind 资深副总裁 Koray Kavukcuoglu 把它定位成「前沿智能新时代的开端」。今天它在中文与港台媒体上被集中重读，原因很实在：<strong>它把军备竞赛从输入端搬到了输出端。</strong></p>
+      <ul>
+        <li><strong>最硬的一个规格</strong>：单次响应输出上限从上一代的 <strong>6.4 万 token 提到 100 万</strong>。过去几年所有模型的上下文竞赛都发生在「能吃进多少」，这次动的是「一次能吐出多少」——理论上足够把一次完整的代码库迁移放进一条不被截断的轨迹里。</li>
+        <li><strong>内部已经在用它做这种事</strong>（均为 Google 自述）：数千名员工用于调试与大规模软件工程；agent 正在把 C 与 C++ 代码库迁到 Rust，<strong>包含 Fuchsia Zircon 内核里超过 80 万行</strong>；给开源视频解码器 libgav1 生成的 Rust 版本比现有 Rust 移植<strong>快 2.7 倍</strong>且视频输出一致；跨数据中心识别内存优化，<strong>已释放 300 TiB</strong>，预计总量可达 500 TiB 到 1 PiB；量子计算研究中对某算法优化的公开基线提升 40%。</li>
+        <li><strong>基准成绩</strong>（除一项外全部自报）：DeepSWE v1.1 <strong>77.9%</strong>（长周期真实软件工程）；CWE-bench v1 <strong>68%</strong>（漏洞修补，并列第一）；LVBench 91.7%（长视频理解）；Zapier AutomationBench 51.3%；APEX-Agents <strong>82.4% ±4.3</strong>（Sonnet 5.5 为 75.5%、Opus 5.5 为 73.5%）。Google 称在 18 项评测中有 12 项超过 GPT-6 Astra 与 Claude Opus 5.5。</li>
+        <li><strong>唯一的第三方独立印证</strong>：Vals AI 的 Finance Agent v2 榜单在 10 月 1 日独立地把 Argon 排在第一，得分 <strong>65.40%</strong>。其余各项<b>没有</b>独立复现。</li>
+        <li><strong>也存在反向证据</strong>：在 Artificial Analysis 的智能指数上 Argon <strong>仍落后 Claude Opus 5.5</strong>；GPT-6 Astra 在若干软件、科学终端与 computer-use 任务上仍领先；Opus 5.5 在 terminal-agent 与后训练基准上领先。</li>
+        <li><strong>价格目前只是一个报价单</strong>：促销价每百万输入 2 美元、输出 10 美元，之后回升到 4 / 20，缓存输入 95% 折扣。按 Vals 的每任务成本口径，约合 <strong>每任务 1.99 美元</strong>——GPT-6 Astra 约 3.26 美元、Claude Opus 5.5 约 5.98 美元。</li>
+        <li><strong>但今天几乎没有人能用得上</strong>：Google 选择先把它交给参与 <strong>Fairwind 计划</strong>的<strong>全球 650 多家安防守卫者与政府机构</strong>，付费 API 客户与 Google AI Ultra 订阅者排在下一批，<strong>没有公布日期</strong>。中文一线的解读更直白：目前只对网安防御团队开放，真实编程任务上仍然吃力。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 把这条和今天 ① 并排放，是整个今天的重点。同一天，两家实验室对「长周期任务该怎么跑」给出了方向相反的答案：<b>Anthropic 说横向铺开（很多个便宜的并行探索，最后收敛），Google 说纵向拉长（一次航程跑完，中间不切断）。</b></p>
+      <p>而横向与纵向各有对应的失败模式：并行的失败是<b>探索之间不共享记忆</b>，每一次都从零想起；长航程的失败是<b>跑偏之后没有回头</b>，因为「一次性完成完整重构」这个架构天然没有检查点。<b>Google 没有公布任何关于中断、纠错或回退率的数据</b>——100 万输出 token 听起来很大，但它是否等于有效的长周期工作，目前无人验证。</p>
+      <p>更值得注意的是这次开放顺序的选择。<b>一个主打「软件工程与大规模代码迁移」的模型，第一批用户是安防守卫者而不是开发者。</b>合理的解释是 CWE-bench 68% 这个数字本身就是它的准入理由—— autonomous vulnerability remediation 是最容错的场景，找漏补漏错了也不至于毁掉业务。这是一个值得记的工程判断：<b>长周期能力先在允许失败的场景里交付。</b></p>
+      <p>最后是可 Finance 层面对照的一点：① 是让便宜的东西更便宜（继续往下走），② 是让最贵的东西每任务只花 1.99 美元（也是往下走）。两条同日发布，说明 2026 年秋天的价格曲线还远没见底。</p>
+    </div>
+    <div class="act">
+      <p><b>两条跟踪建议</b></p>
+      <p>① <b>盯 GA 日期而不是盯榜单。</b>它没有公开可用日期，非 Fairwind 成员今天既拿不到也测不了；在此之前任何「Argon 改写某某工作」的说法都不成立。</p>
+      <p>② <b>如果你在评估长周期编码流程，把「有没有检查点」当成硬指标。</b>100 万输出 token 的价值取决于中途能否被纠回来；供应商若不提供回退、重试与中断率数据，就把它当成实验室结论。</p>
+    </div>
+    <div class="caveat">
+      <p><b>日期分层（引用前必读）</b>：首发时点在二手源之间不一致，TUN 记为 <b>2026-09-30</b>，另有英文源的 10 月 4 日综述已收录；中文一线（腾讯研究院 AI 速递、极新早报、太平洋科技日报）则在 <b>10 月 8 日</b>集中解读。<b>本期的增量是今天的中文解读与 Vals AI 的独立佐证，不是模型本身的首次发布。</b></p>
+      <p><b>除 Vals AI 一项外全部为 Google 自报</b>：80 万行迁移、2.7 倍、300 TiB、量子优化的 40% 提升与 CWE-bench 的并列第一，均无第三方复现；上述 Rust 迁移发生在<b> Google 自家代码库</b>，质量标准由自己定义，不等于外部仓库的可迁移结论。</p>
+      <p><b>每任务 1.99 美元是 Vals 的成本口径</b>，不是你的 API 账单；促销价与正式价相差一倍，<b>不要拿促销期的数字做长期预算</b>。</p>
+      <p><b>计价口径提示</b>：本条的 1.99 美元按 Vals 的「每任务」口径，与 ① 的「每百万 token」口径<b>不是同一个单位</b>，两者不可直接换算比较。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>微软的答案最彻底：例行编码改由本机 137B 模型承担、不计推理费，同 MXC 容器沙箱脱离 beta 正式可用，但三种模式里留了一个「记录但不拦」</h2>
+      <span class="tag t-code">AI Coding · 本地推理 / Agent 沙箱</span>
+    </div>
+    <div class="src">来源：Microsoft Windows &amp; Surface 发布会（2026-10-07，旧金山，Satya Nadella、Pavan Davuluri、黄仁勋同台）· 官方文档：<code>blogs.windows.com</code>《Microsoft Execution Containers: Policy-driven containment for AI agents》、<code>blogs.nvidia.com</code> · 交叉参考：HotHardware 现场报道、Superpower Daily、HuggingNews 10-07、Chinaz 10-08、发布会现场 X 帖</div>
+    <div class="body">
+      <p>微软在旧金山办了一场把 NVIDIA CEO 请上台的 Windows 与 Surface 发布会。如果只看标题它会像一场硬件发布会，但真正在这里发生的事有两件：<strong>例行编码被搬下了云</strong>，以及<strong>agent 的沙箱结束了公测</strong>。</p>
+      <ul>
+        <li><strong>MXC（Microsoft Execution Containers）正式可用</strong>：一个<strong>策略驱动</strong>的 containment 层，由企业指定 agent 可以用哪些文件、哪些网络位置、哪些工具，运行期间 Windows 拦截其余一切。隔离级别从独立进程、独立会话一路到虚拟机与云 PC。</li>
+        <li><strong>三类容器</strong>：process container 支持 <strong>Windows 11、macOS、Linux</strong>；session container <strong>仅 Windows 11</strong>，把 agent 的桌面、剪贴板与输入同人的活跃会话隔离开；Windows 365 支持同步 GA，让 agent 工作负载跑在云 PC 上。</li>
+        <li><strong>三种模式值得单独记</strong>：<strong>learning</strong> 阻断未授权访问并记录；<strong>permissive</strong> 记录本应被策略拒绝的访问<strong>但仍然放行</strong>；<strong>enforcement</strong> 直接阻断且不产出活动报告。换句话说，<strong>「看得见」和「拦得住」在产品里是两个显式开关，默认不是同一个东西</strong>。</li>
+        <li><strong>HydraFusion</strong>（发布会演示时仍以 Project 冠名）：GitHub Copilot 的多模型编排系统，逐请求评估后选择最省的模型起草，必要时才升级。<strong>关键动作是把例行编码任务从 Anthropic 的 Claude Haiku 4.5 切到本机运行的 MAI-Code-1.1 Flash</strong>——<strong>137B 总参、6.8B 激活、3-bit 量化但保留 256K 上下文</strong>，微软称在 SWE-Bench Verified 与 Terminal-Bench 2.1 上与全精度同分，<strong>本地调用不产生推理费用</strong>。</li>
+        <li><strong>硬件是这个方案的地基</strong>：Surface Laptop Ultra 起售 <strong>2,599 美元</strong>、Surface RTX Spark Dev Box <strong>5,999 美元</strong>（11 月出货），均基于 NVIDIA RTX Spark（Arm 架构 + Blackwell GPU，处理器与图形共享最高 128GB 统一内存）。微软自报的对比数字：出图比最新 MacBook Pro 快至 4.3 倍、首 token 快 2.1 倍、视频生成快至 6.2 倍。</li>
+        <li>同一场发布还提到：Microsoft AutoPilot 被称为第一个「企业级长运行 agent」；Agent 365 作为 IT 管控平面与 Entra、Defender、Purview 打通；<strong>llama.cpp 正在上 Windows ML</strong>；Meta 的 Muse 年内以原生应用登陆 Windows； DeepSeek V4 Flash 与 NVIDIA Nemotron 本地模型在途中；Perplexity、Hermes、OpenClaw 的本地 agent 同日上线 Windows。</li>
+        <li><strong>治理部分没有同步交付</strong>：Entra 对 agent 行为的归因、Agent 365 对本地 agent 的控制、Intune 对 Win11 process container 的策略管理，全部标记为 coming soon。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这是同一个「谁付算力钱」的问题被用第三种方式回答了。前两条是在<b>单价</b>上竞争；微软这一步是直接<b>取消单价</b>。</p>
+      <p>时序上的巧合很有意思：<b>GitHub Copilot 今天为止的例行编码还在调 Anthropic 的 Claude Haiku 4.5，而 Anthropic 恰好在今天把 Haiku 5.5 降价约 75%。</b>微软选择的回应不是谈判更好的价格，而是把这部分负载搬到本地，理由是这笔钱为零。代价也很清楚——<b>这份零需要一个 2,599 美元起的前置门槛。</b>竞争维度由此从「每百万 token 多少钱」变成了「你愿不愿意先买台机器」。</p>
+      <p>对从业者而言，MXC 那三个模式才是本条最值钱的部分。<b>learning 与 permissive 的存在，说明微软承认企业在落地初期并不知道该给 agent 什么权限。</b>这不是缺陷而是一个务实的迁移路径：先只记录看清它到底碰了什么，再收紧。但同样要清醒：<b>permissive 模式下策略只是建议</b>，边界在本\b机、在企业，不在这层容器里。</p>
+      <p>最后把它放回本系列的长期线索：<b>09-07 记录的 Project Zenith 就已经是「64GB 统一内存的 Win11 开发机 + MXC 容器隔离 agent」。</b>两个月后，同一个设想拿到了具体的型号、价格与 GA 状态。今天真正的新东西不是概念，是价格与可用性。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>把 agent 权限当成一个要先观测后收紧的流程。</b>先用 learning 模式跑一到两周，拿到它实际请求的资源清单，再写策略；直接上 enforcement 大概率会打断业务。</p>
+      <p>② <b>明确记录当前处于哪种模式。</b>permissive 下产生的越界访问会被记录但不会拦，把这个事实写进 agent 的上线评审单，别让它被误读成「已有隔离」。</p>
+      <p>③ <b>算本地方案时要把硬件折旧摊进去。</b>「本机不计费」成立的前提是机器已经付过钱；按 5,999 美元的开发箱做三年折旧，远不等于零成本。</p>
+    </div>
+    <div class="caveat">
+      <p><b>全部性能与安全声明均为微软自报</b>：3-bit 量化「在 SWE-Bench Verified 与 Terminal-Bench 2.1 上与全精度同分」只给了两个基准且<b>没有给出具体分数与评测条件</b>；4.3 倍 / 2.1 倍 / 6.2 倍的对比对象为「最新 MacBook Pro」，未说明机型、任务与测量方法。</p>
+      <p><b>GA 范围要分清</b>：MXC 的 GA 指的是 Windows 11 上的可用性，其中 session container 仅支持 Windows 11；三个容器层级与三种模式之间的可组合性<b>未见官方明细</b>。</p>
+      <p><b>HydraFusion 的状态在报道之间有分歧</b>：现场报道冠以 Project，另有报道直接称即将用于 GitHub Copilot。<b>是否已 GA、切换逻辑是否可由企业配置，请自行核实官方文案</b>，本文不替它盖章。</p>
+      <p><b>微软既是路由方又是模型与硬件方</b>：把负载从 Anthropic 的 Haiku 切到自家 MAI-Code、并推向自家 Surface 硬件，是本条最明显的自利结构；读性能数字时请把这一点算进去。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Mecka 拿到 6,000 万美元 B 轮：英伟达、微软 M12、高通创投、三星同一天成为一家「给人戴传感器录扫地」公司的股东</h2>
+      <span class="tag t-emb">具身智能 · 数据基础设施</span>
+    </div>
+    <div class="src">来源：Mecka 官方博客《Mecka raises $60M Series B led by Sequoia Capital》（Josh、Jason 与 Mecka 团队，10-07 官宣）· 交叉参考：AI Insider 10-08、Pivot News 10-07、TechCrunch 相关报道（含 5 亿美元估值的先前报道）、The Meridiem 10-08</div>
+    <div class="body">
+      <p>这家公司做的事听起来很土：<strong>付钱给普通人，让他们戴着传感器、用手机录制自己煮咖啡、叠衣服、修车的日常动作</strong>，再把这批动作数据变成能训练机器人的信号。今天它宣布拿到了 <strong>6,000 万美元 B 轮</strong>，而投资方名单比金额本身更值得读。</p>
+      <ul>
+        <li><strong>轮次与领投</strong>：<strong>Series B，由 Sequoia Capital 领投</strong>（官方原文为 Series B；个别低质量英文站写成 Series A，请以官方博客为准）。新投资方包括 <strong>NVIDIA、M12（微软风投）、Qualcomm Ventures、Samsung</strong>；老股东 Kindred、Framework Ventures、Neo 继续跟投。</li>
+        <li><strong>天使名单</strong>：DoorDash 创始人兼 CEO Tony Xu、ServiceNow 与 Snowflake 前 CEO Frank Slootman、特斯拉 Optimus 前负责人 Milan Kovac。</li>
+        <li><strong>自建了整条栈</strong>：<strong>Instruments</strong>（自己设计制造的多传感硬件，按下游模型需要的信号来选传感器与做同步）；<strong>Capture</strong>（全球采集队，在家庭与真实商业环境里录）；<strong>Research</strong>（内部实验室做动作追踪、3D 重建、传感器对齐）。</li>
+        <li><strong>技术自述</strong>：在野外数据上做到<b>亚厘米级手部姿态精度</b>（原文称 state-of-the-art）。</li>
+        <li><strong>EgoVerse</strong>：与 Georgia Tech、Stanford、UC San Diego、ETH Zürich、MIT、Meta 的研究者合作的人到机器人迁移研究，据称已在多个实验室、多种任务与多台机器人上复现。</li>
+        <li><strong>商业化形态已经换了</strong>：从「卖数据」转成官方自称的现代机器人集成商——自带硬件、到客户现场采集、就地后训练、负责集成与持续运维。用他们的话说，传统集成商交付一次就定型，他们的系统<b>每运行一小时都会因为重新采集与训练而变好</b>。</li>
+        <li><strong>客户口径</strong>：称已向若干顶级前沿机器人实验室与<b>多家 Mag 7 公司</b>供货，<b>未点名</b>。</li>
+        <li><strong>外部坐标</strong>：TechCrunch 此前报道 Mecka 接近以 <strong>5 亿美元估值</strong>融资；同行 <strong>XDOF</strong> 据 TechCrunch 报道在洽谈估值 12 亿美元的 B 轮；Scale AI、Micro1 这类从语言模型起家的数据平台也在往机器人方向扩。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 真正的信号不在钱，在<b>那四家同时出现</b>。英伟达 、微软 、高通创投、三星的共同点是都卖部署机器人要用的硬件或芯片，而它们最缺的不是算力，是<b>让这些硬件有活可干的经验数据</b>。四家在同一轮里同时进场，本质上是<b>硬件方在集体预订数据源</b>。</p>
+      <p>把它退回本系列已经记录过的价格带读更有意思：<b>09-28 ⑤ 记过第一人称视觉数据的价格是每小时 18 到 34 美元、触觉 55 到 95 美元。</b>那个价格带建立在人工采集与人工标注之上，而 Mecka 做的正是这个底座。<b>今天有人用 6,000 万美元去锁定这条供给，等于给那个价格带标了一个期货。</b></p>
+      <p>第二层看点是从「卖数据」到「做集成」的转向。这条路线如果成立，意味着<b>具身侧的竞争单位会从模型变成交付闭环</b>——谁能在客户现场持续把数据变成能力，谁就锁住了客户。这与 10-07 ⑤ 记录的「管道被拆成两截分别定价」是同一趋势的下一步：<b>先拆分，再有人把拆开的部分重新打包成一笔生意。</b></p>
+      <p>还有一个视角能串起今天这五条：<b>同样是「这事该花多少钱」，前三家在算力上做文章，这家在数据上做文章。</b></p>
+    </div>
+    <div class="act">
+      <p><b>两条跟踪建议</b></p>
+      <p>① <b>等客户名字，不要等融资稿。</b>「若干前沿实验室与多家 Mag 7」没有一个是具名可核的；第一个公开承认在用这批数据训策略的第三方，才是这条路的判据。</p>
+      <p>② <b>关注生物识别数据的合规安排。</b>付钱录制真人身体运动这条路何时、如何碰上个人信息与生物特征合规，官方博客完全没有展开，而这会是这条模式的天花板而非细节。</p>
+    </div>
+    <div class="caveat">
+      <p><b>最可疑的一组数字（必读）</b>：官方称 2026 年 6 月 run-rate revenue 突破 <b>1 亿美元</b>，且是「运营仅几个月」；预计年底达 <b>3 亿美元</b> run rate。同时二手报道称公司<b>成立于 2024 年</b>——<b>这与「仅运营数月」直接冲突</b>。另外 run rate 是把当期收入年化，<b>不是已确认收入、更不等于已到账现金</b>。这与本系列此前处理过的四次口径陷阱同一族（09-20 预收货款不是收入、09-29 毛利率不等于毛利额、10-05 营收加合同不等于收入、10-07 累计融资不等于本轮融资）。<b>引用前请务必写明是 run rate 且未经审计。</b></p>
+      <p><b>本轮未披露估值</b>：5 亿美元来自 TechCrunch 的<b>先前</b>报道，不是本轮确认数字，<b>不要当成本次融资的估值引用</b>。</p>
+      <p><b>亚厘米级精度、给 top labs 与 Mag 7 供货、季度预测全部为公司自述</b>，无任何第三方核验或具名客户。</p>
+      <p><b>轮次口径冲突</b>：部分低质量英文站写成 Series A 并把它描述为「Series A by Sequoia」，<b>与官方博客不符，请以官方为准</b>。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>HiPHI 端出 617.5 小时亚毫米级光学动捕数据，其中 245.7 小时带同步物体网格，已迁到 Unitree G1 实机</h2>
+      <span class="tag t-emb">具身智能 · 数据集</span>
+    </div>
+    <div class="src">来源：HiPHI 白皮书（IEEE Spectrum 与 Wiley，2026-10-07）· 发布方 Noitom Robotics · 交叉参考：RobotToday《HiPHI Dataset: Advancing Human Motion and Object Interaction for Humanoid Robots》、GoKawiil 10-07、Hello Marvis AI Today 10-07、IAExpertos 技术解读</div>
+    <div class="body">
+      <p>与今天 ④ 同一天，另一拨人给出了具身数据问题的完全相反的答案。这一家的主张是<strong>不靠规模靠精度</strong>。</p>
+      <ul>
+        <li><strong>规模与精度</strong>：全身人体运动数据合计 <strong>617.5 小时</strong>，采用光学动捕，精度为<strong>亚毫米级</strong>。</li>
+        <li><strong>其中 245.7 小时是人-物交互</strong>，并且<strong>同步记录了物体的轨迹与 3D 网格</strong>。这一点很关键——互联网视频有 diversity 但没有精确物理状态，而只有理解了物体怎么被推动、被形变，才能教会机器人搬、推、拉这类动作。</li>
+        <li><strong>用 FrameNet 组织采集</strong>：FrameNet 本是语言学框架，把人类动作拆成施事、受事、工具、结果等语义角色。HiPHI 拿它当采集的方法论骨架，<strong>系统覆盖而不是随机录制</strong>，避免出现「录了一万小时但全在同一个动作附近」的情况。</li>
+        <li><strong>不只是数据集</strong>：白皮书同时给出了一套度量<b>运动多样性</b>与<b>交互接地</b>（interaction grounding）的基准套件，让后续的数据集可以横向比。</li>
+        <li><strong>闭环</strong>：论文报告了在该数据集上训练的强化学习策略，并<strong>迁移到实体 Unitree G1 人形机器人</strong>上部署（sim-to-real）。</li>
+        <li><strong>它对标的那个缺口说得最清楚</strong>：互联网视频有多样性但抓不到精确的物理状态；传统实验室动捕有精度但动作谱很窄。HiPHI 想同时占住两头。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 今天 ④ 与 ⑤ 是具身智能当前最大的那场未决争论，被同一天摆到了台面上：<b>要多样性，还是要物理精确。</b>Mecka 押前者（野外、放大规模、有人付钱录制），HiPHI 押后者（实验室、光学动捕、亚毫米 + 物体网格）。</p>
+      <p>这不是第一次见到这场争论。<b>10-05 的 Runway Praxis-1 对 FieldAI 就是它的上一幕</b>——前者押网络视频预训练，后者押物理先验、估值报到 100 亿美元。今天的区别在于：<b>两方都拿出了可在实机上验证的交付物</b>（一个给出 EgoVerse 的跨实验室复现，一个给出 Unitree G1 上的 sim-to-real），而不是只端出一批数据。</p>
+      <p>还有一个容易被忽略但很妙的细节：<b>HiPHI 用一套语言学框架来组织运动数据。</b>这件事的含义是，采集分布被一件外部语义骨架约束住了——动作不再是「录到什么算什么」，而是「语义角色表里还缺哪一类」。这与今天 ① 里「用结构化输出替代自由生成」在方法论上是同构的：<b>都是先定好答案的形状，再去看里面填了什么。</b></p>
+      <p>把它们和本系列的旧坐标放在一起看，还能读出一个正在形成的分工：<b>09-28 ⑤ 记录第一人称视觉数据每小时 18 到 34 美元的价格带，今天这两条分别给出了那条带的两个供给端</b>——一个是把它做成可规模化的采集网络，一个是把它做成可 Benchmark 的高精度标准。<b>二者不竞争，但会决定那条价格带最终往上还是往下走。</b></p>
+    </div>
+    <div class="act">
+      <p><b>两条落地建议</b></p>
+      <p>① <b>把它当参照物而不是通用答案。</b>先看白皮书披露的动作与物体清单边界，判断覆盖不到的那一半是不是你自己的任务；未公开清单之前不要按「通吃」来规划。</p>
+      <p>② <b>盯第三方复现。</b>sim-to-real 的成色由别人在同一套数据上重跑决定；当前只有白皮书自己的报告。</p>
+    </div>
+    <div class="caveat">
+      <p><b>日期与发布方在二手源之间有冲突（引用前必读）</b>：多数源记为白皮书由 <b>IEEE Spectrum 与 Wiley</b> 于 2026-10-07 发布、数据集由 <b>Noitom Robotics</b> 放出；但有一个聚合站明确写成「2025 年 10 月 7 日」。本文按 <b>2026 年处理</b>，<b>请自行核原文确认年份</b>。</p>
+      <p><b>全部指标为白皮书自述</b>：亚毫米精度、617.5 小时、245.7 小时交互、sim-to-real 成功部署，<b>均未见独立复现</b>；且未说明具体覆盖的动作与物体清单，泛化能力未知。</p>
+      <p><b>发布方存在自利关系</b>：Noitom 本身是动捕设备厂商，<b>数据集与其硬件业务直接相关</b>，读精度数字时请把这一点算进去。</p>
+      <p><b>别把 ④ 和 ⑤ 当成同一件事的两条新闻。</b>一个是商业模式，一个是数据标准，两者<b>不互相印证</b>；把它们并列为「具身数据的两种解法」可以，用其中一个的业绩去推断另一个则不行。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">顺带一提 · 4 条</div>
+  <div class="mini">
+    <div class="m">
+      <h3>OpenAI 一次性公开 722 篇数学手稿：GPT 用未发布的模型解决数百个开放问题，而验证成为新瓶颈</h3>
+      <p>一个未发布的内部前沿模型被喂了约 <b>4,000 道数学问题</b>，产出按相关性分成 <b>372 个「结果族」</b>，涵盖理论计算机科学、数论、几何、数学物理等 <b>17 个领域</b>，已在 Apache-2.0 许可下放到 GitHub 的 openai/math 仓库。Sam Altman 点名了其中四项：<b>准黎曼猜想、唯一游戏猜想、Hodge 猜想的一个情形、自由群因子问题</b>（后者自 1940 年代起开放）。注意措辞的边界：所谓准黎曼猜想是「ζ 函数在实部大于八分之七的区域无零点」，<b>弱于黎曼猜想本身</b>；Hodge 结果也只覆盖一类形状。官方称平均每个结果耗费相当于 ChatGPT Pro 约三小时的计算量，部分证明有 Lean 形式化。普林斯顿高等研究院的数学与 AI 顾问小组（AGMAI，成员含 Fields 奖得主 Timothy Gowers、Martin Hairer 与物理学家 Edward Witten）称这是重大事件，但<b>明确不为这批结果或 OpenAI 的流程背书</b>；该小组 9 月底的建议里要求实验室披露模型名、prompts 与算力成本，并呼吁<b>不要把数学结果的发布当成推广模型的营销车</b>——而 OpenAI 恰恰<b>没有公开模型名与 prompts，外部也无法重跑</b>。数千名数学家连署的莱顿宣言要求 AI 公司达到数学界标准；同时也有如多伦多大学 Daniel Litt 这样的数学家认为公开答案本身是好事。<b>为什么值得看</b>：这条把「产出」和「验收」彻底拆开了——722 篇<b>未经同行评议</b>，而每一行都要靠人去验。它与今天的主题是完全同源的：<b>产出变得近乎免费之后，稀缺的是可靠的接受能力。</b>与本系列从 09-28 起反复出现的「验收权归谁」正对接，也与 10-05 ①「模型自写的测试会把正确答案判成错」遥相呼应。<b>边界</b>：OpenAI 自承各项结果的验证程度不一，未经形式化检验的证明可能有错；官方宣传语里「平均每个结果耗费相当于 ChatGPT Pro 约三小时的计算量」为公司估算；本文未核到 GitHub 仓库原文，具体上下线与 Issue 记录请自行核对。</p>
+    </div>
+    <div class="m sec">
+      <h3>GPT-6 正式推出：系统卡第一次把防御率写成产品级百分比，而 97.13% 意味着每三十五次就成功一次</h3>
+      <p>10 月 7 日 OpenAI 正式推出 GPT-6，付费用户使用 <b>GPT-6 Sol</b>、免费与 Go 用户使用 <b>GPT-6 Luna</b>。系统说明卡把两款模型都列为网安与生化领域的「高能力」级别，但未达到「AI 自我改进」的高能力门槛。公开的几个数：<b>多轮越狱测试</b>在各攻击预算下防御成功率均高于 GPT-5.6 Sol；<b>指令层级提示注入</b>防护率 Sol 99.99%、Luna 99.79%；<b>间接提示注入</b>分别为 <b>97.13% 与 95.80%</b>；生化严重威胁提示的安全拒绝得分 Sol 为 0.980（GPT-5.6 Sol 为 0.954）；欺骗性行为测试较前代改善。同日也是 OpenAI「28 天连发」的第三天，放出面向全部 ChatGPT 用户的 Intelligent UI——不再只回文本，而是直接生成可交互的界面、图形、表单与图表。<b>为什么值得看</b>：这天前三家争的都是谁为算力付账，而 OpenAI 给出的答案是<b>把安全做成可报价的百分比</b>。它与今天 ③ 的 MXC 是同一件事的两个层：一个在下层做容器隔离，一个在模型层报数字。请把 97.13% 读成「定价了风险」而不是「解决了风险」——间接注入每三十五次就有一次成功，对于一个会替你执行工具的 agent，这个失败率必须被上层沙箱兜住。<b>边界</b>：全部数字来自 OpenAI 自家的系统说明卡，测试集与攻击预算未披露细节；99.99% 与 99.79% 属于不同模型，不可混用口径；Intelligent UI 的覆盖范围与可用层级由二手转述，请以官方说明为准。</p>
+    </div>
+    <div class="m code">
+      <h3>上海 StartLux 开源 StartLux-Decision：不生成 token，直接吐结构化判断，一次前向回答三个问题 26 毫秒</h3>
+      <p>10 月 2 日首发、今天被行业日报二次传播。五档规格 0.8B / 2B / 4B / 9B / 27B，权重与三种 GGUF 量化（Q8_0、Q4_K_M、BF16）全部开放（详见其 GitHub 与 Hugging Face 页面）。它切的口子很窄：<b>agent 执行过程中反复出现的那类判断题</b>——下一步点哪个按钮、调哪个工具、当前任务是否完成、这张工单该给哪个团队。候选集往往已经确定，而每一步等待都会累积。做法是接收当前状态与候选项，<b>一次前向同时返回多个问题的判断及选项概率，不逐字生成答案文本</b>。延迟：单张 H200、BF16、短请求下通过本地 HTTP 测得，一次回答三个问题——<b>0.8B 12.2 毫秒、2B 15.5 毫秒、4B 26 毫秒、9B 35.7 毫秒、27B 102.3 毫秒</b>。成绩：独立的 Decision Index 0.2.1 上 27B 得 <b>63.88</b>（Jev 1.13 为 57.91），<b>38 项基准中 31 项更高</b>；上海 AI 实验室发 Intern-Decision 时用的七项评测组合上，27B 平均准确率 <b>91.82%</b>，高于 Jev 的 88.74% 与 Intern-Decision-4B 的 90.02%；JevBench 答对 208/231，Hard 子集的 111 道难题少错 8 题。团队称<b>研发与验证全程只用 3 天</b>，靠自家的 Auto Research 闭环（RSI 体系的一环：AI 参与「假设—实验—验证—新假设」的循环，研究目标、评价标准与关键取舍仍由人类研究员把关）。<b>为什么值得看</b>：它是今天 ① 那条思路的极端版本。<b>Haiku 的 effort 档位是把思考变便宜，它是直接取消了思考的输出形式。</b>当 agent 每一步都在等大模型吐字，把「候选已定的判断」外包给一个 26 毫秒的模型，是第三条降本路径。<b>边界</b>：全部成绩为公司自测自述；Decision Index 0.2.1 被描述为「独立」，但该评测的运营方本文未核到；延迟为特定硬件与短请求下的响应时间，<b>不含排队，与端到端延迟不是一回事</b>；「3 天完成研发」为公司自述；对照组是它自己选的。</p>
+    </div>
+    <div class="m emb">
+      <h3>智元远征 A3 接入网易云音乐：10 月 15 日起可语音点歌，而公开播放仍要另办商业授权</h3>
+      <p>9 月 30 日宣布的合作，今天经行业日报二次传播：<b>自 10 月 15 日起</b>，用户可以对远征 A3 说出歌名或歌手，由系统检索曲库、完成账号鉴权并通过机器人本体播放，无需外接设备。首阶段开放的核心功能是语音点歌，覆盖<b>歌曲检索、账号鉴权、播放控制</b>三条链路，并已适配嘈杂环境唤醒、弱网重试与多用户并发；个人用户经产品授权使用，<b>账号登录等能力将按产品交付版本与网易云音乐的授权范围逐步开放</b>。横琴长隆飞船乐园部分点位已开展音乐交互试点，但<b>若用于公开播放、巡游配乐或经营性演出，仍需另行确认商业授权</b>。后续方向包括 music to gesture 生成式动作模型、AI DJ 与随心伴唱。<b>为什么值得看</b>：这条的价值不在能力而在边界——<b>机器人把音乐「播放」出来是需要另行授权的商业行为</b>。人形机器人一旦进入文旅与 C 端场景，每一个内容型交互背后都可能挂着一条版权与表演许可链。它与昨天 ③ 那条 Photopea 事件是同一种张力的两端：<b>昨天是代码被合法地重新表达了一遍，今天是一段音乐被调用也要重新谈一遍许可。</b>具身化的副作用是，「使用」在物理世界里会变成「表演」。<b>边界</b>：10 月 15 日为计划开放日，届时是否如期未能验证；功能边界取决于两家的授权范围，公开材料均未给出清单；试点属产品测试性质。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>今日条目</th><th>历史条目</th><th>关系</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>① Haiku 5.5 平均成本降约 75%、子 agent 并行</td><td>09-12 ① Devin Fusion（lead 前沿模型 + sidekick SWE-2，交接只传简报/结果/反馈以保 cache；省 36%）</td><td><strong>同题不同手段</strong>（那时省钱靠<b>少传上下文</b>，这次靠<b>把探索本身换到便宜档</b>；目标变量一直是「每个 agent 回合的边际成本」）</td></tr>
+          <tr><td>① Haiku 4.5 在 Terminal-Bench 4.0 上是 0.0%，5.5 升到 39.2%</td><td>10-04 ② AgentBug-Smith（最强编码 agent 只修好 9% 的 harness bug）</td><td>同题不同面（<b>小模型不是退而求其次，而是过去根本不能干活</b>；Terminal-Bench 从 0 到 39.2 是一个能力门槛被跨过，不是一个百分比被抬高）</td></tr>
+          <tr><td>① Anthropic 自荐「复杂任务仍用 Sonnet / Opus」</td><td>10-07 ① ReviewBench 由 GitHub 自建自审计、judge 是 Anthropic 的 Claude Sonnet 5</td><td>同一原则第五次应用（<b>既当裁判又参赛</b>：一边卖贵的那档，一边由自己给出「贵的更好」的结论）</td></tr>
+          <tr><td>① 新分词器多算约 30% token</td><td>09-23 ① HarnessTax（同一模型不同 harness 成本最多差 5 倍）；09-14 ② 同模型不同工具账单差 70 倍</td><td><strong>同一铁律新变体</strong>（前面两次是<b>外层包装</b>改写账单，这次是<b>分词器本身</b>改写账单；凡官方成本对比，先问按哪个口径的 token 算）</td></tr>
+          <tr><td>② 输出上限 6.4 万到 100 万</td><td>10-07 ② GitHub 9 月单月 73.8 亿次提交、推送同比 4.9 倍</td><td><strong>同日反向镜像</strong>（平台侧逼着<b>把大任务切碎</b>以适应每一次 commit 的往返延迟；模型侧却在<b>把任务拉长成一次航程</b>。两件事今天同时发生，是本期最值得记的一组张力）</td></tr>
+          <tr><td>② 「fail gracefully」缺席：无检查点、无回退率</td><td>09-29 ① 护栏装在哪（运行时权限外置）；09-30 ① 意图的锚点在哪里</td><td>同题不同层（<b>一次性跑完</b>的架构天然缺少锚点；100 万输出 token 若不能中途纠回，意图漂移将被完整放大到最后一行）</td></tr>
+          <tr><td>② 先给 650 家安防守卫者而不是开发者</td><td>10-07 ⑤ TwelveLabs Pegasus 1.6 的合规与同意标记工作流</td><td>同题不同域（<b>新能力先在允许失败的场景交付</b>；补漏错了代价有限，重写业务模块错了代价不可接受。这是同一条工程判断第二次出现）</td></tr>
+          <tr><td>② Vals AI 独立榜单给出佐证，其余皆自报</td><td>09-19 铁律「回头核实基线」；09-30 ⑤「分类第一不等于全榜第一」</td><td>同题不同进（这次的问题是<b>哪一项是真独立</b>：18 项自报里只有 Vals AI 那一项有第三方主体，其余全部不能引）</td></tr>
+          <tr><td>③ MXC 先 beta 后 GA，三种模式</td><td>09-07 ② Project Zenith（64GB+ 统一内存 Win11 开发机，本地跑 30B+，MXC 容器隔离 Agent）</td><td><strong>同一设想的两个阶段</strong>（两个月前是概念机 + beta 容器，今天有了型号、价格与 GA 状态；<b>这不是新想法，是新定价</b>）</td></tr>
+          <tr><td>③ 从 Claude Haiku 4.5 切到本地 MAI-Code-1.1 Flash</td><td>09-12 微软详解 Copilot HydraFusion 四轴评分；10-07 顺带 Day-1 默认提速约 50%</td><td><strong>同一机制三次递进</strong>（9 月 HydraFusion 还在<b>给多个模型打分</b>，今天的答案是<b>在多模型之外再加一层「本地」</b>，并把费用压到零）</td></tr>
+          <tr><td>③ permissive 模式「记录但不拦」</td><td>09-29 ① 护栏有了工程形态也暴露了代价；10-07 ④ Wikimedia 的数百万次未授权请求</td><td>同题不同面（<b>观测不等于执行</b>第一次被写成产品的显式开关；permissive 是有用的迁移路径，但把它当成「已有隔离」就是误读）</td></tr>
+          <tr><td>③ 治理部分（Entra 归因 / Agent 365 / Intune）coming soon</td><td>10-07 ④ Wikimedia 诉求「可识别 + 可选择」；09-28 ④ 「提交即同意」被废弃后用户开始看 diff 且要求回滚</td><td>同题不同进（<b>隔离先到，归因后到</b>；这与 10-07 ④ 诉求的「可识别」是同一个缺口，发布时尚未闭合</td></tr>
+          <tr><td>④ Mecka 6,000 万 B 轮，run rate 1 亿到 3 亿</td><td>09-20 ① 预收货款不是收入；09-29 毛利率不等于毛利额；10-05 营收加合同不等于收入；10-07 累计融资不等于本轮融资</td><td><strong>同一条铁律第五次出现</strong>（run rate 是把当期年化，<b>不是已确认收入</b>；且「成立于 2024 年」与官方自述「仅运营数月」冲突）</td></tr>
+          <tr><td>④ 英伟达 / 微软 M12 / 高通 / 三星同时进场</td><td>10-07 ⑤ Reactor 累计 7400 万不做模型只卖运行时；10-05 ⑤ FieldAI 100 亿美元押物理先验；09-29 ④ AMD 82 亿收购 World Labs</td><td><strong>同题三层，新增一层</strong>（买模型 / 卖能力 / 卖跑道之外，今天是<b>买数据源</b>；硬件方正在绕过模型层去锁住 feeder）</td></tr>
+          <tr><td>④ 从卖数据转向做集成、持续再训练</td><td>10-07 ⑤⑫「视频变机器人」被拆成理解层与运行时层分别定价</td><td><strong>同题反向</strong>（昨天是<b>拆分</b>，今天是有人<b>把拆开的部分重新打包成一笔生意</b>；这是分工之后的第一次整合尝试）</td></tr>
+          <tr><td>⑤ HiPHI 617.5 小时、亚毫米、带物体网格</td><td>10-05 ④ Runway Praxis-1（网络视频预训练 16.1 厘米 vs 遥操作 16.0 厘米，自承不显著）；10-05 ⑤ FieldAI 押物理先验</td><td><strong>同一场争论第三幕</strong>（<b>多样性 vs 物理精确</b>；这次的进步是两方都拿出了可在实机验证的交付物，而不是只有主张）</td></tr>
+          <tr><td>⑤ 用 FrameNet 语言学骨架约束采集分布</td><td>① 格式要求改用结构化输出；10-07 ① ReviewBench 的黄金集须满足「真实/相关/非琐碎」</td><td><strong>同题不同域</strong>（都是<b>先定形状再看内容</b>：把输出或答案的形状先钉死，一个钉答案格式，一个钉采集分布）</td></tr>
+          <tr><td>顺带 OpenAI 722 篇数学手稿、外部无法重跑</td><td>10-05 ① 模型自写的 168 份测试里 129 份拒绝正确答案</td><td><strong>同题不同域，同一结论</strong>（在数学里判卷人会错，在代码里模型自写的测试也会错；<b>两处的稀缺资源都是可靠的验收能力</b>）</td></tr>
+          <tr><td>顺带 GPT-6 间接提示注入 97.13%</td><td>09-29 ④ GLM-5.3 抹掉护栏（2200 GPU 小时、约 4400 美元）；10-07 ④ agent 大体做了被训练去做的事</td><td>同题不同层（前两条是<b>意图对齐</b>的失败，这条是<b>把失败率定价</b>；97.13% 应读成「已知且可接受」而不是「解决了」）</td></tr>
+          <tr><td>顺带 StartLux-Decision 一次前向回答三题 26 毫秒</td><td>① Haiku 5.5 的 effort 五档；10-07 顺带 Day-1 默认提速约 50%</td><td><strong>第三条降本路径</strong>（今天是<b>让便宜 / 让快</b>，这条是<b>取消生成</b>；适用于候选集已定的判断题，不适用于要出新方案的地方）</td></tr>
+          <tr><td>顺带 智元远征 A3 语音点歌，公开播放需另办授权</td><td>10-07 ③ Photopea 被「过一遍模型」重发；09-13 顺带 RubyGems 供应链</td><td>同题不同面（<b>代码可以合法地被重新表达，音乐不能</b>；具身化让「使用」变成「表演」，而表演从来需要另一份许可）</td></tr>
+          <tr><td><strong>今日整体</strong></td><td>09-28 验收权归谁 → 09-29 护栏有了工程形态也暴露了代价 → 09-30 意图的锚点在哪里 → 10-04 中间层被搬进权重也修不动 → 10-05 自证凭证正在失效 → 10-07 产出已经不是瓶颈、背书才是</td><td>递进：前六期分别处理了<b>谁验收、护栏装哪、意图锚在哪、中间层由谁维护、凭证是否还成立、背书谁来做</b>；今天轮到更前面的一个变量——<b>这笔算力到底由谁、按什么方式付钱</b>。① Anthropic 说横向：把最便宜的一档压到地板价（≤10 万 token 的请求输入 0.10、输出 0.50 每百万），第一次让「十个便宜子 agent 并行试 86 种、再由大模型收敛」在錢与时间上同时优于「一个贵模型慢慢想」，代价是新分词器多算约 30% 的 token、非默认采样参数直接报 400；② Google 说纵向：输出上限从 6.4 万提到 100 万 token，把 80 万行的 C/C++ 到 Rust 迁移塞进一次航程，每任务约 1.99 美元，代价是除了 650 家安防守卫者之外今天没人能用，且没有公开任何检查点与回退率；③ 微软说取消单价：例行编码从 Claude Haiku 4.5 改由本机 137B / 6.8B 激活的 MAI-Code-1.1 Flash 承担且不计费，配套的 MXC 沙箱同日 GA，三种模式里明确留了一个「记录但不拦」，而归因与策略管理还在路上；④ 具身侧的答案在数据不在算力：英伟达、微软 M12、高通创投、三星同一天成为一家付钱给人录日常动作的公司股东；⑤ 另一拨人同日给出反案：617.5 小时亚毫米级光学动捕、其中 245.7 小时带同步物体网格，已迁到 Unitree G1 实机。<b>五种解法同一天出现且互相排斥，恰恰说明这个行业还没对「agent 的钱该怎么花」形成任何共识——而共识缺位的这段时间，正是最值得亲自算账而不是听报价的窗口。</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-08 · 北京时间 10:36</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-07.html">← 2026-10-07</a></div>
+</body>
+</html>
