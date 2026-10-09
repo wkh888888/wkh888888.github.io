@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-09 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px solid #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 9 日（周五）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">Agent 治理 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：产出不是问题，规格才是 —— ① Claude Code 给子 agent 分了 low 到 max 四档算力，并让 mod 能在它启动前直接拒掉，昨天「十个便宜模型并行试 86 种方案」的演示今天才有了可用的旋钮；② Anthropic 一年多来第一次全量改使用政策，最扎眼的「不许虐待模型」其实门槛极高、且靠模型自己挂电话执行，真正有分量的是新增的物理动作条款——模型驱动的硬件可能造成伤害时，必须有一个合格的人能看见它并按停它；③ 全国已启用七十多家具身智能训练场、交付 150 万小时人类视频数据，数据瓶颈第一次以国家基础设施的形态出现，而同一天澎湃的账本提醒：采集小时数不等于可训练小时数；④ 一个开源 agent 被克隆两千四百万次，换来 15 亿美元投后估值，代价是收入口径只有 run rate；⑤ 小鹏给出人形机器人的制造口径——八成核心工序自动化、年底月产一千台、85% 的零部件供应商与汽车重合。算力有档位、行为有条款、数据有底座、公司有定价、产能有节拍：五件事在做同一件事，把「能不能做出来」换成「按什么规格持续运行」</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 给子 agent 分算力档位</a>
+    <a href="#n2">② 模型进了受保护条款</a>
+    <a href="#n3">③ 七十座机器人学校</a>
+    <a href="#n4">④ 两千四百万次克隆的报价</a>
+    <a href="#n5">⑤ 一千台一个月</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Claude Code 给子 agent 分了算力档位，并让 mod 能在它启动前直接拒掉：多智能体第一次有了控制面</h2>
+      <span class="tag t-code">AI Coding · 多智能体治理</span>
+    </div>
+    <div class="src">来源：Anthropic Claude Code 官方变更日志 v2.1.292 / v2.1.293 · 交叉参考：clauding.de 版本解读、claudeupdates.dev 版本追踪、howtoclaude.dev、openclawradar.com、turboai.dev 环境变量表 · 社区实测数据见 10-09 英文日更源转述</div>
+    <div class="body">
+      <p>本周 Claude Code 的变更日志动了两次，两次合起来画出的是同一张图：<strong>agent 框架过去一年证明了能 spawn 出很多 worker，瓶颈已经从「能不能生」转移到「谁来管」</strong>——谁能拿到多少算力、哪一次 spawn 被允许运行、操作者怎么看清楚正在发生什么。</p>
+      <ul>
+        <li><strong>Agent 工具新增 <code>effort</code> 参数</strong>：主 agent 可以为它创建的每一个子 agent 指定推理强度，四档 <code>low / medium / high / max</code>。便宜的检索、日志清理、跑测试给 low，架构决策和复杂调试给 max，编排器第一次能按任务难度匹配算力预算，而不是给 grep 付旗舰价。</li>
+        <li><strong>同一版本把 workflow agents 暴露给了 <code>agent.spawnHook</code></strong>，并带上 <code>runID</code> 与 <code>index</code>。这行的意思是：<strong>一个 mod 现在可以在某个 agent 启动之前就拒绝它</strong>——功能上这就是一个准入控制器，分布式系统里最老的那种。</li>
+        <li><strong>v2.1.293 落在 Haiku 5.5 发布的次日早上</strong>，补上原生 <code>model</code> 与 <code>agentType</code> 支持，并在子 agent 状态行里加了 <code>agentType</code> 字段用于追踪。也就是说：谁在跑、跑的是哪一类、跑多大，三件事第一次都能看见。</li>
+        <li><strong>经济账因此成立</strong>。昨天那组被广泛转述的社区实测：同一个物理仿真基准上，Opus 5.5 单干用了 3 分 37 秒、试了 25 种方案、花 0.47 美元；同一个模型指挥 10 个 Haiku 5.5 子 agent，58 秒、86 种、0.14 美元。<strong>昨天是价格让它划算，今天才是控制面让它可做。</strong></li>
+        <li><strong>六项权限修复，只有一项被标了 Security</strong>：<code>PreToolUse</code> 钩子的批准与 auto mode 会<strong>绕过网络（UNC）路径读文件的权限提示</strong>。另外五项延续了 2.1.290 开始的清扫——沙箱命令可读 <code>~/.claude/seed-admin</code> 下 <code>/ultrareview</code> 上传的暂存副本；托管设置里的 read-deny 路径在会话中途出现或改向时，没有撤销其下的项目授权、也没有终止凭证注入；macOS 与 Windows 上读笔记本或 PDF 可以在中途换链接返回批准范围之外的文件；被篡改的托管设置磁盘缓存可以在设置拉取失败时关掉内置策略插件；<code>rm -rf</code> 打在 8.3 短名或 Windows 其他拼法上，现在按删除处理。</li>
+        <li><strong>三处过去静默失败的地方被修了</strong>：<code>/resume</code>、<code>/branch</code>、<code>/clear</code> 之后创建的定时任务从不触发；后台会话的 <code>/loop</code> 在进程重启后因为待唤醒丢失而静默停止；<code>@</code> 引用超过 256KB 的文本文件过去被直接丢掉且不报错，现在会告知大小并让模型分段读。</li>
+        <li>其余新增：<code>claude plugin install --marketplace</code> 一条命令完成注册与安装；<code>CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS</code> 调整 529 过载时的退避基线；mods 拿到 <code>prompt.autocomplete</code> 事件与 <code>$.model.complete</code> 的 prompt caching。</li>
+        <li>版本体量：第三方追踪站记 <strong>92 项改动</strong>，其中 57% 为 bug 修复，Plugins/Skills 相关 18 项，是本月第 6 个版本。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条要贴着昨天的主榜读。昨天这栏的结论是「探索这件事被重新定价了，搜索的宽度第一次比深度便宜」；<b>但价格降下来之后，紧接着的问题是：谁来分配这批便宜的探索。</b></p>
+      <p>在此之前，一个主 agent 派出去的子 agent 拿到的推理强度基本是一视同仁的，你要么接受默认值，要么绕开框架自己写调度。<b><code>effort</code> 参数把这件事变成了调用约定里的一行</b>，而 <code>agent.spawnHook</code> 拿到 <code>runID</code> 与 <code>index</code> 之后能直接拒绝，意味着「允许生成多少个、每个多大」从提示词层面挪到了运行时层面。</p>
+      <p>把它翻译成工程语言：<b>agent 集群正在长出一个分布式系统早就有、而 agent 框架一直缺的层——配额与准入。</b>这一层去年还不重要，因为大部分团队只跑一两个 agent；今天重要，是因为并行的宽度刚刚变得便宜。价格先到，控制面后到，中间这个时间差就是现在能抢的窗口。</p>
+      <p>还有一层容易被忽略：<b>那六项权限修复里有五项的形态是「中途改向」</b>——路径在会话中途被重新指向、链接在读的中途被换掉、托管缓存中途被篡改。这不是配置写错，而是时间维度上的竞态。沙箱和只读清单这类静态边界，管不住在运行途中变化的边界。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径与边界</b> —— 三层时点先分清楚：<b>v2.1.292 的发布日是 10 月 6 日（当天 17:10 UTC），v2.1.293 在 Haiku 5.5 发布的次日早上，今天看到的是社区与二手源的集中解读，不是首发日。</b></p>
+      <p>① 那组「58 秒 / 0.14 美元 / 86 次」<b>来自社区实测转述，不是官方发行说明里的数据</b>；官方没有给出 <code>effort</code> 参数对成本与延迟的具体影响，任何换算都应按方向性读，不当承诺。②「92 项改动 / 57% 修复」出自第三方版本追踪站的统计口径，非 Anthropic 官方数字。③ 六项权限修复<b>未附 CVE 编号</b>，是否构成权限提升路径由各二手源自行定性，本文只描述能被读到的事实。④ 版本间日期在不同英文源上有出入（有源记 10 月 6 日、有源记 10 月 8 日），采用官方变更日志顺序，不据此推算精确时点。</p>
+    </div>
+    <div class="act">
+      <p><b>四条立刻可落地</b></p>
+      <p>① <b>把 <code>effort</code> 显式写进调用约定，不要让它落到默认档。</b>默认档在你的任务分布上几乎一定不是最优，而这是目前唯一能按任务难度分配算力的官方旋钮。</p>
+      <p>② <b>用 <code>agent.spawnHook</code> 做启动前拦截，而不是事后审计。</b>「已经跑了三分钟的子 agent」和「根本没启动的子 agent」成本差一个数量级。</p>
+      <p>③ <b>UNC 路径那条是六项里唯一标了 Security 的，优先升级。</b>在文件共享环境里跑 agent 的团队，这条的暴露面比其余五项加起来都大。</p>
+      <p>④ <b>去查一遍 <code>/resume</code> 之后建的定时任务是否真的在跑。</b>这类修复之所以值得单独提，是因为它在修复前不报错、不告警、只在日志里安静地什么都不做。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card sec" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Anthropic 全量改使用政策：不许虐待模型只是标题，真正有分量的是那条「必须有人能按停它」</h2>
+      <span class="tag t-sec">Agent 治理 · 物理动作条款</span>
+    </div>
+    <div class="src">来源：Anthropic 官方《Usage Policy》2026 版（发布时间 2026-10-08，生效 2026-11-12）· 交叉参考：The Verge 10-08、MacRumors 10-08、凤凰网科技 / IT 之家 10-09、格隆汇 10-09、IT 时代网 10-09</div>
+    <div class="body">
+      <p>这是一年多来 Anthropic 第一次对使用政策做全量修订，11 月 12 日生效。传播最广的那条是禁止虐待模型，但从工程角度看，<strong>真正值得抄进自家设计文档的，是新增的「物理动作」一章</strong>。</p>
+      <ul>
+        <li><strong>首次针对模型本身的条款</strong>：禁止对 Claude 实施「持续且不必要的虐待或残忍行为」。这条源自公司的模型福祉研究；执行机制上，<strong>终止对话仍是主要手段</strong>（Claude 自 2025 年 8 月起已可主动结束与持续施虐用户的对话，结束后该会话不能再发消息，其他会话不受影响）。是否进一步封号，公司未予置评，但通用条款里本就允许警告、限流、暂停与终止。</li>
+        <li>官方明确划了排除项：<strong>日常不满、反驳、黑暗创作主题、模型测试与研究都不适用</strong>；只针对「反复、无明显目的地实施残忍行为」的极端情况。</li>
+        <li><strong>新增「物理动作」章节（本文认为这是本次修订里最重的一条）</strong>：当 Claude 连接到<strong>可能造成伤害的、会自主执行物理动作的硬件</strong>时，必须有一名<strong>合格操作者能够观察该设备，并在需要时让它停下来</strong>。对特定政府客户，在合同限制与安全措施充分时可作调整。</li>
+        <li><strong>武器条款从「开发武器」扩到「让武器运转的软件与组件」</strong>，新增禁止改造生物或化学制剂以提高致死性或传播性，并明确禁止<strong>用 Claude 武装无人机与其他自主载具</strong>。公司称这是对已观察到的多起真实尝试的回应。</li>
+        <li><strong>监控条款重写</strong>：禁止未经同意追踪个人（无论实时还是分析既有数据）；Claude 不得用于决定或建议执法与刑事司法程序中的调查、逮捕、起诉对象；新增禁止构建或改进监控工具；禁止人肉搜索。</li>
+        <li><strong>欺骗性活动合并为统一章节</strong>：假评论、水军、假站点、机器人冒充人、隐藏信息发布者身份、搭建运行影响力行动所需的工具与基础设施。公司称发现国家媒体机构、政府宣传部门与商业公司在用 Claude 运营假账号与伪造新闻站网络。选举章节相应收窄为禁止欺骗选民、冒充候选人或官员、压制投票率。</li>
+        <li><strong>健康与金融列为高风险场景</strong>：诊断、用药剂量、具体投资建议等，需在结果到达用户前由合格专业人士复核，并明确披露内容为 AI 生成。</li>
+        <li>另新增禁止创建、分享或威胁分享非自愿亲密影像，以及用于制作这类影像的工具。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 「不许骂 AI」这条注定会被当成段子传播（MacRumors 评论区前两条就是在笑它），但它在本期里的分量其实最轻：<b>门槛写到极高、执行靠模型自己挂电话、公司连会不会封号都不肯说。</b></p>
+      <p>真正该被抄走的是物理动作那条。<b>一家模型公司第一次在面向用户的合同里，为「模型驱动机器人」预设了接口规则，而且规则的内容不是「不许做什么」，而是「必须有一个合格的人能看见它并能按停它」。</b>这句话把责任钉在了人身上，且钉法很具体：不是事后追责，是要求运行时存在一条可用的停止链路，且操作者必须具备资质。</p>
+      <p>把它和 9 月 28 日那批硬件侧的护栏放在一起读会更清楚——那边是把「允许做什么」搬出模型、搬出主机、装进 agent 提示不了的硅片；这边是同一件事的合同层版本：<b>不是限制模型想做什么，而是规定部署形态必须具备什么。</b>两层合起来，才是一个完整的东西。</p>
+      <p>还有一处收紧值得单独说：武器条款从「开发武器」扩到「<b>让武器运转的软件与组件</b>」。这意味着他们看到的真实尝试是软件形态的，而不是硬件形态的——这与过去一年编码 agent 被反复用于写控制、导航、仿真类代码的观察是同一个方向。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径与边界</b> —— ① <b>发布日 10 月 8 日，生效日 11 月 12 日</b>，今天既不是发布日也不是生效日，中文媒体的集中转述在 10 月 9 日。②「已发现多起利用 Claude 开发武器指导或控制软件的真实尝试」<b>是公司自陈</b>，引自其威胁情报报告，未见独立核实的具体案例与数量。③ 虐待条款的<b>执行机制是模型终止对话</b>，Anthropic 未说明是否会引入用户封禁，不要把它读成账号处罚制度。④ 物理动作条款里「合格操作者」的资质标准、观察方式、停止方式<b>均未定义</b>，落地时仍需自行转成可验收的规格。⑤ 与 9 月 12 日推送过的也门事件是同一家公司的两件事：那时是外部滥用已发生，这次是政策收紧，<b>不构成重复，但读的时候应当连着看</b>。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>做 agent 接硬件的团队：把「合格操作者能观察并停止」当验收项，不要当法务条款。</b>具体到工程上是三件事——有没有独立的停止通道、操作者能否在不经过模型的情况下触发、触发后设备是否真的停。</p>
+      <p>② <b>做健康与金融场景的：11 月 12 日前补上人工复核与 AI 生成披露。</b>这两项现在是从「建议」变成了政策里的明确要求。</p>
+      <p>③ <b>别把「禁止虐待」读成内容审核收紧。</b>官方明确排除了日常不满、反驳、黑暗创作与红队测试——做安全评估的团队照旧做，这一条不覆盖你们的场景。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card embodied" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>七十多家具身智能训练场已启用，交付 150 万小时人类视频数据：数据瓶颈第一次长成了国家基础设施</h2>
+      <span class="tag t-emb">具身智能 · 数据基础设施</span>
+    </div>
+    <div class="src">来源：央视新闻 10-08《我国具身智能产业化加速落地》、工信微报 / 中国网 10-08、中财网 10-09、搜狐转载 10-09 · 反方口径：澎湃新闻 10-09《风暴中的数采中心：数据采集是好生意吗》</div>
+    <div class="body">
+      <p>今年以来国内持续夯实具身智能的训练场基础设施。<strong>全国已建成启用 70 多家具身智能训练场，在建与规划 40 余家</strong>，形成长三角、京津冀、珠三角三大核心集群。业内把训练场叫做「机器人学校」——没有真实场景里的数据，机器人只会纸上谈兵。</p>
+      <ul>
+        <li><strong>中关村一家企业的具身智能数据平台</strong>汇聚了全国各地训练场的人类视频与仿真合成数据，<strong>已交付 150 万小时人类视频数据</strong>，官方称量级达到全球领先。</li>
+        <li><strong>数据已经开始喂进真机</strong>：在深圳，依托实训数据训练的轮臂式人形机器人可完成<strong>开关电柜、启闭工业阀门</strong>这类复杂作业。深圳赛博格机器人负责人给出的口径是：<strong>通过几万条左右数据的训练，已能让机器以 80% 到 90% 的成功率完成当前一个动作</strong>。</li>
+        <li>产业坐标：<strong>2025 年我国人工智能核心产业规模超 1.2 万亿元，企业数量超 6200 家</strong>。</li>
+        <li>政策侧：工信部等部委不久前开展专项行动，聚焦<strong>工业、服务、特种三大领域</strong>，构建「实景实训—数据沉淀—产品迭代—规模部署」的产业闭环。目标是<strong>到 2026 年底，人形机器人等重点产品在一批代表性场景中率先完成应用验证和常态部署，带动形成万台级规模落地能力</strong>；国家发改委明确要靠实训场和中试基地帮中小企业跨过从样机到量产的门槛。</li>
+        <li><strong>但同一天澎湃给出的账本把话说完整了</strong>：不少训练场<strong>建设不足一年，商业模式远未成熟</strong>；真机数据采集<strong>每小时数百到上千元</strong>，复杂任务更贵；更关键的一句——<strong>可采集的数据规模，不等于可训练的数据规模</strong>，中间还要经过清洗、对齐、标注和质检。这门「教机器人干活」的生意到底是好生意还是泡沫，业内还在吵。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条要放在「数据瓶颈」这条主线上读。9 月 14 日这栏推送过红杉领投一家做具身数据的公司、并指出瓶颈正从硬件转向数据；<b>当时的解法是资本买采集能力，今天的解法是国家建训练场集群</b>——70 座已启用、40 余座在建、三大集群、150 万小时已交付。同一道题的两条路线，在同一年各走了一步。</p>
+      <p>真正值得抄走的是澎湃那句：<b>可采集规模不等于可训练规模。</b>150 万小时这个数字很漂亮，但从采集到可训练中间横着清洗、对齐、标注、质检四道工序，而这四道工序的单价，恰恰是过去几期反复出现的账本里最贵的那一段。任何一份数据报价，如果不写清楚是采集小时数还是可训练小时数，都不能直接进预算表。</p>
+      <p>还有一个口径陷阱藏在政策目标里：<b>「万台级规模落地能力」是能力目标，不是已实现产量。</b>它说的是到 2026 年底具备这个能力，跟各家公司的实际出货是两层数字，不能放在同一张表里加减。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径与边界</b> —— ① 70 余家、40 余家、150 万小时、1.2 万亿元、6200 家<b>均为官方与央媒口径，未见第三方核验</b>。② 80%–90% 成功率<b>来自被采访企业的自陈</b>，且限定在「当前一个动作」，不是整机任务的完成率，不能与实验室里那些整机基准的分数并列。③ 150 万小时是<b>已交付的采集量</b>，不含清洗与对齐后的可用量，二者不可混用。④ 万台级是<b>落地能力目标</b>，与 9 月 19 日推送过的 40 万台那一类产量口径不是同一层，<b>不可并列引用</b>。⑤ 澎湃对商业模式与成本的质疑发表于同一天（10-09），<b>建议与本条并读</b>，不要只看央媒口径。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>评估数据供应商时，只问「可训练小时数」，不问「采集小时数」。</b>把清洗、对齐、标注、质检的单价单独列进预算，这四项通常比采集本身贵。</p>
+      <p>② <b>把「单机动作成功率」与「整机任务完成率」分开记录。</b>前者是 80%–90% 那种数，后者才是能拿去和客户谈的数。</p>
+      <p>③ <b>别把万台级目标当采购依据。</b>它是能力建设目标；采购要看具体厂商的已交付台数与节拍。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card coding" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>一个开源 agent 被克隆两千四百万次，换来 15 亿美元投后估值，而收入口径只有 run rate</h2>
+      <span class="tag t-code">AI Coding · 开源 agent 商业化</span>
+    </div>
+    <div class="src">来源：TechCrunch 10-07、SiliconANGLE 10-07、theaiinsider 10-08、VentureCapitalTracker · 财务数据引自《华尔街日报》· 中文转述见 10-09 财经媒体</div>
+    <div class="body">
+      <p>Nous Research 确认完成 <strong>9000 万美元 B 轮，投后估值 15 亿美元</strong>。这家成立三年的公司做的是开源 agent Hermes，这次融资要解决的命题很直白：<strong>把开源生态的渗透率换成企业收入。</strong></p>
+      <ul>
+        <li><strong>轮次与股东</strong>：Robot Ventures 领投，参投方包括 <strong>NVIDIA、Samsung</strong>、Union Square Ventures、Menlo Ventures、1789 Capital；累计融资 <strong>1.58 亿美元</strong>；上一轮为 2025 年 4 月 Paradigm 领投的 5000 万美元 A 轮。</li>
+        <li><strong>Hermes 的分发数据</strong>：2026 年 2 月以开源许可发布，<strong>被克隆超过 2400 万次</strong>（另有源记下载超 2200 万），拥有数千名开源贡献者，<strong>公司自估约占全球 AI token 用量的 2.5%</strong>。</li>
+        <li><strong>能力形态</strong>：桌面应用可访问用户文件与本机程序、用浏览器取数、在 Docker 容器里跑代码；底层可接 Claude 等前沿模型，也支持自研 Hermes 4 系列（用 500 万条合成数据训练，约三分之二专为增强推理，自研工具 DataForge 生成）；内置 router 按推理成本、速度、输出质量路由每次请求；可外接 RetainDB 在会话间保留偏好与项目数据。</li>
+        <li><strong>商业化三档</strong>：Hermes Cloud（个人，几秒起 agent）、Hermes Business 与 Hermes Enterprise（管理员可设团队级 token 限额、共享 agent 定制）。本次新推 <strong>Hermes for Businesses</strong>，主打企业部署定制 agent 处理多步工作流，<strong>数据保持私有、不进入第三方或共享训练管线</strong>。</li>
+        <li><strong>收入口径</strong>：据《华尔街日报》，截至 2026 年 9 月中旬年化收入约 <strong>3600 万美元</strong>，公司预计年底前超过 <strong>1 亿美元</strong>。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条是「社区渗透率能不能换成钱」这道题目前最贵的一次下注。此前这栏记过 superpowers 那类生态指标（几十万星），<b>那是「装了多少」的计数；这次是资本第一次直接给这个计数报了价——2400 万次克隆，15 亿美元。</b></p>
+      <p>但风险恰好也在同一个地方。<b>克隆数是分发指标，不是付费指标。</b>企业采购要的是支持、安全、治理和可预测的经济性，这四样和 GitHub 上的星数几乎没有关系。一家二手源把话说得比较直白：开放权重本身不是完整的商业模式，Nous 必须把模型、推理、agent 工具、支持与治理打包成一个企业愿意付钱的产品，同时不能让开源社区觉得自己成了次要的那一方。</p>
+      <p>还有一个结构性观察值得记：<b>Hermes 的护城河不在权重上，而在「能不能被治理」上。</b>企业版卖的是团队级 token 限额、数据私有、可审计——这跟今天第 ① 条 Claude Code 长出配额与准入控制，是同一个需求在两个不同位置的表达。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径与边界</b> —— ① <b>3600 万美元是 run rate（截至 2026 年 9 月中旬），不是已确认收入；年底 1 亿是公司预测，不是已实现业绩。</b>引用前务必写明是 run rate 且未经审计（此为本栏在 9-20 预收货款、9-29 毛利率、10-05 营收加合同、10-07 累计融资、10-08 run rate 之后同条铁律的又一次应用）。② <b>克隆数两个口径打架</b>：TechCrunch 与 SiliconANGLE 记「克隆超 2400 万次」，另一家记「下载超 2200 万」，两个数字不可混用。③ 2.5% 全球 token 用量<b>为公司自估</b>，无第三方口径。④ <b>融资官宣日为 10 月 7 日</b>，今日所见为中文与二手源扩散，不是首发。⑤ 有源把 M12 列入参投方、另有源未列，股东名单以公司公告为准。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>采购开源 agent 时，把克隆数排除在决策依据之外。</b>真正该看的四项是付费转化、留存与扩张、推理经济性、长任务可靠性（含安全与审计）。</p>
+      <p>② <b>如果团队已在用 Hermes 开源版，注意企业版与开源版的数据处理边界是两回事。</b>「数据不进入共享训练管线」是企业版的承诺，不自动覆盖开源版。</p>
+      <p>③ <b>把 2.5% 当营销口径，不当市场份额。</b>它是公司自估的 token 占比，与收入份额、付费席位数都没有换算关系。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>小鹏给出人形机器人的制造口径：八成核心工序自动化、年底月产一千台、85% 的零部件供应商与汽车重合</h2>
+      <span class="tag t-emb">具身智能 · 量产与供应链</span>
+    </div>
+    <div class="src">来源：朝鲜日报旗下 Chosun Biz 10-09 产业分析《Automakers pivot to humanoids as EV supply chains speed mass production》· 中文转载：腾讯新闻 / IT 时代网 10-09、BigGo Finance 10-09</div>
+    <div class="body">
+      <p>小鹏在广州工厂正式启用了人形机器人自动化产线，并第一次把人形机器人的<strong>制造口径</strong>摆到台面上。上一期这条线索停在「官宣量产但未披露产量」，今天补上的是那组数字。</p>
+      <ul>
+        <li><strong>产线与节拍</strong>：核心工序自动化率<strong>超过 80%</strong>；公司自称「全球首条面向先进人形机器人的自动化产线」，把车规级制造能力应用到了机器人生产上。<strong>年底开始量产，目标月产 1000 台</strong>。</li>
+        <li><strong>首批去向</strong>：先部署到小鹏自家门店，承担<strong>引导与客户服务</strong>；面向国内外的对外销售<strong>预计从明年启动</strong>。</li>
+        <li><strong>本体参数</strong>：IRON 高 <strong>178 厘米</strong>，内部代号「9527」，外覆白色外壳；搭载<strong>三颗自研图灵 AI 芯片，最高算力 2250 TOPS</strong>——图灵原本是小鹏为自动驾驶自研的芯片，现在同时用于人形机器人。</li>
+        <li><strong>供应链是这套打法的地基</strong>：小鹏在上月第二季度财报会上披露，IRON 生产所需零部件供应商中，<strong>超过 85% 与小鹏汽车零部件供应商重合</strong>。何小鹏的表述是：<strong>汽车和机器人不是两条平行线，而是同一套物理 AI 能力延伸到不同本体上</strong>。小鹏三厂（肇庆、广州、武汉）整车年产能 60 万辆，去年销量约 43 万辆。</li>
+        <li><strong>资本侧</strong>：机器人部门上月获得来自 <strong>IDG 资本、腾讯与阿里巴巴的 9 亿美元</strong>投资，被称中国具身智能领域单轮规模最大的私募融资。</li>
+        <li><strong>第三方视角</strong>：汉阳大学机器人工学教授韩在权指出，电动车与人形机器人零部件重合度高，整车厂天然握有相当一部分人形机器人供应链；<strong>自研 AI 芯片能进一步压低成本，垂直整合程度与零部件自给率将成为开发速度与售价的标尺</strong>。</li>
+        <li><strong>同业坐标</strong>：现代汽车集团计划 2028 年起在制造现场部署 Atlas，构建初期年产 3 万台的体系，优先投放美国 HMGMA；特斯拉走类似路径。国内智元、优必选等已达年产数千台。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注</b> —— 这条的价值不在「又一家宣布量产」，而在它<b>把具身智能的竞争从本体参数挪到了制造体系</b>：80% 自动化率是工艺口径，1000 台/月是产能口径，85% 供应链重合是成本结构口径。这三个数字此前几乎没人同时给过。</p>
+      <p>整车厂进场的含义也在这里。纯机器人公司要从零搭供应链，而<b>整车厂直接复用已有的零部件采购网络</b>——这不是营销话术，是可核对的成本差异。再加一层：自研芯片（图灵）让算力这一块不用外采，垂直整合程度越高，售价空间越大。韩在权那句「垂直整合与自给率将成为标尺」，说的就是这件事。</p>
+      <p>但也要把话说回来：<b>今天的数字里没有一个是已实现的产量。</b>1000 台/月是年底目标，首批去向是自家门店做引导与客服，外部销售要等明年。把它和 9 月 29 日那本招股书放在一起读更有意思——那边的账本写着「人形两年只卖 4 台、赚钱的是机器狗」，这边写着「年底月产一千台」。<b>同一条赛道上，量产叙事与账本数字之间还隔着整整一个交付周期。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>口径与边界（三层时点，务必分清）</b> —— ① <b>产线启用与 IRON 走下产线发生在 9 月 8 日</b>；② <b>9 月 13 日本栏已据 IFA 柏林官宣推送过该事件，当时明确写明「未披露产量」</b>；③ <b>今天 10 月 9 日的是 Chosun 的产业分析报道与中文转载。</b>因此本期的增量是「80% 核心工序自动化率 / 年底月产 1000 台 / 85% 供应链重合」这组<b>制造口径</b>，不是产线启用这一事件本身——与 10-04 处理宝马与 Figure 的三层写法一致。</p>
+      <p>④ 英文源日期互相打架：一处写 8 月 8 日、另一处写「上月 8 日」，<b>按中文与韩文口径取 9 月 8 日，两个日期不可混引</b>。⑤ 9 亿美元是<b>上月的融资</b>（9 月 7 日顺带已提及），不是今日新钱。⑥ 80% 是「<b>核心工序</b>」自动化率，公司未披露核心工序的范围，分母不清楚时这个比率不可横向比较。⑦ 1000 台/月是<b>年底目标</b>，不是已实现产能。⑧「全球首条」为<b>公司自称</b>，无第三方核验。</p>
+    </div>
+    <div class="act">
+      <p><b>三条立刻可落地</b></p>
+      <p>① <b>追踪硬证据而不是目标：产线实际下线台数、首个外部客户名与订单量。</b>在此之前，1000 台/月与「万台级落地能力」同属目标口径。</p>
+      <p>② <b>遇到自动化率，先问分母。</b>「核心工序」包含哪些、总工序有多少，决定了 80% 是不是一个强声明。</p>
+      <p>③ <b>把量产叙事与账本放在同一张表上读。</b>云深处招股书的人形销量、优必选的年报台数、小鹏的月产目标，分开放会各自成立，合起来才看得出交付周期有多长。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+
+    <div class="m code">
+      <h3>Google 推常驻型 Gemini 工作智能体</h3>
+      <p>10 月 8 日发布，面向职场，可答疑、处理知识工作、生成图像与媒体、<b>编写并运行代码</b>。用户设定目标后等待结果，可跨网页、移动端、Windows 与 Mac 访问，集成 Workspace、Microsoft 365 与 Slack，并<b>以无头方式运行（不需要专用界面）</b>。官方称它有独立的企业身份、能围绕一个目标持续工作数天、会为任务选择最合适的模型并内置成本控制。谷歌云 CEO Thomas Kurian 强调企业所需的安全、管理与治理能力。<b>读法</b>：与 9 月 30 日 OpenAI dots 是同一形态（常驻、跨设备、可自主推进）被两家在同一周分别落地，属同题不同厂商，不是谁抄谁。</p>
+    </div>
+
+    <div class="m code">
+      <h3>Manus 融资超 5 亿美元，估值约 40 亿</h3>
+      <p>蝴蝶效应 10 月 8 日宣布完成超 5 亿美元新融资，博裕资本与 IDG 资本领投，腾讯、红杉中国、真格等老股东跟投。<b>这是 Meta 原定的超 20 亿美元收购今年夏天被拆解、公司 9 月 1 日恢复独立运营后的首轮融资</b>，报道指向约 40 亿美元估值，为 Meta 报价的两倍。9 月 29 日已推出国际版 Manus 2.0 及个人 agent Cue（自带手机号、邮箱、支付与电脑）。累计处理超 147 万亿 token、创建超 8000 万台虚拟电脑（截至去年 12 月）。<b>读法</b>：一个差点被收购消失的团队回到市场并在十个月内把价格翻倍，是「通用 agent 能否在巨头自带 agent 功能之外保持溢价」的一次实时测试。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>代工厂视角：造一台是科研，造一千台才是制造业</h3>
+      <p>捷普（Jabil）以设计-for-制造视角谈人形机器人进度（The Robot Report 10-08，10-09 转载）。它不卖人形机器人，但看得见物料清单、良率与公差堆叠。核心判断：<b>难点已不再是让机器人走起来，而是可靠且便宜地造出上千台</b>——执行器能否撑过一万个 duty cycle、灵巧手装配是否要技师逐台手调、电池包能否通过在人旁工作的认证。Apptronik 把产能外包而非自建工厂，资本因此投向软件、安全验证与客户试点。<b>推论</b>：若代工成为扩产引擎，护城河会从硬件转向控制栈、安全运行记录与客户集成深度。<b>读法</b>：与 10-04 宝马在主机厂内部跑通是同一题的两条路，一个自建一个外包。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>反方：语言遇瓶颈，类人灵巧操作还要等到 2030—2031</h3>
+      <p>彭博社 10 月 8 日观点文章，赛迪网 10 月 9 日《AI 全球眼》转述：RLWRLD CEO 柳贞熙提出机器人的「大脑」与「双手」需同步迭代，其与英伟达联合研发的<b>灵巧性基准模型证明仅靠语言理解不足以支撑现实世界的物理作业</b>。我国人形机器人虽占全球 97% 市场份额，落地中仍存在感知与执行脱节。斯坦福 AI 指数显示真实环境下表现远低于实验室；2024 年调研中多数研究者判断，<b>达到人类水平的洗衣、积木组装等灵巧操作要等到 2030—2031 年</b>，76% 的研究者认为靠现有技术路径很难实现通用人工智能。<b>读法</b>：与今天第 ③ 条「数据瓶颈」并读——一个说是数据不够，一个说是物理交互能力本身缺位，两个解释并不互斥。</p>
+    </div>
+
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>历史条目</th><th>关系</th><th>说明</th></tr>
+        <tr><td>① Claude Code <code>effort</code> 与准入控制</td><td>10-08 ① Haiku 5.5 定价</td><td><strong>同题不同进</strong></td><td>昨天把探索的价格压下来（58 秒 / 0.14 美元 / 86 次），今天把调度这批探索的旋钮做出来；价格先到、控制面后到</td></tr>
+        <tr><td>① 多 agent 的配额与准入</td><td>10-07 ② GitHub 重建 Git 底座</td><td><strong>同层不同面</strong></td><td>一个扩容写入通道（4733 亿事件/月），一个给并发 agent 定算力档位与启动许可；都是「多 agent 之后基础设施怎么跟」</td></tr>
+        <tr><td>① <code>agent.spawnHook</code> 启动前拒绝</td><td>10-05 ③ GLM-5.3 抹护栏后 100% 服从</td><td><strong>同题反向</strong></td><td>一个把拒绝权做进启动之前，一个证明护栏可以被 2200 GPU 小时抹掉；攻防在相邻两层</td></tr>
+        <tr><td>① UNC 路径绕过权限提示</td><td>09-13 顺带 三工具安全更新</td><td><strong>同类不同处</strong></td><td>同为权限绕过，这次落在网络共享（UNC）路径与「中途改向」型竞态</td></tr>
+        <tr><td>② 使用政策「物理动作」条款</td><td>09-29 ① NVIDIA OpenShell / Sentry</td><td><strong>同题不同层</strong></td><td>一个把运行时约束装进硅片与带外看门狗，一个把「必须有人能按停」写成合同条款；两层合起来才完整</td></tr>
+        <tr><td>② 禁止虐待模型</td><td>09-12 ③ Anthropic 也门威胁报告</td><td><strong>同公司不同事</strong></td><td>那时是模型被拿去写导弹制导软件，这次是模型本身进了受保护条款；应连着读，不构成重复</td></tr>
+        <tr><td>② 武器条款扩到软件与组件</td><td>09-12 ③ 也门小组用 Claude Code</td><td><strong>同题再收紧</strong></td><td>从「开发武器」扩到「让武器运转的软件与组件」，并点名无人机与自主载具</td></tr>
+        <tr><td>② 武器禁令</td><td>10-05 ③ GLM-5.3 造武器链 8 小时 / 20.40 美元</td><td><strong>同题不同价</strong></td><td>一条禁令对应的是刚被证明很便宜的能力；但两者不是同一段链路，成本不可直接换算</td></tr>
+        <tr><td>③ 70+ 训练场 / 150 万小时</td><td>09-14 ④ 红杉领投 Mecka 数据公司</td><td><strong>同题不同路线</strong></td><td>一个靠国家建训练场集群（公共供给），一个靠资本买采集能力（私有供给）；同年各走一步</td></tr>
+        <tr><td>③ 采集每小时数百到上千元</td><td>09-13 ⑤ 数采经济学账本</td><td><strong>同题互证</strong></td><td>去年口径 120–150 元/小时、设备 15 万元/台，今天澎湃给数百到上千元/小时；成本结构一年未变，两源互证</td></tr>
+        <tr><td>③ 万台级落地能力</td><td>09-19 40 万台</td><td><strong>同题不同口径</strong></td><td>一个是 2026 年底代表性场景的能力目标，一个是另一处的产量口径，不可并列</td></tr>
+        <tr><td>④ Nous 15 亿估值</td><td>09-11 ③ superpowers 28.4 万星</td><td><strong>同题不同价</strong></td><td>从「装了多少」的计数，到资本直接给渗透率报价（2400 万次克隆 → 15 亿美元）</td></tr>
+        <tr><td>④ 3600 万 run rate</td><td>10-08 ④ Mecka run-rate 破亿</td><td><strong>同一铁律</strong></td><td>都是 run rate 不是已确认收入；本栏在 09-20 / 09-29 / 10-05 / 10-07 之后第五次应用</td></tr>
+        <tr><td>④ Hermes 私有部署</td><td>09-30 ① OpenAI DevDay dots 常驻云电脑</td><td><strong>同题不同层</strong></td><td>一个托管常驻（厂商云电脑），一个可私有部署（自有基建）；两条相反的企业化路径</td></tr>
+        <tr><td>⑤ 小鹏 1000 台/月</td><td>09-13 ④ 小鹏 IRON IFA 官宣量产</td><td><strong>同一事件的两个时点</strong></td><td>09-13 明确写明「未披露产量」；本期增量是 80% 自动化率与 1000 台/月的制造口径，已在 caveat 列三层时点</td></tr>
+        <tr><td>⑤ 85% 供应链重合</td><td>10-04 ⑤ 宝马与 Figure 03 技能集</td><td><strong>同题不同面</strong></td><td>一个靠整车厂既有采购网络压成本，一个靠主机厂自建可复用技能集；两条降本路径</td></tr>
+        <tr><td>⑤ 年底月产一千台</td><td>09-29 ⑤ 云深处「人形两年 4 台」</td><td><strong>同题反向</strong></td><td>同一条赛道上，量产叙事与招股书账本之间隔着整个交付周期；建议放在同一张表上读</td></tr>
+        <tr><td>速览 捷普代工</td><td>10-04 ⑤ 宝马与 Figure 03</td><td><strong>同题不同层</strong></td><td>一个在主机厂内部跑通，一个把制造外包给代工厂；护城河位置随之改变</td></tr>
+        <tr><td>速览 Gemini 常驻智能体</td><td>09-30 ① OpenAI dots</td><td><strong>同题不同厂商</strong></td><td>同一形态（常驻、跨设备、可自主推进数天）被两家在同一周分别落地</td></tr>
+        <tr><td>速览 语言遇瓶颈</td><td>09-14 ④ 数据瓶颈从硬件转向数据</td><td><strong>同题不同因</strong></td><td>一个归因于数据不足，一个归因于物理交互能力本身缺位；两个解释不互斥</td></tr>
+        <tr><td><strong>今日整体</strong></td><td>10-07 → 10-08 → 10-09</td><td><strong>递进</strong></td><td>10-07「产出不是瓶颈，背书才是」→ 10-08「谁为算力付账，五个互斥答案」→ 10-09「按什么规格持续运行」：从谁来验、到谁付钱、再到按什么规格跑，三步都在把衡量标准往具体里落</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-09 · 北京时间 10:20</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-08.html">← 2026-10-08</a></div>
+</body>
+</html>

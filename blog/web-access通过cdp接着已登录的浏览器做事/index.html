@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>web-access：通过 CDP 接着已登录的浏览器做事 · walker</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="web-access：通过 CDP 接着已登录的浏览器做事 · walker"><meta property="og:description" content><meta property="og:url" content="https://blog.walkerhua.com/blog/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B/"><meta property="og:image" content="https://blog.walkerhua.com/og/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="web-access：通过 CDP 接着已登录的浏览器做事 · walker"><meta name="twitter:description" content><meta name="twitter:image" content="https://blog.walkerhua.com/og/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>web-access：通过 CDP 接着已登录的浏览器做事</h1><p></p><div class="hero-meta"><span>发表于 2026-10-08</span><span>约 5 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#它怎样连接浏览器">它怎样连接浏览器</a><a class="toc-l2" href="#开始前先确认连接和登录态">开始前先确认连接和登录态</a><a class="toc-l2" href="#三种工具的关系">三种工具的关系</a><a class="toc-l2" href="#一次-oa-草稿的实测">一次 OA 草稿的实测</a><a class="toc-l2" href="#选择工具时看任务路径">选择工具时看任务路径</a></aside><article class="card prose"><p><strong>日期：2026-10-08</strong></p>
+<p>有时网页自动化最费时间的不是点击，而是找到正确的浏览器会话：账号已经登录，页面也停在熟悉的系统里，工具却连接到了另一个空白窗口。web-access 提供了一条直接连接本机 Chrome 或 Edge 的路径，让代理读取页面、操作网页，再检查结果是否真的保存。</p>
+<p>这篇文章记录一次 EOI OA 日常报销草稿的实际操作，并说明 web-access、bb-browser 和 CUA 各自扮演的角色。本文依据本机 web-access Skill <strong>2.5.4</strong> 的功能和 2026-10-08 的实测编写，不代表上游项目当前最新版本。</p>
+<h2 id="它怎样连接浏览器">它怎样连接浏览器</h2>
+<p>web-access 是联网调度 Skill：它可以按任务使用搜索、网页抓取、命令行请求，也可借助本机 CDP 代理控制浏览器。CDP 是 Chrome DevTools Protocol，即浏览器开发者工具协议。浏览器须开放调试连接；代理通过它连接到一个具体的浏览器标签页。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> LR</span></span>
+<span class="line"><span style="color:#FFAB70">  A</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">AI Agent</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> B</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">本机 HTTP 代理 localhost:3456</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  B </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> C</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">CDP</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  C </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> D</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">Chrome 或 Edge 的具体会话</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  D </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> E</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">网页</span><span style="color:#F97583">]</span></span></code></pre>
+<p>这条链路的关键是“具体会话”。浏览器窗口可能各自有不同的登录状态、页面和标签页。能访问 OA 地址，不代表连到的窗口已经登录；看到登录后的页面，也不代表它就是用户正在使用的那个标签页。</p>
+<h2 id="开始前先确认连接和登录态">开始前先确认连接和登录态</h2>
+<p>本地 2.5.4 要求 Node.js 22+（使用原生 WebSocket），并需要 Chrome 或 Edge 的调试连接可用。依赖检查入口是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">node</span><span style="color:#9ECBFF"> ~/.agents/skills/web-access/scripts/check-deps.mjs</span><span style="color:#79B8FF"> --browser</span><span style="color:#9ECBFF"> chrome</span></span></code></pre>
+<p>检查通过后，可以读取代理当前暴露的目标列表：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> http://localhost:3456/targets</span></span></code></pre>
+<p>确认目标后，可在已选中的页面上下文里执行只读检查，例如查看标题：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#9ECBFF"> 'http://localhost:3456/eval?target=目标ID'</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> 'Content-Type: text/plain'</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> 'document.title'</span></span></code></pre>
+<p>这些示例用于检查连接。实际使用时应先根据工具返回的目标信息确认标签页，再决定操作。登录页面需要用户本人完成登录；遇到会话过期时，重新登录后再继续，不要把其他窗口的状态当作当前窗口的状态。</p>
+<p>Skill 2.5.4 通过本地 Node 运行时和 HTTP 代理提供浏览器能力。创建或切换目标页面时，<code>new</code>、<code>navigate</code> 使用 POST 请求体传参；其余接口按用途提供页面求值、DOM 操作、点击和文件输入设置等能力。本文只展示只读请求，避免把不同接口的参数格式混成一条通用命令。官方项目介绍可见 <a href="https://github.com/eze-is/web-access">web-access 项目页</a>，协议说明见 <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol 文档</a>。</p>
+<h2 id="三种工具的关系">三种工具的关系</h2>
+<p><strong>web-access 和 bb-browser 都能操作浏览器，能力有重叠，但它们是不同的入口。</strong> web-access 是联网调度 Skill，其中包含本机 CDP 代理路径；bb-browser 是浏览器自动化 CLI，也可通过 CDP 访问网页，并提供自己的命令和适配器。web-access 不是 bb-browser 的别名。</p>
+<p><strong>CUA 的操作范围还包括桌面原生应用。</strong> 它可以读取界面并执行鼠标、键盘等操作；在 macOS 原生窗口路径中，还可以使用辅助功能信息。CUA 不只依赖截图坐标。选用哪条路径，要看任务需要操作浏览器页面还是桌面应用，以及工具能否接入正确的会话。</p>
+<h2 id="一次-oa-草稿的实测">一次 OA 草稿的实测</h2>
+<p>2026-10-08 的这次报销中，bb-browser 先连到了不合适的浏览器会话，CUA 的状态读取也超时了。web-access 随后连接到已经打开 OA 的 Chrome 会话。页面提示登录过期时，用户重新登录，自动化才从正确的页面继续。这些现象说的是不同工具当时连接到的会话和状态，并不互相矛盾。</p>
+<p>接入后，操作先读取表单和现有选项，再按页面提供的控件选项目和成本中心，填写日期、金额和说明，上传两份附件。保存之后重新读取请求页面，检查刚填写的值和附件是否出现。只有回读与预期一致，才将结果视为草稿已保存；点击按钮本身不足以证明业务操作完成。</p>
+<p>表单看起来只是 HTML，但现代网页常由框架维护自己的状态。直接改输入框的 DOM 值，页面上能看到新文字，不代表框架已经接收了变更。应优先使用正常输入和页面控件；如果某个控件确实需要额外事件处理，也要随后回读表单确认。内部框架事件处理器依赖页面实现细节，不能当作通用填写方法照搬。</p>
+<p>文件上传也有范围差别：代理可以为网页的文件输入控件设置用户指定的本地文件；这并不等于它能操作操作系统的任意文件选择窗口。跨域 iframe 和封闭的 Shadow DOM 也可能限制页面脚本能看到的内容。页面提示成功或 HTTP 状态正常，只说明某一层有响应；最终仍要核对表单字段、附件列表和保存后的页面状态。</p>
+<p>操作已有登录会话时，目标标签页继承该浏览器会话的账号权限。应只选择完成任务所需的页面与文件，保留用户原有标签页，并在结束时关闭自己创建的临时标签页。常规点击也不能保证所有网站都接受操作；如果网页没有完成预期变化，就停下来检查页面状态，而不是连续重复提交。</p>
+<h2 id="选择工具时看任务路径">选择工具时看任务路径</h2>
+<p>需要读写已打开网页、页面结构和文件输入控件时，web-access 的 CDP 路径可以直接接入本机浏览器会话。已有 bb-browser 工作流时，它也可以承担浏览器操作。要处理浏览器之外的桌面应用或原生界面，CUA 覆盖范围更合适。三者都要先确认目标窗口和登录态，再根据页面反馈核验结果。</p>
+<p>本次实测没有对模型 Token 消耗、点击准确率或成功率作统一测量，因此无法据此给这些工具排性能名次。它能说明的是：连接到正确的登录会话、遵循页面控件的交互方式、保存后回读业务数据，这三步共同决定了网页任务能否可靠完成。</p>
+<nav class="post-nav"><span></span><a class="post-nav-item post-nav-next" href="/blog/ai会点网页为什么还填不了你的oa/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">AI 会点网页，为什么还填不了你的 OA？两次操作里的自动化选型思考</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

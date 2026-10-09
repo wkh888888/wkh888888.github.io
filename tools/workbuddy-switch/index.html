@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>WorkBuddy-Switch：给 WorkBuddy / CodeBuddy 装一个「换号总闸」 · walker</title><meta name="description" content="社区开源的 MIT 协议 Tauri 桌面应用，把 WorkBuddy、CodeBuddy IDE/CLI、VS Code 与 JetBrains 插件的账号登录态收进一个界面，一键换号、积分到期与 Token 用量监控、会话跨账号复制。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/workbuddy-switch/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="WorkBuddy-Switch：给 WorkBuddy / CodeBuddy 装一个「换号总闸」 · walker"><meta property="og:description" content="社区开源的 MIT 协议 Tauri 桌面应用，把 WorkBuddy、CodeBuddy IDE/CLI、VS Code 与 JetBrains 插件的账号登录态收进一个界面，一键换号、积分到期与 Token 用量监控、会话跨账号复制。"><meta property="og:url" content="https://blog.walkerhua.com/tools/workbuddy-switch/"><meta property="og:image" content="https://blog.walkerhua.com/og/workbuddy-switch.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="WorkBuddy-Switch：给 WorkBuddy / CodeBuddy 装一个「换号总闸」 · walker"><meta name="twitter:description" content="社区开源的 MIT 协议 Tauri 桌面应用，把 WorkBuddy、CodeBuddy IDE/CLI、VS Code 与 JetBrains 插件的账号登录态收进一个界面，一键换号、积分到期与 Token 用量监控、会话跨账号复制。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/workbuddy-switch.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>WorkBuddy-Switch：给 WorkBuddy / CodeBuddy 装一个「换号总闸」</h1><p>它不管你写不写代码，只管一件事——让你在多个 WorkBuddy / CodeBuddy 账号之间一键换号。</p><div class="hero-meta"><span>第 8 期</span><span>发布于 2026-10-08</span><span>约 4 分钟</span><a class="tag" href="https://github.com/changexbc/workbuddy-switch" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/效率/">效率</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/macOS/">macOS</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心功能readme-实锤非营销稿">核心功能（README 实锤，非营销稿）</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#macos-权限这道坎别跳过">macOS 权限这道坎（别跳过）</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>第一次听说 WorkBuddy-Switch，容易和几个东西搞混，先划清边界：</p>
+<ul>
+<li><strong>它不是 WorkBuddy 官方出品</strong>。是社区开源项目（作者 changexbc，<strong>MIT 协议</strong>，Rust + Tauri 构建，写这篇时最新 v0.1.58，GitHub 1055 ⭐ / 129 fork，更新很勤）。</li>
+<li><strong>它也不是 CC Switch</strong>。CC Switch 管的是 Claude Code / Codex / Gemini 那一票 AI 编程工具的<strong>供应商配置</strong>切换；WorkBuddy-Switch 管的是 <strong>WorkBuddy / CodeBuddy 的账号登录态</strong>切换——两者对象完全不同，别混。</li>
+<li><strong>它本身不调模型、不写代码</strong>。它只动「你以哪个账号登录」这件事。</li>
+</ul>
+<p>所以预期摆正：装了它不会多出模型能力，它只是让你多账号之间切得爽一点、还能盯着积分别过期。</p>
+<p>不想先装？官方有<a href="https://changexbc.github.io/workbuddy-switch/">在线演示</a>（只读，账号与积分均为虚构数据），可以先点开看一眼再决定。</p>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>如果你只有<strong>一个</strong> WorkBuddy 账号、从不换号，可以直接划走，你不需要它。</p>
+<p>但只要符合下面任意一条，它就值：</p>
+<ul>
+<li>你有多个 WorkBuddy / CodeBuddy 账号（比如个人号 + 公司号，或国内版 + 国际版），每次换号都要退出重登、重新扫码；</li>
+<li>积分快过期了才发现、白白浪费，想提前看到期提醒；</li>
+<li>想看 Token 用了多少、哪个账号烧得凶；</li>
+<li>想把 A 账号里的某段会话挪到 B 账号接着干，又不想丢原数据。</li>
+</ul>
+<h2 id="核心功能readme-实锤非营销稿">核心功能（README 实锤，非营销稿）</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>账号管理</td>
+<td>OAuth 扫码登录、导入导出账号（备份为 JSON）、删除账号、给账号加备注</td>
+</tr>
+<tr>
+<td>账号切换</td>
+<td>一键切换 WorkBuddy 登录账号，实时显示进度；国内版 / 国际版都支持</td>
+</tr>
+<tr>
+<td>会话复制</td>
+<td>把当前账号勾选的会话以<strong>新 id 复制</strong>给目标账号，源账号数据不受影响，云端归属目标账号</td>
+</tr>
+<tr>
+<td>关联会话</td>
+<td>复制过的会话自动建立跨账号关联；按客户端集中查看副本状态，支持<strong>增量同步、分歧处理</strong>、新增/解除关联，还有会话关联图</td>
+</tr>
+<tr>
+<td>积分到期查询</td>
+<td>自动查每账号积分剩余与到期时间，<strong>7 天内到期高亮</strong>，按紧迫程度排序并标注「建议优先使用」</td>
+</tr>
+<tr>
+<td>积分统计</td>
+<td>官方请求用量：总览、近 30 天趋势、模型分类、账号消耗与请求明细</td>
+</tr>
+<tr>
+<td>Token 统计</td>
+<td>按来源的总览与趋势，构成占比、活跃热力图、项目/模型 Top 10、会话排行</td>
+</tr>
+<tr>
+<td>自动轮换</td>
+<td>后台把<strong>积分最紧迫的账号</strong>设为 CodeBuddy CLI 后续启动账号；检测到 CLI 会话在跑就跳过</td>
+</tr>
+<tr>
+<td>自动更新</td>
+<td>从 GitHub Releases 检查新版，整包更新经签名校验</td>
+</tr>
+<tr>
+<td>Agent Companion 悬浮窗</td>
+<td>桌面悬浮栏集中显示 Codex / WorkBuddy / CodeBuddy / Codeg 会话的运行中/待确认/已完成状态，悬停查看详情，点击跳回原会话，托盘可隐藏</td>
+</tr>
+<tr>
+<td>权限检测</td>
+<td>macOS 授权引导（App 管理 / 完全磁盘访问 + 自动检测）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>覆盖五个端</strong>：WorkBuddy、CodeBuddy IDE、CodeBuddy CLI、VS Code CodeBuddy 插件、JetBrains 插件（IDEA / PyCharm）。设置里可按客户端逐个开关入口（JetBrains 端默认关闭）。账号切换五端都支持；会话复制在 CLI 与 JetBrains 端不支持。</p>
+<p>我认为最值钱的是两个：<strong>一键换号</strong>（把「退出重登扫码」变成一次点击）和 <strong>会话复制/关联</strong>（跨账号搬会话还不丢原数据，还能增量同步和处理分歧）。自动轮换属于「让积分自己先烧掉最紧迫的那个」的小聪明，挺实用。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>原生桌面应用，Tauri 构建，三平台都有包：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>安装包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS Apple Silicon (arm64)</td>
+<td><code>workbuddy-switch_&lt;版本&gt;_aarch64.dmg</code></td>
+</tr>
+<tr>
+<td>macOS Intel (x86_64)</td>
+<td><code>workbuddy-switch_&lt;版本&gt;_x86_64.dmg</code></td>
+</tr>
+<tr>
+<td>Windows x64</td>
+<td><code>workbuddy-switch_&lt;版本&gt;_x64-setup.exe</code></td>
+</tr>
+<tr>
+<td>Linux x64</td>
+<td><code>..._amd64.deb</code> / <code>..._amd64.AppImage</code></td>
+</tr>
+</tbody>
+</table>
+<p>macOS 安装：打开 DMG，把 <code>workbuddy-switch.app</code> 拖入「应用程序」。首次启动若提示无法验证开发者，按住 Control 点击应用选「打开」，或去「系统设置 → 隐私与安全性」选「仍要打开」；仍报「已损坏」再跑一句 <code>xattr -rd com.apple.quarantine "/Applications/workbuddy-switch.app"</code>。</p>
+<p><strong>不想装桌面端</strong>还有 npm/webui 版（功能覆盖全部模块，但不含悬浮窗）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> i</span><span style="color:#79B8FF"> -g</span><span style="color:#9ECBFF"> workbuddy-switch</span></span>
+<span class="line"><span style="color:#B392F0">workbuddy-switch</span><span style="color:#6A737D">          # 启动本地服务 + 自动开浏览器</span></span>
+<span class="line"><span style="color:#B392F0">workbuddy-switch</span><span style="color:#9ECBFF"> status</span><span style="color:#6A737D">   # 终端看当前账号</span></span></code></pre>
+<blockquote>
+<p>本机已装：<strong>v0.1.58</strong>（macOS arm64 dmg），位于 <code>/Applications/workbuddy-switch.app</code>，quarantine 已清，Launchpad 可直接打开。</p>
+</blockquote>
+<h2 id="macos-权限这道坎别跳过">macOS 权限这道坎（别跳过）</h2>
+<p>切换账号本质是<strong>写入 WorkBuddy 认证文件</strong>，macOS 会拦。第一次切换报「无权限」时：</p>
+<ol>
+<li>点「打开系统设置」；</li>
+<li>优先在 <strong>App 管理</strong>里打开 workbuddy-switch 开关；没有的话去 <strong>完全磁盘访问</strong>把它拖进带箭头的框；</li>
+<li><strong>授权后要重启本应用</strong>才生效，设置页「权限检测」可随时验证。</li>
+</ol>
+<p>不授权的话，应用能开、界面能看，但就是切不了号——这是最容易卡住的一步。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>它碰你的账号凭证</strong>。换号本质是读写 WorkBuddy / CodeBuddy 的本地登录态与会话，等于把钥匙交给了这个第三方开源应用——授权前想清楚，只用你信得过的版本、只从官方 Release 下。</li>
+<li><strong>会话复制有数据流向</strong>。复制过去的会话云端归属<strong>目标账号</strong>，不是源账号的副本；敏感会话别随手往别的号搬。</li>
+<li><strong>切 CodeBuddy CLI 会中断当前会话</strong>：它会先关掉正在运行的 CLI，当前会话直接中断且<strong>不会自动重开</strong>。其余各端（含 VS Code / JetBrains 插件）都能在客户端运行时自动完成切换。</li>
+<li><strong>社区项目，非官方</strong>。WorkBuddy / CodeBuddy 的登录态格式一变，得等它跟进；好在更新勤，还有自动更新校验签名。</li>
+<li><strong>macOS 没公证</strong>是常态，那道 Gatekeeper 提示按上面方法处理即可，不是软件坏了。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<ul>
+<li>手握多个 WorkBuddy / CodeBuddy 账号、经常换号的人——这是它的主场；</li>
+<li>怕积分过期、想盯着 Token 用量的人；</li>
+<li>需要在账号间搬会话、又不想丢原数据的人；</li>
+<li>同时用 VS Code 和 JetBrains（IDEA / PyCharm）的 CodeBuddy 插件、懒得分别处理的人。</li>
+</ul>
+<p>只有一个账号、从不在多账号之间切的，不用装，少一个常驻应用。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/open-design/"><span class="post-nav-label">上一期</span><span class="post-nav-title">Open Design：把「你已有的 coding agent」变成设计引擎</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
