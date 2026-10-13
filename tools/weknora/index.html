@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki · walker</title><meta name="description" content="Tencent 开源的 LLM 知识平台（MIT，Go 编写，33k+ Star），把文档变成可问答的 RAG 库、会推理的 Agent 和自维护的 Wiki；20+ 模型供应商、8 种向量库、Docker Compose 一键私有化部署。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/weknora/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki · walker"><meta property="og:description" content="Tencent 开源的 LLM 知识平台（MIT，Go 编写，33k+ Star），把文档变成可问答的 RAG 库、会推理的 Agent 和自维护的 Wiki；20+ 模型供应商、8 种向量库、Docker Compose 一键私有化部署。"><meta property="og:url" content="https://blog.walkerhua.com/tools/weknora/"><meta property="og:image" content="https://blog.walkerhua.com/og/weknora.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki · walker"><meta name="twitter:description" content="Tencent 开源的 LLM 知识平台（MIT，Go 编写，33k+ Star），把文档变成可问答的 RAG 库、会推理的 Agent 和自维护的 Wiki；20+ 模型供应商、8 种向量库、Docker Compose 一键私有化部署。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/weknora.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki</h1><p>上一期推荐的 ima 是线上托管版，WeKnora 是同一套知识库能力的开源私有化版——数据全部攥在自己手里。</p><div class="hero-meta"><span>第 10 期</span><span>发布于 2026-10-12</span><span>约 5 分钟</span><a class="tag" href="https://github.com/Tencent/WeKnora" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/RAG/">RAG</a><a class="tag" href="/tags/知识库/">知识库</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/腾讯/">腾讯</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与部署">平台与部署</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<ul>
+<li><strong>它不是 ima 的竞品，是 ima 的「开源版底座」</strong>。ima 的知识库能力由腾讯开源为 WeKnora（LLM + RAG 架构），线上 ima 满足不了的「数据不出内网」，交给它。</li>
+<li><strong>它不是套壳 GUI</strong>。Go 写的完整后端（app / docreader 双服务），带 RESTful API、MCP Server、CLI，是可以集成进自己系统的框架，不只是个网页。</li>
+<li><strong>它不自带模型</strong>。LLM、Embedding 都要自己配：本机 Ollama 或任意云端 API（OpenAI 兼容即可）。空手部署完只能建库，问答不出结果——这是新手第一坑。</li>
+<li><strong>它不是玩具 demo</strong>。33k+ Star、4.4k fork、日更级别提交（写这篇时最新 v0.8.0，仓库当天还有推送），2025-07 建库，MIT 协议（第三方组件单独列清单）。</li>
+</ul>
+<p>预期摆正：WeKnora 是给<strong>愿意运维一套服务</strong>的人准备的。只想开箱即用的，回上一期看 ima。</p>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>ima 的边界就是云：资料上传腾讯服务器、模型固定混元/DeepSeek、不能接自己的 Key。下面任意一条命中，就该看 WeKnora：</p>
+<ul>
+<li>公司文档、客户资料<strong>不能出内网</strong>，但想要 RAG 问答；</li>
+<li>已经有 DeepSeek / Qwen / 混元的 API Key，想用自己的配额、自己的模型；</li>
+<li>要把知识库能力<strong>嵌进自己的产品</strong>（REST API / MCP / 网站挂件）；</li>
+<li>团队知识要<strong>定时同步</strong>（飞书知识库、GitLab、Notion、语雀、RSS 自动同步，ima 库也能导进来）；</li>
+<li>想要的不只是问答，还有 <strong>Agent 多步推理</strong>和<strong>自动维护的 Wiki 知识库</strong>。</li>
+</ul>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>三种知识库</td>
+<td>FAQ / 文档 / Wiki；Wiki 模式由 Agent 把原始文档自动整理成互链的 Markdown 页面 + 知识图谱，带修订历史和一键回滚</td>
+</tr>
+<tr>
+<td>问答与推理</td>
+<td>RAG 快速问答 + ReAct Agent 多步推理（自主编排检索、MCP 工具、技能沙箱、联网搜索）</td>
+</tr>
+<tr>
+<td>文档解析</td>
+<td>PDF / Word / Excel / PPT / TXT / MD / HTML / EPUB / MHTML / 图片 / CSV / JSON / XMind；进程内 anydoc 解析 Office，可选 PaddleOCR-VL</td>
+</tr>
+<tr>
+<td>检索策略</td>
+<td>BM25 / Dense / GraphRAG / 父子分块 / HNSW 加速 pgvector（1024 维）/ 多维索引；分块可编辑、带版本 diff 和回滚</td>
+</tr>
+<tr>
+<td>数据源同步</td>
+<td>飞书知识库 / 飞书云文档 / Lark / GitLab / <strong>腾讯 IMA</strong> / Notion / 语雀 / RSS，支持增量同步</td>
+</tr>
+<tr>
+<td>模型接入</td>
+<td>20+ 供应商：OpenAI / Azure / Anthropic / DeepSeek / 通义 / 智谱 / 混元 / 豆包 / Gemini / MiniMax / NVIDIA / LiteLLM / Ollama 等；Embedding 支持 Ollama / BGE / GTE / OpenAI 兼容</td>
+</tr>
+<tr>
+<td>向量库</td>
+<td>PostgreSQL(pgvector) / Elasticsearch / OpenSearch / Milvus / Weaviate / Qdrant / Apache Doris / 腾讯云 VectorDB，按库绑定</td>
+</tr>
+<tr>
+<td>对象存储</td>
+<td>本地 / MinIO / S3(IAM Role/IRSA) / TOS / OSS / KS3 / OBS，支持每工作区多实例</td>
+</tr>
+<tr>
+<td>Agent 扩展</td>
+<td>技能目录（ClawHub / SkillHub / git / zip 安装）+ 会话级沙箱（Docker / E2B / Cube，可配网络策略）；MCP 工具 29 个（PyPI <code>tencent-weknora-mcp</code>，stdio/SSE/HTTP）</td>
+</tr>
+<tr>
+<td>IM 入口</td>
+<td>企业微信 / 飞书 / QQ Bot / Slack / Telegram / 钉钉 / Mattermost / 微信 / 云之家，问答直接进群</td>
+</tr>
+<tr>
+<td>权限与安全</td>
+<td>工作区 RBAC 四级（Owner/Admin/Contributor/Viewer）+ 审计日志 + 细粒度 API Key；密钥 AES-256-GCM 落盘加密、SSRF 防护、OIDC JWKS</td>
+</tr>
+<tr>
+<td>可观测</td>
+<td>Langfuse 全链路追踪（ReAct 循环 / token / 工具调用），任务队列看板（队列深度、并发治理、失败重试）</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>数据源自动同步</strong>（飞书/GitLab/IMA 库直接同步进来，不用手动传文件）和 <strong>Wiki 模式</strong>（Agent 把散文档自动维护成结构化知识库，这是普通 RAG 没有的「知识再生产」）。ima 用户注意：WeKnora 支持把 <strong>IMA 作为数据源</strong>——线上 ima 收藏的资料可以同步进自托管库，两条路是通的。</p>
+<h2 id="平台与部署">平台与部署</h2>
+<p><strong>官方主推 Docker Compose</strong>（Git 克隆后 5 分钟起），核心 5 个服务：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> clone</span><span style="color:#9ECBFF"> https://github.com/Tencent/WeKnora.git</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> WeKnora</span></span>
+<span class="line"><span style="color:#B392F0">cp</span><span style="color:#9ECBFF"> .env.example</span><span style="color:#9ECBFF"> .env</span></span>
+<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> compose</span><span style="color:#9ECBFF"> pull</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> compose</span><span style="color:#9ECBFF"> up</span><span style="color:#79B8FF"> -d</span><span style="color:#6A737D">   # 访问 http://localhost</span></span></code></pre>
+<p>编排组成：frontend(nginx) + app(Go 后端) + docreader(解析) + postgres(ParadeDB pg17，自带 pgvector) + redis。可选 profile：<code>neo4j</code>（知识图谱）/ <code>minio</code>（对象存储）/ <code>langfuse</code>（追踪）/ <code>full</code>。K8s 有官方 Helm chart。</p>
+<blockquote>
+<p>本机已部署：<strong>v0.8.0</strong>（2026-09-17 装的 release tarball，非 git clone），源码 <code>~/projects/WeKnora</code>。
+因 80/8080 被 OrbStack 和 homebrew nginx 占用，端口改为 Web <strong>18000</strong> / API <strong>18080</strong>，详见仓库内《安装说明-阿墨.md》。</p>
+</blockquote>
+<p><strong>部署三个坑（本机实测，别跳过）</strong>：</p>
+<ol>
+<li><strong>别一次 <code>up -d</code> 拉全部</strong>：frontend 依赖 app 健康检查，而 app 有 60s <code>start_period</code>，一把梭会判定 “dependency failed to start” 导致 frontend 不创建。正确做法是先起 <code>postgres redis docreader app</code>，等 healthcheck 过了再单独起 <code>frontend</code>。</li>
+<li><strong>国内拉镜像要换源</strong>：官方镜像在 Docker Hub <code>wechatopenai/*</code> 命名空间，直连不通，多数国内镜像源对该命名空间 403/404。可用 <code>docker.1ms.run</code>（只有 latest 标签，拉完 <code>docker tag</code> 打回版本号）。</li>
+<li><strong>不配模型不出答案</strong>：部署完成只是能登录建库，必须在知识库配置里填 LLM + Embedding（本机 Ollama 或云端 API），否则 docreader 解析了也问不出东西。</li>
+</ol>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>Docker 是事实门槛</strong>。官方文档只提供 Compose / Helm 路径，裸机部署要自己看 Makefile 和 <code>docker/Dockerfile.app</code> 啃，不划算。对「坚决不碰容器」的人是硬伤，想清楚再入。</li>
+<li><strong>模型要自己出钱</strong>。不自带任何模型，本地 Ollama（吃显存/内存）或云 API（按量付费）二选一。</li>
+<li><strong>0.x 版本，迭代极快</strong>。从 0.3 到 0.8 功能密度惊人，但也意味着升级可能踩 breaking change——固定版本、升级前读 CHANGELOG。技能沙箱挂 docker.sock 等同宿主机 root，官方明确只建议私有化单机用。</li>
+<li><strong>资源占用不小</strong>。5 个常驻服务 + ParadeDB，轻量机器（&lt;4C8G）别勉强。</li>
+<li><strong>和 ima 的分工</strong>：资料要公开传播/团队轻协作 → ima；数据必须留在自己机器上、要接自己的模型、要嵌进自己系统 → WeKnora。也可以都要：ima 当移动端收藏入口，WeKnora 当内网知识底座，用数据源同步打通。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<ul>
+<li><strong>对数据主权有要求的团队</strong>：金融、政务、法务、医疗——文档不出内网 + 自选模型，这是它的主场；</li>
+<li><strong>有运维能力的个人开发者</strong>：想搭「自己的 ima」，愿意花半天调 Docker 和模型配置；</li>
+<li><strong>要集成 RAG 能力的开发者</strong>：REST API / MCP Server / 网站挂件 / IM 机器人，四种接入方式现成；</li>
+<li><strong>ima 重度用户</strong>：想把 ima 里的收藏同步进本地库，或嫌 ima 模型选择太死的。</li>
+</ul>
+<p>只想开箱即用、不想运维服务的，用 ima；连 Docker 都不想碰的，两个都别装，用回网盘 + 通用 AI。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/ima/"><span class="post-nav-label">上一期</span><span class="post-nav-title">ima.copilot：腾讯的「会思考的知识库」，把收藏吃进肚子里</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

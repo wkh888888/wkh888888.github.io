@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ima.copilot：腾讯的「会思考的知识库」，把收藏吃进肚子里 · walker</title><meta name="description" content="腾讯官方 AI 工作台，混元 + DeepSeek R1 双引擎，PDF/微信文章/网页一键入库，基于个人知识库精准问答，共享知识库团队协作，核心功能免费。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/ima/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="ima.copilot：腾讯的「会思考的知识库」，把收藏吃进肚子里 · walker"><meta property="og:description" content="腾讯官方 AI 工作台，混元 + DeepSeek R1 双引擎，PDF/微信文章/网页一键入库，基于个人知识库精准问答，共享知识库团队协作，核心功能免费。"><meta property="og:url" content="https://blog.walkerhua.com/tools/ima/"><meta property="og:image" content="https://blog.walkerhua.com/og/ima.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ima.copilot：腾讯的「会思考的知识库」，把收藏吃进肚子里 · walker"><meta name="twitter:description" content="腾讯官方 AI 工作台，混元 + DeepSeek R1 双引擎，PDF/微信文章/网页一键入库，基于个人知识库精准问答，共享知识库团队协作，核心功能免费。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ima.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>ima.copilot：腾讯的「会思考的知识库」，把收藏吃进肚子里</h1><p>普通网盘只会「存」，ima 会「想」——你收藏的每一份资料，它读得懂、找得到、用得上。</p><div class="hero-meta"><span>第 9 期</span><span>发布于 2026-10-12</span><span>约 4 分钟</span><a class="tag" href="https://ima.qq.com" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/知识管理/">知识管理</a><a class="tag" href="/tags/腾讯/">腾讯</a><a class="tag" href="/tags/macOS/">macOS</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心功能">核心功能</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#macos-更新这道坎2026-09-官方已确认">macOS 更新这道坎（2026-09 官方已确认）</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>第一次听说 ima，容易和几个东西搞混，先划清边界：</p>
+<ul>
+<li><strong>它不是又一个聊天机器人套壳</strong>。ima.copilot（下称 ima）是腾讯 2024 年推出的 AI 工作台，2025 年 10 月发布 2.0，核心是<strong>以知识库为底座</strong>：先把你的资料收进来、解析好，再让模型基于这些资料回答和创作。</li>
+<li><strong>它不是网盘</strong>。存文件只是第一步，解析、检索、问答、生成才是重点；原文链接失效后，已入库的解析内容照样能搜能问。</li>
+<li><strong>它不是 WeKnora</strong>。WeKnora 是腾讯把 ima 知识库能力开源后的私有化部署方案（LLM + RAG，Docker 部署），面向数据隐私要求高的组织；ima 是线上托管版，数据在腾讯云。两者选一个，别纠结。</li>
+<li><strong>它不接你自己的 API Key</strong>。模型固定用腾讯混元 + DeepSeek R1 满血版，不能换成别的供应商——要自由选模型，那是 CC Switch 那类工具的活。</li>
+</ul>
+<p>预期摆正：ima 适合「资料多且散、想沉淀成个人第二大脑」的人；想要完全私有部署的，出门右转 WeKnora。</p>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>符合下面任意一条，它就值：</p>
+<ul>
+<li>微信里收藏了几百篇文章从来没再看过，想用的时候找不到；</li>
+<li>PDF / 论文 / 财报存了一堆，每次要靠手动翻；</li>
+<li>团队资料散在每个人手里，新人问事全靠口口相传；</li>
+<li>用通用 AI 问自己行业的问题，答案永远隔着一层——因为它不认识你的资料。</li>
+</ul>
+<p>ima 的打法是：<strong>搜 → 读 → 写闭环</strong>。资料从微信、网页、本地文件一键入库，AI 基于库内内容精准问答（带出处），需要产出时直接调用库内知识生成文章、报告、脑图、播客。</p>
+<h2 id="核心功能">核心功能</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>知识库类型</td>
+<td>个人 / 共享（团队）/ 订阅（订阅他人发布的垂直库）三种，知识库广场另有 20+ 行业、数亿份公开库文件</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>腾讯混元 + DeepSeek R1 满血版双引擎，对话中可切换；信源结合公众号 / 腾讯新闻 + 联网搜索</td>
+</tr>
+<tr>
+<td>AI 搜索</td>
+<td>既搜全网也搜私有库，模糊描述即可（如「关于财报造假的内容」），答案带原文出处</td>
+</tr>
+<tr>
+<td>知识库问答</td>
+<td>基于 RAG 检索增强，回答只认你存的资料，可指定单个库作答</td>
+</tr>
+<tr>
+<td>文档解析</td>
+<td>PDF / Word / Excel / PPT / TXT / MD / 图片全格式，拍照 OCR 收纸质资料；官方口径百页文献十分钟级消化</td>
+</tr>
+<tr>
+<td>一键收录</td>
+<td>微信文章 / 聊天文件走「… → 更多打开方式 → IMA 知识库」；网页走浏览器插件；本地文件、截图、录音直接传</td>
+</tr>
+<tr>
+<td>AI 输出</td>
+<td>生文 / 生脑图 / 生图 / 翻译 / 扩写 / 润色；知识库内容一键转播客音频、PPT</td>
+</tr>
+<tr>
+<td>云笔记</td>
+<td>Markdown 兼容、支持数学公式，写在笔记里天然就在知识库中</td>
+</tr>
+<tr>
+<td>任务模式</td>
+<td>2.0 上线的深度研究模式，适合行业分析、调研报告类重产出</td>
+</tr>
+<tr>
+<td>团队协作</td>
+<td>共享知识库带成员管理 + 分级权限（创建者 / 管理员 / 编辑 / 协作成员 / 普通成员），修改实时同步；发布到广场不占个人容量</td>
+</tr>
+<tr>
+<td>SkillHub</td>
+<td>技能生态，可安装技能扩展工作台能力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>容量</strong>：官方口径免费 30GB 起步、成长体系可扩（社区文章有称 50GB，以客户端「头像 → 存储空间」实际显示为准）；发布到知识库广场的共享库不占个人空间。</p>
+<p>我认为最值钱的两个：<strong>微信生态一键收录</strong>（把「收藏吃灰」变成「入库可问」）和<strong>带出处的库内问答</strong>（答案是拿你自己的资料回答的，不是模型瞎编）。团队共享库对「资料在个人手里」的团队是刚需。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>覆盖 9 个入口，全端同步：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>获取方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS（12+）/ Windows（10+）</td>
+<td>ima.qq.com/download 下载客户端</td>
+</tr>
+<tr>
+<td>iOS / Android / 鸿蒙</td>
+<td>应用商店搜「ima」</td>
+</tr>
+<tr>
+<td>微信小程序</td>
+<td>搜「ima知识库」</td>
+</tr>
+<tr>
+<td>网页版 / 浏览器插件</td>
+<td>ima.qq.com 直接用</td>
+</tr>
+</tbody>
+</table>
+<p>macOS 安装：下载 universal dmg（当前 <code>ima.copilot_universal_1018_2.6.9_5083.dmg</code>，约 354MB，直链 <code>https://app-dl.ima.qq.com/app/</code>），拖入「应用程序」即可。</p>
+<blockquote>
+<p>本机已装：<strong>150.0.7871.5272</strong>（2026-10-12 由 147.0.7727.4985 更新），位于 <code>/Applications/ima.copilot.app</code>。</p>
+</blockquote>
+<h2 id="macos-更新这道坎2026-09-官方已确认">macOS 更新这道坎（2026-09 官方已确认）</h2>
+<p>Mac 版 2026 年 9 月出过一次<strong>更新后启动闪退</strong>，官方频道的处置方案值得记一下：</p>
+<ol>
+<li>官方先让受影响用户回退指定版本（即上面那个 2.6.9_5083），并<strong>关掉自动升级</strong>；</li>
+<li>根因解法是：<strong>系统设置 → 语言与地区 → 地区改成「中国大陆」</strong>，之后即可正常更新（后续 2.6.10 有用户确认修复）。</li>
+</ol>
+<p>我这次更新走的是手动下 universal dmg 覆盖安装，没触发应用内升级通道，也就没踩这个坑。<strong>建议 Mac 用户先确认系统地区为中国大陆，再决定要不要开自动更新。</strong></p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>数据在腾讯云</strong>。知识库内容、笔记、录音全部托管在腾讯服务器，公司机密、个人敏感资料想清楚再入库；不能接受的用开源 WeKnora 私有化部署。</li>
+<li><strong>模型锁死</strong>。只有混元 + DeepSeek R1，不能接自己的 Key，也不能用别的模型——这是它和通用 AI 客户端的本质区别。</li>
+<li><strong>发布到广场 = 公开</strong>。共享知识库一旦发布到知识库广场就是公域内容，加入超 500 人还会解锁数据看板；发布前想清楚。</li>
+<li><strong>免费是现状不是承诺</strong>。核心功能目前免费，存储成长体系规则以后可能变，重度使用者留个后手（本地保留原件）。</li>
+<li><strong>解析质量看格式</strong>。扫描版 PDF、复杂排版表格的解析效果会打折扣，OCR 入口就是为这个准备的，但别期望 100%。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<ul>
+<li><strong>分析师 / 研究员</strong>：行业资料、会议录音、调研报告入库，出报告时基于自己的资料问；</li>
+<li><strong>学生 / 教师</strong>：课件、论文、板书拍照入库，生成要点、脑图、播客；</li>
+<li><strong>律师 / 金融 / 政务等垂直从业者</strong>：订阅广场上的垂直知识库，比通用搜索精准；</li>
+<li><strong>小团队</strong>：共享知识库 + 权限分级，把「资料在个人手里」变成「团队资产」。</li>
+</ul>
+<p>只有一两份文档、从不积累资料的人不用装；数据必须完全私有、不能上云的，直接看 WeKnora。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/workbuddy-switch/"><span class="post-nav-label">上一期</span><span class="post-nav-title">WorkBuddy-Switch：给 WorkBuddy / CodeBuddy 装一个「换号总闸」</span></a><a class="post-nav-item post-nav-next" href="/tools/weknora/"><span class="post-nav-label">下一期</span><span class="post-nav-title">WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

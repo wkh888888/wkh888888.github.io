@@ -32,9 +32,11 @@
   <url><loc>https://blog.walkerhua.com/tools/cc-switch/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/cmux/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/dbx/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tools/ima/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/obsidian/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/open-design/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/orcaterm/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tools/weknora/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/workbuddy/</loc></url>
   <url><loc>https://blog.walkerhua.com/tools/workbuddy-switch/</loc></url>
   <url><loc>https://blog.walkerhua.com/pits/p001-%E9%82%AE%E4%BB%B6%E5%85%A5%E5%8F%A3%E6%92%9E%E8%BD%A6%E4%B8%8Emcp%E9%80%89%E5%9E%8B/</loc></url>
@@ -88,10 +90,14 @@
   <url><loc>https://blog.walkerhua.com/tags/macOS/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/SQL/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E6%95%88%E7%8E%87/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tags/%E8%85%BE%E8%AE%AF/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E7%AC%94%E8%AE%B0/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/Markdown/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E8%AE%BE%E8%AE%A1/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/SSH/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tags/RAG/</loc></url>
+  <url><loc>https://blog.walkerhua.com/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E5%B7%A5%E5%85%B7%E9%80%89%E5%9E%8B/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E9%82%AE%E4%BB%B6/</loc></url>
   <url><loc>https://blog.walkerhua.com/tags/%E5%B7%A5%E5%85%B7%E9%93%BE/</loc></url>
@@ -134,4 +140,5 @@
   <url><loc>https://blog.walkerhua.com/ai-daily/2026-10-08.html</loc></url>
   <url><loc>https://blog.walkerhua.com/ai-daily/2026-10-09.html</loc></url>
   <url><loc>https://blog.walkerhua.com/ai-daily/2026-10-10.html</loc></url>
+  <url><loc>https://blog.walkerhua.com/ai-daily/2026-10-13.html</loc></url>
 </urlset>
