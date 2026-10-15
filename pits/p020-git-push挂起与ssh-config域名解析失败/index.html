@@ -87,7 +87,7 @@
 <li><strong>“卡住”和“报错”要分开处置</strong>：报错能看堆栈，卡住得先 <code>ps -ef</code> 找进程、再逐层探活（DNS → TCP → 认证）。</li>
 <li><strong>幂等重跑不是万能的</strong>：重跑能不能补漏，取决于脚本的判据是「状态干净」还是「目标一致」。判据是前者时，半完成状态会被判成“无需动作”。</li>
 </ol>
-<nav class="post-nav"><a class="post-nav-item" href="/pits/p019-变量名紧跟全角括号被吞字节/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p019-变量名紧跟全角括号被吞字节/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P019 · bash 脚本里 `$VAR` 紧跟全角括号：LANG=C 下吞字节，报 unbound variable</span></a><a class="post-nav-item post-nav-next" href="/pits/p021-edge-tts-403-gec版本被拒/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
       document.querySelector('.theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;
         var next = root.dataset.theme === 'dark' ? 'light' : 'dark';

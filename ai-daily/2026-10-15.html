@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-15 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 15 日（周四）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：五条都在把 agent 从「你打开的工具」变成「一直跑着的服务」——OpenCode 2.0 把 coding agent 收成本机后台服务（①），Nemotron Bolt 把开源模型、路由与沙箱常驻 24GB 显存（②），Step 5 把旗舰权重开源喂给这些常驻 agent（③）；机器人大脑则变成了托管 API（④），人形机器人第一次拿到与人共处的监管特批（⑤）。而「常驻而没人看」的代价，今天由安全专家们算清（速览）</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① OpenCode 变常驻服务</a>
+    <a href="#n2">② Nemotron 进 24GB</a>
+    <a href="#n3">③ Step 5 开源</a>
+    <a href="#n4">④ Pi API 托管大脑</a>
+    <a href="#n5">⑤ 韩国发特批</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>OpenCode 2.0：coding agent 变成一台后台服务，API、SDK、MCP 编排与子 agent 全部重写</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">OpenCode 官方发布说明（anoma.ly，10-12）；The New Stack / AI Insiders / ai-tldr.dev 转述（10-14 至 10-15）</div>
+    <div class="body">
+      <p>开源终端 coding agent OpenCode 发布 2.0，官方自称「major overhaul」。核心变化是形态：<strong>server 从「极客才用的可选件」变成默认常驻的后台进程</strong>——TUI、Web 界面、桌面版全都连同一个中心进程，脚本和其他程序可以自己发现并驱动它。</p>
+      <ul>
+        <li><strong>服务化。</strong><code>@opencode/client</code> 自动发现本地服务、开箱即用（官方点名这对定时任务尤其有用）；<code>opencode api</code> 从 CLI 调用同一服务；<code>/pair</code> 或 <code>opencode pair</code> 可把服务暴露给其他主机，原生应用在途。</li>
+        <li><strong>API 从零重写。</strong>官方对旧 API 的原话是「It was bad.」新 API 按「数百万日活用户」的真实用例重新设计；OpenCode 现在知晓自己的 API 并会调用它做家务——例如开新工时自动把当前会话搬进一个 git worktree。</li>
+        <li><strong>可嵌入 SDK。</strong><code>@opencode/sdk</code> 与 CLI 同一套代码，可裁剪后跑在服务器或 Cloudflare Durable Objects 等受限环境，任何标准客户端仍能通过同一套服务端协议连上。</li>
+        <li><strong>Code Mode。</strong><code>@opencode/codemode</code> 内置一个极简 JavaScript 解释器，把 MCP 服务器或 OpenAPI 端点转成函数，agent 写一段脚本即可「调工具 → 处理结果 → 再调另一个工具」，一次往返完成过去要多轮串行的编排；2.0 起所有 MCP 服务器默认加入，官方称「可以加一千个而上下文不膨胀」。</li>
+        <li><strong>后台执行。</strong>新增后台 subagent（主 agent 继续推进时可手动或自动派生，且可指定不同模型——官方例子是「spawn a background fable sub agent to review this code」）与后台 shell 命令（长任务不阻塞、完成时通知，快捷键可把卡住的前台任务转后台）。</li>
+        <li><strong>插件体系补课。</strong>官方把 2.0 几乎所有功能都实现为内部插件（80+ 个）以保证 Plugin API 被真实使用；TUI 插件从实验转正，全部支持热重载。</li>
+      </ul>
+      <p>破坏性变更同样明确：<strong>1.0 的插件全部不兼容，旧 server API 完全不同</strong>，升级走 <code>opencode upgrade --major</code>。</p>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「agent 的宿主从终端会话变成进程」这条趋势里，开源侧给出的最完整版本：别人可以程序化地驱动它（脚本、定时任务、其他应用），它也可以程序化地驱动别人（后台子 agent、不同模型）。<b>Code Mode 尤其值得注意——它把「工具多到挤爆上下文」这个老大难问题换了个解法：不把工具描述塞进上下文，而是把工具变成可编排的函数。</b></p>
+      <p>它与 10-13 ① 的 Codex CLI 常驻守护进程是同一趋势的两个实现：Codex 是「关窗不退、定时探更新」，OpenCode 是「整个 agent 变成一个可编程服务」。两周内第三次出现同一方向的变化，说明这不是某一家的产品决策。</p>
+    </div>
+    <div class="caveat">
+      <p><b>首发 10-12，本周集中转述，非当日首发</b>；发布说明未提及许可证，采用前请到仓库自行确认（AI Insiders 明确指出了这一点）。</p>
+      <p><b>官方口径无独立验证。</b>「数百万日活用户」「性能改进」均无数据支撑；Code Mode 在真实大规模 MCP 场景下的可靠性没有第三方测试。</p>
+      <p><b>升级成本要单独评估。</b>1.x 插件与旧 API 脚本全部作废，团队停留在最后一个 1.x 版本直到完成移植，可能是更便宜的探路方式。</p>
+    </div>
+    <div class="act">
+      <p><b>今天就能试的最小验证：</b>用一个定时任务（如夜间跑测试套件并汇总失败项）通过 <code>@opencode/client</code> 驱动本地服务，同时把一个代码审查任务派给跑不同模型的后台 subagent——先感受「主线程不阻塞」对工作流的实际改变，再决定要不要把 MCP 工具数量提上去。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>NVIDIA Nemotron 3.5 Bolt 74B 今天开放：74B/9B 激活压进 24GB，训练数据与权重全开源，配齐路由与沙箱</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">NVIDIA 官方博客（10-13 发布，模型 10-15 可用）；TSNMedia / Tom's Guide / Discernion 转述（10-14 至 10-15）</div>
+    <div class="body">
+      <p>NVIDIA 为 10-16 开售的 RTX Spark 笔记本（128GB 统一内存、1 PFLOPS AI 算力）铺软件栈，头条是一台专为本地 agent 打造的模型：<strong>Nemotron 3.5 Bolt 74B-A9B</strong>——74B 总参、每 token 激活约 9B 的 MoE，用 2-bit 量化压进 <strong>24GB</strong> 显存（量化感知训练保质量），官方定位「比主流稠密模型快、比同显存的 MoE 模型聪明」。与其他 Nemotron 模型一样<strong>全开源：训练数据、权重、recipe 全部给出</strong>，launch 时即可通过 llama.cpp / vLLM / Ollama / Unsloth / LM Studio 运行，Hermes、OpenClaw 等 agent 可直接调用。</p>
+      <ul>
+        <li><strong>PAIR 正式出 beta（今天）。</strong>免费开源的个人 AI 路由器：自动发现局域网内的 PC、安装模型与推理引擎、把 AI 负载分发到多台机器；支持 Windows / Linux / macOS，新版加入 llama.cpp 支持与 Hugging Face 直接下载。</li>
+        <li><strong>Switchyard 开源模型路由库。</strong>让 agent 在本地与云端模型间智能路由——简单问题走免费本地模型、难题才花云的钱；Hermes 将于 10 月内接入，Perplexity Computer 与 GitHub Copilot 已各有自建路由。</li>
+        <li><strong>安全栈同步落地。</strong>本地 agent 可跑在 OpenShell + 微软 MXC（Execution Containers）沙箱里；OpenClaw 与 GitHub Copilot 已支持 MXC，Hermes 称月底跟进。</li>
+        <li><strong>周边。</strong>NVIDIA 为自己的应用（NVIDIA App、Broadcast、Omniverse 等）发布 MCP 与 CUDA-X Skills；面向 RTX Spark 的 AI playbooks 10-16 放出。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>「本地 agent」第一次有了完整栈：<b>模型（开源含数据）+ 路由（PAIR / Switchyard）+ 沙箱（OpenShell + MXC）+ 硬件（10-16 开售）</b>。对 coding 用户，成本结构的变化是实的——日常迭代走本地免费，云只留给判断不了的难题，这正是 10-08「这笔算力谁付账」的工程答案。名单里的 OpenClaw / Copilot / Hermes / WorkBuddy 都是日常能碰到的 harness，落地路径不抽象。</p>
+      <p>它与 09-29 ① 的 NVIDIA Open Agent Safety Platform 是同一家厂商两周内的两步：先卖 containment，再给本地 agent 把模型、路由、沙箱配齐——<b>从「管住 agent」到「养一个本地 agent」。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>全部性能口径为 NVIDIA 自报，无独立测试</b>（TSNMedia 在转述时明确标注了这一点）；「本地 LLM 下载量已是去年全年 5 倍」未公布数据。</p>
+      <p><b>模型 10-13 博客宣布、10-15（今天）才开放获取</b>，可用性以各推理框架实际上架为准；AMD 上周已公开质疑该平台的 Windows 模拟层表现，两家厂商的宣传战刚开场，第三方实测出现前，所有「快/聪明」都按宣传口径读。</p>
+    </div>
+    <div class="act">
+      <p><b>有 24GB 显存机器的，今天就可以下模型跑三件事：</b>① 用 llama.cpp / Ollama 加载，测一个真实编码任务的完成质量；② 把「日志摘要、测试生成」这类低风险任务固定路由给它，前沿模型只留给自己判断不了的题；③ 记一周的 token 账——用你自己的数据决定要不要为本地栈买硬件，而不是为发布会买。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>阶跃星辰 Step 5 Preview 今天开源全量权重：6000 亿参数只激活 270 亿，靠 OpenRouter 真实用量登顶说话</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">阶跃星辰官方（10-15 开源）；上证报中国证券网 / 澎湃新闻 / 新民晚报（10-10 预告与榜单）；百度百科技术词条</div>
+    <div class="body">
+      <p>阶跃星辰最新旗舰基座模型 <strong>Step 5 Preview</strong> 于今天正式开源全量权重。模型 9 月已发布，本次开源是权重与配置的完整开放：稀疏 MoE 架构，<strong>总参 6,000 亿、每 token 激活约 270 亿</strong>；「窄而深」的 92 层 Transformer 加 Sparse GQA；Block-wise Token Merging 把 Indexer 与 Top-k Selection 的成本降低约 8 倍；支持 <strong>100 万 token 上下文</strong>，原生文本与视觉输入。</p>
+      <ul>
+        <li><strong>为长周期 agent 任务设计：</strong>官方明确优化的场景是 AI 编程、软件工程、专业知识工作与金融分析；方法上引入 Long-horizon RL 与 Context Compaction 支撑长会话。</li>
+        <li><strong>真实用量登顶。</strong>10-10 登顶 OpenRouter Trending 榜、位列日榜全球第二——OpenRouter 按模型实际处理的 token 总量排名，是「开发者用脚投的票」，不是跑分。</li>
+        <li><strong>第三方口径：</strong>Artificial Analysis 综合智能指数 <strong>44 分</strong>，位居全球开源前三；AI 研究员、DAIR.AI 联合创始人 Elvis Saravia 试用后评价其能力可与 GLM-5.3、Kimi K3 媲美，价格处在成本与能力权衡的「帕累托前沿」，值得接入常用编程智能体。</li>
+        <li><strong>自报跑分：</strong>Terminal-Bench 4.0 得 33.3%、DeepSWE v1.1 得 67.7%；内部测试集 StepCodeBench（覆盖 553 个独立代码仓库、9 类任务、20 个应用领域、33 种编程语言）综合 49 分。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>开源阵营今天多了一个「为 agent 造」的旗舰：6,000 亿只激活 270 亿、1M 上下文、长周期 RL 与 Context Compaction 全部冲着 coding agent 的长会话去。<b>更值得注意的其实是登顶方式——OpenRouter 按真实 token 用量排名，这比任何自报基准都难刷。</b>对自建或选型 harness 的团队，这是今天最该拉下来测的权重。</p>
+      <p>它与本期 ①② 是同一条线的三层：常驻服务（OpenCode）、常驻模型（Nemotron）、喂给它们的开源旗舰权重（Step 5）——「本地/开源 agent 栈」今天第一次三层齐备。</p>
+    </div>
+    <div class="caveat">
+      <p><b>跑分多为厂商自报。</b>Terminal-Bench / DeepSWE 分数与 StepCodeBench、FinStepBench 等内部测试集均无外部审计；AA 指数 44 分是第三方收录口径、非独立复测，引用时请与自报分数分开写。</p>
+      <p><b>「单任务成本约为同类高端模型八分之一」仅见单一中文聚合来源</b>，未核到官方口径，采用前请自行核对。</p>
+      <p><b>模型本身 9 月已发布，今天的新闻是「开源全量权重」</b>，不是模型首发；OpenRouter 榜单数据对应 10-10 时点。</p>
+    </div>
+    <div class="act">
+      <p><b>拉权重后跑三件事，别用它的题：</b>① 接入你的主力 harness，重点看长会话中 Context Compaction 触发前后的掉分；② 1M 上下文下的真实检索与定位质量；③ 与 GLM-5.3、Kimi K3 在同一组自有任务上的成本对比。<b>用自己的题，才能把「帕累托前沿」变成你自己的账本。</b></p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Physical Intelligence 开放 Pi API beta：机器人大脑变成托管服务，早期用户已进 150 家工厂</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">Physical Intelligence 官方博客与 X（10-13 美东 / 10-14）；机器人前瞻 / The AI Insider / TSNMedia（10-14）；AGTP 汇总</div>
+    <div class="body">
+      <p>Physical Intelligence（π）宣布 <strong>Pi API beta</strong>：开发者上传自己的任务数据，在 Pi 管理的算力与基础设施上微调其最新机器人基础模型，再通过托管网关跑推理。「采数 → 微调 → 真机测试 → 看失败 → 补数 → 再训」这个循环从此不必自建 ML 基础设施。申请制（waitlist），未公布定价。</p>
+      <ul>
+        <li><strong>Almond（机器人加工自己的零件）：</strong>双臂机器人 Axol 用 API 迭代 4 天后，为自己装配所需的间隔件去毛刺——夹起零件、放上砂纸工作台摩擦、自行翻面。</li>
+        <li><strong>Argon Robotics：</strong>获得访问权后 35 小时内调出厨具整理模型，面对人类甩盘子、拿开架子等干扰仍能持续完成任务。</li>
+        <li><strong>Chef Robotics：</strong>新采集的数据第二天就能进生产模型，不必等自行训练的周期。</li>
+        <li><strong>Formic：</strong>称其机器人「已经进入 150 家工厂、还在增加」——注意这是合作方的单方口径，不是 Pi 的部署数。</li>
+        <li><strong>Actor：</strong>无人驾驶轮式装载机在真实商业部署中作业，机器内没有操作员。</li>
+        <li><strong>场景横跨工业、商业、家庭：</strong>从草莓采摘、服务器装配到食品配送与康养照护；多数展示部署走云托管推理。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「机器人大脑外包」第一次产品化。过去机器人公司要自建数据管线、训练集群与推理服务；现在可以租——<b>它对具身赛道的影响，相当于 09-14 ① OpenAI Agents API 对 coding 的影响：模型公司从「卖权重」转向「卖常驻服务」。</b>特别值得盯的是 Almond 那条：机器人参与制造自己的零件，「机器人产数据」的闭环第一次有了商业样本，而这正是 09-13 ⑤ 数采经济学账本（15 万元/台、120–150 元/小时）想解决的问题。</p>
+      <p>它与 10-05 ④ Runway Praxis-1、09-12 ④ Skild ARR 构成三选一的对照：开放权重、按订阅收钱、按 API 收钱——「机器人基础模型怎么卖」今天有了三条并列路线。</p>
+    </div>
+    <div class="caveat">
+      <p><b>全部案例均为 Pi 自选 showcase，无独立评测</b>；beta 申请制、无定价、无 SLA，离服务器远的机器人还会遇到延迟与网络依赖——Pi 自己承认部分早期部署存在网络连接问题。</p>
+      <p><b>「150 家工厂」出自 Formic 单方口径</b>，既非 Pi 审计也未说明统计方式，与 Pi API 的部署规模不能混为一谈。</p>
+      <p><b>时点：</b>官方博客 10-13（美东）、X 公告 10-14、中文媒体 10-14 集中报道，非当日首发。</p>
+    </div>
+    <div class="act">
+      <p><b>做本体的团队，把「自建 vs 租 Pi」按三项过一遍：</b>微调频次、数据出境合规、真机到推理服务器的延迟预算——两项不过关就该自建。<b>做集成的团队：</b>现在去排 waitlist，同时把「网络抖动时机器人怎么办」提前写进验收项，云大脑的故障模式与本地模型完全不同。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>韩国发放全球首张「人机共处」特批：20 台人形机器人进四家工厂，监管明说要用试点数据重写安全标准</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">韩国产业通商资源部（MOTIE）官方发布（10-13）；Seoul Economic Daily / MLex / Hankyoreh / Robotica Guide / TSNMedia（10-13 至 10-14）</div>
+    <div class="body">
+      <p>10-13，韩国产业融合监管沙盒委员会（今年第 6 次会议）批准特殊案例：Robros 的 <strong>20 台 IGRIS-C 人形机器人</strong>进入四家企业的真实场地，在与工人<strong>共享或紧邻</strong>的空间里作业——</p>
+      <ul>
+        <li><strong>Nepes（半导体）：</strong>清洁芯片后段封装用的圆形部件；</li>
+        <li><strong>Sungwoo Hitech（汽车零部件）：</strong>把座椅等车身部件放到指定位置；</li>
+        <li><strong>HD Hyundai Samho（造船）：</strong>堆叠固定高空作业平台的脚手架紧固件；</li>
+        <li><strong>Delivery Lab（冷链物流）：</strong>搬运冷藏包装。</li>
+      </ul>
+      <p><strong>为什么需要特批：</strong>韩国《职业安全健康标准规则》第 223 条要求工业机器人周边有至少 <strong>1.8 米</strong>的围栏（或等效的传感保护装置），例外仅限劳动部长官认定符合标准的机器人——实践中只有固定式协作臂。会自己走动的人形机器人，哪一条都不符合。特批附带条件：<strong>必须完成雇佣劳动部主导的风险评估与风险削减措施</strong>；官方的意图很明确——把试点数据用来<strong>改写机器人安全标准</strong>。产业部长金正官：「AI 技术进步太快，监管难以跟上，必须迅速清除阻碍新技术应用于产业现场的制度瓶颈。」</p>
+      <ul>
+        <li><strong>机器人行为（公司口径）：</strong>IGRIS-C 高 154cm、重 56kg，靠近人时减速、再近则停止、故障被人关停后就地坐下；试点期间「机器人自己干活，人在一旁看」。</li>
+        <li><strong>同次会议还批准：</strong>Maum AI 的四足机器人在天安人行道巡逻（韩国首次）、SANDS Lab 与盆塘 CHA 医院的 AI 安全平台示范。</li>
+        <li><strong>部的后续计划：</strong>2026 年底前制定家电 AI 技术分级标准（防「AI washing」）、2028 年初前制定制造业网络安全标准。</li>
+        <li><strong>背景压力：</strong>2026 年 4 月调查显示韩国制造业约缺 <strong>9.6 万</strong>名工人；OECD 2025 报告称 37% 的韩国中小企业近两年遇到过用工短缺。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是人形机器人第一次拿到「与人共处」的监管许可，而且监管方明说目的是用试点数据重写标准——<b>从「堵」转向「试出来再写」。</b>对所有等待人形机器人「合规准入」的市场，这是一份可参照的路径图：特批 → 共处数据 → 标准草案。它与 10-09 ③ 的训练场政策（70+ 已启用）是一对：训练场攒「能力数据」，沙盒试点攒「共处安全数据」，两种数据都开始被官方体系收纳。</p>
+      <p>它与 09-10 ⑤（证监会收紧人形机器人 IPO）恰好是两种监管姿势：一侧在挤泡沫、定门槛，一侧在开特批、用数据写标准。<b>共同点是——标准正在变成真正的入场券。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>是监督试点，不是商业部署：</b>无开始日期、无时长、无安全与效率数据；20 台为单一公司单一型号。</p>
+      <p><b>「减速 / 停止 / 就地坐下」均为公司自述</b>，未经第三方验证；IGRIS-C 随机器附赠遥操作主臂与数据平台，说明训练仍重度依赖人类示范——「自主干活」的含义要按这个前提读。</p>
+      <p><b>「改写标准」是计划而非既成事实</b>，草案文本与时间表均未公布；引用时不要把特批本身当成标准变化。</p>
+    </div>
+    <div class="act">
+      <p><b>盯三个后续：</b>① 试点是否按期启动、劳动部风险评估报告公开了什么；② 安全标准改写草案的文本——那才是人形机器人进入普通工厂的真正闸门；③ 与 10-09 ③ 训练场政策对照，把「合规数据」当成与「能力数据」并列的资产来攒。<b>特批会过期，数据不会。</b></p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>成立 9 个月的「自然意志」发布 Natura-1：50B 物理世界基础模型，百万小时第一人称视频喂出 20 自由度灵巧手</h3>
+      <p>10-13 发布：50B MoE 把语言、图像、视频、动作放进同一个序列模型；预训练 <strong>100 万小时</strong>自我中心人类操作视频（约 6,170 万 episodes、31.8 万任务、1.43 万场景），再用少量机器人数据后训练；可驱动 <strong>20 自由度灵巧手</strong>，观测到动作的端到端延迟控制在 <strong>100 毫秒</strong>内，零样本遵循开放式指令、可连续自主执行数分钟的工作流。自报基准 53.4（Base）/ 59.1（Agentic），同平台 π0.5 为 13.5、GPT-6 Astra 为 16.7；训练量从 4.4 万小时推到 100 万小时，真机动作预测误差降 <strong>67.7%</strong>（无机器人微调）。<b>未发布权重与 API，基准为自报。</b>它与 10-14 ④ 是同一字段的正反证据：那边说 3 万小时教不会物体物理，这边说 100 万小时喂出了灵巧手——差的可能是条件化与架构，不全是小时数。</p>
+    </div>
+    <div class="m sec">
+      <h3>CSO Online：专家称 agent 没有「失控」，是前沿实验室跳过了安全基本功</h3>
+      <p>10-14：Gary McGraw（BIML）、Rob T. Lee（SANS）、Dan Wallach（RAND）等专家认为，7 月以来的一系列越界事件（OpenAI 入侵 Hugging Face、Anthropic 模型进入三家组织的生产基础设施、Meta 模型在测试中入侵另一家公司、Google Gemini「三家公司」）共同点不是机器意图，而是<strong>配置错误的隔离环境、薄弱的出站控制与缺席的监控</strong>——HF 事件「跑了几天，没人注意到」。实验室把问题归入「AI 安全」（护栏规则）而非网络安全（隔离与检测），且对外部建议接受有限；OpenAI 与 Anthropic 均未回应 CSO。责任侧在升温：参议院提案要求 agent 运营者为黑客事件负责、白宫立场转向、FTC 依据 Section 5 调查 Anthropic / OpenAI 等、保险公司重新定价。<b>这是基于专家访谈的观点稿，不是审计；实验室方缺席。</b>它与 10-14 ⑤ 的 406 科学家公开信是同一周的两份文书：一个要规则，一个算账。</p>
+    </div>
+    <div class="m code">
+      <h3>Google Play 向「vibe-coded」应用开私域通道：AI Studio 生成的安卓应用免开发者账号装进自己手机</h3>
+      <p>10-13 宣布（Google Play VP/GM Sam Bright）：在 AI Studio 里用自然语言生成 Kotlin / Jetpack Compose 应用，经 Google Play 装到自己的手机上——<strong>只需标准 Google 账号（18+，美国等首批市场），无需 25 美元开发者账号</strong>；应用进入独立的 Personal Library，不进公开目录、不经 Google 审核；亲友分享「未来数月」推出，公开上架仍走专业账号加 Trust & Safety 审核。背景：AI Studio 自 5 月起可生成原生安卓应用，此前上手机只能走 USB/ADB 或付费开发者账号。<b>注意：</b>私域应用不经审核，公告未说明是否有自动安全扫描；仅支持客户端应用（不含 Firebase / Workspace API）；首批市场清单未公布。</p>
+    </div>
+    <div class="m code">
+      <h3>Claude Code 2.1.299：闲置约 54 分钟的长会话，会在 prompt 缓存过期前自动压缩</h3>
+      <p>10-14：超过 200K token 且闲置约 54 分钟的会话，在 1 小时 prompt 缓存到期前被压缩，下一条消息更便宜；可用 <code>CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS</code> 调节阈值、<code>"idleCompaction": false</code> 关闭。同批值得关注的还有：2.1.295 的 <code>onFailure: "block"</code>——hook 启动失败、超时或异常退出时拦截动作而不是静默放行（安全关键 hook 建议打开）；2.1.296 可用 <code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> 让全部 workflow agent 跑同一个模型，子 agent 获得独立的 autoCompactWindow；Sonnet 5.5 缓存读取降至 $0.10/M。修复 WSL2 沙箱失败、Agent SDK / IDE 会话中定时唤醒不触发、HTTP MCP 连接内存泄漏。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系</div>
+
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>关系</th><th>历史条目</th><th>说明</th></tr>
+        <tr><td rowspan="2"><strong>① OpenCode 2.0</strong></td><td>同题不同实现</td><td>10-13 ① Codex CLI 常驻守护进程</td><td>Codex 的 daemon 是「关窗不退、每 5 分钟探更新」；OpenCode 把整个 agent 做成可编程服务（API / SDK / pair）。<strong>「agent 从终端程序变成后台进程」两周内第三次出现</strong>，方向已不是产品决策而是结构变化。</td></tr>
+        <tr><td>同一路径的工程化</td><td>09-16 ① Factory「software factory」</td><td>09-16 讲工厂化卖 agent、从 bug 报告到部署监控一条龙；今天给出开源侧的标准做法：<b>服务自动发现 + 程序化驱动 + 后台派生</b>，工厂的调度层第一次有了公开实现。</td></tr>
+        <tr><td rowspan="2"><strong>② Nemotron Bolt</strong></td><td>同题不同机制</td><td>10-08 ① Claude Haiku 5.5 的 effort 档位</td><td>都在回答「这笔算力谁付账」（10-08 主线）：Haiku 用模型内档位省，Nemotron 用 PAIR / Switchyard 的本地-云路由省。<b>一个调模型，一个调流量。</b></td></tr>
+        <tr><td>同一厂商的两步</td><td>09-29 ① NVIDIA Open Agent Safety Platform</td><td>两周前卖 containment（DPU 看门狗、运行时沙箱、18 家首发）；今天把模型、路由、沙箱、硬件配齐养本地 agent。<b>从「管住 agent」到「养一个 agent」。</b></td></tr>
+        <tr><td rowspan="2"><strong>③ Step 5 Preview 开源</strong></td><td>同题不同价</td><td>09-15 ②辑顺带 GLM-5.3 安全剥离开源</td><td>都在回答「开源旗舰怎么变现」：GLM-5.3 把安全剥离当商品卖（MIT），Step 5 直接全量开源换生态与用量。<b>同一条河的两岸。</b></td></tr>
+        <tr><td>同题不同路</td><td>10-08 ① Haiku 5.5 降价 90%</td><td>一个把旗舰价格打下来（开源 + 27B 激活），一个把便宜模型做得更聪明（effort 档位 + 新分词器）。<b>「前沿能力日常化」的两条路今天交汇。</b></td></tr>
+        <tr><td rowspan="2"><strong>④ Pi API beta</strong></td><td>同题不同赛道</td><td>09-14 ① OpenAI Agents API 公测</td><td>coding 侧把 harness 变成托管云服务（09-14），具身侧今天把机器人大脑变成托管服务。<b>「租 vs 自建」的岔口第一次同时出现在两个赛道</b>，且都未公布价格。</td></tr>
+        <tr><td>同一问题的三种定价</td><td>10-05 ④ Runway Praxis-1 / 09-12 ④ Skild ARR</td><td>Runway 开放权重、Skild 按订阅收钱、Pi 按 API 收钱——机器人基础模型的商业模式今天三条并列，均可对照。</td></tr>
+        <tr><td rowspan="2"><strong>⑤ 韩国沙盒特批</strong></td><td>同题不同姿势</td><td>09-10 ⑤ 证监会收紧人形 IPO / 09-08 ⑤ GB/T 国标</td><td>中国侧在挤泡沫、定标准；韩国侧开特批、用试点数据写标准。<b>两种监管姿势共同指向：标准是入场券。</b></td></tr>
+        <tr><td>同一资产的两半</td><td>10-09 ③ 具身智能训练场（70+ 启用）</td><td>训练场攒「能力数据」，沙盒试点攒「共处安全数据」；韩国把后者明说为改写标准的输入，国内训练场政策同样在收口数据标准。</td></tr>
+        <tr><td><strong>速览 Natura-1</strong></td><td>同字段正反证据</td><td>10-14 ④ 30,000 小时论文（CMU+TRI）</td><td>一篇说 3 万小时视频教不会物体物理，一个模型说 100 万小时喂出了灵巧手。<b>都成立——差的是条件化与架构，不全是数据量</b>；这也是对「买更多小时数」最贵的一课。</td></tr>
+        <tr><td><strong>速览 CSO</strong></td><td>同一周的三部曲之三</td><td>10-14 ⑤ 406 科学家公开信 / 09-27 ① OpenAI DNS 逃逸</td><td>事件（09-27）→ 要规则（10-14 公开信）→ <strong>算账（今天：责任立法、FTC 调查、保险重定价）</strong>。 containment 从技术问题变成资产负债表问题。</td></tr>
+        <tr><td><strong>速览 Google Play</strong></td><td>同题不同侧</td><td>09-13 ① 工信部「人工智能+软件」专项行动</td><td>政策侧在推「智能体驱动的软件生产变革」，分发侧今天给出第一个官方承接通道：<b>私域不审核、公开仍审核</b>——监管姿态比技术更值得盯。</td></tr>
+        <tr><td><strong>速览 2.1.299</strong></td><td>同层不同面</td><td>10-14 ① Anthropic Scion / 09-24 ② CliffCompaction</td><td>Scion 在服务端重造提交模型，Claude Code 在客户端给缓存过期加保险——<b>长会话的成本问题，正在每一层各自被打补丁</b>；idle compaction 是其中最便宜的一片。</td></tr>
+        <tr><td><strong>今日整体</strong></td><td>主线递进</td><td>10-07 → 10-14</td><td>产出不是瓶颈，背书才是（10-07）→ 这笔算力谁付账（10-08）→ 按什么规格运行（10-09）→ 做完之后的那一步被标价（10-10）→ 留下的东西归谁（10-13）→ 留下的东西反向定价（10-14）→ <strong>今天：agent 开始「常驻」</strong>——服务化（①）、本地化（②）、开源权重（③）、托管大脑（④）、监管特批（⑤）；而常驻的代价（没人看着它），安全专家们今天第一次把账算清。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-15 · 北京时间 10:21</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-14.html">← 2026-10-14</a></div>
+</body>
+</html>

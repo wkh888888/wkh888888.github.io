@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒 · walker</title><meta name="description" content="跑 html-scene-video 技能生成小说预告片，edge-tts 连续 5 次失败："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p021-edge-tts-403-gec%E7%89%88%E6%9C%AC%E8%A2%AB%E6%8B%92/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒 · walker"><meta property="og:description" content="跑 html-scene-video 技能生成小说预告片，edge-tts 连续 5 次失败："><meta property="og:url" content="https://blog.walkerhua.com/pits/p021-edge-tts-403-gec%E7%89%88%E6%9C%AC%E8%A2%AB%E6%8B%92/"><meta property="og:image" content="https://blog.walkerhua.com/og/p021-edge-tts-403-gec%E7%89%88%E6%9C%AC%E8%A2%AB%E6%8B%92.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒 · walker"><meta name="twitter:description" content="跑 html-scene-video 技能生成小说预告片，edge-tts 连续 5 次失败："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p021-edge-tts-403-gec%E7%89%88%E6%9C%AC%E8%A2%AB%E6%8B%92.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒</h1><p>跑 html-scene-video 技能生成小说预告片，edge-tts 连续 5 次失败：</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/视频生成/">视频生成</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#定位">定位</a><a class="toc-l2" href="#处置">处置</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-14</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 视频生成</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（配音全挂，重试 5 次同样 403；表象像网络故障，实为版本问题）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>edge-tts、403、WSServerHandshakeError、Sec-MS-GEC、speech.platform.bing.com、readaloud、html-scene-video、MoneyPrinterTurbo、venv 隔离</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（升级 7.3.0 解决；旧 7.2.7 必升）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>跑 <code>html-scene-video</code> 技能生成小说预告片，edge-tts 连续 5 次失败：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>aiohttp.client_exceptions.WSServerHandshakeError: 403, message='Invalid response status',</span></span>
+<span class="line"><span>url='wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=...&amp;Sec-MS-GEC=...&amp;Sec-MS-GEC-Version=1-143.0.3650.75'</span></span></code></pre>
+<p>生成 0 字节 mp3，重试无效。</p>
+<h2 id="定位">定位</h2>
+<ol>
+<li><strong>不是代理</strong>：本机 <code>HTTP_PROXY=127.0.0.1:7890</code>，但 <code>HTTPS_PROXY= HTTP_PROXY= </code> 直连同样 403。</li>
+<li><strong>不是网络不通</strong>：<code>curl https://speech.platform.bing.com/</code> 返回 400（服务器有响应），
+说明 TCP+TLS 通，<strong>只是 WebSocket upgrade 被拒</strong>。</li>
+<li><strong>是版本</strong>：<code>edge-tts --version</code> = 7.2.7。微软收紧了 readaloud 端点的 <code>Sec-MS-GEC-Version</code>
+校验，旧版本拼的版本号被拒 → 403。<strong>升级即修复</strong>，与账号、网络、地区无关。</li>
+</ol>
+<h2 id="处置">处置</h2>
+<p>按运行隔离规矩新建 venv 装最新版（不动 MoneyPrinterTurbo 的原 venv）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">/Users/kehua/.workbuddy/binaries/python/versions/3.13.12/bin/python3</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> venv</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">  /Users/kehua/.workbuddy/binaries/python/envs/edge-tts</span></span>
+<span class="line"><span style="color:#B392F0">/Users/kehua/.workbuddy/binaries/python/envs/edge-tts/bin/pip</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -U</span><span style="color:#9ECBFF"> edge-tts</span></span>
+<span class="line"><span style="color:#6A737D"># 7.3.0 通过；脚本里 EDGE_TTS 指向新路径</span></span></code></pre>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong><code>WSServerHandshakeError 403</code> ≠ 网络故障</strong>。先看工具版本再看代理——
+这类“平台收紧随附 token”的服务（Bing/Edge 系）版本一旧就整体 403。</li>
+<li>复用他人项目 venv 里的 CLI（MoneyPrinterTurbo 的 edge-tts）有版本滞后风险，
+自己管线里的依赖按隔离规矩装一份，出问题不连坐。</li>
+<li>重试策略救不了“确定性拒绝”：403 是每次必败，重试 5 次只是浪费 10 秒——
+<strong>同类错误先分级：瞬时失败才重试，确定性失败先升级</strong>。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p020-git-push挂起与ssh-config域名解析失败/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P020 · `git push` 卡住十几分钟：ssh config 映射 `ssh.github.com` + 本机 DNS 不可达</span></a><a class="post-nav-item post-nav-next" href="/pits/p022-透明字幕叠加两坑_chrome白底与单帧repeat定格/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

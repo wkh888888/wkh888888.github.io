@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买 · walker</title><meta name="description" content="1. 水印在左上角：「AI生成」约 200×45px，位于 x≈8,y≈6。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p025-videogen%E4%B8%89%E7%A1%AC%E4%BA%8B%E5%AE%9E_%E6%B0%B4%E5%8D%B0%E5%B7%A6%E4%B8%8A15s%E4%B8%8A%E9%99%90%E4%B8%8E%E9%A2%9D%E5%BA%A6%E8%80%97%E5%B0%BD/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买 · walker"><meta property="og:description" content="1. 水印在左上角：「AI生成」约 200×45px，位于 x≈8,y≈6。"><meta property="og:url" content="https://blog.walkerhua.com/pits/p025-videogen%E4%B8%89%E7%A1%AC%E4%BA%8B%E5%AE%9E_%E6%B0%B4%E5%8D%B0%E5%B7%A6%E4%B8%8A15s%E4%B8%8A%E9%99%90%E4%B8%8E%E9%A2%9D%E5%BA%A6%E8%80%97%E5%B0%BD/"><meta property="og:image" content="https://blog.walkerhua.com/og/p025-videogen%E4%B8%89%E7%A1%AC%E4%BA%8B%E5%AE%9E_%E6%B0%B4%E5%8D%B0%E5%B7%A6%E4%B8%8A15s%E4%B8%8A%E9%99%90%E4%B8%8E%E9%A2%9D%E5%BA%A6%E8%80%97%E5%B0%BD.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买 · walker"><meta name="twitter:description" content="1. 水印在左上角：「AI生成」约 200×45px，位于 x≈8,y≈6。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p025-videogen%E4%B8%89%E7%A1%AC%E4%BA%8B%E5%AE%9E_%E6%B0%B4%E5%8D%B0%E5%B7%A6%E4%B8%8A15s%E4%B8%8A%E9%99%90%E4%B8%8E%E9%A2%9D%E5%BA%A6%E8%80%97%E5%B0%BD.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买</h1><p>1. 水印在左上角：「AI生成」约 200×45px，位于 x≈8,y≈6。</p><div class="hero-meta"><span>踩坑于 2026-10-15</span><span>约 2 分钟</span><a class="tag" href="/tags/视频合成/">视频合成</a><a class="tag" href="/tags/多模态生成/">多模态生成</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#三个硬事实2026-10-15-实测">三个硬事实（2026-10-15 实测）</a><a class="toc-l2" href="#处置记录">处置记录</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-15</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>视频合成 / 多模态生成</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>高（额度耗尽直接断活；水印位置搞错=白干一批）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>VideoGen、图生视频、image-to-video、1764x1176、水印左上角、seconds 15 上限、额度用尽 429、加量包、crop=1764:992:0:92、tpad 冻结</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（额度未补前视频通道不可用；图像走 Agnes 见 P024）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="三个硬事实2026-10-15-实测">三个硬事实（2026-10-15 实测）</h2>
+<ol>
+<li><strong>水印在左上角</strong>：「AI生成」约 200×45px，位于 x≈8,y≈6。
+<strong>与 ImageGen 的右下角完全不同</strong>——按 ImageGen 经验裁底部会漏掉。
+输出是 1764×1176（3:2）：裁 <code>crop=1764:992:0:92</code> 一步同时完成
+「去左上水印 + 转 16:9」（上裁 92 / 下裁 92）。</li>
+<li><strong>单段最长 15 秒</strong>：<code>seconds=16</code> 直接报错 <code>seconds must be between 3 and 15</code>
+（schema 注释里的 “4-30” 不适用于当前模型）。长面板要么接受 15s + 冻结补帧，
+要么拆段。</li>
+<li><strong>额度计费，耗尽即 429</strong>：错误体 <code>{"code":14018,"msg":"额度已用尽，请访问以下链接， 购买加量包以获取更多额度"}</code> —— 与普通限流（等一会就好）<strong>不同，是硬配额</strong>，
+买加量包前一支视频都出不来。5 秒 ≈ 50-100 credits，13-15 秒 ≈ 130-300。
+<strong>大批量动画化前先问额度余量</strong>，或先发 1 段试水。</li>
+</ol>
+<h2 id="处置记录">处置记录</h2>
+<p>《我能闻到所有人的秘密》漫剧 E01 3D 真人版：8 镜全动画化开工，
+p1/p2/p4 三支成功（15s/13s/9s）后额度耗尽，p3/p5-p8 五支未出 →
+先出「3 动画 + 5 静帧」混合版交付，余额度后补完剩余 5 支。</p>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong>图生视频和文生图的水印位置、输出尺寸都不一样</strong>，接新通道必须逐项量
+（角区裁剪抽帧 + ffprobe），不能沿用旧通道经验。</li>
+<li>额度型 API 的 429 要<strong>读错误体</strong>：<code>14018 额度已用尽</code> 是购买入口，
+普通 RPM 限流是等待——处置动作完全相反。</li>
+<li>混合版（能动的先动 + 静帧运镜兜底）是额度中断时的合理交付形态，
+比干等或全静帧都好；剩余镜头补额度后增量生成即可（管线不变）。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p024-图像生成备援通道_agnes实操四点/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点 · walker</title><meta name="description" content="做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p024-%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E5%A4%87%E6%8F%B4%E9%80%9A%E9%81%93_agnes%E5%AE%9E%E6%93%8D%E5%9B%9B%E7%82%B9/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点 · walker"><meta property="og:description" content="做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），"><meta property="og:url" content="https://blog.walkerhua.com/pits/p024-%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E5%A4%87%E6%8F%B4%E9%80%9A%E9%81%93_agnes%E5%AE%9E%E6%93%8D%E5%9B%9B%E7%82%B9/"><meta property="og:image" content="https://blog.walkerhua.com/og/p024-%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E5%A4%87%E6%8F%B4%E9%80%9A%E9%81%93_agnes%E5%AE%9E%E6%93%8D%E5%9B%9B%E7%82%B9.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点 · walker"><meta name="twitter:description" content="做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p024-%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E5%A4%87%E6%8F%B4%E9%80%9A%E9%81%93_agnes%E5%AE%9E%E6%93%8D%E5%9B%9B%E7%82%B9.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点</h1><p>做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/多模态生成/">多模态生成</a><a class="tag" href="/tags/工具选型/">工具选型</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#备援通道agnes-ai本机已有-skill--key">备援通道：Agnes AI（本机已有 skill + key）</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-14</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>多模态生成 / 工具选型</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（不致命，但第一次用必踩；限流时干等浪费时间）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>ImageGen 429、 Agnes AI、agnes-image-2.1-flash、apihub.agnes-ai.com、platform-outputs CDN、免 auth 下载、1248x832、RPM 6/分钟、国风分镜、备援通道</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（Agnes 图像通道实测可用；视频下载 bug 见 agnes-image-video skill 文档）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 <code>429</code>（连发 1 张也限流），
+等待 60–105 秒后仍 429 —— 短时间大量生成（图+视频混跑）会触发配额级限流，恢复窗口不明。</p>
+<h2 id="备援通道agnes-ai本机已有-skill--key">备援通道：Agnes AI（本机已有 skill + key）</h2>
+<p><code>~/.agents/skills/agnes-image-video/agnes_cli.py</code>，key 在 <code>~/.zshrc</code> 的 <code>AGNES_API_KEY</code>
+（非登录 shell 不导出，需 <code>export AGNES_API_KEY=$(grep -m1 AGNES_API_KEY ~/.zshrc | cut -d= -f2 | tr -d '"'"'"' ')</code>）。</p>
+<p><strong>四个实操点（都实测过）</strong>：</p>
+<ol>
+<li><strong>输出 CDN 免 auth</strong>：<code>data[0].url</code> 指向 <code>platform-outputs.agnes-ai.space</code>，
+直接 GET 即可 200 下载；<strong>带 <code>Authorization</code> 头反而 401</strong>（CLI 的 download 子命令是给视频用的，别照抄）。</li>
+<li><strong>尺寸不听话</strong>：请求 <code>size=1536x1024</code>，实际返回 <strong>1248×832</strong>（3:2）——
+下游 pipeline 按 1248×832 设计裁剪（如 16:9 去水印：<code>crop=1248:702:0:65</code>），别写死请求值。</li>
+<li><strong>RPM 6/分钟</strong>：批量生成脚本里 <code>sleep 12</code>  sequential 跑；超频返回 429/503，
+503 是上游临时过载，退避 20s 重试即可（skill 文档已载）。</li>
+<li><strong>出图风格</strong>：<code>agnes-image-2.1-flash</code> 对「国风插画/水墨写意」响应极好
+（实测优于日系动漫 prompt 的表现），现代都市+国潮题材可直接用；
+prompt 里加「无品牌标识」避免生成美团/饿了么等真实标识。</li>
+</ol>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong>多模态生成要有备援通道意识</strong>：宿主工具限流时，本机 skill 库里的其他 API 通道
+（Agnes）可以直接接上，管线不用改（都是出 PNG）。</li>
+<li>接新通道先看三件事：<strong>响应结构、下载是否要 auth、实际输出尺寸</strong> —— 这三个和文档承诺的都不一样。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p023-concat混分辨率不报错/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风</span></a><a class="post-nav-item post-nav-next" href="/pits/p025-videogen三硬事实_水印左上15s上限与额度耗尽/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

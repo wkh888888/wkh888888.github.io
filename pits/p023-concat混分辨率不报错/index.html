@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风 · walker</title><meta name="description" content="《我能闻到所有人的秘密》漫剧 E01 合成&quot;成功&quot;（无任何报错），"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p023-concat%E6%B7%B7%E5%88%86%E8%BE%A8%E7%8E%87%E4%B8%8D%E6%8A%A5%E9%94%99/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风 · walker"><meta property="og:description" content="《我能闻到所有人的秘密》漫剧 E01 合成&quot;成功&quot;（无任何报错），"><meta property="og:url" content="https://blog.walkerhua.com/pits/p023-concat%E6%B7%B7%E5%88%86%E8%BE%A8%E7%8E%87%E4%B8%8D%E6%8A%A5%E9%94%99/"><meta property="og:image" content="https://blog.walkerhua.com/og/p023-concat%E6%B7%B7%E5%88%86%E8%BE%A8%E7%8E%87%E4%B8%8D%E6%8A%A5%E9%94%99.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风 · walker"><meta name="twitter:description" content="《我能闻到所有人的秘密》漫剧 E01 合成&quot;成功&quot;（无任何报错），"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p023-concat%E6%B7%B7%E5%88%86%E8%BE%A8%E7%8E%87%E4%B8%8D%E6%8A%A5%E9%94%99.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风</h1><p>《我能闻到所有人的秘密》漫剧 E01 合成&quot;成功&quot;（无任何报错），</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/视频合成/">视频合成</a><a class="tag" href="/tags/ffmpeg/">ffmpeg</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#定位">定位</a><a class="toc-l2" href="#处置">处置</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-14</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>视频合成 / ffmpeg</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>高（无声产出错误文件；抽帧抽查单段看不出问题，只有 ffprobe 全集参数才暴露）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>ffmpeg、concat demuxer、-c copy、分辨率不一致、1920x1080、2112x1188、zoompan s=、视频参数闸门、漫剧组装</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（已加拼接前断言闸门；所有多段合成管线复用）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>《我能闻到所有人的秘密》漫剧 E01 合成“成功”（无任何报错），
+但 <code>ffprobe</code> 成品显示 <strong>width=2112 height=1188</strong>，而分镜段明明是 1920×1080。
+单段抽帧（片头卡、分镜、动画段）看起来都正常——<strong>只有查全集流参数才发现</strong>。</p>
+<h2 id="根因">根因</h2>
+<p>11 个面板段里，片头/备忘录/片尾 3 个<strong>卡片段</strong>走的是 <code>scale=2112:1188</code> 后直接输出
+（漏了 zoompan 的 <code>s=1920x1080</code>），图段和动画段是 1920×1080。
+<code>concat</code> demuxer + <code>-c copy</code> <strong>不校验分辨率一致性</strong>：它按<strong>第一个文件</strong>的流参数
+声明输出轨，后续不同分辨率的段被原样塞进去——容器层“合法”，播放层错乱。</p>
+<h2 id="定位">定位</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> f </span><span style="color:#F97583">in</span><span style="color:#9ECBFF"> build/seg*.mp4</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">do</span><span style="color:#B392F0"> ffprobe</span><span style="color:#79B8FF"> -v</span><span style="color:#9ECBFF"> error</span><span style="color:#79B8FF"> -select_streams</span><span style="color:#9ECBFF"> v:0</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -show_entries</span><span style="color:#9ECBFF"> stream=width,height</span><span style="color:#79B8FF"> -of</span><span style="color:#9ECBFF"> csv=p=</span><span style="color:#79B8FF">0</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$f</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">done</span><span style="color:#6A737D">   # 逐段量，立即见混</span></span>
+<span class="line"><span style="color:#B392F0">ffprobe</span><span style="color:#79B8FF"> -v</span><span style="color:#9ECBFF"> error</span><span style="color:#79B8FF"> -show_entries</span><span style="color:#9ECBFF"> stream=width,height</span><span style="color:#9ECBFF"> 成品.mp4</span><span style="color:#6A737D">  # 全集参数 = 首段参数</span></span></code></pre>
+<h2 id="处置">处置</h2>
+<ol>
+<li>卡片分支统一走 zoompan 链（<code>...scale=2112:1188,zoompan=...:s=1920x1080...</code>），
+与图段输出一致（顺便获得缓推运镜）。</li>
+<li><strong>加拼接前闸门</strong>（治本，防复发）：</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> av </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> panel_avs:</span></span>
+<span class="line"><span style="color:#E1E4E8">    probe </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sh([</span><span style="color:#9ECBFF">"ffprobe"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"-v"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"error"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"-select_streams"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"v:0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "-show_entries"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"stream=width,height"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"-of"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"csv=p=0"</span><span style="color:#E1E4E8">, av]).stdout.strip()</span></span>
+<span class="line"><span style="color:#F97583">    assert</span><span style="color:#E1E4E8"> probe </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "1920,1080"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"分辨率不一致: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">av</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> -&gt; </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">probe</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span></span></code></pre>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong><code>concat -c copy</code> 是“信任式”拼接：不校验、不转码、不报错</strong>。多段合成的管线，
+拼接前必须逐段断言参数（分辨率/帧率/像素格式），不能等成品出来再看。</li>
+<li>分支遗漏（某个 kind 少走一级 filter）在这种静默模式下<strong>永远不报错</strong>——
+按 kind 分叉的合成脚本，每个分支的出口参数都要显式对齐。</li>
+<li>验收不能只抽帧：<strong>抽帧验画面，ffprobe 验参数</strong>，两件事都要做。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p022-透明字幕叠加两坑_chrome白底与单帧repeat定格/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧</span></a><a class="post-nav-item post-nav-next" href="/pits/p024-图像生成备援通道_agnes实操四点/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

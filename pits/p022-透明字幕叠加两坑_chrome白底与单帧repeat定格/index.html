@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧 · walker</title><meta name="description" content="做《我能闻到所有人的秘密》AI 漫剧，字幕条（Chrome 渲染的透明 PNG）叠加到分镜图上，"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p022-%E9%80%8F%E6%98%8E%E5%AD%97%E5%B9%95%E5%8F%A0%E5%8A%A0%E4%B8%A4%E5%9D%91_chrome%E7%99%BD%E5%BA%95%E4%B8%8E%E5%8D%95%E5%B8%A7repeat%E5%AE%9A%E6%A0%BC/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧 · walker"><meta property="og:description" content="做《我能闻到所有人的秘密》AI 漫剧，字幕条（Chrome 渲染的透明 PNG）叠加到分镜图上，"><meta property="og:url" content="https://blog.walkerhua.com/pits/p022-%E9%80%8F%E6%98%8E%E5%AD%97%E5%B9%95%E5%8F%A0%E5%8A%A0%E4%B8%A4%E5%9D%91_chrome%E7%99%BD%E5%BA%95%E4%B8%8E%E5%8D%95%E5%B8%A7repeat%E5%AE%9A%E6%A0%BC/"><meta property="og:image" content="https://blog.walkerhua.com/og/p022-%E9%80%8F%E6%98%8E%E5%AD%97%E5%B9%95%E5%8F%A0%E5%8A%A0%E4%B8%A4%E5%9D%91_chrome%E7%99%BD%E5%BA%95%E4%B8%8E%E5%8D%95%E5%B8%A7repeat%E5%AE%9A%E6%A0%BC.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧 · walker"><meta name="twitter:description" content="做《我能闻到所有人的秘密》AI 漫剧，字幕条（Chrome 渲染的透明 PNG）叠加到分镜图上，"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p022-%E9%80%8F%E6%98%8E%E5%AD%97%E5%B9%95%E5%8F%A0%E5%8A%A0%E4%B8%A4%E5%9D%91_chrome%E7%99%BD%E5%BA%95%E4%B8%8E%E5%8D%95%E5%B8%A7repeat%E5%AE%9A%E6%A0%BC.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P022 · 透明字幕 PNG 叠加两个连环坑：Chrome 白底截图 + 单帧流被 repeat 定格在全透明帧</h1><p>做《我能闻到所有人的秘密》AI 漫剧，字幕条（Chrome 渲染的透明 PNG）叠加到分镜图上，</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/视频合成/">视频合成</a><a class="tag" href="/tags/ffmpeg/">ffmpeg</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因两层各自独立">根因（两层，各自独立）</a><a class="toc-l2" href="#修法两行都已实测">修法（两行，都已实测）</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-14</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>视频合成 / ffmpeg</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>高（症状极度误导：字幕“消失”或整帧被白布盖住，两个坑叠在同一处）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>ffmpeg、overlay、fade alpha、单帧输入、eof_action repeat、–default-background-color、Chrome headless 截图、透明 PNG、rgb24 rgba、漫剧、字幕条、zoompan</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效（两个修法都已验证；漫剧/字幕管线复用）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>做《我能闻到所有人的秘密》AI 漫剧，字幕条（Chrome 渲染的透明 PNG）叠加到分镜图上，
+抽帧发现两种连环故障：</p>
+<ol>
+<li><strong>字幕整条消失</strong>：单独看字幕 PNG 正常（透明底 + 底部名条），合进视频后什么都没有。</li>
+<li><strong>修了第 1 个后整帧变白布</strong>：给字幕输入加 <code>-loop 1</code> 后字幕出现了，
+但整个画面被一块白色盖住——原来 Chrome 截图把透明页合成了<strong>白底 rgb24（无 alpha）</strong>。</li>
+</ol>
+<h2 id="根因两层各自独立">根因（两层，各自独立）</h2>
+<p><strong>坑 1：单帧输入 + <code>fade=alpha=1</code> + overlay 默认 <code>eof_action=repeat</code> = 永久定格在 t=0 帧。</strong>
+字幕 PNG 作为第二个输入只有 1 帧（t=0），<code>fade=t=in:st=0:d=0.25:alpha=1</code> 在 t=0 时
+alpha=0；输入流随即 EOF，overlay 的 framesync 按默认 <code>eof_action=repeat</code>
+<strong>永远重复这一帧</strong>——于是字幕全程透明，表现为“字幕没合成上”。
+（不是 overlay 语法错、不是 PNG 坏，是时间维坏了。）</p>
+<p><strong>坑 2：Chrome headless <code>--screenshot</code> 默认把透明背景合成为白底。</strong>
+CSS <code>background:transparent</code> 的页面截出来是 <code>rgb24</code> 白底 PNG，没有 alpha；
+overlay 上去就是一块不透明白布。</p>
+<h2 id="修法两行都已实测">修法（两行，都已实测）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># 1) Chrome 截图加透明参数，产出 rgba PNG</span></span>
+<span class="line"><span style="color:#79B8FF">CHROME</span><span style="color:#79B8FF"> ...</span><span style="color:#FDAEB7;font-style:italic"> --</span><span style="color:#E1E4E8">default</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">background</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">color</span><span style="color:#F97583">=</span><span style="color:#79B8FF">00000000</span><span style="color:#FDAEB7;font-style:italic"> --</span><span style="color:#E1E4E8">window</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1920</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">1080</span><span style="color:#FDAEB7;font-style:italic"> --</span><span style="color:#E1E4E8">screenshot</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">sub.png </span><span style="color:#79B8FF">...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 2) 字幕输入必须 loop 成连续流，fade 才有时间轴可依</span></span>
+<span class="line"><span style="color:#E1E4E8">ffmpeg </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">loop </span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">framerate </span><span style="color:#79B8FF">30</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">i panel.png </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">loop </span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">framerate </span><span style="color:#79B8FF">30</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">i sub.png \</span></span>
+<span class="line"><span style="color:#F97583">  -</span><span style="color:#E1E4E8">filter_complex </span><span style="color:#9ECBFF">"[0:v]...,zoompan=...[base]; </span><span style="color:#79B8FF">\</span></span>
+<span class="line"><span style="color:#9ECBFF">    [1:v]fade=t=in:st=0:d=0.25:alpha=1,fade=t=out:st=D-0.2:d=0.2:alpha=1[sub]; </span><span style="color:#79B8FF">\</span></span>
+<span class="line"><span style="color:#9ECBFF">    [base][sub]overlay=0:0:format=auto[v]"</span><span style="color:#79B8FF"> ...</span></span></code></pre>
+<h2 id="教训">教训</h2>
+<ol>
+<li><strong><code>overlay</code> 的第二路是单帧图时，任何带时间的滤镜（fade/alpha）都会坏</strong>——
+单帧流没有“后续”，repeat 会把 t=0 的状态冻成永久。给单帧图当 overlay 素材，
+一律 <code>-loop 1 -framerate N</code>。</li>
+<li><strong>Chrome 无头截图的透明不是默认的</strong>，要显式 <code>--default-background-color=00000000</code>；
+用 <code>ffprobe -show_entries stream=pix_fmt</code> 验证（<code>rgb24</code> = 没透明，<code>rgba</code> = 有）。</li>
+<li>这类“素材单独看都对、合起来错”的问题，<strong>先拆开验证每一环</strong>
+（PNG 单独读 → 单帧 overlay 手动复现 → 加 loop），别在整条管线上猜。</li>
+</ol>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p021-edge-tts-403-gec版本被拒/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P021 · edge-tts 报 `WSServerHandshakeError: 403`：版本太旧，GEC 被微软拒</span></a><a class="post-nav-item post-nav-next" href="/pits/p023-concat混分辨率不报错/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P023 · ffmpeg concat `-c copy` 混分辨率**不报错**：成品流参数以首段为准，播放器抽风</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
