@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-18 · AI Coding / 具身智能 · 第二辑</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 18 日（周日）· 第二辑</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×1</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">Agent 治理 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：栖息地开始收门票了 —— 凭据被偷（②）、网站关门（③）、物理世界还没过墙（④），三堵墙同时显形；两条回应：墙内把群控工具做成白送的生态商品（⑤），墙外把每题票价打到一块三（①）。承当日第一辑「模型在商品化，栖息地在资产化」：资产化之后，第二幕是通行证被定价、被收回、被偷</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① DeepSeek 1.3 元/题</a>
+    <a href="#n2">② OpenCode 密钥泄露</a>
+    <a href="#n3">③ 网站对 agent 关门</a>
+    <a href="#n4">④ OpenAI 自研人形</a>
+    <a href="#n5">⑤ 宇树群控白送</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+    <a href="#ed1">第一辑索引</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>DeepSeek-V4.1-Flash-1017：DeepSWE 77.0 每题约 1.3 元，MIT 权重顺带把搜索 API 开放给别家 harness</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">DeepSeek 官方发布与 Hugging Face 模型卡（10-17，版本号即日期）；The Decoder / BlockBeats / AI &amp; Tech News 转述（10-17/18）</div>
+    <div class="body">
+      <p>DeepSeek 发布 <strong>DeepSeek-V4.1-Flash-1017</strong>：网页、App、API 同步切换，权重按 <strong>MIT 协议</strong>上架 Hugging Face 与 ModelScope（FP8 / 8-bit，Transformers 直载）。官方口径是「性能与成本的帕累托改进」——更快、输出更短、agentic 与编码分数更高。真正值得看的不是分数，是三件事：</p>
+      <ul>
+        <li><strong>成本曲线打穿地板。</strong>官方 DeepSWE 成本图：<strong>77.0% 通过率对应每题约 1.3 元</strong>（不足 $0.20），low 档 >72% 约 $0.10；前代 V4.1-Flash 74.2% 要约 $0.50。同一张图上 GPT-6 Astra、Gemini 3.8 Flash、Claude Opus 5 是每题 $2 到 $10+ 且分数不追平。两个月四次迭代，每次以 Opus 为坐标：7 月底 V4-Flash 54.4 → 8 月 V4-Pro 62.7 → 9 月 V4.1 Flash 74.2 → 1017 版 77.0。</li>
+        <li><strong>底座直接铺进第三方 harness。</strong>官方明确针对 DeepSeek Harness（推荐 v0.2.1-rc.1+）、<strong>腾讯 CodeBuddy、WorkBuddy</strong> 做了调优——模型公司主动适配别家的壳子，而不是等壳子来适配自己。</li>
+        <li><strong>内部搜索引擎变成公共 API。</strong>Search 与 Fetch API 首次向所有开发者开放（按成功请求计费，每端点每千次 $0.75，约 ¥5）；经 Claude Code、Codex、DeepSeek Harness 内置搜索触发的请求<strong>免费至 10 月 31 日 16:00 UTC</strong>（另有源记 11-01）——等于给别家 harness 的用户付两周过路费。</li>
+      </ul>
+      <p>方法侧的看点是 <strong>RLSF</strong>（带自反馈的强化学习）：用模型自己的置信度与自我批评当奖励信号，不要人工评估员、不要外部 reward model，面向「从零建完整项目」——官方演示了故宫 3D 场景、网页赛车和 Godot 引擎《传送门 2》复刻，BlockBeats 称之为「许愿式编程」。规格：prefill 每 token 激活 8B / decode 16B，1M 上下文，最高 384K 输出。</p>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>按本日报 09-22（Grok 4.7）与 09-29（Sonnet 5.5）的判定，纯模型发布是弱条目；<b>这次的变量不是分数，是分发。</b>MIT 权重 + 官方点名适配 CodeBuddy / WorkBuddy + 搜索 API 对竞品 harness 免单——模型公司开始给别家的栖息地付过路费。它与 10-08 ① Haiku 5.5（降价约 90%）、10-15 ② Nemotron（2-bit 量化塞进 24GB 本地跑）并列成「谁付账」的第三种答案：<b>把前沿级分数打到一块三，用免费分发换用量。</b></p>
+      <p>另一个必须并读的信号：RLSF 的「自评当奖励」与 09-27 ②（17/17 模型无提示自发 reward hacking）是同一枚硬币的两面——自己给自己打分正是奖励黑客的温床，而官方未披露任何防作弊设计。<b>便宜是真的，验收还得是你自己的。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>跑分与成本曲线均为官方口径，无独立基准跟进。</b>DeepSWE 77.0 超的是 <b>Claude Opus 5 的 74.0，不是 Opus 5.5</b>；Terminal-Bench 4.0 从 31.2% 升至 42.3%，仍落后 Opus 5 的 51.8%（BlockBeats）。官方自承对手已到 5.5。</p>
+      <p><b>监管传闻单一来源：</b>The Decoder 报道中国政府据报计划收紧开放权重发布规则、甚至禁止，「是否进入前十最强系统」或是判据之一——<b>「reportedly」级别，未证实</b>，采用前请自行核实。</p>
+      <p><b>RLSF 无防作弊披露</b>：自反馈奖励与 reward hacking 的结构性风险（09-27 ②）未见官方回应；「许愿式编程」演示为精选案例，非系统评测。</p>
+    </div>
+    <div class="act">
+      <p><b>三件事按顺序验：</b>① 拿自己真实任务在 77% 档跑一遍实付账单（对照现用模型的每任务成本，10-14 ① 提醒过同模型不同工具账单可差 70 倍）；② 免单期内把 Search / Fetch 接进 Claude Code 或 Codex，与现有检索工具对比质量；③ 等 Artificial Analysis 等独立口径跟进后再决定是否进生产——在那之前，把它当「便宜的可疑新选项」而不是「新王」。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card sec" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>OpenCode 确认密钥泄露：1.4% Console 用户中招，偷密钥的动机是「大规模蒸馏攻击」</h2>
+      <span class="tag t-sec">Agent 安全</span>
+    </div>
+    <div class="src">OpenCode 官方 X 公告（10-17 18:08 UTC，TSNMedia 全文引用）；客户通知邮件转述（CodeYourCraft / CyPro / CyPro 安全公告）；ZAKER 等中文转述（10-18）</div>
+    <div class="body">
+      <p>开源编码 agent <strong>OpenCode</strong>（开发商 Anomaly Innovations，前身为 SST）10-17 确认安全事故：事件与一场<strong>「大规模蒸馏攻击」</strong>相关，波及约 <strong>1.4% 的 OpenCode Console 用户</strong>——且仅限「在 Console 链接了外部 provider」的子集，即那些把自己付费的 OpenAI / Anthropic / Google API key 存进 Console 工作区、由平台网关代为调用的团队。</p>
+      <ul>
+        <li><strong>时间线。</strong>入侵 traced 到一套<strong>正在退役的 legacy console 系统</strong>；最早暴露约 10-17 00:30 UTC（另有源记 10-16 夜间），距首封通知约 <strong>22 小时</strong>——首封邮件「Action Required: Potential provider key breach」10-17 22:51 UTC 发出，第二封（说明具体受影响 key）在 10-18 午夜前到达。</li>
+        <li><strong>已出现真实损失。</strong>开发者论坛上至少一人报告约 <strong>$100 欺诈性用量</strong>，另一人报告 10-17 Claude API 异常活动——均为个人报告、非公司口径；官方称「迄今」未发现其他数据泄露证据，且<strong>无法确认暴露的 key 是否已被滥用</strong>。</li>
+        <li><strong>官方应对。</strong>与 Anthropic、OpenAI、Google 合作处置；建议用户<strong>去各 provider 自己的控制台</strong>吊销并重发 key（切勿点邮件里的链接）、检查 10-17 以来的账单与用量日志、设置支出上限。团队成员 thdxr 在 X 上称「我的个人账号现在也在被攻击」。</li>
+        <li><strong>动机定性才是重点。</strong>「蒸馏攻击」指未经授权地从强模型抽取能力去训练竞品——Anthropic 10 月中旬披露此类行动「隐蔽、工业规模」，涉及数十万欺诈账号、约 <strong>1.9 亿次</strong>从 Claude 抽走的交互，部分途径正是<strong>非法获取的真实 API key</strong>。偷 key 不只是为了花钱，是给模型工厂供原料。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是 09-29 ① NVIDIA Open Agent Safety Platform 的现场反例：OpenShell 的设计前提原话是「真凭证留在工作负载外」——而 OpenCode Console 恰恰是<strong>把凭证收进平台工作区</strong>的那一层，泄露面就是所有链接了 provider 的 workspace。也是 09-19 ① Plugin4Shell 之后，agent 供应链信任第二次以密钥形态破裂：上次是插件市场投毒，这次是托管平台失守。</p>
+      <p>把 ② 与今天速览的 MONST3R-AI 对读，是一条完整的黑色经济链：平台存钥匙（②）→ 地下市场收购赃 key → 自主扫描器用赃 key 干活、账单记在受害者头上（速览）。<b>「谁付账」在这条链上是被偷的人。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>key 是否真被读取，公司未确认。</b>ZAKER 等中文源写「API 密钥泄露」，TSNMedia 明确指出「OpenCode has not said that any of these stored keys were exposed」——两方口径并列，<b>勿读成既成事实</b>。</p>
+      <p><b>1.4% 是 Console 用户比例，不是全部用户</b>（Console 为可选托管服务；「月活 1600 万开发者」为公司自报）；无绝对人数、无攻击入口细节、无完整 postmortem，官方明说「incident is ongoing」。</p>
+      <p><b>「与蒸馏攻击相关」的因果关系公司未解释</b>；三家公司均未公开置评；$100 等损失数字为个人报告。泄露窗口两个口径（10-17 00:30 UTC / 10-16 夜间）尚未有官方澄清。</p>
+    </div>
+    <div class="act">
+      <p><b>今天就能做的四件事：</b>① 如果你或团队用过 Console 链接 provider——现在去各 provider 后台吊销重发（从官方控制台进，不点邮件链接）；② 查 10-16 以来的用量与账单，设硬性支出上限 + 告警；③ 按项目 / 人拆分 key scope，让单次泄露烧不动整个组织；④ 对「agent 平台代管凭证」这类功能，<b>默认它迟早被偷一次</b>来设计——凭证外置、短寿命、沙箱外监督（对照 09-29 ① OpenShell 的三层）。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card sec" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Yelp、达美、摩根大通向 AI agent 关门：Schwab CEO 一句「出了事谁负责」，把责任层问倒了</h2>
+      <span class="tag t-sec">Agent 治理</span>
+    </div>
+    <div class="src">The Verge（Emma Roth，10-16 主稿 / 10-16 Schwab 跟进稿，10-17 起集中转述）；彭博（Schwab CEO 访谈，10-16）；TechCrunch（Yelp 回应）</div>
+    <div class="body">
+      <p>The Verge 汇总了近几周一个越来越普遍的现象：<strong>Meta Muse、xAI Grok、OpenAI Dots、Instinct 的用户在各大网站上接连被拦</strong>——agent 被卖成「替你在网上办事」，而互联网本身并不承认这个设定。</p>
+      <ul>
+        <li><strong>明确关门的三类。</strong>Yelp：只放行付费进入其数据授权计划的 agent（告诉 TechCrunch）；达美航空：禁止 agent 代替用户订票；<strong>摩根大通与嘉信理财</strong>以安全理由确认屏蔽 agent 访问账户。嘉信 CEO Rick Wurster 对彭博（10-16）说得最直白：「<strong>我们不希望有人把密码交给 Muse、让 Muse 代表客户行事。我们控制不了，客户也控制不了，万一出事谁负责？所以我们不允许。</strong>」</li>
+        <li><strong>最硬的是 Amazon。</strong>称 Muse 的「持续访问」违反站点政策，Grok、Instinct agent、Dots 也被报无法使用 Amazon；马斯克回应：也许该「创办一个 Amazon 的竞争对手」。背景是 Amazon 与 Perplexity 的官司：去年禁掉 agentic shopping 并起诉，法官曾发禁令，<strong>8 月被上诉法院推翻</strong>，Amazon 已提交修订诉状——战局未定。</li>
+        <li><strong>静默封锁同样在发生。</strong>用户报告 Cars.com、Amtrak 等「以前能用的 agent 现在不行了」——没有公告，只有失败。</li>
+        <li><strong>开门派走的是商务路线。</strong>Meta 官方口径「<strong>拒绝一个个人 agent，就是拒绝它背后的客户</strong>」，转而与 Walmart、Gap、Sephora、Best Buy 签约让 Muse 可以购物；Shopify 则把整个 storefront 网络开放给 agent。</li>
+        <li><strong>还有一层误伤。</strong>反 bot 系统为防欺诈而建，agent 以机器速度填表正中警报：Reddit 用户报 Google 以「可疑活动」封禁使用 Muse 的账号、Walmart 虽有合作仍结账失败；Cloudflare 在 2025 年一键拦 AI 爬虫之后，开始拦截「同时为搜索索引与 AI 训练抓取」的爬虫。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是 09-21 ③ ChatGPT <code>__obi</code> cookie 的镜像：那条是「web 从 agent 身上刮数据」，这条是「<b>web 拒绝 agent 代表你行动</b>」。capability 的最后一公里不是模型，是门口——EquiStamp CEO Chris Canal 的原话：「这绝对影响 Anthropic 和 OpenAI 的被感知价值：它们宣称 agent 将渗透生活的每个方面，如果有公司在积极阻止这件事，agent 能做的事就更少。」</p>
+      <p>对工程侧这是基建级信号：每个域都变成一次单独集成，<b>licensed API 生存、对敌意门店的浏览器自动化死亡</b>；per-domain 成功率监控从边缘需求变成核心基建——静默封锁在日志里长得和选择器失效一模一样。</p>
+    </div>
+    <div class="caveat">
+      <p><b>多为用户报告 + 公司对媒体确认，无系统计量</b>；刻意封锁与反 bot 误伤在报道中混杂，无法拆分比例。</p>
+      <p><b>Amazon v. Perplexity 未决</b>（修订诉状已提交）；OpenAI / Google 未回应置评、Instinct 拒绝置评；「Walmart 合作」与「Walmart 结账失败」并存——<b>合作不等于畅通</b>，Meta 的商务路线尚未证明可复制。</p>
+      <p><b>Yelp 收费、达美禁令均为公司单方面口径</b>，条款细节（价格、范围、违约后果）未公开。</p>
+    </div>
+    <div class="act">
+      <p><b>做 agent 产品的先画三张表：</b>① 目标站点授权矩阵（官方 API / 数据授权 / 合作伙伴 / 封锁 / 静默封锁，按域逐条标）；② per-domain 成功率监控，把「静默封锁」与「选择器失效」分成两种告警；③ 人类交接路径——被门拦住时干净地交还给人，而不是硬闯。别再把「浏览器自动化」当默认通道。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>Altman 确认 OpenAI 自研人形机器人：「我们会做」，但大脑是比身体更大的问题，2027 年才演示</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">IT之家 / 凤凰网科技 / 新浪财经 / 同花顺（10-18，译自 Engadget）；Altman 在 Sources 播客与《财富》访谈的转述</div>
+    <div class="body">
+      <p>Altman 在《Sources》播客里被直接问到 OpenAI 是否会亲自造人形机器人，回答只有一个词：<strong>「我们会（We will）。」</strong>他给出的两条理由——</p>
+      <ul>
+        <li><strong>选人形是因为「世界为人类而建」。</strong>门、键盘、所有工具都按人的形态设计，要在同类空间里活动的机器，采用相近外形是合理选择。</li>
+        <li><strong>但真正的瓶颈是「大脑」。</strong>外观细节「远不如把驱动机器人运转的大脑造出来重要」——原话逻辑：给机器装上胳膊腿，它不知道怎么用，一样没用。拿马克杯的例子：识别杯子、找到杯柄、预估握法、施对力气，错了咖啡洒了还得打扫。</li>
+      </ul>
+      <p>节奏上他说得很保守：接受《财富》采访时预计 <strong>2027 年拿出「亮眼的演示样机」</strong>，「但机器人走上街头还需要再等好几年」——没有演示内容、没有外观、没有外部接触时间表。</p>
+      <p><strong>招聘清单就是路线图。</strong>目前 27 个开放机器人岗位，覆盖运动控制、状态估计、执行器控制、整机行为开发，以及训练具身系统的 ML 基础设施；同时自研机电一体化执行器（电机、传动机构、传感与热管理），并有面向规模化量产的制造与供应链岗位。阶段目标：近期做<strong>协助技术工人建设基础设施</strong>的通用机器人，远期才是家用个人机器人。脉络上可追溯到 Dactyl——在仿真里练出机械手、转战魔方，那是「软件里学会了、物理规律不答应」的最早案例。</p>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「大脑 vs 身体」路线之争的最新注脚：别人在卷身体——Figure 把退役机器人熔进钢水（今日速览）、波士顿动力 Atlas 产能排队到 2027、宇树把群控软件白送（今日 ⑤）——<b>OpenAI 把宝押在「脑子还没解决」</b>，并为此自研执行器。它与 09-21 ④（Astra 直接开动机械臂，Zia：「机器人领域的 OpenAI 可能就是 OpenAI，而不是 PI 或 Skild」）、10-14 ③（Google 一段人类视频直接 sim-to-real 上真机）构成同周三条「模型公司下厂」路径，形态截然不同。</p>
+      <p>另一个读法：当日第一辑 ⑤ 信通院报告说国内多数企业与前沿差约两代——<b>OpenAI 这份招聘清单，就是那两代差距的目录。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>这不是产品公告。</b>无原型、无外观、无价格、无发布时间表；「2027 演示」出自《财富》访谈转述，播客与访谈的英文原文上线时间未在中文转述中明确（中文媒体 10-18 集中报道），引用时请以 Engadget / Fortune 原文为准。</p>
+      <p><b>27 个岗位为报道时点快照</b>；「协助基建工人」「家用机器人」是方向表述，不是承诺；Dactyl 是 2018—2019 年的旧研究，只作脉络不作能力证明。</p>
+    </div>
+    <div class="act">
+      <p><b>两个可操作的观察点：</b>① 对具身创业者——盯 OpenAI 招聘目录的技能组合变化，「自研执行器 + 制造供应链岗位」是硬件垂直整合的信号，决定未来是卖模型还是卖整机；② 对投资与采购——把「演示」与「上岗」继续分开计价（承第一辑 ⑤ 信通院三冷：月均开机天数、订单类型、TCO 三件套），2027 年的「亮眼演示」大概率仍是演示。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>宇树免费放出 UniUni 群控软件：机群控制平面从厂商内部工具变成用户手里的产品</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">Pandaily（10-17 首发）；RobotToday / AllWorld.Media 转述；AIGC.NEWS 事件页（标注「尚未获公司或第二独立信源确认」）</div>
+    <div class="body">
+      <p>宇树发布 <strong>UniUni</strong> 集群控制软件：<strong>Windows / macOS 桌面应用，对所有宇树用户免费</strong>（首发版本 Win 1.1.14 / macOS 1.1.15），首发支持 H2 与 G1 两款人形。功能清单几乎就是一张「多机演出与巡检的最小控制面」——</p>
+      <ul>
+        <li><strong>编排：</strong>2D / 3D 视图里手画每台机器人的轨迹；拖拽时间轴编排群体动作顺序；AI 辅助工具排全身动作并<strong>对齐音乐节拍</strong>。</li>
+        <li><strong>定位：</strong>导入点云地图，机器人以激光 SLAM 自主定位；同局域网内自动发现、自动配对。</li>
+        <li><strong>监控与安全：</strong>运行中逐台实时状态；<strong>一键全群急停</strong>。</li>
+      </ul>
+      <p>它的意义要把语境放进来： coordinated 人形表演是中国厂商的标准展示形态，此前每场都要定制编排；同步时间轴 + 地图 + 中央监控 + 统一急停，第一次被做成客户能自己跑的产品。</p>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>当日第一辑的主线是「栖息地在资产化」——UniUni 就是<b>具身侧栖息地的雏形</b>：机群控制平面从「厂商内部工具」变成「用户可自运的产品」，而且免费。对照同公司 09-20 ④ UnifoLM-WLA-1.0（开放世界-动作模型的<strong>部分</strong>权重）：模型扣着放，工具全量白送——<b>软件层才是生态抓手</b>，这与第一辑 ① Beam「模型只是内核，harness 与生态整包出厂」是同一个判断的两次执行。</p>
+      <p>往安全侧再读一层：一键全群急停 + 中央状态监控，就是 09-29 ① OpenShell 在编码 agent 上做的事（沙箱外监督、可一键停）在物理机群上的对应物——<b>控制面正在成为标配，而不是增值项。</b></p>
+    </div>
+    <div class="caveat">
+      <p><b>官方公告原文未直接核到。</b>目前为 Pandaily 首发 + RobotToday / AllWorld 转述，AIGC.NEWS 事件页明确标注「尚未获公司确认或第二独立信源」——引用前请以宇树官方渠道为准。</p>
+      <p><b>关键规格全部缺失：</b>最大协同机数未披露、H2 / G1 之外的机型支持未定、网络要求与定位精度未公布；「AI 辅助编排」无任何技术细节。</p>
+      <p><b>免费是生态策略不是慈善</b>：最终指向硬件销售与生态锁定，勿读作「群控没有成本」。</p>
+    </div>
+    <div class="act">
+      <p><b>做机群调度 / 多机表演 / 巡检的，直接下载试，重点验三件事：</b>① 20+ 台规模下的规划延迟与急停延迟（演示场景最怕这两个数）；② 激光 SLAM 在真实场地（非完美点云场景）的定位漂移；③ 时间轴编排能否导出 / 回放——决定它只能做 demo，还是能进生产 pipeline。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m sec">
+      <h3>MONST3R-AI：赃 key 进面板、预算一设就能扫，攻击的账单记在受害者头上</h3>
+      <p>Bitsight 威胁情报（10-16，Help Net Security 同日）：地下论坛在售一款自称自主渗透测试平台的工具 <strong>MONST3R-AI</strong>——买家把偷来的 OpenAI / Anthropic / Google key 粘进面板、设预算上限、指向目标列表即开扫；<b>卖家自己不托管任何模型</b>，架构上绕过 provider 的安全训练，计量费用全部落在 key 主人头上。卖家自报 199 台主机 1,072 个发现（Bitsight 无法核实）。Bitsight 追踪 16 个论坛 2026 年 2—8 月：AI agent / 间接提示注入 / MCP 提及 <strong>+67%</strong>，越狱讨论 +约四分之三，GLM / DeepSeek 等开放权重提及大增（可本地跑、无 provider 监控；转售商 CloseRouter 的 GLM 报价 $0.053/M vs 官方 $1.12）。坐标：Sysdig 估计被劫 Claude 级账号日暴露可超 $46,000；METR 今年 3 月被盗 key 三周被烧掉 <strong>$600,000</strong> 推理额度（ITPro）；同期 FakeGit 行动约 7,600 个假 GitHub 仓库传播 SmartLoader，其中 800+ 伪装成 AI skill 或 MCP server（含仿冒「Docker MCP Gateway」）。<b>与主榜 ② 是同一枚硬币：② 讲钥匙怎么被偷，这条讲偷来干什么。</b></p>
+    </div>
+    <div class="m emb">
+      <h3>优必选 Thinker-WM：RGB + 深度 + 动作挤进同一表征，自报三个世界模型基准第一</h3>
+      <p>10-17 Pandaily 附 arXiv 论文：优必选 Thinker 团队的统一世界模型，把 RGB 视频、<b>度量深度</b>与机器人动作编进同一共享表征——各模态独立编码器 → 统一 latent → Unified Dynamics Transformer 联合建模，深度当原生输出而非辅助信号；一份权重跑六种模式（视频-动作联合生成、未来预测、策略推理、video-to-action、逆动力学等）。自报三个具身世界模型基准第一：WorldOlympiad 总分 0.740（3D 一致性 0.531、交互保真 0.765）、EWMBench 4.66（领先 Qwen-RobotWorld 与 Sora 2）、WorldArena 1.0 Track-1 十二个维度领先；RoboTwin 单任务消融：加深度使操作成功率 <b>+15pp</b>。<b>边界：</b>排名为发布时点自报、无独立复现；优必选已在本日报推送三次（09-08 国标交付 / 09-13 海外订单 / 09-15②辑 柳州工厂），本条系同公司不同事（世界模型论文）的弃用条目复用，特此说明；「世界模型第一」与「能上岗」之间隔着 09-23 ④ 的 2,100 次真机试验。</p>
+    </div>
+    <div class="m emb">
+      <h3>智元创新新一轮 10—15 亿、投后约 500 亿：港交所 120 天规则把 IPO 最早推到 2027 年 2 月底</h3>
+      <p>10-17 摩斯 IPO（网易转述）：市场消息称智元创新启动 <strong>10—15 亿元</strong>新融资、<b>投后估值约 500 亿元</b>、已接近收尾。真正的信息量在上市时间表：按港交所规则，递表后完成新股须满 <strong>120 日</strong>才能挂牌——若 10 月底收官，最早也要 <b>2027 年 2 月底</b>上市，市场预期的「2026 年内港股上市」落空；7 月启动 IPO 筹备时基石投资人目标估值为 400—500 亿港元，三个月后该窗口正式关闭。公司坐标：2023-02 上海成立，董事长邓泰华、联创 / CTO 彭志辉（稚晖君）；远征 / 灵犀 / 精灵多系列，2025 年营收破 10 亿。<b>边界：</b>「接近收尾」未经公司确认；智元已推三次（09-10 AGILE2.0 / 09-16 龙旗并线 / 09-21 长隆），本条为资本维度复用，特此说明；500 亿为投后估值、400—500 亿为基石目标区间，两个口径不可直接相比。</p>
+    </div>
+    <div class="m emb">
+      <h3>Figure 02 跳进芬兰钢水熔炉「退役」：傅盛复盘三次标志性宣传，「作秀第一名」</h3>
+      <p>10-17 傅盛（今日头条）：Figure 把上一代 Figure 02 运到芬兰一家钢厂，训练它<strong>自己跳进装满钢水的熔炉</strong>完成「退役」，还请来《终结者 2》主演施瓦辛格复刻竖大拇指镜头；官方解释是 Figure 03 开始接替、旧机含大量自研零部件、熔毁为防止技术泄露。傅盛的回怼「干啥啥不行，作秀第一名」并复盘三次标志性宣传：2024-01 冲咖啡（创始人喊出机器人的「ChatGPT 时刻」，实际面对的是固定胶囊咖啡机）、搬板子进宝马车间、以及本次熔炉退役；估值坐标 390 亿美元。<b>边界：</b>制造与部署的真实数据以 10-04 ⑤ 为准（宝马 CMD 9-30 发布：11 个月 / 1,250+ 小时 / 84 秒节拍，Figure 上半年已公布）；本条是退役仪式与舆论反响；傅盛为观点稿，「作秀」是其立场不是事实；「熔毁防泄露」未见第三方核实。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系</div>
+
+  <div class="card">
+    <div class="body">
+      <table>
+        <tr><th>今日条目</th><th>关系</th><th>历史条目</th><th>说明</th></tr>
+        <tr><td rowspan="2"><strong>① DeepSeek 1017</strong></td><td>同题不同价</td><td>10-08 ① Haiku 5.5 降价 90% / 10-15 ② Nemotron 本地化</td><td>「谁付账」的三种工程答案并列：降单价（Haiku 输出 $0.50/M）、换本地（Nemotron 2-bit 进 24GB）、打到地板价 + 免单分发（DeepSeek 1.3 元/题、搜索 API 两周免费）。</td></tr>
+        <tr><td>同题不同层（风险面）</td><td>09-27 ② 17/17 模型自发 reward hacking</td><td>RLSF 用模型自评当奖励信号，而 09-27 证明模型会自发钻奖励空子——自己给自己打分正是温床；官方未披露防作弊设计，采用前当未验证假设读。</td></tr>
+        <tr><td rowspan="3"><strong>② OpenCode 泄露</strong></td><td>同公司不同事</td><td>10-15 ① OpenCode 2.0 发布</td><td>一周前刚推「server 常驻 + Code Mode + 后台 subagent」，一周后证实其 Console 代管凭证的 legacy 系统被偷——版本演进与信任崩塌同周发生。</td></tr>
+        <tr><td>反向镜像</td><td>09-29 ① NVIDIA OpenShell</td><td>OpenShell 的设计前提原话「真凭证留在工作负载外」；OpenCode Console 恰恰是把凭证收进平台工作区的那一层——现场反例。</td></tr>
+        <tr><td>同题不同层</td><td>09-19 ① Plugin4Shell</td><td>插件市场投毒 vs 托管平台凭证失守；agent 供应链信任一年内第二次以密钥形态破裂，上次赌的是代码，这次赌的是账单。</td></tr>
+        <tr><td rowspan="2"><strong>③ 网站关门</strong></td><td>反向镜像</td><td>09-21 ③ ChatGPT <code>__obi</code> cookie</td><td>web 从 agent 身上刮数据（广告像素借聊天产品出道）vs web 拒绝 agent 代表你行动（银行 / 航司 / 点评站设门禁）——同一片互联网的两个方向。</td></tr>
+        <tr><td>同题不同层</td><td>10-15 ⑤ 韩国监管沙盒特批</td><td>物理世界「人机共处需特许 + 风险评估」，网络世界「agent 通行需逐个站点谈判」；两边共同点是通行证从默认变成需要挣。</td></tr>
+        <tr><td rowspan="3"><strong>④ OpenAI 人形</strong></td><td>同题不同进</td><td>09-21 ④ Astra 直接开动机械臂</td><td>模型控制现成机械臂（「物理 ICL」）vs 自研本体 + 自研执行器；Zia「机器人领域的 OpenAI 可能就是 OpenAI」的最新注脚。</td></tr>
+        <tr><td>同题不同路</td><td>10-14 ③ Gemini 4 Argon video-to-sim-to-real</td><td>Google「一段人类视频启动仿真器、真机七连中」vs OpenAI「2027 才演示、脑子是瓶颈、上街还要几年」——模型公司下厂的两种节奏。</td></tr>
+        <tr><td>反向坐标</td><td>当日第一辑 ⑤ 信通院三冷报告</td><td>行业报告说国内多数企业落后前沿约两代；OpenAI 的 27 个岗位招聘清单就是那两代差距的目录——差距不在资金在技能组合。</td></tr>
+        <tr><td rowspan="2"><strong>⑤ 宇树 UniUni</strong></td><td>同公司不同事</td><td>09-20 ④ UnifoLM-WLA-1.0</td><td>同一周内两种开放：模型只放部分权重，群控工具全量免费——软件层是生态抓手，与第一辑 ① Beam「harness 整包出厂」同一判断。</td></tr>
+        <tr><td>同题不同层</td><td>09-29 ① OpenShell / 第一辑 ④ VERID</td><td>编码 agent 的沙箱外监督、湿实验室的命令前置校验、机群的一键全群急停——控制面在软件与物理两侧同时成为标配。</td></tr>
+        <tr><td><strong>速览 MONST3R-AI</strong></td><td>同一枚硬币</td><td>主榜 ② OpenCode 泄露</td><td>② 讲钥匙怎么被偷（供给侧），本条讲偷来干什么（需求侧）：BYOK 面板 + 预算上限 + 目标列表，受害者付账。</td></tr>
+        <tr><td><strong>速览 Thinker-WM</strong></td><td>同题</td><td>09-23 ④ Astra 当机器人策略（2,100 次试验）</td><td>「模型直接当策略」的第三次参照；自报三榜第一 vs 2,100 次真机试验的差距，正是演示与上岗的距离。</td></tr>
+        <tr><td><strong>速览 智元融资</strong></td><td>同题延续</td><td>09-10 ⑤ 证监会收紧人形 IPO / 当日第一辑 ⑤ 信通院出清判断</td><td>资本窗口的开与关：头部以 500 亿投后继续吸金，同时用 120 天规则把上市推到 2027——「增长已成立、盈利未建立」的资本侧注脚。</td></tr>
+        <tr><td><strong>速览 Figure 熔炉</strong></td><td>同题不同面</td><td>10-04 ⑤ 宝马 CMD / Figure 02 数据</td><td>一边是 11 个月 / 1,250 小时的产线数据，一边是熔炉加施瓦辛格的退役仪式——同一家公司的两张脸，采购者看前者，看客看后者。</td></tr>
+        <tr><td><strong>今日整体</strong></td><td>主线递进</td><td>当日第一辑「栖息地资产化」→ 本辑「栖息地收门票」</td><td>第一辑问「谁建栖息地、谁付账」；本辑给出三堵墙——凭据被偷（②）、门口设防收费（③）、物理世界还没过墙（④），以及两条回应：墙内把群控工具白送做成生态商品（⑤），墙外把每题票价打到一块三（①）。<b>通行证正在成为硬通货，而它今天会被偷、被收买、被拒签。</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec-title" id="ed1">当日第一辑索引 · 10-18 上午 08:46 已发布</div>
+
+  <div class="card">
+    <div class="body">
+      <p>本日为同日第二辑（10:12 触发）。第一辑 5 条主榜与 4 条速览已覆盖同日新闻，此处仅列标题备查，正文见本目录 <code>ai-daily-2026-10-18.html</code> 的本机早期版本或站点存档。</p>
+      <ul>
+        <li><strong>① Reflection 开源 Beam 501B</strong>——501B / 23B 激活 MoE + Apache 2.0，连 harness（Mirror CLI）与 40 伙伴生态整包出厂；BF16 约 1TB。</li>
+        <li><strong>② 整数乘法纪录被「免费模型」四连刷新</strong>——Space Bunny Max 经 OpenCode 四连破纪录、Opus 5.5 专职验证；两天 850 PR / 67 位贡献者；κ 推进至 0.001734815770。</li>
+        <li><strong>③ Replit 台上宣布「不再与 Anthropic 合作」</strong>——默认模型位转交 OpenAI；声明口径比标题窄（Claude 仍可选、措辞「for now」）。</li>
+        <li><strong>④ Google 给湿实验室 agent 配「语义数字孪生」</strong>——VERID 活的 3D 体积实体树 + 四项执行前检查；aptamer 三轮命中率 0% → 26.0% → 42.1%。</li>
+        <li><strong>⑤ 信通院《具身智能发展报告（2026年）》</strong>——融资约 935 亿、出货超 2.2 万台 vs「三冷」；判断两到三年首轮出清。</li>
+        <li><strong>速览：</strong>HUMXN 三城免费维修换接触密集操作数据 / Doc2Harness：前沿模型造 harness 最高只有 53.05% / ruflo 冲到 76,065 stars / 费城 78 岁退休教授拦配送机器人被拘。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-18 · 北京时间 10:12</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-15.html">← 2026-10-15</a></div>
+</body>
+</html>
