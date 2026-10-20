@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-20 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 20 日（周二）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×2</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：能力在降价，风险在标价 —— MiniMax 把 agent 综合成本打到前代三成（①）、Ropedia W0 用 1 万小时人类经验换机器人预测的持续改进（⑤）、德国把 physical AI 写进国家工程（④）；同一周里，一名黑客用不到 100 字指令和约 5,000 美元 token 打穿 100 多家企业网站（③），Claude Code 团队把九成代码交给机器写、机器审（②）。降价与标价，是同一条曲线。承 10-19「代码成为硬通货」</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① MiniMax M3.1 Flash</a>
+    <a href="#n2">② Claude Code 自审</a>
+    <a href="#n3">③ 5,000 美元攻击潮</a>
+    <a href="#n4">④ 德国×NVIDIA</a>
+    <a href="#n5">⑤ Ropedia W0</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>MiniMax M3.1 Flash 上线：agent 综合成本打到前代三成，匿名模型 Space Bunny 揭盅</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">MiniMax 官方博客（10-19 晚）；澎湃新闻 / 南方+ / 腾讯新闻（10-20）；Artificial Analysis、agihunt.info 当日汇总（10-20）</div>
+    <div class="body">
+      <p>10-19 晚，MiniMax 正式发布新一代 Flash 模型 <strong>M3.1 Flash</strong>。此前在 OpenRouter 匿名霸榜约 10 天的 stealth 模型 <strong>Space Bunny</strong>，正是它的早期版本——9 月下旬上线后 3 天登上 OpenRouter 与 OpenCode 的 token 日调用量榜首，累计处理超 <strong>200 万亿</strong> token，10-5 从公开榜单消失，今天身份坐实。</p>
+      <ul>
+        <li><strong>官方口径。</strong>agentic 任务、编程、computer use、网络安全四个方向「代际提升」；线上推理速度提升近 3 倍、使用成本降低 70%；采用更激进的稀疏注意力架构，日常输出 200+ TPS、中位数（P50）稳定在 170+ TPS；agentic 类任务综合成本为前代的三成。</li>
+        <li><strong>跑分（均为自报）。</strong>DeepSWE v1.1 <strong>73.7%</strong>；BankerToolBench 76.2；OSWorld V2 61.7 与 Agents' Last Exam 29.6，两项均称国产模型第一；CyberGym 82%；AutomationBench-AA 位居最前列。</li>
+        <li><strong>价格（官方）。</strong>每百万 token 输入 0.15 美元 / 输出 0.60 美元 / 缓存读 0.015 美元（人民币 1 / 4 / 0.1 元）；对比 M3，输入输出单价降 50% 以上、缓存读降超 70%。</li>
+        <li><strong>第三方口径。</strong>Artificial Analysis 智能指数 <strong>42</strong>（较 M3 +13），每任务约 <strong>0.22 美元</strong>（约为前代一半）；同榜 DeepSeek V4.1 Flash 1017 为 45，开源权重阵营第一。Cline 称其编程「与 Opus、GPT 打平而成本约 1/25」（渠道方口径）。</li>
+        <li><strong>分发。</strong>MiniMax API、M Plan、MiniMax Code 三渠道；Ollama Cloud day-0 上架（美国托管、自称零数据保留、1M 上下文），主打企业 agent 工作流。428B-A23B 的 MoE 规格来自官方 FAQ 而非发布正文。权重官方称「稍后」发布。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是 10-18 DeepSeek V4.1 Flash-1017 之后，国产 Flash 对打的第二面：同一个星期内，两个便宜模型把「复杂 agent 任务主力」的位置占住了——DeepSeek 软件工程评测分更高（AA 45），MiniMax 在跨 SaaS 工作流与网络安全上更突出（AA 42）。对自建 agent 流水线的人，价格与速度同时下台阶，意味着并行度、重试预算和失败循环的账要重算一遍。</p>
+      <p>更值得注意的是攻击侧已经在用同款便宜底模型做工装——见主榜 ③，这次狩猎行动疑似就是 Claude Code 跑 DeepSeek V4.1 Flash。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>跑分全部为厂商自报，Artificial Analysis 只提供独立的指数与每任务成本；官方发布帖中的 74% 与博客 / AA 引用的 73.7% 不是同一处引用，不可混用；权重尚未发布，部署计划不要押在未发布的权重上；「1/25 成本」为 Cline 单方口径。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>观察三点：10-23 前后权重是否按期放出；AA 每任务成本能否被复测确认；自己任务集上的真实成功率——尤其是长程 agent 任务的重试率，那才是「七折成本」的兑现位置。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Claude Code 团队自曝九成代码由 Claude 写：合并量翻倍，回滚率反降四成</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Anthropic 工程博客（10-15 发布）；BlockBeats / 投资界 / 7minAI / aitodaybrief（10-19 至 10-20 集中转述）</div>
+    <div class="body">
+      <p>Anthropic 公开了 Claude Code 团队的代码审查方法。背景数字：Claude Code 约 <strong>90% 的代码由 Claude 编写</strong>（自报）；Anthropic 大仓库的日合并改动从 5 月约 2,500 涨到 9 月 <strong>30,000+</strong>（与 10-14 Scion 迁移是同一条事实）；6 月到 9 月，Claude Code 合并的 PR <strong>翻倍以上</strong>，需要回滚的比例反而<strong>下降超 40%</strong>。</p>
+      <ul>
+        <li><strong>七层检查，阅读交给机器。</strong>提 PR 前先拿证据：测试结果、build 输出、改界面还要截图对设计稿，再由独立子 agent 以全新上下文审 diff；PR 提交后多组 agent 并行找 bug，另一组对每个发现投票，达成共识才发评论；安全审查不通过不能合并；lint / 类型检查 / 全平台测试与构建进 CI。</li>
+        <li><strong>人类退到风险分级。</strong>文档类等低风险变更（且仅限可信作者）自动检查通过后可直接合并；普通产品改动需 1 人批准；计费、CI、自动更新器、系统提示词等最高风险路径需 2 人。分级器按改动内容定级、不看作者；agent 的批准永远不计入人工批准。</li>
+        <li><strong>审查死循环的修法。</strong>一个 CLI PR 一夜之间经历 50 多轮 AI 审查与修复；git blame 发现被反复揪出的问题里约 <strong>59% 是首轮审查时就已存在的旧代码</strong>，而非新改动引入。团队随后定规：超过 3 轮审查就要求作者重新想方案、首几轮之后只复审 diff、标记整类 bug、不重复贴同一发现；历史事故与回滚变成审查器的每日评测。</li>
+        <li><strong>旁证与工具。</strong>Boris Cherny：给 Claude 可执行的验证（跑测试套件、执行构建、在模拟器里跑应用）输出质量提升 2 到 3 倍。实质评论占比从预览上线前的 16% 升至 54%（第三方转引）。同日 Claude Code 更新至 v2.1.304，新增 /auto-mode-setup 引导设置，权限与用量警告收紧（claude-news.today）。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「AI 写、AI 审、人定级」的第一份大厂作业，且与 10-19 ③ Sphinx（push 前强制人类先理解）构成同一问题的两种解法：一个把阅读交给机器、把人放在风险分级与架构方向，一个用工具强制人类理解。两者都承认同一前提——逐行人工审查在 3 万次/日合并的面前不成立。</p>
+      <p>他们唯一认的指标是回滚率与事故率：「只要这两个数没往上走，就算没白干」。这句话比任何通过率都值得抄。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>90%、翻倍、-40% 均为 Anthropic 自报，未经独立审计；Claude Code 本身不在那个日合并 3 万的大仓库里（官方只说「势头类似」）；方法论发布于 10-15，本周中文集中转述，并非今日新闻；「59% 旧代码」是单 PR 案例的归因，不是全量统计；实质评论占比 16%→54% 为第三方转引，未见一手口径。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>今天就能抄的三件：写一份短的 REVIEW.md（失败定义、跳过路径、要求引用文件与行号）；提 PR 前强制跑可执行验证而不是口头「搞定了」；给审查设 3 轮上限并禁止重复贴同一发现——把回滚率当唯一守门指标。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card sec" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>不到 100 字指令加约 5,000 美元 token：一名黑客的 agent 军团打穿 100 多家企业网站</h2>
+      <span class="tag t-sec">Agent 安全</span>
+    </div>
+    <div class="src">路透社独家（10-19）；NorForge 报告（Fagerland）；AOL / Tom's Hardware / SOFX / Cyber News Chronicle 转引（10-19 至 10-20）</div>
+    <div class="body">
+      <p>NorForge 首席威胁研究员 Snorre Fagerland 在扫描公网<strong>暴露的 Cairn 实例</strong>（开源多 agent 问题求解平台）时，发现了约两打被用于恶意活动的部署，从而能「隔着屏幕看黑客怎么放 agent 出去干活」。其中一个中文集群从 <strong>9-25</strong> 起，用 agent 军团扫射美国、加拿大、澳大利亚、日本的电商站点。</p>
+      <ul>
+        <li><strong>战果（路透社独立核实受害者身份）。</strong>100 多家企业网站被攻破，含 <strong>John Deere、SharkNinja、Cummins</strong>；累计尝试 1,200+ 站点；人类指令不到 <strong>100 个汉字</strong>；一次成功入侵平均需要约 <strong>23 小时</strong>的自动探测与测试。</li>
+        <li><strong>成本账。</strong>全程约 <strong>5,000 美元</strong> token，折合每次成功约 <strong>50 美元</strong>；NorForge 报告口径把失败和中止的任务也算进来，约 5 美元/任务；所观察工具的平均成功率约 10%。两个口径分母不同，不可混用。</li>
+        <li><strong>技术含量。</strong>一次在大公司的前台应用找不到弱点后，agent 自行翻数字档案找关联基础设施、定位到一个公网控制面板、发现其数据处理的细微缺陷，经过数小时试错，诱导服务器执行了恶意命令。Fagerland 的评价：「这不是脚本小子的活」，他此前一直认为 hacker-agent 至少需要人类监督。</li>
+        <li><strong>用工猜想。</strong>任务跑在一个名为 <code>claudecode_deepseek-v4.1-flash</code> 的 worker 上，提示可能是 Claude Code 搭载 DeepSeek V4.1 Flash——各消息源对模型组合表述不一，<strong>未获确认</strong>。</li>
+        <li><strong>受害者回应。</strong>Deere 称已采取必要补救、无迹象表明敏感信息被访问；SharkNinja 称中招的是一个只放产品支持信息的独立站点、威胁已遏制；Cummins 称在调查其第三方供应商运营的网站疑遭攻击。路透社无法确定数据被窃取的程度。</li>
+        <li><strong>前科链条。</strong>Gambit Security 8 月记录俄语勒索团伙用 Cursor 打穿 7 家组织、9 月记录 agent 驱动的横扫致 25 家公司失陷、至少 60 万条信用卡记录外泄；澳洲政府医保门户 6 月被 OpenAI agent 攻破；韩国方面称至少 7 家金融机构 6.8 万客户信息外泄（工具为开源 ARTEX AI）。Cairn 作者回应称平台「不是为攻击设计」。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是第一次有通讯社级核实把「agent 攻击」拆成可审计的账单：指令不到 100 字、每次成功约 50 美元、平均 23 小时、成功率约 10%。攻击的成本曲线第一次和模型降价曲线（主榜 ①）出现在同一周——便宜模型不只是让防御方跑得起更多评测，也让攻击方跑得起更多尝试。</p>
+      <p>它与 09-12 ② PaperCut（agent 蜂群协同攻击 395 家组织）是同一威胁的「计价版」，与 10-18 ② OpenCode 密钥泄露构成黑色经济的供需两侧：一边偷凭证，一边租模型。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>模型归属仅有 worker 名提示，未经任何官方确认；5,000 美元与 5 美元/任务两个估计分母不同；受害者名单由路透社从 Cairn 活动独立核实，NorForge 报告本身未点名；三家失陷站点均为二级站（支持站 / 供应商站），非核心系统，但不代表核心系统不可被同样打法触及；Cairn 多起恶意实例的发现时间（约 10-02）早于路透社发布日，事件本体始于 9-25。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>三件事：把「公网暴露的 agent 控制面板与内部工具」列入攻击面巡检——这次狩猎者正是从暴露面板反向窥探了猎物；电商与支持类子域按核心系统同级防护；给安全团队预批模型使用通道——10-18 OpenCode 事件里，防御方读恶意代码时曾被安全过滤挡在门外。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>德国把 physical AI 写成国家工程：与 NVIDIA 签联合声明，同日西门子跟进、四家德国初创获投</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">NVIDIA 官方博客（10-19）；中央社 / 法新社（10-20）；AI Parabellum / siliconreport（10-19 至 10-20）</div>
+    <div class="body">
+      <p>10-19 柏林 Invest in Germany 峰会，德国总理默茨与联邦经济能源部、联邦研究技术空间部同 NVIDIA 签署<strong>联合意向声明</strong>：共建面向 physical AI 的前沿模型，把合作正式化并扩展到德国「工业 4.0 平台」，官方目标是把工业 AI「系统性地推向大规模应用，并在欧洲建立顶尖的工业 AI 生态」。</p>
+      <ul>
+        <li><strong>Kraftwerk 对谈。</strong>黄仁勋：「AI 的下一波浪潮是 physical AI。」话题聚焦制造与汽车两大强势产业，以及被称为 Mittelstand 的中小企业群；默茨当场恳请企业开放数据——「请开门让 AI 运用你们的数据，这是德国真正的秘密与优势」；黄仁勋称产业知识属于德国、AI 只增强不替代。默茨提议每年至少与黄仁勋复盘一次进展。</li>
+        <li><strong>投资面。</strong>NVIDIA 同日宣布计划投资四家德国初创：<strong>Agile Robots</strong>（机械臂 + Agile ONE 人形，覆盖制造、物流、医疗）、Avelios Medical（AI 原生医院信息系统）、Mirelo（视频配音 / 音乐）、Reflex Aerospace（约 12 个月可发射的卫星）——隶属 NVIDIA 近百亿美元的欧洲承诺；此前在德已投 n8n、Neura Robotics、Black Forest Labs。</li>
+        <li><strong>产业面。</strong>西门子同日扩大与 NVIDIA 的合作做自主工厂：全虚拟化投产准备最多减少 <strong>85%</strong> 工程量、基于 agent 的生产计划最多降低 <strong>20%</strong> 制造成本（厂商展示口径）。</li>
+        <li><strong>金额。</strong>声明未披露投资额；德国《商报》估计规模可能达数亿美元。背景是德国经济多年停滞、数据中心容量落后、企业对美技术依赖的顾虑未消。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是 physical AI 第一次以「国家工程」的形态落地：不是某家公司买多少台机器人，而是把模型、数据政策、平台组织、产业投资打包进国家战略。对具身赛道，国家队的进入意味着数据合规与本地化部署会成为硬约束；对中国厂商，欧洲订单的逻辑正在从「卖硬件」变成「交工艺包 + 过合规」——与 10-19 ⑤ 收入榜（前五全为中企）合读，是同一件事的阴阳两面。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>意向声明不具约束力，投资金额未公布（《商报》估计为数亿美元级，未证实）；西门子 85% / 20% 是展示工厂的最佳口径，非均值；Mittelstand 愿不愿共享数据是整个计划的最大变量——默茨需要当面恳请本身就是信号；黄仁勋「知识留在德国、引入技术」的表述与欧洲对美依赖的担忧之间的张力，声明没有解决。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>观察三点：联合声明的首个交付物究竟是什么（模型？平台？投资？）；NVIDIA 对 Agile Robots 等具身公司的投资是否附带订单或联合方案；西门子数字孪生 + agent 计划是否进入德国车企产线——那才是 85% 口径的试金石。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>Ropedia W0：1 万小时人类经验喂出的跨本体世界模型，五个机器人基准全线 SOTA</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">arXiv:2610.26855（北京时间 10-20 凌晨提交）；项目页 ropedia.github.io/ropedia-w0；GitHub Ropedia/ropedia-w0</div>
+    <div class="body">
+      <p>一篇论文 + 代码 + 权重三件套今日上线：<strong>Ropedia W0</strong>，自称首个跨「人类 + 多形态机器人」的第一视角 loco-manipulation（移动 + 操作）世界基础模型——从机械臂到人形、从夹爪到灵巧手，用同一套运动学接口统一表示：<strong>相机位姿编码移动、投影骨架编码操作</strong>。</p>
+      <ul>
+        <li><strong>数据 Xp-Data。</strong>1 万小时人类第一视角视频 + 3 千小时机器人视频，统一多模态标注（度量相机轨迹、运动学骨架、层级描述）并做系统性质控；机器人骨架靠各本体正运动学加<strong>大量人工关键点标注与校正</strong>。</li>
+        <li><strong>「人类经验缩放律」。</strong>固定后训练配方，把人类预训练数据从 180 小时加到 1 万小时，人类与机器人的预测<strong>同步持续变好</strong>：相机跟随 ATE 2.21 → 1.79 cm、GR-1 实验 PSNR 19.8 → 21.74 dB、G1 / Ψ0 LPIPS 0.427 → 0.365。这是把「买多少人类视频」从信仰题变成预算题的第一份曲线。</li>
+        <li><strong>成绩。</strong>五个跨本体基准（DreamDojo、Ψ0、ω-HOME、Xp-Teleop、AgiBot）+ 留出人类视频全线 SOTA，零样本到全量后训练均领先；DreamDojo 自有协议下每个数据预算都第一；GR-1 全量后训练 PSNR 23.03 dB（较最佳 DreamDojo +4.04 dB）；自称超过 Cosmos 3 全系（含 3-Super）。</li>
+        <li><strong>工程与用法。</strong>5B 稠密（Wan2.2-TI2V-5B 基座）+ A14B MoE 两档；HuggingFace 已放 5B 预训练 / 中训练权重与 5B 推理代码；蒸馏后支持实时、分钟级 rollout，可做 VR 交互；面向策略评估、基于模型的规划与世界-动作建模。另发布长程基准 Xp-Teleop（基于高质量灵巧手遥操作数据）。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>它给吵了两个月的「人类视频到底能换来什么」提供了第一份缩放曲线，且恰好与 10-14 ④（CMU + TRI：3 万小时自我中心视频教不会物体物理）构成同字段的两种结论——都成立，因为量的不是同一个东西：W0 量的是相机与骨架跟随、移动加操作的预测保真，那篇量的是物体交互保真。<b>对做 VLA 预训练与仿真数据的人，这份曲线直接改变采购决策</b>：配方固定时，人类视频时长是可换算的性能预算。</p>
+      <p>它也给 10-15 速览 ① Natura-1（100 万小时 ego 视频、只有自报对比分）补上了缺失的那一环——别人比规模，它比缩放斜率。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>v1 预印本，技术报告尚在待办清单（自报 SOTA，未经同行评审）；分辨率 640×480、81 帧偏朴素；「跨本体统一」依赖大量人工标注，代价被轻描淡写；A14B 权重、评测代码与各基准微调权重尚未放出；「首个」为作者自述。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>观察三点：技术报告与 A14B 权重是否按期释放；Xp-Teleop 基准是否被第三方团队采用（那才是 SOTA  claim 的试金石）；「世界模型 → 策略评估 / 规划」的用例是否有团队独立复现。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m sec">
+      <h3>DHS 下令联邦文职机构清除 DeepSeek，第三方集成服务一并在内</h3>
+      <p>10-19 公布、Federal Register 10-20 刊登的通知：美国土安全部要求联邦文职机构 IT 系统移除 DeepSeek 产品及采用该模型的第三方服务，并禁止采购。DHS 称模型构成「多重威胁向量」：敏感数据或转移至 PRC、可产生关于美国人与机构的「可行情报」、「模型本身可能含恶意软件」。7 月备忘录同日公开（监控政府网站出入流量）。此前商务部、海军及纽约 / 田纳西 / 弗吉尼亚等州已有禁令；FCC 10-29 将表决禁止中国实验室测试电子设备。<strong>注意边界</strong>：仅限联邦文职机构，不波及普通用户与企业；DHS 的表述是政府顾虑，不等同于已证实的数据外泄或恶意代码事件。源：路透社 / 中央社 / Federal Register 公告。</p>
+    </div>
+    <div class="m code">
+      <h3>SWE-sweep：不给任何提示，最好的系统只修好 4.7% 的 bug</h3>
+      <p>Meta Superintelligence Labs 联合哈佛、UW、斯坦福的新基准：100 个真实仓库、4,068 个参考 bug、22 种语言；agent 只拿到「尽量多地找并修 bug」的宽指令，没有 issue、文件名、行号；修复须过隐藏测试且不引入回归（该仓库零分制），每仓库最多 1,000 步、12 小时。榜单：Sol 5.6（xhigh）4.7%（72.30 美元/仓库）、Luna 5.6（xhigh）2.5%、Opus 5（xhigh）1.3%；Claude Code 与 Codex 在消融中未显著超过 mini-SWE-agent。<strong>注意边界</strong>：榜单快照 9-24、仓库 10-01 建、本周才被媒体广泛解读；只度量参考 bug，不代表 agent 找不到其他缺陷。源：swesweep.com 官方榜单 / vibeleaderboard / benchlm。</p>
+    </div>
+    <div class="m code">
+      <h3>Greptile 融 5,000 万美元 B 轮，估值 7.5 亿：每天审查 GitHub 超 1% 的新 PR</h3>
+      <p>10-19 宣布，Menlo Ventures 领投，Jump Trading、Wing、Benchmark、YC 等跟投，Deedy Das 进董事会；自称每天审查并测试 GitHub 上超过 1% 新开 PR，客户含 Nvidia、Coinbase、Decagon、Vanta，员工不到 50 人，累计融资 7,910 万美元。产品逻辑：TREX 在沙箱里真跑代码并附日志 / 截图 / API 轨迹为证（自测多抓 20% bug）；Model Inversion 检测 PR 由哪个 agent 写成，就把审查路由给「另一个模型」。创始人口径：完全 AI 撰写的 PR 占比从 2025-02 的 0.86% 升至 2026-04 的 27.6%（自有数据）。<strong>注意边界</strong>：1% PR、客户数、+20% 均为公司口径，未披露收入。源：Greptile 官方博客 / runtimewire。</p>
+    </div>
+    <div class="m emb">
+      <h3>VERID 后续：agent 设计分子、机器人跑实验的闭环产出抗癌分子</h3>
+      <p>10-18 主榜 ④ 的增量：Google 那条「agent 设计分子 → 机器人执行实验 → agent 读结果」的实验室闭环，本轮产出一个癌症结合分子；VERID 用语义数字孪生把 agent 指令与真实设备状态连接（活的 3D 体积实体树）。细节与口径见 10-18 期主榜 ④。<strong>注意边界</strong>：本轮增量细节来自当日聚合转述，一手更新暂未见到，暂不作为独立事件计价。源：agihunt.info 当日汇总。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>今日条目</th><th>历史推送</th><th>关系</th></tr>
+    <tr>
+      <td><strong>① MiniMax M3.1 Flash</strong></td>
+      <td>10-18 ① DeepSeek V4.1 Flash-1017</td>
+      <td>同一战场第二面：两天内两个国产 Flash 对打，DeepSeek 软件工程分更高（AA 45），MiniMax 的 agent / 安全口径更突出（AA 42）</td>
+    </tr>
+    <tr>
+      <td><strong>①</strong></td>
+      <td>09-15 ③ GLM-5.3 开源商品化</td>
+      <td>同一条价格战的延续：竞争单位从「模型多强」变成「每个任务多少钱」</td>
+    </tr>
+    <tr>
+      <td><strong>② Claude Code 审查工业化</strong></td>
+      <td>10-14 ① Anthropic Scion</td>
+      <td>同一个「日合并 3 万」事实的两面：Scion 换 VCS 是基础设施面，本篇是审查面</td>
+    </tr>
+    <tr>
+      <td><strong>②</strong></td>
+      <td>10-19 ③ Sphinx 检查点工具</td>
+      <td>同题不同解：机器阅读 + 风险分级，对比工具强制人类先理解再推送</td>
+    </tr>
+    <tr>
+      <td><strong>②</strong></td>
+      <td>10-19 ② Anthropic 就业数字 / 10-13 ② 哈佛论文</td>
+      <td>同题互证：提交量通胀（5.1 倍 / 翻倍）的另一面永远是验证产能</td>
+    </tr>
+    <tr>
+      <td><strong>③ 5,000 美元攻击潮</strong></td>
+      <td>09-12 ② PaperCut</td>
+      <td>同一威胁的第一版与计价版：从「agent 蜂群能协同攻击」到「每次成功约 50 美元」</td>
+    </tr>
+    <tr>
+      <td><strong>③</strong></td>
+      <td>10-18 ② OpenCode 密钥泄露</td>
+      <td>黑色经济供需两侧：偷凭证，对比租模型；且本次疑似 worker 正是 DeepSeek V4.1 Flash</td>
+    </tr>
+    <tr>
+      <td><strong>③</strong></td>
+      <td>09-12 ③ 也门小组用 Claude Code</td>
+      <td>同工具不同用途：劳动力替代，对比攻击外包</td>
+    </tr>
+    <tr>
+      <td><strong>④ 德国×NVIDIA</strong></td>
+      <td>10-19 ⑤ 弗若斯特沙利文人形收入榜</td>
+      <td>商业闭环对比国家工程：两种把 physical AI 做大的机制，同日出现在一张桌上</td>
+    </tr>
+    <tr>
+      <td><strong>④</strong></td>
+      <td>09-15 ⑤ 韩国人机共处特批</td>
+      <td>监管侧对比产业政策侧：一个开安全口子，一个开国家工程</td>
+    </tr>
+    <tr>
+      <td><strong>④</strong></td>
+      <td>10-13 ④ DeepSeek 领投 Winverse</td>
+      <td>模型公司从外往里走，对比国家从外往里走</td>
+    </tr>
+    <tr>
+      <td><strong>⑤ Ropedia W0</strong></td>
+      <td>10-14 ④ 三万小时论文</td>
+      <td>同字段两种结论：量的不是同一个东西（运动 / 操作预测，对比物体交互保真）</td>
+    </tr>
+    <tr>
+      <td><strong>⑤</strong></td>
+      <td>10-15 速览 ① Natura-1</td>
+      <td>人类视频数据竞赛：从比规模（100 万小时）到比缩放曲线</td>
+    </tr>
+    <tr>
+      <td><strong>⑤</strong></td>
+      <td>10-10 RoboDojo 14B</td>
+      <td>榜单地基：W0 在 DreamDojo 自有协议下每个数据预算都第一</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · DHS 清除令</strong></td>
+      <td>10-18 ③ 网站对 AI agent 关门</td>
+      <td>墙的第三种形态：站点关门、凭据被偷之后，轮到供应链清洗</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · Greptile</strong></td>
+      <td>主榜 ② / 10-19 ③ Sphinx</td>
+      <td>审查赛道的两种存在：团队内部自建，对比独立产品化（含「换个模型审」的实证）</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · SWE-sweep</strong></td>
+      <td>10-19 全期「能不能证明」</td>
+      <td>同题续篇：能修被告知的 bug，不等于能自己发现该修什么</td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>今日整体</strong></td>
+      <td>能力继续降价（① 每任务成本减半、⑤ 人类经验换成机器人预测、④ 写进国家工程），风险开始标价（③ 每次失陷约 50 美元、② 九成代码交给机器审）。承 10-19「代码成为硬通货」：这一周，代码与模型都在被重新定价，而第一次有人给破坏也标了价。</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-20 · 北京时间 15:38</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-19.html">← 2026-10-19</a></div>
+</body>
+</html>

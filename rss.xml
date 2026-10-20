@@ -7,6 +7,13 @@
     <language>zh-CN</language>
     <atom:link href="https://blog.walkerhua.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>多设备协同办公：Mac、Windows、Linux 共用一套文件</title>
+      <link>https://blog.walkerhua.com/blog/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%8D%8F%E5%90%8C%E5%8A%9E%E5%85%ACmacwindowslinux-%E5%85%B1%E7%94%A8%E4%B8%80%E5%A5%97%E6%96%87%E4%BB%B6/</link>
+      <guid isPermaLink="true">https://blog.walkerhua.com/blog/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%8D%8F%E5%90%8C%E5%8A%9E%E5%85%ACmacwindowslinux-%E5%85%B1%E7%94%A8%E4%B8%80%E5%A5%97%E6%96%87%E4%BB%B6/</guid>
+      <pubDate>Sat, 10 Oct 2026 00:00:00 GMT</pubDate>
+      <description>用 Syncthing 加已有私有组网，让 macOS、Windows、Linux 共用同一套文件：Linux 常在线做枢纽，两端都能编辑，历史版本交给独立快照备份。</description>
+    </item>
+    <item>
       <title>web-access：通过 CDP 接着已登录的浏览器做事</title>
       <link>https://blog.walkerhua.com/blog/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B/</link>
       <guid isPermaLink="true">https://blog.walkerhua.com/blog/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B/</guid>
