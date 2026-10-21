@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-21 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 21 日（周三）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">Agent 安全 ×1</span>
+      <span class="chip">今日主线：账本开始公开 —— DeepSeek 把每卡每小时 38 美元的推理账交出来（①）、Cursor 把验证习惯当作包发到对手的货架上（②）、Vercel 把 agent 的完成与未完成写成可回放的日志（③）、NVIDIA 把机器人标注成本压到 1/125（④）；而特斯拉第一次在年报里写下「已为 V3 Optimus 大规模量产做好准备」，却仍未给出任何交付时间（⑤）。能力怎么来的、钱怎么算的、什么还没做完 —— 这一期全是账。承 10-20「能力在降价，风险在标价」</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① DeepSeek 交出推理账</a>
+    <a href="#n2">② Cursor 借对手货架</a>
+    <a href="#n3">③ durable-harness</a>
+    <a href="#n4">④ NVIDIA Flora</a>
+    <a href="#n5">⑤ Optimus 量产就绪</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>DeepSeek 开源 DeepInfer：把推理栈连同「每卡每小时 38 美元」的账本一并交出来</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">DeepSeek 官方公告与开源仓库（10-20 傍晚）；澎湃新闻 / 中新经纬 / 第一财经 / 中国基金报（10-20 至 10-21）；vLLM 官方确认（Apache 2.0 致谢）</div>
+    <div class="body">
+      <p>10-20 傍晚（昨日本期日报 15:38 收稿之后），DeepSeek 在官方渠道宣布把内部大规模云服务推理框架 <strong>DeepInfer</strong> 全面开源，同时开源生产级 Token 编解码组件 <code>deepseek-recipe</code>。这是全球头部大模型企业中首家主动交出<strong>原生生产推理栈</strong>的公司。</p>
+      <ul>
+        <li><strong>账本（自报）。</strong>基于 DeepInfer 已实现 DeepSeek V4.1 Flash 的高吞吐低延迟服务；单一集群服务吞吐 <strong>155 万亿 Tokens / 天</strong>，整体收入为<strong>每卡每小时 38 美元</strong>（按谷价口径）。</li>
+        <li><strong>能力面。</strong>高性能算子 + 深度优化推理引擎，支持分布式推理、推测解码、SWA Bounded Replay、结构化输出，可在<strong>英伟达与华为昇腾</strong>平台运行。</li>
+        <li><strong>协议与出身。</strong>Apache 2.0；vLLM 项目官方确认 DeepInfer 最初主要构建于 vLLM 之上，另受 SGLang 与 TensorRT-LLM 启发，并公开致谢开源社区。配套的 deepseek-recipe 支持主流大模型 API 协议，处理逻辑与 DeepSeek 官方 API 完整对齐。</li>
+        <li><strong>交付边界。</strong>官方仓库说明本次提供离线推理与大规模服务所需核心能力；要搭完整在线服务，开发者仍需自补 KV 缓存系统、推理阶段分离部署、跨副本负载均衡等组件。新模型推理代码与后续优化将继续在该框架内开源。</li>
+        <li><strong>行业含义（媒体推论）。</strong>推理框架此前是原生部署与社区部署成本差异最大的系统层原因；在负载调度合理的前提下，云厂商部署非原生 DeepSeek 调用的成本存在低于官方原生的可能性。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>开源深度推进了一层：10-18 ① 推的是<strong>权重</strong>开源（DeepSeek V4.1 Flash-1017），这次是<strong>部署栈</strong>开源。对自建推理的团队，权重开源只省了调优，系统层没开源就只能照抄别人的成本结构；现在连调度与编解码逻辑都给了，等于把「为什么你们比官方便宜」这个答案的参考实现一并公开。</p>
+      <p>更值得注意的是它把 <strong>MaaS 的定价权</strong>摆到了桌面上：如果推理栈可以被第三方复现，官方 API 每百万 token 的价格就不再只由算力成本决定。对照 10-20 ① MiniMax M3.1 Flash 把 agent 综合成本打到前代三成 —— 一边降价，一边把定价所依赖的那层系统逻辑免费送出。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>155 万亿 Tokens / 天与每卡每小时 38 美元均为 DeepSeek 自报，未见第三方复现；「谷价」为特定计价场景，非通用市场价；「非原生部署可能比官方更便宜」是媒体推论，非实测结论；官方仓库明确说明完整在线服务需自建组件，落地成本不含在内；vLLM 的确认说明相当一部分能力来自社区，DeepInfer 的增量价值在于整合与调度，不是从零发明。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的推理成本正卡在官方 API 报价上，这是第一个值得算一遍的对照组：拿自家负载在 DeepInfer 上跑一遍吞吐与延迟，再对比官方账单，差额就是这套开源给你的上限收益。同时盯住官方 API 定价是否随之调整 —— 那是这次开源真正想撬动的东西。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Cursor 把插件发进 Claude Code 的市场：竞品 harness 开始借对手的货架分发自己</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">GitHub <code>cursor/plugins</code> 仓库与 PR #709（作者本人经 GitHub API 一手核实，10-21）；clauday 技术分析（10-20 前后）</div>
+    <div class="body">
+      <p>Cursor 官方插件仓库 <code>cursor/plugins</code> 的 <code>.claude-plugin/marketplace.json</code> 里，owner 写的是 Cursor、联系邮箱是 <code>plugins@cursor.com</code>，对外暴露两个插件：<strong>origin-apps</strong>（基于 Cursor Origin API 构建应用）与 <strong>pstack</strong>（严格、可并行的代理开发工作流，源码路径 <code>harness/pstack/claude-code</code>）。<strong>Cursor 卖的是与 Claude Code 竞争的 harness，却把自己的插件挂进了 Anthropic 的插件市场。</strong></p>
+      <ul>
+        <li><strong>仓库实况（10-21 一手核实）。</strong><strong>13,267</strong> star、<strong>1,307</strong> fork，最后推送 10-21 03:32（UTC）；marketplace 列出 <strong>103</strong> 个条目，其中 <strong>17</strong> 个为一方插件（含 continual-learning 增量更新 AGENTS.md、thermos 并行子代理审查、ralph-loop 迭代循环、orchestrate 大任务分派、advisor 重大决策前咨询更强模型、cli-for-agent 让 agent 可靠调用 CLI 等），另约 55 个为第三方集成（该数字来自第三方分析，非仓库自报）。</li>
+        <li><strong>PR #709 的内容（已合并）。</strong>10-18 提交并合并，新增 <code>/create-formal-verification-skill</code>，作者注明由 Cursor agent 撰写。它要求 agent 选仓库里<strong>最难验证而破坏后最伤用户</strong>的那个承诺作为目标，而不是挑最容易的那个；选工具并说明理由；在<strong>故意破坏的代码变体上证明该属性确实会失败</strong>；然后把检查写成项目内局部 skill，留给下一个 agent，让它能判断改动是否触及被验证的代码、用一条命令重跑、区分真实 bug 与建模错误。skill 明确禁止为了通过检查而弱化属性或模型。</li>
+        <li><strong>它为什么留在目标层。</strong>skill 只规定「什么算好结果」（模型部分、证明部分都要指到可打开的代码；必须先看到属性在破坏变体上失败；交接要写明边界、假设与未覆盖项；检查要能一条命令、工具版本可复现重跑；被验证代码变更时要触发下一次复核），把工具选择留给 agent —— 并点名 TLA+ 只是并发与分布式设计的常见起点。PR 自述的评测在 6 个从未见过的开源仓库上盲评（<code>pg-boss</code>、<code>swr</code>、<code>HikariCP</code>、<code>client-go</code>、<code>cJSON</code>、<code>arrayvec</code>）：4 个并发/分布式形态仓库均值 29.0 对早先草稿 26.5，<code>cJSON</code> 与 <code>arrayvec</code> 均值 26.0 对 22.0；在 TLA+ 不适配的两个仓库，skill 在 4/4 次运行中改选 CBMC 与 Kani。</li>
+        <li><strong>背景。</strong>Android 上周也已把 skills 发进 Claude Code 与 Codex 市场；Cursor 这么做信号不同 —— 它是直接竞争者。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是分发权的一次转移：<strong>skill 文件正在成为新的分发单元，harness 退化成「在哪跑」</strong>。过去一家 AI coding 工具的护城河是自己的编辑器与运行时；现在连 Cursor 都愿意把自己的工作流方法论，塞进竞争对手的包管理器里换取触达。</p>
+      <p>它和前两期的验证主线构成三解，且各占一层：10-19 ③ Sphinx 强制人类在 push 前先答出理解题（谁来读），10-20 ② Claude Code 团队把阅读交给机器、人类只做风险分级（谁来判），本期这条是<strong>谁来发</strong> —— 而且发的是「怎么自己造一个检查」的方法，而不是某个具体工具的用法。对想把验证留到自己仓库里的人，这比装一个插件更值得抄。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>star / fork / 条目数为 10-21 经 GitHub API 一手核实，第三方分析文章写作时为 12,705 star，不同时点快照；约 55 个第三方集成来自第三方分析，仓库页面未列完整清单；PR 自述的评测样本极小（每仓每版本 n = 1，部分 n = 2），作者自己也写明「把单次差距当线索而非结论」，且在 <code>cJSON</code> 与 <code>arrayvec</code> 的「检查强度」一项上分数低于早先草稿；PR 明确只改提示词与文档，不改运行时与既有 skill；<code>/create-formal-verification-skill</code> 设置了 <code>disable-model-invocation: true</code>，只能手动调用，不会自动触发。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>抄两条就能用：① 在自己的仓库里立一条「选最难验证而非最容易验证」的检查项，让 agent 挑那个破坏后最伤用户的承诺；② 要求所有落地的检查必须<strong>先在故意破坏的变体上失败一次</strong>，否则不算通过。再加一条交接规范：写明边界、假设、未覆盖项，以及被验证代码变更时谁来触发复核。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Vercel 开源 durable-harness：agent 的状态从进程里搬进日志，崩溃后接着算账</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Vercel Labs <code>vercel-labs/durable-harness</code>（10-20 发布）；Vercel 官方博客 Making every harness durable；aicoder / deniz.in / creatorstoolbox 技术分析（10-21）</div>
+    <div class="body">
+      <p>10-20，Vercel Labs 开源 <strong>durable-harness</strong>（Apache 2.0，npm 版本 <code>0.0.1-beta.6</code>，README 标注实验性、API 可能变）。它把 Vercel 内部给 <code>eve</code> 与 Workflow SDK 用的持久化能力，做成适配器嫁接到第三方 harness 上：<strong>Pi、OpenCode、Codex、Claude Code、fx</strong>（Claude Code 与 Codex 需额外沙箱，且被标记为实验性）。</p>
+      <ul>
+        <li><strong>机制。</strong>每个 session 变成 Workflow SDK 的一个 run；每次模型调用与工具调用，<strong>先写 intent、执行完再写 outcome</strong>，全部进同一个 durable log；每个 turn 背后还有一条队列消息，函数崩溃或超时后队列把 turn 交给新函数，新函数读日志从断点继续。</li>
+        <li><strong>不重复计费。</strong>已完成的模型调用结果直接从日志读回，不会为同一次调用再付一次 token 费；模型保留此前调用的记忆而不是重做。</li>
+        <li><strong>工具自声明重放策略。</strong>每个交给 agent 的工具要声明崩溃后的行为：标 <code>safe</code> 的（读文件、查 CI 状态）崩溃后自动重跑；标 <code>never</code> 的（退款、发 PR 评论）永不重跑，模型只被告知「这个调用可能已经发生」，由它自己判断要不要核。Vercel 的例子是加定价页：文件读取与 CI 状态查询 safe，PR 评论 never。</li>
+        <li><strong>会话镜像与可移植。</strong>Claude Code 的 transcript、Codex 的 rollout、OpenCode 的 event store 会被镜像进日志，新函数或新 Sandbox 可以据此重建会话；日志、队列与流合并在 Vercel 称为 World 的接口后面，本地开发用文件、Vercel 上用 Vercel World、自托管可指到 Postgres / MongoDB / Redis / Turso，改两个环境变量即完成迁移。文件系统有三种模式：virtual（存进 session 日志）、virtual + durable:false（内存临时）、sandbox（独立 Vercel Sandbox，workspace 落在 Drive 上）。</li>
+        <li><strong>它想解决的痛点。</strong>harness 原本是为长驻本地进程设计的，会话在工作区同一块磁盘上，断点续跑只要再发一句提示；一旦搬到云上跑几分钟到几小时的 turn，持久化 VM 也记不住「哪些模型与工具调用已经完成」，超时或崩溃就丢活，重跑还要再烧一遍 token。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「agent 常驻」这条线的第三个解法，而且解的是最硬的一环：10-13 ① Codex 常驻守护进程解决的是<strong>进程别退出</strong>，10-15 ① OpenCode 2.0 后台服务化解决的是<strong>agent 常驻</strong>，durable-harness 解决的是<strong>状态常驻而进程可换</strong> —— 计算层变成临时资源，状态全在日志，跨机器恢复。</p>
+      <p>更值得注意的是它把「完成与未完成」变成了可审计的账：intent 与 outcome 成对落盘，等于给每个 turn 留了一份可回放的执行凭据。这正是 10-20 ② Claude Code 团队「给 Claude 可执行的验证」诉求的运行时版本 —— 那篇解决怎么验，这篇解决验完之后怎么留痕、怎么不重复花钱。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>Apache 2.0、npm <code>0.0.1-beta.6</code>、README 自标 experimental 且 API 可能变，均为仓库事实；「已完成的模型调用不会被二次计费」是厂商的设计描述，<strong>无第三方测试</strong>；Vercel 未公布性能或可靠性基准、恢复延迟与开销数字；Claude Code 与 Codex 需额外沙箱且标实验性；<code>never</code> 类工具靠模型自觉核验，不构成强幂等保证；本地开发默认文件存储，跨机器恢复仍需自建一致性的后端。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>两件今天就能做的：① 给现有 agent 流程补一份「工具重放策略表」，逐个标注 safe / never —— 特别是退款、发通知、写外部系统这些副作用动作，必须走 never 并让模型先核对；② 试用前先跑一遍账：同一任务崩溃重启后，确认已完成调用确实没有被二次计费。若成立，再考虑把长任务从本地搬到常驻环境。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>NVIDIA 开源 Flora：机器人数据标注压到 Astra 级的 1/125 成本，500 块 GPU 每天处理 20 万小时视频</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">NVIDIA 机器人研究负责人 Jim Fan 于 X 发布（10-21 01:02）；NVIDIA GEAR 研究页 <code>research.nvidia.com/labs/gear/flora</code>；RoboHorizon 报道；中文技术号转述（10-21）</div>
+    <div class="body">
+      <p>10-21 凌晨，NVIDIA 机器人研究负责人 Jim Fan 在 X 上宣布开源模型套件 <strong>Flora</strong>，定位是「给机器人数据引擎规模化供料」。三个模型分别对应机器人数据的三个环节：</p>
+      <ul>
+        <li><strong>Flora-Captioner</strong> 看单帧图像生成场景描述；<strong>Flora-TempSeg</strong> 处理视频，定位某个动作的精确起止时刻；<strong>Flora-Rewarder</strong> 看视频片段写出「成绩单」，给出带原因的反馈信号，而不只是一个通过或不通过。</li>
+        <li><strong>产能口径（自报）。</strong>性能达到 <strong>Astra 级别</strong>，成本只有 Astra 的 <strong>1/125</strong>（Astra 为 Google DeepMind 的机器人模型系列，此处作性能参照物）；已在 NVIDIA 内部数据引擎投入使用，<strong>500 块 GPU 每天处理并标注 20 万小时视频</strong>。</li>
+        <li><strong>用途。</strong>Jim Fan 明确「我们用它来训练 NVIDIA GR00T」—— Flora 相当于 GR00T 的数据加工厂：把原始机器人视频与人类第一视角视频，转成带时间戳的指令、密集的进度奖励（供质量控制与强化学习后训练）与评分量表（供真实世界基准测试）。</li>
+        <li><strong>开放程度。</strong>模型权重完全开放，已上 HuggingFace；官方强调「现在权重也归你了」。</li>
+        <li><strong>同期开源潮。</strong>10-16 Meta 放出 Muse Spark Open（816B 总参 / 42B 激活 / 1M 上下文）；10-20 DeepSeek 开源 DeepInfer（见主榜 ①）；10-15 NVIDIA 发布 Nemotron 3.5 Super VL、10-14 把 Run:ai 平台整体开源。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>机器人赛道眼下最缺的不是本体，是<strong>数据</strong>：大模型能靠互联网文本吃饱，机器人没有「互联网视频」这种现成燃料，只能靠遥操作采集、仿真合成与人工标注，成本高到成为主要瓶颈。Flora 把「把原始视频变成训练信号」这一步做成一个可下载、可改写的工程件，等于把标注产能从人力预算里搬到了 GPU 预算里。</p>
+      <p>和 10-20 ⑤ Ropedia W0 合读更清楚：W0 回答「人类视频能换多少性能」（缩放曲线），Flora 回答「造这些训练信号要多少钱」（单位成本）—— 两条合起来，机器人数据这件事才第一次有了可算的预算表。对国内做具身数据工厂的公司，这套权重意味着可以省掉自建标注团队的一大笔钱，代价是数据管线的竞争会更卷。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「Astra 级别」与「成本 1/125」均为 NVIDIA 自报，跨厂商对比的训练数据、任务集与计算口径未公开，无法独立复现；20 万小时 / 天、500 块 GPU 是内部部署口径，非可购买的对外服务；权重开放，但训练管线、标注规范与内部数据均未开放；RoboHorizon 对三个模型职责的描述与 Jim Fan 原帖表述一致，但与官方研究页细节仍需逐条对照。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的团队正为标注产能发愁，先做一次对照实验：拿自家同一批机器人视频，跑 Flora-TempSeg 与 Flora-Rewarder，与现有标注流程比单位成本与时间戳精度。<b>重点看 Rewarder 的失败原因是否可用</b> —— 能说清「为什么失败」比一个分数值钱得多，那才是强化学习后训练真正吃的东西。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>特斯拉年报表述里写进「已为 V3 Optimus 大规模量产做好准备」，但官方时间表今年已四次后移</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">特斯拉向 SEC 提交的 2026 年年度股东大会材料与最终委托书（美东时间 10-19 周一）；FourWeekMBA 申报文件核对；新浪财经 / 中新经纬 / 中国财富网（10-20 至 10-21）</div>
+    <div class="body">
+      <p>10-19（美东时间周一），特斯拉提交年度股东大会材料与 2026 年最终委托书，股东大会定于 <strong>12 月 3 日</strong>。据第三方对申报文件的核对，年报封面列出四项成就：累计交付超 1,000 万辆车、在美国推出纯视觉 Robotaxi、累计部署超 130 吉瓦时储能，以及<strong>「已为 V3 Optimus 大规模量产做好准备」</strong>——这是特斯拉首次以书面形式这样表述。</p>
+      <ul>
+        <li><strong>文件没给的。</strong>未披露任何产量、价格或交付时间。</li>
+        <li><strong>同一份文件的正文更保守。</strong>董事会主席 Robyn Denholm 在致股东信中写的是：持续投资规模化所需基础设施，包括建设内华达州 Semi 工厂、<strong>Optimus 的首批生产线</strong>，以及训练超级智能系统的新增数据中心产能 —— 产线仍被描述为在建项目。委托书回顾 2025 年进展时写的是「对<strong>为量产而优化</strong>的 Optimus 机器人设计的进一步完善」，而不是开始生产。</li>
+        <li><strong>官方时间表今年四次移动。</strong>1 月的 Q4 材料称第三代是首款为大规模量产设计的产品、计划 2026 年底前开始生产、最终规划年产能 100 万台；3 月马斯克称今年夏天开始生产；4 月 Q1 财报给出产线位置（弗里蒙特 Model S / X 产线退役后由新线替代）；7 月 Q2 财报称弗里蒙特工厂已开始 Optimus 施工、预计今年晚些时候投产；到 10 月，措辞变成「量产就绪」。</li>
+        <li><strong>尚未落地的事实。</strong>截至 10 月中旬，特斯拉仍未公开发布第三代 Optimus，也没有公布规格、价格或预订渠道。10-19 马斯克在社交平台称，Optimus 与 Cybercab 将构成特斯拉价值的「绝大部分」。</li>
+        <li><strong>治理侧的一个新细节。</strong>最新的委托书把员工股权奖励与 Optimus 工厂 rollout 直接挂钩；机器人核心供应商新剑传动在上市审核问询函回复中称特斯拉机器人设计方案接近定型、即将进入量产周期。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是一份把「叙事」和「交付」分开的好样本：措辞在往前推（从「今年夏天生产」到「量产就绪」），可交付的事实没有跟上（无产量、无价格、无交付时间、产线仍是在建项目）。同一天里，A 股人形机器人概念股集体走强，浙江荣泰、宁波东力、大业股份等盘中涨停，恒立液压披露多款行星滚柱丝杠与直线驱动器已批量生产供应 —— 供应链的预期已经按「量产已在眼前」定价。</p>
+      <p>它与 10-19 ⑤ 人形收入榜（前五全为中企、上半年 3.6 万台 / 5.4 亿美元）是同一件事的两面：收入榜证明<strong>机器人已经开始卖</strong>，年报措辞证明<strong>最大玩家还在准备</strong>。真要把这条读成可交易的结论，得盯住 12 月 3 日股东大会上会不会出现具体数字。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「量产就绪」是特斯拉自己的措辞，文件明确没有披露产量、价格与交付日期；委托书正文与年报封面的口径不一致，不能混用；今年四次时间表移动均为公司前后表述，第三方分析据此判断「量产就绪不等于量产」；截至 10 月中旬 V3 仍未公开发布，官方规格、价格、预订渠道均无；「特斯拉机器人团队到拓普、三花、均胜审厂」为 10-08 期已推旧闻，本期不重复计价，仅作背景；新剑传动「接近定型」为供应商对监管问询的回复，非特斯拉口径；12 月 3 日股东大会前一切表述仍可能更新。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>看多机器人链上，把观测口径从「产能规划」换成「可交付证据」：出厂台数、单机成本、实际交付客户、售后与备件体系。三条硬指标任意一条出现，才算从「量产就绪」走到「量产」。在此之前，审厂、扩产、股权挂钩这类信号只能当情绪看，不能当订单看。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>GTC 柏林的物理 AI 主线：从「能训练」转向「能部署」，Halos 抢的是合规入口</h3>
+      <p>GTC 大会 10-20 至 22 日在柏林 STATION 举行，100 多场专题；黄仁勋主题演讲定在 <strong>10-21 11:00–13:00 CEST，即北京时间今天 17:00 开始</strong>（本篇截稿时演讲尚未开始）。议程的物理 AI 章节坐着的是部署方与场景方（Agile Robots、Siemens Healthineers、Mercedes-Benz、Humanoid），而非本体公司秀参数。关键组件是 <strong>NVIDIA Halos</strong>：全球首个获 ANAB 认可、依 ISO/IEC 17020 运行的物理 AI 功能安全检验项目，莱茵 TÜV、南德 TÜV、UL Solutions、exida、SGS 认可其报告；Agility 已把 Halos 接入 Digit 安全系统。配套时间表是欧盟机械法规 <strong>EU 2023/1230 于 2027 年 1 月 20 日全面适用</strong>，首次把「通过机器学习实现自演化行为的安全功能」纳入强制评估。可审计的现场样本是西门子埃尔朗根工厂的 HMND 01 Alpha：连续 8 小时自主运行、每小时 60 次周转箱搬运、抓取放置成功率超 90%、并已接入西门子生产系统。对照项：GTC 开幕前数日，科隆发生机器人被操控者用于骚扰 16 岁女性的事件，警方正在调查是预编程还是实时遥控。<strong>注意边界</strong>：Halos for Robotics 本身 6 月已发布，本轮增量是 GTC 上的安全认证叙事、埃尔朗根的现场数据与法规时间表；认证解决的是封闭工业场景，公共空间的责任归属仍无框架。源：NVIDIA 官方博客 / 智财社 / OFweek / techgig。</p>
+    </div>
+    <div class="m emb">
+      <h3>AGCO 与 Agility 签约：Digit 2027 年进堪萨斯工厂产线，从仓库走向离散制造</h3>
+      <p>10-20 签署，AGCO（纽交所，旗下 Fendt、Massey Ferguson 等品牌）引入 Agility 的 Digit 人形机器人，2027 年在堪萨斯州 Hesston 工厂试点，任务为零件分拣、堆叠与料箱搬运。关键在场景升级：此前的人形部署多在仓库与配送中心，地面平整、任务重复、出错代价是一箱货；农业设备产线公差更紧、零件几何更多变、安全余量更小，而且任何工位跟不上就会成为整条线的瓶颈。Agility 称 Digit 已累计超过 <strong>65,000 小时</strong>真实运行，客户包括 Toyota、GXO、Schaeffler。采购方真正该看的软件层是 <strong>Agility Arc</strong> —— 云端车队管理平台，决定机器人能否不改造厂房就上线。<strong>注意边界</strong>：2027 年才启动，不是当前订单；65,000 小时与客户名单为厂商口径；AGCO 明确表述目标是把工人转向更高技能岗位而非直接裁员，这属于采购叙事的一部分。源：RobotAIGeek / AGCO 与 Agility 公告。</p>
+    </div>
+    <div class="m code">
+      <h3>Dream Labs 机器人通用大脑公开 API：每小时 3 美元，配 9,000 万美元种子轮</h3>
+      <p>10-19 宣布，前 NVIDIA 研究员创办的 Dream Labs 开放 robotics 公共 API 并完成 <strong>9,000 万美元</strong>种子轮。定价口径清晰：<strong>Dream-1 每小时 3 美元，Flash 版每小时 2 美元</strong>，面向双臂加平行夹爪的机型。硬件伙伴 MakerMods 称其机器人在接入后数分钟内就开始尝试新任务。定位是共享控制 API —— 让便宜机械臂不必各自重训模型就能用。<strong>注意边界</strong>：官方明确这是研究版 beta，性能随硬件差异大，不适用于安全关键场景；成功率与任务表现缺少可核对的基准；单价不含硬件与集成成本，不能与人力成本直接比。源：aiimpacthub 当日简报 / Dream Labs 公告。</p>
+    </div>
+    <div class="m sec">
+      <h3>MCP 注册表扫描：过半远程服务器无需认证即可返回完整工具清单，read-only 标签并不可靠</h3>
+      <p>当日汇总（agihunt.info 10-21 期）称：对公共 MCP 注册表的扫描发现，<strong>超过一半的远程服务器无需任何认证即可返回完整工具清单</strong>；同时，<strong>标为只读的工具实际可以写文件或产生费用</strong>，与声明的权限不符。两条指向同一件事 —— agent 面对的不是一个可信的能力目录，而是一份未经校验的自述表。<strong>注意边界</strong>：本条来自 AI 汇编 + 人工编辑的当日汇总，尚未见到一手扫描报告与完整数据，规模比例与样本口径均无法独立核实；按本期惯例，单源且未见一手材料的条目只作风险提示，不作事实计价。源：agihunt.info 当日汇总。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>今日条目</th><th>历史推送</th><th>关系</th></tr>
+    <tr>
+      <td><strong>① DeepSeek 交出推理账</strong></td>
+      <td>10-18 ① DeepSeek V4.1 Flash-1017</td>
+      <td>同一家公司的开源纵深推进一层：那次是权重，这次是部署栈与调度逻辑；配套对比 10-20 ① MiniMax M3.1 Flash 降价 —— 一边降 API 价，一边把定价依据免费送出</td>
+    </tr>
+    <tr>
+      <td><strong>①</strong></td>
+      <td>09-15 ③ GLM-5.3 开源商品化</td>
+      <td>同一条价格战的另一层：竞争单位从「模型多强」推进到「谁掌握成本结构」</td>
+    </tr>
+    <tr>
+      <td><strong>② Cursor 借对手货架</strong></td>
+      <td>10-19 ③ Sphinx 检查点工具扎堆</td>
+      <td>同题不同层：Sphinx 解决 push 前谁来理解，Cursor 这条解决谁来分发验证方法</td>
+    </tr>
+    <tr>
+      <td><strong>②</strong></td>
+      <td>10-20 ② Claude Code 团队自审</td>
+      <td>验证主线三解之一：那篇是谁来读（机器读、人分级），这条是谁来发（竞品把验证习惯当商品分发）</td>
+    </tr>
+    <tr>
+      <td><strong>③ durable-harness</strong></td>
+      <td>10-13 ① Codex 常驻守护进程 / 10-15 ① OpenCode 2.0 后台服务化</td>
+      <td>「agent 常驻」三解：进程别退出、agent 常驻、状态常驻而进程可换；第三解补上前两解都没解决的崩溃恢复与重复计费</td>
+    </tr>
+    <tr>
+      <td><strong>③</strong></td>
+      <td>10-20 ② Claude Code 自审</td>
+      <td>把「可执行验证」从流程层落到运行时层：intent 与 outcome 成对落盘，验完之后能留痕</td>
+    </tr>
+    <tr>
+      <td><strong>④ NVIDIA Flora</strong></td>
+      <td>10-20 ⑤ Ropedia W0</td>
+      <td>机器人数据的两张预算表：W0 给性能缩放曲线，Flora 给单位标注成本，合起来才可算预算</td>
+    </tr>
+    <tr>
+      <td><strong>④</strong></td>
+      <td>10-18 ④ 信通院《具身智能发展报告》 / 10-15 ⑤ 韩国 MOTIE 特批</td>
+      <td>同一条产业判断的供给侧落点：报告说三冷与出清，Flora 供的是被出清前最缺的那块料</td>
+    </tr>
+    <tr>
+      <td><strong>⑤ Optimus 量产就绪</strong></td>
+      <td>10-19 ⑤ 人形收入榜前五全为中企</td>
+      <td>同一件事的两面：收入榜证明机器人已经在卖，年报措辞证明最大玩家还在准备</td>
+    </tr>
+    <tr>
+      <td><strong>⑤</strong></td>
+      <td>10-08 ④ 特斯拉审厂与 5 万台口径</td>
+      <td>审厂是旧闻，本期只计新东西：官方文件里的「量产就绪」措辞，以及今年四次后移的时间表</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · GTC 柏林 Halos</strong></td>
+      <td>10-20 ④ 德国 × NVIDIA 国家工程</td>
+      <td>同一个 GTC 周的两层：上期是资金与国家战略层（联合声明、四家初创获投），本期是部署前的合规准入层（Halos 与 2027 年法规）</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · Dream Labs</strong></td>
+      <td>10-20 ① MiniMax M3.1 Flash / 主榜 ① DeepInfer</td>
+      <td>降价潮的第三面：模型按 token 计价、推理栈免费送出之后，机器人通用大脑开始按小时计价</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · MCP 注册表扫描</strong></td>
+      <td>10-18 ② OpenCode 密钥泄露 / 10-20 ③ 5,000 美元攻击潮</td>
+      <td>黑产供需链的第三段：偷凭证、租模型之后，轮到工具目录本身不可信</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · AGCO × Agility</strong></td>
+      <td>10-19 ⑤ / 速览 · GTC 埃尔朗根 8 小时 90%</td>
+      <td>同一批可审计现场数据的两种呈现：埃尔朗根是已跑出的指标，AGCO 是还没开始的合同</td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>今日整体</strong></td>
+      <td>这一期全是账：推理栈连同单位经济一起开源（①）、验证方法被当商品分发（②）、agent 的完成与未完成变成可回放日志（③）、机器人标注第一次有了单位成本（④），而唯一没有数字的反而是最大玩家的量产承诺（⑤）。承 10-20「能力在降价，风险在标价」—— 降价之后的第一件事，是把账本摊开给人看。</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-21 · 北京时间 12:40</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-20.html">← 2026-10-20</a></div>
+</body>
+</html>
