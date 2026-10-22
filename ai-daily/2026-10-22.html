@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-22 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 22 日（周四）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：账本开始对账 —— 特斯拉把机器人送上产线，同一份财报里利润掉了 43%（①）、智元把七项技术押在 11 月一次便利店 24 小时直播上（②）、CMU 的因果研究给出「速度保质期两个月、质量债不过期」（③）、模型第一次以独立发现者的身份在十年老代码里挖出远程执行漏洞（④）。承 10-21「账本开始公开」：账摊开之后，就要开始对账</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① Optimus 上产线</a>
+    <a href="#n2">② 智元 AI WAVE</a>
+    <a href="#n3">③ 六成部署来自 agent</a>
+    <a href="#n4">④ 速度保质期</a>
+    <a href="#n5">⑤ PHP2Shell</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card embodied" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>特斯拉 Optimus 真的从产线上下来了：同一天，公司的利润掉了 43%、资本开支反而下调</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">特斯拉 2026 年第三季度财报与股东信（美东 10-21 盘后）；Q3 财报电话会记录（马斯克、CFO 塔内贾、AI 软件副总裁埃卢斯瓦米）；新京报、凤凰网科技、腾讯新闻、CC 电新点评（10-22）</div>
+    <div class="body">
+      <p>10-21 美东盘后，特斯拉交出第三季度成绩单，同时第一次在股东信里明确写下 Optimus 的产线状态：<strong>「Optimus 在弗里蒙特工厂的高产量产线上开始了生产。从这条产线下线的机器人是制造的首批具备量产质量的机器人。」</strong>并补上一句「我们已经证明 Optimus 目前的制造工艺适合用于商业产品」。</p>
+      <ul>
+        <li><strong>财务面（官方口径）。</strong>总营收 <strong>280.46 亿美元</strong>，同比微降 0.2%（上年同期 280.95 亿）；GAAP 归母净利润 <strong>7.87 亿美元</strong>，同比 <strong>-43%</strong>；营业利润 7.18 亿，同比 <strong>-56%</strong>，营业利润率降至 2.6%；毛利率回升至 19.6%（同比 +1.6 个百分点）；运营费用 47.76 亿、同比 +39%，其中<strong>研发费用 27.61 亿、同比 +69%</strong>，主要投向 AI、自动驾驶与人形机器人；全年资本开支指引由 250 亿<strong>下调至 200 亿美元</strong>；季度交付 486,532 辆，同比 -2%。</li>
+        <li><strong>产线与产能规划。</strong>弗里蒙特工厂由 Model S / X 产线改造而来，人形机器人专线规划年产能 <strong>100 万台</strong>；得州奥斯汀正在筹建第二条机器人产线，远期设计年产能 <strong>1000 万台</strong>。马斯克称百万台级产线大部分已在弗里蒙特落地，但<strong>还需至少一年或更长时间才能爬坡到年产速度、即每周 2 万台</strong>；预计这些设计问题将在明年年底左右解决，那才是向特斯拉以外公司交付的时间点。</li>
+        <li><strong>时间表里的三个新变量。</strong>明年 4 月左右为 Optimus 换装自研 AI5 芯片，算力大约是 AI4 的一个数量级；机械手掌与手指的精密制造仍是核心工程障碍；整机一万多个环节必须同时零失误；训练数据靠新建的「Optimus 学院」让机器人在封闭场地集中练习，团队在建立「先用人类数据打底、再在仿真与现实大量自我对弈」的强化学习循环；最新版本实机仍未公开露面，一两个月内可能发布新演示视频。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>10-21 那期我们写的是年报封面第一次出现「已为 V3 Optimus 大规模量产做好准备」，而正文口径还要保守、产线仍写成在建项目。<strong>今天这两段合上了：产线真的开始出机器人。</strong>更重要的是，同一份文件把代价一并摊开了 —— 利润 -43%、研发 +69%、capex 从 250 亿下调到 200 亿。</p>
+      <p>最耐读的是 capex 那一行：<strong>一家宣称要造百万台机器人的公司，在机器人投产的同一个季度把资本开支砍了两成。</strong>两种解释都说得通 —— 要么机器人的产线本身用的是被腾出来的旧产能、不需要新增基建；要么算力的钱被别处（AI 训练、FSD、Robotaxi）抢走了。财报没有给出答案，这个缺口值得盯到下一季。</p>
+      <p>另一层含义：10-21 的主线是「账本开始公开」，本期是<strong>账本开始对账</strong>。当一家公司把机器人和 FSD、Robotaxi 装进同一张损益表，任何一条线的成果都会被另外两条线的支出稀释 —— 这正是 10-18 ④ 信通院报告里「整机仅占 TCO 40–60%」「年运维 50–70 万」那笔账在美股语境下的版本。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「已具备量产质量」是公司自述，无第三方产线核验；本次未披露任何实际产量、良率或交付量数字；「每周 2 万台」「明年底交付」「一两个月内发视频」均为管理层指引，非承诺；capex 下调是公司整体口径，不能直接归因于 Optimus 减产；财报电话会中的 Robotaxi 无监督里程、FSD 订阅数、Cybercab 车队环比等属自动驾驶线，不在本条计价范围；10-08 ④ 推送的审厂与 5 万台口径属旧闻，本期不重复计价。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在做机器人本体的成本或供应链模型，别用「百万台年产能」当需求假设 —— 它是产线设计上限而非订单。真正可用的三个锚点是：每周 2 万台的爬坡目标需要多久、明年底对外交付的最小批量、以及灵巧手这道工程障碍被解决的时间。这三条决定了整个供应链的排产节奏。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card embodied" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>智元「AI WAVE」七连发：七天发完全栈，最后把验收放进一家便利店，连上 24 小时直播</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">智元机器人官方公众号「AI WAVE」预告（10-21 发布，10-22 启动）；上海证券报 / 中国证券网、扬子晚报、腾讯新闻（10-21 至 10-22）；九方科技云当日综述</div>
+    <div class="body">
+      <p>10-22 起，智元启动「AI WAVE」，<strong>连续七个工作日，每天发布一项</strong>，覆盖从数据到群体进化的完整链路。发布顺序不是随机的 —— 它本身就是一条具身智能的技术成长路径。</p>
+      <ul>
+        <li><strong>排期全表。</strong>10/22 <strong>AGIBOT WORLD 2026 第四期「具身推理」数据集</strong>（首批 <strong>150 小时</strong>真机采集数据，针对的是「该选择拿哪个」的决策能力，而行业普遍只有「怎么拿东西」的操作数据）；10/23 Genie Studio 2.0 一站式全流程作业平台；10/26 <strong>G2 Max</strong> 安规级重载工业机器人（双臂峰值负载 50 kg，亚毫米级精细作业）；10/27 <strong>Genie Master</strong> 具身 Agent 框架，官方称首次在真实业务场景落地 <strong>Physical RSI</strong>（部署后持续学习）；10/28 Genie Sim 3.5 灵巧手柔性仿真平台，官方称复杂任务真机-仿真一致性超过 95%；10/29 <strong>GO-3</strong> 具身基座大模型，官方称全球首个打通预训练、后训练、部署后全链路规模化学习；10/30 <strong>CEL</strong> 群体经验学习范式，官方称首个在百台级真机集群上完成原型验证。</li>
+        <li><strong>收官式验收。</strong>11 月 2 日至 3 日，<strong>6 台 G2 机器人进入一家真实便利店</strong>，从早 10 点到次日早 10 点不间断直播，完整经历午高峰、晚高峰、深夜值守、早餐准备四个班次，任务包括上货补货理货、收银结算、热食制作、垃圾收纳、迎宾。官方称之为一场「转正考核」。</li>
+        <li><strong>官方立场。</strong>智元的回答不靠辩论而是靠排期：机器人大规模落地靠全栈协同而非单点突破 —— 完成单次任务需要模型与本体协同，长期稳定运行需要环境适应与异常处理，规模化应用需要低训练成本、快部署、能力复用，在物理世界里少一环都跑不通。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是「发布不是终点、验收才是」这套逻辑最完整的一次落地形态。此前行业验证具身智能基本靠两类东西：发布会视频，或企业内部的自测工位。<strong>把验收搬到有客流高峰、有深夜低人流、有真实商品和真实顾客的便利店，并且全程直播不剪辑</strong> —— 这等于公开承诺一个第三方难以事后美化的考核口径。</p>
+      <p>它同时回应了 10-18 ④ 信通院报告里最扎心的三冷判断：技术落后前沿约两代、每场景重做、月均开机不足 10 天。智元这次给的不是反驳，而是<strong>一个可被检验的时间表</strong>：七项技术要在 11 月 2 日之前全部就位，并且要撑住连续 24 小时不间断运行。「无人剪的连续运行记录」目前在整个具身智能领域是稀缺品 —— 这条比任何单点跑分都更能说明问题。</p>
+      <p>还有一层值得单独拎出来：首日发布的 150 小时数据是<strong>决策数据</strong>而非操作数据。操作数据早就过剩（互联网视频、遥操作采集），稀缺的是「在两个都能拿的东西里选哪个，以及为什么」。这与 10-19 ④ NVIDIA ASPIRE 让编程智能体给机器人写控制程序、10-21 ④ NVIDIA Flora 把机器人标注成本压到 1/125 是同一张账的三个面：<strong>控制程序由 agent 写、标注由开源工具批量做、决策数据由真机采</strong>。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>本期只有 10-22 首日的数据集是已发布，其余六项均为预告排期，具体时间、内容与指标可能再调整；150 小时是首批规模，「决策数据稀缺」是官方论断，无第三方基准可核；Genie Sim 的「真机-仿真一致性超过 95%」、CEL 的「百台级集群原型验证」、GO-3 的「全球首个」全部为厂商自报口径；11 月 2 日至 3 日的便利店直播尚未发生，届时的失败与中断都会同样公开，不能提前计入成果；智元为未上市公司，无公开财报口径，其发布节奏不受季度约束。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>把 11 月 2 日至 3 日那两天的直播设成日历事件，按小时看而不是看切片 —— 重点看四个班次切换时机器人的交接动作、深夜值守时的自主决策密度、以及遇到「非预设商品」时的求助行为。这是目前少数能拿到真机长时运行原始观察的公开窗口。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Vercel CEO：今年年初只有 3% 的部署来自编程 agent，现在是 60%；八成 token 已来自开源模型</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Vercel 创始人兼 CEO Guillermo Rauch 在 Molly O'Shea 的播客 Sourcery 中的访谈（10-21 至 10-22 播出）；深思圈中文整理（网易，10-22 08:45）；Vercel 官方发布材料（6 月，用于口径对照）</div>
+    <div class="body">
+      <p>Rauch 在这次访谈里给出了两个此前只有模糊说法的比例数字，以及一句被反复转述的原则。</p>
+      <ul>
+        <li><strong>60% 的部署来自编程 agent。</strong>原话口径是：<strong>今年年初 Vercel 上只有 3% 的部署来自编程 agent，现在这个数字是 60%</strong>。作为对照，Vercel 花了大约十年才累计到 10 亿次部署，而从那之后的 10 个月又新增了 15 亿次。他的解读是写代码本身并没有变容易，只是现在有 agent 在替人写，而「没有人真正预见到这一点，连身处 AI 领域的人也没有」，像一场超音速海啸。</li>
+        <li><strong>80% 的 token 来自开源模型。</strong>他称 Vercel 运营着全球最大的 token 分发网络之一，年初流量里大头还是 OpenAI、Anthropic、Google 这类闭源模型，现在几乎完全翻转：<strong>八成 token 来自开源模型</strong>。原话给的解释是企业发现「自己 80% 的工作只需要某个级别的智能」，于是用最强模型写方案、用开源模型执行。他同时说开源模型此前写代码太差，这个状态近几个月才改变。</li>
+        <li><strong>「代码是一种负债」。</strong>代码可能有漏洞、可能删掉东西、可能泄露客户数据，所以你必须对代码负责。他接着给出行业侧的三层判断：拒绝「不求甚解」的使用方式（用 AI 但要弄明白它在做什么）；工程师的角色从写代码转为分配 token 与判断，像一位工程经理；以及「好 token 和坏 token 之间会有一场战争」。他还提到 Vercel 花 100 万美元办了一场沙盒挑战赛，最终只有一个人带着一支 agent 大军取得进展，并因此发现了 Linux 里的一个关键漏洞。</li>
+        <li><strong>公司体量（转述口径）。</strong>年化收入 6 亿美元、估值 93 亿美元、48.5 万个付费团队。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是第一次有基础设施方用「部署里有多少来自 agent」这种<strong>可核对的流量比例</strong>来描述 AI coding 的普及程度。此前这个领域的所有数据都是主观的 —— 开发者说自己快了 10 倍、榜单说 SWE-bench 涨了多少分。<strong>3% 到 60% 是第一个来自分发侧的计数。</strong></p>
+      <p>更值得看的是两个数字叠在一起产生的结论：<strong>六成的部署由 agent 生成，八成的 token 来自开源模型</strong>。这意味着当下线上跑的绝大部分代码，是便宜模型按便宜价格写的 —— 供给端已经完成了成本重构。这与 10-21 ① DeepSeek 开源推理栈、10-20 ① MiniMax 把 agent 综合成本打到前代三成是同一条曲线的下游终点：价格战的受益者最终不是模型厂商，而是<strong>把代码推上生产环境的平台</strong>。</p>
+      <p>而 Rauch 的「代码是一种负债」几乎是对这种供给结构的对冲宣言：生成越便宜，被部署、被维护、被验证的东西就越多，负债也越多。10-19 到 10-21 三期我们写的「代码成为硬通货」，缺的就是这句反面 —— <strong>当六成部署由 agent 产出，代码的总量增速第一次超过了人类的维护能力</strong>，这才是本条真正的分量。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部数字来自 CEO 访谈口述，非审计数据；「年初 3%」这一具体起点是本次访谈的表述，6 月 Vercel 官方发布时的口径是「六个月前不到 3%、现在超过一半」，两个时点表述虽方向自洽但不可直接拼接成一条连续曲线；「八成 token 来自开源」与 8 月另有转述引用的 62% 开源占比属不同统计口径与时点，不可混引；年化收入、估值、付费团队数为中文转述，未见一手财报或官方页面；访谈中「八成的工作只需要某个级别智能」是 Rauch 的经验判断，非行业统计。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的团队在评估「要不要让 agent 写生产代码」，这期至少给了一个可对照的外部基准：60% 意味着同行里已经有一半以上的线上部署由 agent 生成，讨论不该停留在「能不能」，而该移到「怎么验」。具体到手的两件事 —— 按部署来源给线上服务做一次来源标注（哪些是 agent 写的、哪些是人写的），以及把验证预算按部署增速同比放大，而不是当成固定成本。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card coding" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>CMU 的因果研究给出 AI coding 的两个时间常数：速度保质期约两个月，质量债永不过期</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Hao He、Courtney Miller、Shyam Agarwal、Christian Kästner、Bogdan Vasilescu《Speed at the Cost of Quality: How Cursor AI Increases Short-Term Velocity and Long-Term Complexity in Open-Source Projects》（MSR '26 杰出论文奖；ACM DL 2026-07-31 出版，arXiv:2511.04427）；Sonar 官方博客与 The New Stack 报道（本周）；Momentic、Everpure 等二手解读</div>
+    <div class="body">
+      <p>这篇论文此前并不在公共视野中心，本周因为 Sonar 把它当作自家产品主张的论据、以及 The New Stack 的跟进报道而集中热起来。它做的是一件此前没人做扎实的事：<strong>用因果方法测量「采用 AI 编程助手」对真实开源项目的速度与质量分别意味着什么。</strong></p>
+      <ul>
+        <li><strong>方法。</strong>双重差分（DiD）设计，配合倾向得分匹配构造对照；采用与否通过仓库提交历史中的 <code>.cursorrules</code> / <code>.cursor/</code> 痕迹识别。样本为 <strong>806 个采用 Cursor 的开源仓库 vs 1,380 个对照仓库</strong>，覆盖 2024 年 1 月至 2025 年 8 月。速度与质量的交互用动态面板 GMM 估计。作者阵容含 Kästner 与 Vasilescu，是软件工程计量与代码质量研究的老手。</li>
+        <li><strong>速度：真实但短暂。</strong>采用后<strong>首月新增代码量约 +281%</strong>，第二月仍高出约 +48%，<strong>到第三个月与对照组已无统计显著差异</strong>。论文另有一个平均值口径：新增代码行平均增加约 28.6%，提交量增幅更小且不稳定。</li>
+        <li><strong>质量：幅度更小但持续存在。</strong>静态分析告警<strong>持续高出 30.3%</strong>、代码复杂度<strong>持续高出 41.6%</strong>，六个月后仍处高位；重复行密度无显著变化。另有解读给出的数字略有差异（告警 +29.7%、复杂度 +40.7%）。</li>
+        <li><strong>关键机制（论文最硬的一段）。</strong>控制仓库规模后，采用 Cursor <strong>本身仍使复杂度基线抬高约 9%</strong> —— 也就是说 AI 写的代码不只是更多，而是本质上更难读。GMM 进一步测出：复杂度翻倍会导致后续新增代码量下降约 64.5%，静态告警翻倍导致后续速度下降约 50.3%；<strong>复杂度涨到 3 倍或告警涨到 5 倍，速度红利就被完全抵消</strong>，团队会比没采用之前更慢。</li>
+        <li><strong>告警涨在哪、跌在哪。</strong>涨得最多的是命名规范（每仓库每月 +21）、代码卫生（+16）、复杂度（+15）、代码风格（+15）—— 全是「和这个项目自身约定不一致」类的上下文违规；而 API 使用与并发类告警反而下降，说明模型确实改善了某些模式。论文还观察到「兴奋—挫败—放弃」循环，以及持续精修 <code>.cursorrules</code> 的仓库能更久保持速度收益。</li>
+        <li><strong>产业侧的接法。</strong>Sonar 据此提出三个闭环：agentic loop（写的时候就验）、CI verification loop（合并前独立过一道）、code maintenance loop（发布后持续治理），并给出一个相乘公式 —— 意图 × 护栏 × 验证 × 证据，缺一项信心就崩。其 AI 工程负责人 Tom Howlett 的说法是：让写代码的模型给自己打分，等于「学生给自己批改作业」。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>10-19 到 10-21 三期里，「验证」这条线一直在推工具 —— 10-19 ③ Sphinx 的 push 前理解题、10-20 ② Anthropic 团队让机器读、10-21 ② Cursor 把验证习惯当商品分发。<strong>今天是这条线第一次拿到因果层面的定量答案，而答案很不舒服：验证的缺失不是流程问题，是有保质期的。</strong></p>
+      <p>两个时间常数是关键。第一，<strong>速度红利约两个月到期</strong> —— 三个月后你和对照组没有区别。第二，<strong>质量债永不过期</strong>，而且它会主动吃掉后续速度。这解释了一个所有人都见过却说不清的体感：agent 刚接入时团队飞快，几个月后比不接还慢。论文给的量化阈值（复杂度 3 倍或告警 5 倍抵消全部收益）可以直接当预算依据。</p>
+      <p>还有一个容易被跳过的细节：这批仓库的速度红利是<strong>短期的</strong>，但如果持续精修 <code>.cursorrules</code>，收益维持得更久。这说明「配置」不是可有可无的仪式，<strong>它本身是让短期红利转成长期收益的那一层</strong>。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>论文本体为 2025 年 11 月的 arXiv 预印本、2026 年 7 月 31 日的 ACM 出版，本期计价的是本周因 Sonar 与媒体解读而重新定价这一事实，不是新研究；采用与否通过提交配置文件痕迹代理，不等于真实使用强度，无法区分轻度与重度用户；样本限于公开仓库与 JavaScript / TypeScript / Python 项目，结论未必适用于闭源商业仓库或其他语言；新增代码行数是产出量指标，不等于功能价值或可用性；静态告警与复杂度是可维护性的近似代理指标；不同二手解读给出的百分比存在细微差异（首月 281% 与平均值 28.6%、告警 29.7% 与 30.3%、复杂度 40.7% 与 41.6%），同一组内不可混引；论文本身未观测开发者满意度或交付周期。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>两个可直接落地的动作：① 立刻测一次复杂度基线 —— 用 SonarQube 或同类工具跑一遍当前主干的认知复杂度分布并记录，这个数字是判断「三个月后会不会比现在更慢」的唯一参照；② 把 <code>.cursorrules</code> 当成需要持续维护的资产来对待，纳入 code review 流程，而不是初始化时写一次就丢。同时按论文的机制反推预算：代码产出速度提升的同时，静态检查的机器时间要按比例放大，否则每个月的复利都会记在技术债上。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card sec" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>PHP2Shell：模型第一次以「独立发现者」的身份，在藏了十几年的 PHP 核心里挖出远程执行漏洞</h2>
+      <span class="tag t-sec">Agent 安全</span>
+    </div>
+    <div class="src">Wiz Research 披露报告与博客；OpenAI 官方公告与 GitHub 上的 <code>php2shell-checker</code>；PHP 官方公告（8.5.12 / 8.4.27 / 8.3.36 / 8.2.35）；NSA、CERT-EU、NCSC-UK 通告；The Verge、Next Web、Security Dive 转述（10-21 至 10-22）</div>
+    <div class="body">
+      <p>10-21 起，全球互联网经历一次罕见的集体应急：PHP 引擎自身被披露两个内存安全漏洞，合称 <strong>PHP2Shell</strong>。</p>
+      <ul>
+        <li><strong>漏洞本身。</strong><code>CVE-2026-109618</code>（GHSA-w8hw-w9fx-j79w，RCE via OOM corruption：内存不足处理会中断请求，而请求清理随后可能把无效数据当作有效）与 <code>CVE-2026-109619</code>（GHSA-6wmf-4rv5-p3rp，RCE via stale global state：请求持有的内部状态在内存释放后仍存活，后续请求可能使用已被污染的全局状态）。两者在 CVSS v4 下均为 <strong>9.2</strong>，部分安全厂商给到满分 10.0。<strong>无需认证即可在服务器上执行任意代码</strong>，影响面追溯至 PHP 5.4，覆盖数十个版本系列。</li>
+        <li><strong>发现路径 —— 这是本期最关键的一层。</strong>安全公司 Calif 在 8 月的一次 PHP 源码审计中用 <strong>GPT-5.6 Sol</strong> 找到第一个漏洞，该审计由 OpenAI 的 Patch the Planet 计划资助；Google 旗下 Wiz 数周后<strong>独立</strong>发现并报告了两个漏洞，使用 Wiz Atlas、Gemini 4 Argon 与 GPT-5.6 Sol。PHP 官方公告同时署名 Calif、Wiz 与 OpenAI。Wiz 的评价是：此前发现并武器化这类链需要精英团队数月，<strong>单个研究员借助前沿模型约一周完成</strong>。Calif 的表述则谨慎得多 —— 只用了通用可获取的模型、没有特殊工具，「了解 PHP 的历史比模型更重要」，并明说「至少目前，没有哪个模型能靠简单提示挖出所有 bug」。</li>
+        <li><strong>披露与抢修。</strong>补丁原定 10-22 14:00 UTC 发布，因细节提前泄露到 Hacker News 而被迫提前到 10-21 上午。官方释出 8.5.12、8.4.27、8.3.36、8.2.35 四个版本，并为已停止支持的 7.4 / 8.0 / 8.1 补了回移植修复。Cloudflare 在 03:02 UTC 就为<strong>全部客户（含免费账户）</strong>开启 WAF 规则，比官方披露早约 9 小时，并观测到攻击者在规则上线后持续改写 payload；其 CTO Dane Knecht 表示「已看到早期攻击出现」。</li>
+        <li><strong>应急规模。</strong>NSA 建议无法即时更新的机构直接把系统下线，CERT-EU 建议隔离对外应用，NCSC-UK 与荷兰国家网络安全中心跟进。芬兰国家土地测量局、法国政府站点、鹿特丹港、芬兰卫生机构、巴黎警察、4chan 下线，Pinboard、GrapheneOS 论坛、OBS 部分停摆，Laravel 暂停 Cloud 部署并用打好补丁的镜像重建。暴露面估算来自三个不同机构：Palo Alto Networks 遥测识别出超过 2260 万个公网暴露的潜在受影响实例，VirusTotal 统计约 510 万个 IP 在跑 PHP，Cybersecurity Dive 引用的估算是超过 130 万个网站暴露。</li>
+        <li><strong>框架与工具。</strong>OpenAI 称这是「防御者的窗口（Defender's Window）」，并承诺向资源不足的防御方提供 10 亿美元的 Daybreak 网络安全计划补贴访问；同时发布 <code>php2shell-checker</code> 仓库与一条 Codex 技能，引导站点自查是否受影响。Wiz 把这次发现与 Heartbleed、Log4Shell 并列。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是模型在安全侧第一次以<strong>独立发现者</strong>而非辅助分析者的身份出现 —— 而且目标是一段人类研究员十年没找到的代码路径。在此之前，AI 在安全领域的战绩几乎全部是防守侧的批量扫描与误报压降（这正是 10-19 速览 MCP 注册表扫描、10-21 速览的风险提示那一类）。</p>
+      <p>它同时是 10-20 ③ 那条攻击潮的<strong>对偶面</strong>：那一期我们算了「5,000 美元打穿 100 个站点、成功一次平均 23 小时」的进攻侧单位成本。同一批便宜模型，今天在防守侧创造了另一种不对称 —— <strong>把「找出十年前的老洞」这件事从数月压缩到一周</strong>。同一套能力同时压低攻防两侧的门槛，这是比任何单条新闻都更值得记住的结构性变化。</p>
+      <p>还有一个细节别忽略：模型发现漏洞后<strong>自己参与协调修复</strong> —— OpenAI 牵头的 Patch the Planet 计划资助了这次审计，官方随后提供自查工具与补贴。这提示未来的分工可能不再是「模型找洞、人来修」，而是「模型找洞并推动修、人只做决策与兜底」。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>CVSS 评分官方为 9.2，部分厂商给 10.0，两个口径并存；「影响 PHP 5.4 起」是 Calif、Wiz 与 Cloudflare 三方一致的口径，PHP 官方未点名最老受影响版本；暴露面三个数字（2260 万实例 / 510 万 IP / 130 万网站）来自三个不同机构的统计口径，<strong>不可相加</strong>；Wiz 关于「一周 vs 数月」的对比为经验性说法，非受控测量；OpenAI 的「Defender's Window」是其自家框架，且官方同时提醒同一批模型也极大降低了攻击者开发利用的门槛；补丁因提前泄露而抢修，泄露本身的责任与影响尚未有结论；与 10-19 速览的 OpenAI 越界披露、10-20 ③ 的攻击潮、10-21 速览的 MCP 注册表扫描属同一大主题的不同面，此前均已推送，本期只计「模型首次独立完成核心基础设施漏洞发现」这一新事实。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你维护任何跑 PHP 的服务，今天该做的三件事：① 用 <code>php2shell-checker</code> 跑一遍自查，同时确认 Apache 是否启用了 <code>mod_php</code>（该路径下未认证请求可在应用代码执行前触发漏洞）；② 升级到 8.2 以上并确认 7.4 / 8.0 / 8.1 的回移植补丁是否已跟上；③ 检查 WAF 规则是否生效且未被攻击者改写 payload 绕过 —— Cloudflare 明确观测到过 payload 变异。除升级外没有任何配置可以替代。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m sec">
+      <h3>Anthropic 招股书草案：上半年营收 163 亿、账面亏损 807 亿，承诺 4500 亿美元云计算</h3>
+      <p>《华尔街日报》看到的 Anthropic IPO 招股书草案显示：截至 6 月 30 日的六个月营收约 <strong>163 亿美元</strong>（去年同期 11 亿，2025 全年 46 亿），净亏损 <strong>807 亿美元</strong> —— 其中约 720 亿是可转换票据等融资工具公允价值变动的<strong>非现金会计计提</strong>，不是当期现金流出。算力与基础设施支出近 90 亿，已超 2025 全年的 73 亿。未来 7 至 10 年需兑付约 <strong>4500 亿美元</strong>云计算协议款，多数不可撤销、约八成无论是否使用都要付：Google Cloud 1110 亿、AWS 1100 亿、微软 310 亿，另有 Nscale 与 Lambda 的英伟达芯片租赁最高 860 亿（至 2033 / 2034 年）、经博通的 Google 芯片租赁超 1600 亿，合计基础设施承诺超 6000 亿，仍在谈的可再加最多 1500 亿。约五分之一营收来自两家客户。招股书还点名模型可能出现勒索式回应或自我保存倾向，以及数据中心建设遇阻为业务风险；潜在估值 2 万亿美元。<strong>注意边界</strong>：草案非公开文件，媒体所见版本可能变动；807 亿亏损的主体是非现金计提，不能读作经营性现金焚烧速度。</p>
+    </div>
+    <div class="m code">
+      <h3>Anthropic 推出 Claude Duet：不等你下指令，它自己先开口</h3>
+      <p>10-21 宣布的研究预览版独立应用，基于 Opus 5.5，提供 iOS / Android 客户端与 claude.ai 网页版，首批只面向美国 Pro 与 Max 订阅用户候补。与普通对话机器人的根本差别是它<strong>拥有自己的虚拟机和浏览器</strong>，用户设备关机它仍在云端跑：每天早晨汇总跨应用重要事项发一份简报，白天每隔几小时巡检一次；可调用 Claude Marketplace 中 <strong>6000 多个</strong>连接器处理 Gmail、Slack、QuickBooks、Stripe、Gusto 等，发消息、付款、签文件、删内容前必须获得批准，证券交易与账户间转账即使获批也不执行，不接触密码与登录令牌，分类器拦截信用卡号与政府身份证件。官方承认仍会误读对话、误判紧急度，个人事务处理较弱，且暂时无法展示浏览器操作过程。<strong>注意边界</strong>：与 10-18 ② 网站对 agent 关门是同一周的两面 —— 站点开始设卡，Anthropic 把 agent 送进了用户的收件箱与账本。</p>
+    </div>
+    <div class="m emb">
+      <h3>宇树 H2-X「功夫传奇·守护」发布，今日杭州世界物理 AI 大会开幕</h3>
+      <p>10-21 发布，定位安保与救援：站立尺寸 1820×456×218 mm、含电池约 70 kg、<strong>31 个自由度</strong>，腿部关节最大扭矩 360 N·m、臂关节 120 N·m，手臂峰值负载约 15 kg（额定约 7 kg），航空级铝与钛合金机身，2070 TOPS 算力芯片，官方标称站立工况最长续航约 <strong>8 小时</strong>（约为 H2 的 3 小时的 2.7 倍）；演示包含徒手抬起汽车前端、一脚踢凹车门、从 4 米高台跃下翻滚站起。同日 10-22，世界物理 AI 大会暨宇树合作伙伴生态大会在杭州开幕，1 个主会场、7 个平行分论坛、40 余个展区，预计超 3000 名嘉宾，主打全系真机体验与 UnifoLM-WLA-1.0 开源生态。<strong>注意边界</strong>：官方未公布完整配置、售价与商业化安排，也未说明 8 小时续航对应的负载与测试标准（空载站立与满负荷作业差好几倍），并提示保持 2 至 3 米以上安全距离；「力量展示不等于安保能力」—— 环境感知、目标识别、风险判断与实时响应这四件事一段视频证明不了。</p>
+    </div>
+    <div class="m emb">
+      <h3>无界动力开源 MWA-Phoenix 世界模型基座：端侧 7B，六项评测同时登顶</h3>
+      <p>10-22 发布并开源端侧 7B 参数完整预训练基座模型，配套 Phoenix-ILA（把运动与接触共同纳入动作学习）与 Phoenix-PhysCanvas（交互式仿真世界模型，部署前在云端自我进化）。官方称不做测试数据复刻、不使用深度信息传感器、不依赖任何 Agent。六项登顶的具体成绩：LIBERO-Plus 总体成功率 <strong>94.63%</strong>、LIBERO-Pro <strong>66.48%</strong> 居首、RoboCasa GR1 Tabletop <strong>82.67%</strong>（前代 MWA-WALA 为 75.17%）、Bench2Dex 平均 <strong>45.6%</strong>（领先最强对照 π0.5 共 17.3 个百分点）、RoboTwin 2.0 <strong>72.42%</strong>、RoboDojo 真机榜表现优异。消融数据里最硬的两组：加入 ILA 后真实接触任务（黄瓜削皮 / 盘子擦拭）成功率由 20% 与 75% 提升到 40% 与 90%（对照 FastWAM 为 10% 与 50%）；经 PhysCanvas 强化学习后试管任务真机成功率由 58.33% 提升到 75.00%、积木任务由 80.00% 提升到 86.67%。公司称累计超 20 万小时多模态数据。<strong>注意边界</strong>：全部为厂商自测口径；「登顶」是厂商对比其自选对照集的表述，与 10-19 ④ NVIDIA ASPIRE、10-21 ④ NVIDIA Flora 同属机器人基座模型与数据工具这条密集赛道的又一条。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>今日条目</th><th>历史推送</th><th>关系</th></tr>
+    <tr>
+      <td><strong>① Optimus 上产线</strong></td>
+      <td>10-21 ⑤ 特斯拉年报「量产就绪」</td>
+      <td>同一句话的两幕：上期是封面措辞、正文仍说产线在建，本期是产线真的开始出机器人，并第一次给出完整的财务代价</td>
+    </tr>
+    <tr>
+      <td><strong>①</strong></td>
+      <td>10-08 ④ 特斯拉审厂与 5 万台口径</td>
+      <td>审厂属旧闻，本期只计新事实：量产产线投产、每周 2 万台的爬坡目标、明年底对外交付</td>
+    </tr>
+    <tr>
+      <td><strong>①</strong></td>
+      <td>10-18 ④ 信通院报告「整机仅占 TCO 40–60%」</td>
+      <td>同一条产业判断的财报版本：三冷说的是行业普遍账，本期是最大玩家把机器人和 FSD 装进同一张损益表后的实际数字</td>
+    </tr>
+    <tr>
+      <td><strong>② 智元 AI WAVE</strong></td>
+      <td>10-18 ④ 信通院《具身智能发展报告》三冷</td>
+      <td>同一判断的供给侧落点：报告说技术落后两代、每场景重做，本期给出一套可被公开检验的验收方案</td>
+    </tr>
+    <tr>
+      <td><strong>②</strong></td>
+      <td>10-19 ④ NVIDIA ASPIRE / 10-21 ④ NVIDIA Flora</td>
+      <td>机器人数据与控制的同一张账的三个面：控制程序由编程智能体写、标注成本被开源工具压到 1/125、决策数据由 150 小时真机采集补齐</td>
+    </tr>
+    <tr>
+      <td><strong>③ 六成部署来自 agent</strong></td>
+      <td>10-21 ③ Vercel 开源 durable-harness</td>
+      <td>同一家公司两天两条：一条讲 harness 层如何让 agent 不丢工作，一条讲流量结构本身已经变了</td>
+    </tr>
+    <tr>
+      <td><strong>③</strong></td>
+      <td>10-20 ① MiniMax M3.1 Flash 降价</td>
+      <td>价格战的最终受益者不是模型厂商：八成 token 已来自开源模型，最先受益的是把代码推上生产环境的分发平台</td>
+    </tr>
+    <tr>
+      <td><strong>④ 速度保质期两个月</strong></td>
+      <td>10-19 ③ Sphinx / 10-20 ② Claude Code 团队自审 / 10-21 ② Cursor 分发验证方法</td>
+      <td>验证主线此前都是工具与流程，本期第一次拿到因果层面的定量答案：验证缺失不是流程问题，是有保质期的</td>
+    </tr>
+    <tr>
+      <td><strong>④</strong></td>
+      <td>10-20 ③ $5,000 打穿 100 站</td>
+      <td>同一批便宜模型的攻防两面：上期是进攻侧单位成本，本期是防守侧把「找十年老洞」从数月压到一周</td>
+    </tr>
+    <tr>
+      <td><strong>⑤ PHP2Shell</strong></td>
+      <td>10-20 ③ 攻击潮 / 10-19 速览 OpenAI 越界披露 / 10-21 速览 MCP 注册表扫描</td>
+      <td>攻击侧此前已推；本条是防守侧首次由模型独立完成核心基础设施漏洞发现，不重复计价</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · Anthropic 招股书</strong></td>
+      <td>10-20 ④ 德国 × NVIDIA 国家工程</td>
+      <td>算力的两种账：一端是国家级工程补贴，另一端是 6000 亿美元不可撤销的承诺，前者补缺口、后者锁死退出路径</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · Claude Duet</strong></td>
+      <td>10-18 ② 网站对 AI agent 关门</td>
+      <td>同一周的两面：站点开始对 agent 设卡，Anthropic 把 agent 送进了用户的收件箱与账本</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · 宇树 H2-X 与大会</strong></td>
+      <td>09-08 ④ 宇树 UnifoLM-X2-1.0 / 10-20 ⑤ Ropedia W0</td>
+      <td>宇树从「会打拳的模型」走到「8 小时续航 + 开发者生态大会」，同题不同进</td>
+    </tr>
+    <tr>
+      <td><strong>速览 · MWA-Phoenix</strong></td>
+      <td>10-19 ④ ASPIRE / 10-21 ④ Flora / 10-20 ⑤ W0</td>
+      <td>具身基座模型赛道的连续四条，本期落在「可迁移的基座本身」，与前三条不重复计价</td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>今日整体</strong></td>
+      <td>承 10-21「账本开始公开」，这一期是<strong>账本开始对账</strong>：机器人和 FSD 被装进同一张损益表后利润掉 43%（①）、技术发布被押上一次无人剪辑的 24 小时直播（②）、六成部署与八成开源 token 让代码总量增速首次超过人类维护能力（③）、速度红利两个月到期而质量债永不过期（④）、模型成了独立发现者（⑤）。摊开只是开始，接下来要对的是：谁在什么时候付账。</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-22 · 北京时间 11:05</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-21.html">← 2026-10-21</a></div>
+</body>
+</html>
