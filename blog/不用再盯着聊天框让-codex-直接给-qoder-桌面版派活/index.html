@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活 · walker</title><meta name="description" content="Agent 协作实战②：通过 H5 接口派发任务、接收结果"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活 · walker"><meta property="og:description" content="Agent 协作实战②：通过 H5 接口派发任务、接收结果"><meta property="og:url" content="https://blog.walkerhua.com/blog/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB/"><meta property="og:image" content="https://blog.walkerhua.com/og/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活 · walker"><meta name="twitter:description" content="Agent 协作实战②：通过 H5 接口派发任务、接收结果"><meta name="twitter:image" content="https://blog.walkerhua.com/og/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 文章</a><h1>不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</h1><p>Agent 协作实战②：通过 H5 接口派发任务、接收结果</p><div class="hero-meta"><span>发表于 2026-10-23</span><span>约 7 分钟</span><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/桌面自动化/">桌面自动化</a><a class="tag" href="/tags/Agent/">Agent</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#手机能控制桌面入口藏在哪里">手机能控制桌面，入口藏在哪里？</a><a class="toc-l2" href="#先让桌面-agent-回一句话">先让桌面 Agent 回一句话</a><a class="toc-l2" href="#实际跑通的链路">实际跑通的链路</a><a class="toc-l2" href="#返回-201还不等于-agent-开始干活">返回 201，还不等于 Agent 开始干活</a><a class="toc-l2" href="#通了以后怎么安排几个-ai-干活">通了以后，怎么安排几个 AI 干活？</a><a class="toc-l3" href="#qoder-做实现codex-做-review">Qoder 做实现，Codex 做 Review</a><a class="toc-l3" href="#一个负责调研一个负责核查">一个负责调研，一个负责核查</a><a class="toc-l3" href="#额度快用完时把工作交出去">额度快用完时，把工作交出去</a><a class="toc-l2" href="#cuaacph5各自有用武之地">CUA、ACP、H5，各自有用武之地</a></aside><article class="card prose"><p>装了好几个 AI 编程工具之后，你可能会遇到一个尴尬：它们都能干活，却总要你在中间传话。</p>
+<p>Codex 写方案，复制给 Qoder；Qoder 做完，再把结果拿回来让 Codex Review。审查发现问题，又得搬一趟。</p>
+<p>之前，我用 CUA 跑通过这条链路：让 Codex 操作 Qoder 桌面版的聊天框，输入消息、读取回答、继续追问。人从复制粘贴中解放出来，消息改由 Agent 通过界面传递。</p>
+<p>但还有一个问题：每次派活，都要找到聊天框、输入文字、点发送吗？</p>
+<p>这次继续往下查，发现了另一条入口：<strong>Qoder 官方 H5 背后的远程任务接口。</strong></p>
+<p>经过两轮实测，Codex 已经能通过这组接口创建本机 Qoder 桌面任务，发送消息，再用事件流读回回答。</p>
+<h2 id="手机能控制桌面入口藏在哪里">手机能控制桌面，入口藏在哪里？</h2>
+<p>线索来自 Qoder 的官方远程控制功能。</p>
+<p>桌面版保持运行，开启“允许 Qoder Mobile 控制此设备”，再用同一个账号登录手机端或 H5，就可以查看任务、追加指令、处理等待确认的交互。本机任务仍由桌面客户端访问工作区并执行。<a href="https://docs.qoder.com/qoder/remote-control">官方说明</a></p>
+<p>官方提供的 H5 入口是 <a href="https://qoder.com/m">qoder.com/m</a>，国内版是 <a href="https://qoder.cn/m">qoder.cn/m</a>。两套产品的账号和数据分别独立，需要与桌面产品匹配。<a href="https://docs.qoder.com/mobile/app/download">下载与入口说明</a></p>
+<p>这就留下了一个很直接的线索：浏览器里的消息，必然要通过某条通信链路送到桌面任务。</p>
+<p>检查官方 H5 当前加载的前端代码后，找到了这组路径：</p>
+<table>
+<thead>
+<tr>
+<th>页面操作</th>
+<th>背后的 HTTP 接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找到设备和执行环境</td>
+<td><code>GET /api/v1/remote/environments</code></td>
+</tr>
+<tr>
+<td>查看任务列表</td>
+<td><code>GET /api/v1/remote/sessions</code></td>
+</tr>
+<tr>
+<td>创建任务</td>
+<td><code>POST /api/v1/remote/sessions</code></td>
+</tr>
+<tr>
+<td>发送消息和控制指令</td>
+<td><code>POST /api/v1/remote/sessions/{id}/events</code></td>
+</tr>
+<tr>
+<td>读取历史事件</td>
+<td><code>GET /api/v1/remote/sessions/{id}/events</code></td>
+</tr>
+<tr>
+<td>接收实时结果</td>
+<td><code>GET /api/v1/remote/sessions/{id}/events/stream</code></td>
+</tr>
+</tbody>
+</table>
+<p>前端代码里还能看到切换模型、中断执行、响应审批等控制消息。它们共用会话事件入口，通过不同的事件内容表达操作。<a href="https://g.alicdn.com/qoder/qoder-mobile-web/0.0.56/assets/app.js">本次核查的前端构建：0.0.56</a></p>
+<p>于是，下一步很明确：沿着 H5 自己使用的接口，验证外部 Agent 能否把消息交给本机 Qoder。</p>
+<h2 id="先让桌面-agent-回一句话">先让桌面 Agent 回一句话</h2>
+<p>测试刻意选得很小：不改代码，不碰业务文件，只做两轮对话。</p>
+<p>第一轮，Codex 创建桌面任务并发送：</p>
+<blockquote>
+<p>这是接口连通性测试，不要调用工具，不要读写文件。请记住测试口令：海棠643。只回复：H5接口连接成功，19+23=42。</p>
+</blockquote>
+<p>Qoder 返回：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>H5接口连接成功，19+23=42。</span></span></code></pre>
+<p>接着，Codex 在同一个远程会话里追问：</p>
+<blockquote>
+<p>继续刚才的测试，不要调用工具。上一条让你记住的测试口令是什么？只回复口令。</p>
+</blockquote>
+<p>回答是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>海棠643</span></span></code></pre>
+<p>第二轮没有重复口令。它验证了会话上下文确实延续下来，而不是每次调用都重新开始。</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>实测结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建任务</td>
+<td>HTTP 201，执行类型为 <code>desktop</code></td>
+</tr>
+<tr>
+<td>执行环境</td>
+<td><code>environment_type=qoder</code>，对应本机 Mac</td>
+</tr>
+<tr>
+<td>第一轮结果</td>
+<td>正确返回指定内容</td>
+</tr>
+<tr>
+<td>追加消息</td>
+<td>HTTP 200，返回新的事件序号</td>
+</tr>
+<tr>
+<td>实时接收</td>
+<td>HTTP 200，内容类型为 <code>text/event-stream</code></td>
+</tr>
+<tr>
+<td>第二轮结果</td>
+<td>正确返回“海棠643”</td>
+</tr>
+<tr>
+<td>桌面对应关系</td>
+<td>侧栏出现“接口连通测试”，本地任务 ID 与执行事件一致</td>
+</tr>
+</tbody>
+</table>
+<p>这次，消息的提交和回答的读取都通过接口完成。桌面界面用于检查设置与核对任务。</p>
+<h2 id="实际跑通的链路">实际跑通的链路</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Codex</span></span>
+<span class="line"><span>  ↓ 在已登录的浏览器页面中发起同源请求</span></span>
+<span class="line"><span>Qoder H5 内部 HTTP 接口</span></span>
+<span class="line"><span>  ↓ 按所选设备与执行环境派发</span></span>
+<span class="line"><span>本机 Qoder 桌面任务</span></span>
+<span class="line"><span>  ↓ 返回执行事件与回答</span></span>
+<span class="line"><span>SSE 事件流</span></span>
+<span class="line"><span>  ↓</span></span>
+<span class="line"><span>Codex 接收结果，继续追问</span></span></code></pre>
+<p>这里有两个容易混淆的地方。</p>
+<p>首先，这次创建的是本机桌面任务。接口返回的 <code>execution_type=desktop</code>，执行环境也是本机 Qoder。它与启动 Qoder CLI、通过 ACP 调用 CLI，以及创建云端 Agent 任务，分别属于不同的接入方式。</p>
+<p>其次，浏览器使用 HTTP 发送请求，通过 SSE 接收结果。SSE 可以理解为一条持续返回更新的响应：服务端有新事件，就往这条连接里发送。调用方由此接收状态变化、Agent 回答和完成结果，不必反复刷新聊天页面。</p>
+<p>这次验证使用了浏览器已有的登录态。请求在 Qoder H5 页面内执行，由浏览器携带同站 Cookie，并按网页实现带上设备标识和接口版本头。没有把登录凭据复制到脚本或文章里。</p>
+<p>CDP 在这条链路里负责连接浏览器、执行页面请求；它连接的对象是 Chrome。Qoder 桌面任务由官方远程控制通路接收。</p>
+<h2 id="返回-201还不等于-agent-开始干活">返回 201，还不等于 Agent 开始干活</h2>
+<p>实测中最值得记住的坑，就出在创建任务这一步。</p>
+<p>最初只带工作目录和模型等字段，服务端返回了 HTTP 201。网页任务列表也出现了新记录，但会话一直停在 <code>init</code>，没有取得桌面执行结果。</p>
+<p>继续查看 H5 的构造逻辑，才发现它对 Qoder 桌面环境有专门的处理。创建不绑定项目的聊天任务时，使用的上下文包含：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "client_type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"qoder"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "model"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"qfmodel"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "workspace_type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"virtual"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "cwd"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "extra"</span><span style="color:#E1E4E8">: {</span><span style="color:#79B8FF">"workspace_id"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>按网页的桌面专用结构补齐字段后，新任务才跑出了完整的两轮结果。这里的 <code>qfmodel</code> 是本次环境中 Qwen3.8-Flash 的模型标识，不能据此假定所有版本都保持一致。</p>
+<p>所以，验收至少要走完三步：服务端接受任务、桌面端接到任务、Agent 返回结果。一个成功状态码，只能证明其中一部分。</p>
+<p>另一个实际问题是请求超时。浏览器的调试授权弹窗可能挡住操作；超时也不代表服务端没有创建任务。先检查已有会话和事件，再决定是否重试，可以避免一次测试变成两份任务。</p>
+<h2 id="通了以后怎么安排几个-ai-干活">通了以后，怎么安排几个 AI 干活？</h2>
+<p>最有用的变化，是可以围绕一个持续存在的任务会话安排分工。</p>
+<h3 id="qoder-做实现codex-做-review">Qoder 做实现，Codex 做 Review</h3>
+<p>把需求、允许修改的目录和验收条件写清楚，由 Codex 交给 Qoder。</p>
+<p>Qoder 完成后，Codex 根据返回结果检查实际 diff、测试输出和文件内容。发现问题，就向同一会话追加具体修改要求。Qoder 能继续使用前面的上下文，用户不用再重新转述项目背景。</p>
+<p>接口承担消息传递，审查仍要落到实际产物上。Agent 说“做完了”，还需要代码和验证结果支撑。</p>
+<h3 id="一个负责调研一个负责核查">一个负责调研，一个负责核查</h3>
+<p>例如，让 Qoder 整理某个工具的接入方式，报告统一放进共享的协作目录。Codex 再核查来源、检查适用版本、指出结论中的问题，并把返修意见送回原会话。</p>
+<p>文件承载详细材料，会话承载派发与反馈。任务长了，也不必把整篇报告一遍遍复制进聊天框。</p>
+<h3 id="额度快用完时把工作交出去">额度快用完时，把工作交出去</h3>
+<p>任务做到一半，某个工具的额度开始吃紧，可以提前整理目标、当前进度、修改范围和下一步，把剩余工作交给另一个 Agent。</p>
+<p>额度耗尽的工具无法继续承担调度，所以交接最好发生在额度将尽时。工作状态留在文件里，接手方能继续推进；原工具恢复可用后，再回来审查结果。</p>
+<p>这些分工需要逐步补上任务状态、交付文件和异常处理，而这次跑通的收发通路，提供了其中的基础能力。</p>
+<h2 id="cuaacph5各自有用武之地">CUA、ACP、H5，各自有用武之地</h2>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>适合解决的问题</th>
+<th>本次相关结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUA</td>
+<td>操作桌面界面，适应只有按钮和输入框的应用</td>
+<td>此前已跑通 Qoder 桌面两轮对话</td>
+</tr>
+<tr>
+<td>ACP</td>
+<td>通过统一协议调用支持它的 CLI Agent</td>
+<td>已用于本地多个 CLI 的协作验证</td>
+</tr>
+<tr>
+<td>H5 内部接口</td>
+<td>借助官方远程通路创建和继续桌面任务</td>
+<td>本次跑通创建、续聊和 SSE 结果读取</td>
+</tr>
+</tbody>
+</table>
+<p>选择哪条路，取决于任务要落在哪里。CLI 协作可以走 ACP；需要进入桌面应用中的任务，则可以考虑 CUA 或该产品已有的远程入口。</p>
+<p>H5 这条路也有明确边界：这些路径来自网页实现，目前没有公开的稳定桌面 API 契约。本次验证覆盖两轮对话和结果读取，依赖已登录浏览器、在线桌面端及远程控制开关。代码修改、复杂审批和长任务恢复，还需要各自的验收。</p>
+<p>测试结束后，临时远程控制已恢复关闭，未执行的探测会话已归档，有效测试任务保留供复核。</p>
+<p>原来，桌面 Agent 的协作入口，可能就藏在“用手机继续任务”这个功能里。</p>
+<p>这次我们顺着它找到了接口，也让另一位 Agent 接上了话。以后安排“你实现、它审查、发现问题再改一轮”，就有机会把消息往返也一起交给 Agent。</p>
+<hr>
+<p>本系列：</p>
+<ul>
+<li>① <a href="/blog/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A/">别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</a></li>
+<li>② <strong>不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</strong>（本文）</li>
+<li>③ <a href="/blog/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F/">Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</a></li>
+</ul>
+<nav class="post-nav"><span></span><a class="post-nav-item post-nav-next" href="/blog/codex-当组长其他-ai-干活用-acp-组个编程小队/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

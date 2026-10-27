@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Codex 当组长，其他 AI 干活：用 ACP 组个编程小队 · walker</title><meta name="description" content="Agent 协作实战③：通过统一协议调度 CLI Agent"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Codex 当组长，其他 AI 干活：用 ACP 组个编程小队 · walker"><meta property="og:description" content="Agent 协作实战③：通过统一协议调度 CLI Agent"><meta property="og:url" content="https://blog.walkerhua.com/blog/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F/"><meta property="og:image" content="https://blog.walkerhua.com/og/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Codex 当组长，其他 AI 干活：用 ACP 组个编程小队 · walker"><meta name="twitter:description" content="Agent 协作实战③：通过统一协议调度 CLI Agent"><meta name="twitter:image" content="https://blog.walkerhua.com/og/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 文章</a><h1>Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</h1><p>Agent 协作实战③：通过统一协议调度 CLI Agent</p><div class="hero-meta"><span>发表于 2026-10-20</span><span>约 9 分钟</span><span>更新于 2026-10-23</span><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/AI编码工具/">AI编码工具</a><a class="tag" href="/tags/ACP/">ACP</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#从换个终端问一下到让-codex-帮我问">从“换个终端问一下”，到“让 Codex 帮我问”</a><a class="toc-l2" href="#acp-把小队接起来acpx-负责本次接入">ACP 把小队接起来，acpx 负责本次接入</a><a class="toc-l2" href="#跑通第一条链路codex--acpx--qoder">跑通第一条链路：Codex → acpx → Qoder</a><a class="toc-l2" href="#换成-opencode复用同一套调度思路">换成 OpenCode，复用同一套调度思路</a><a class="toc-l2" href="#小队再加一员minimax-code-cli">小队再加一员：MiniMax Code CLI</a><a class="toc-l2" href="#场景一qoder-实现codex-review">场景一：Qoder 实现，Codex review</a><a class="toc-l2" href="#场景二额度快用完提前把工作交出去">场景二：额度快用完，提前把工作交出去</a><a class="toc-l2" href="#场景三让另一个-agent-挑方案里的毛病">场景三：让另一个 Agent 挑方案里的毛病</a><a class="toc-l2" href="#一个真坑退出码是-0不代表任务成功">一个真坑：退出码是 0，不代表任务成功</a><a class="toc-l2" href="#有-cli-用-acp要进桌面就用-cua">有 CLI 用 ACP，要进桌面就用 CUA</a><a class="toc-l2" href="#把换个-ai-试试变成一次明确的交接">把“换个 AI 试试”，变成一次明确的交接</a></aside><article class="card prose"><p>同时装了几个 AI 编程工具之后，我发现自己多了一份工作：给它们安排工作，再搬运结果。</p>
+<p>Codex 想好了方案，切到另一个终端，让 Qoder 实现；Qoder 做完，再把说明复制给 Codex review。如果还要找 OpenCode 补充意见，又得开一个会话，把背景讲一遍。</p>
+<p>工具多了，切换和交接也跟着多了。</p>
+<p>上一篇，我们让 Codex 通过 CUA 操作 Qoder 桌面版，完成了两轮对话。这次换一条路径：<strong>用 ACP 把 CLI Agent 接起来，让 Codex 当组长，给其他 AI 派活、收结果、做 review。</strong></p>
+<p>这套接法的核心是 ACP，也就是 Agent Client Protocol。本次选择 acpx 作为客户端，负责启动目标 CLI、建立 ACP 会话并传递消息。</p>
+<p>Qoder、OpenCode、CodeBuddy，已经分别跑通了真实回复和同会话追问。协调工作可以留在 Codex，具体任务交给其他 Agent，结果再带回来。</p>
+<h2 id="从换个终端问一下到让-codex-帮我问">从“换个终端问一下”，到“让 Codex 帮我问”</h2>
+<p>先看一组实际结果。</p>
+<p>我们通过 acpx 创建 Qoder CLI 会话，让它记住代号“松石482”，并回复一句连接成功的文字。随后再执行一条命令，继续同一个会话，询问刚才的代号。</p>
+<p>Qoder 正确回复了“松石482”。</p>
+<p>同样的两轮测试交给 OpenCode，也得到了正确答案。CodeBuddy 在测试会话指定 Hy3 模型后，则正确记住并返回了另一组代号“澄湖593”。</p>
+<p>这里值得关注的，是第二条命令接上了第一条的上下文。Codex 可以先交代任务，再围绕回答补充要求，不必每次都把完整背景重新发一遍。</p>
+<table>
+<thead>
+<tr>
+<th>本机测试对象</th>
+<th>实际结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qoder CLI 1.1.74</td>
+<td>两轮回复与同会话上下文续接通过</td>
+</tr>
+<tr>
+<td>OpenCode 2.0.32</td>
+<td>两轮回复与同会话上下文续接通过</td>
+</tr>
+<tr>
+<td>CodeBuddy CLI 2.169.0，测试会话指定 Hy3</td>
+<td>两轮回复与同会话上下文续接通过</td>
+</tr>
+<tr>
+<td>Cursor CLI</td>
+<td>ACP 握手、创建会话成功，模型请求提示升级套餐</td>
+</tr>
+<tr>
+<td>MiniMax Code CLI（mcode）0.6.12</td>
+<td>10 月 22 日新增；原生 ACP 初始化握手通过</td>
+</tr>
+</tbody>
+</table>
+<p>这些是 2026 年 10 月 20 日的本机记录。支持协议和当前账户能否执行任务，要分别判断。</p>
+<h2 id="acp-把小队接起来acpx-负责本次接入">ACP 把小队接起来，acpx 负责本次接入</h2>
+<p>这里的 ACP 是 <strong>Agent Client Protocol</strong>，用于让客户端驱动 Agent，会话、提示和执行更新都可以通过协议交互。</p>
+<p>acpx 则是本次使用的 ACP 命令行客户端。Codex 执行 acpx 命令，acpx 启动目标 Agent 的 ACP 入口，发送提示并接收结果。</p>
+<p><strong>ACP 定义双方怎样交互，acpx 把这套交互变成 Codex 可以调用的命令。</strong> 换用其他兼容的 ACP 客户端，也可以沿用这个接入思路；各 Agent 的启动、认证和能力差异仍需处理。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>你把目标交给 Codex</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>Codex 拆分任务、执行 acpx 命令</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>acpx：创建会话、发送提示、接收更新</span></span>
+<span class="line"><span>        ↓ ACP</span></span>
+<span class="line"><span>Qoder CLI / OpenCode / CodeBuddy CLI</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>结果回到 Codex，继续追问或验收</span></span></code></pre>
+<p>所以，这次接法并不要求 Codex 自身提供原生 ACP 启动参数。它作为协调者，调用一个 ACP 客户端，就能驱动目标 CLI。</p>
+<p>也不需要先把这些 Agent 部署成 A2A 网络服务。本次验证的是本机客户端与 CLI Agent 之间的 ACP 通路。</p>
+<h2 id="跑通第一条链路codex--acpx--qoder">跑通第一条链路：Codex → acpx → Qoder</h2>
+<p>本机安装的 acpx 版本是 0.19.6，安装记录中的命令为：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -g</span><span style="color:#9ECBFF"> acpx@latest</span></span></code></pre>
+<p>使用前，需要准备好目标 CLI，并完成它所需的登录和模型配置。安装 acpx，不会同时替你解决目标 Agent 的账号、额度和模型可用性问题。</p>
+<p>下面是本次 Qoder 两轮验证的命令形式。将 <code>&lt;测试目录&gt;</code> 替换为自己的独立目录，在同一目录下使用同一个会话名：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 创建命名会话</span></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#9ECBFF"> qoder</span><span style="color:#9ECBFF"> sessions</span><span style="color:#9ECBFF"> new</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> smoke</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 第一轮：放入测试代号</span></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#9ECBFF"> qoder</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> smoke</span><span style="color:#9ECBFF"> '请记住代号松石482，只回复ACPX连接成功，19+23=42。不使用工具。'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 第二轮：继续同一会话</span></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#9ECBFF"> qoder</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> smoke</span><span style="color:#9ECBFF"> '上一条的测试代号是什么？仅回复代号，不使用工具。'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 测试结束后关闭会话</span></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#9ECBFF"> qoder</span><span style="color:#9ECBFF"> sessions</span><span style="color:#9ECBFF"> close</span><span style="color:#9ECBFF"> smoke</span></span></code></pre>
+<p>第一轮取得了指定的连接成功文字，第二轮正确返回代号。测试结束后，会话关闭成功；关闭会话不等于删除历史。</p>
+<p>这些命令使用了 <code>--deny-all --no-fs --no-terminal</code>：不批准权限请求，也不提供客户端文件系统与终端能力，并在提示里要求不使用工具，便于先确认对话链路。它们不是目标进程的完整操作系统沙箱；实际开发任务还需要根据工作范围配置工具能力和权限，不能把这组纯对话参数直接当成代码执行配置。</p>
+<h2 id="换成-opencode复用同一套调度思路">换成 OpenCode，复用同一套调度思路</h2>
+<p>OpenCode 本机已有原生入口 <code>opencode acp</code>。这次显式指定它，使用本机 CLI：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#79B8FF"> --agent</span><span style="color:#9ECBFF"> 'opencode acp'</span><span style="color:#9ECBFF"> sessions</span><span style="color:#9ECBFF"> new</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> smoke</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#79B8FF"> --agent</span><span style="color:#9ECBFF"> 'opencode acp'</span><span style="color:#9ECBFF"> prompt</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> smoke</span><span style="color:#9ECBFF"> '请记住代号松石482，只回复ACPX连接成功，19+23=42。不使用工具。'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#79B8FF"> --agent</span><span style="color:#9ECBFF"> 'opencode acp'</span><span style="color:#9ECBFF"> prompt</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> smoke</span><span style="color:#9ECBFF"> '上一条的测试代号是什么？仅回复代号，不使用工具。'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --agent</span><span style="color:#9ECBFF"> 'opencode acp'</span><span style="color:#9ECBFF"> sessions</span><span style="color:#9ECBFF"> close</span><span style="color:#9ECBFF"> smoke</span></span></code></pre>
+<p>一个小坑是参数位置：本次使用原始 <code>--agent</code> 命令时，命名会话写成 <code>prompt -s smoke</code>。最初把 <code>-s</code> 直接放在根命令后，被 acpx 拒绝了；修正后，两轮测试通过。</p>
+<p>这类错误很容易被误认为“Agent 不支持 ACP”。实际上，命令参数、协议连接、登录状态和模型执行，是不同的排查位置。</p>
+<h2 id="小队再加一员minimax-code-cli">小队再加一员：MiniMax Code CLI</h2>
+<p>10 月 22 日，本机又加装了 <code>mcode</code>，也就是 MiniMax Code CLI。它提供原生的 <code>mcode acp</code> 入口，通过 stdio 与客户端通信。实际启动后，ACP 初始化成功，返回的 Agent 名称为 <code>minimax-code</code>，版本为 0.6.12。</p>
+<p>因此，接入时可以使用同样的客户端思路，显式指定目标命令：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 接入写法示例：使用本机 mcode 的原生 ACP 入口</span></span>
+<span class="line"><span style="color:#B392F0">acpx</span><span style="color:#79B8FF"> --cwd</span><span style="color:#9ECBFF"> '&lt;测试目录&gt;'</span><span style="color:#79B8FF"> --deny-all</span><span style="color:#79B8FF"> --no-fs</span><span style="color:#79B8FF"> --no-terminal</span><span style="color:#79B8FF"> --agent</span><span style="color:#9ECBFF"> 'mcode acp'</span><span style="color:#9ECBFF"> exec</span><span style="color:#9ECBFF"> '不要使用工具，只回复连接成功。'</span></span></code></pre>
+<p>这里直接指定 <code>mcode acp</code>，不依赖 acpx 是否内置了 mcode 别名。此命令是接入示例，本轮实际验证的是 ACP 初始化握手；前面 Qoder、OpenCode 和 CodeBuddy 的两轮回复记录保持独立。</p>
+<p>有了统一协议，新增一个 CLI Agent 时，就可以围绕它的 ACP 入口接入现有调度流程。这里调用的是 mcode CLI，与 MiniMax Code 桌面版以及另一个 <code>mmx</code> 命令分别判断。</p>
+<h2 id="场景一qoder-实现codex-review">场景一：Qoder 实现，Codex review</h2>
+<p>对我来说，最有用的分工之一，是让一个 Agent 专心实现，另一个 Agent 检查结果。</p>
+<p>Codex 先明确需求、修改范围和验收条件，再通过 acpx 把任务交给 Qoder。Qoder 交付后，Codex 读取完成说明，检查实际 diff，运行必要验证，再把具体问题反馈到同一会话。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Codex 明确任务</span></span>
+<span class="line"><span>  → acpx 派发给 Qoder</span></span>
+<span class="line"><span>  → Qoder 实现、验证、汇报</span></span>
+<span class="line"><span>  → Codex 检查代码和结果</span></span>
+<span class="line"><span>  → 同一会话反馈问题</span></span>
+<span class="line"><span>  → Qoder 修正，Codex 复核</span></span></code></pre>
+<p>交给执行方的内容，可以这样组织：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>目标：修复订单列表在切换筛选条件后仍使用旧页码的问题。</span></span>
+<span class="line"><span>范围：只修改分页与筛选相关代码，保留已有无关改动。</span></span>
+<span class="line"><span>验收：第三页切换筛选后请求第一页，翻页时保留筛选条件。</span></span>
+<span class="line"><span>交付：说明修改文件、实现原因、实际验证结果与遗留问题。</span></span></code></pre>
+<p>共享工作区在这里负责提供实际产物，ACP 负责传递任务和结果。审查时要把对方的汇报与代码对应起来，不能只凭一句“已完成”就结束。</p>
+<p>同一批文件可以由 Qoder 负责修改，Codex 先只读审查；需要切换执行方时，再明确交接，避免两个 Agent 同时覆盖彼此的改动。</p>
+<h2 id="场景二额度快用完提前把工作交出去">场景二：额度快用完，提前把工作交出去</h2>
+<p>任务做到一半换工具，最烦的是重讲前情。</p>
+<p>可以让 Codex 提前整理交接内容：目标、当前分支、已有修改、已执行检查、尚未解决的问题，以及下一步应该做什么。再通过 acpx 发给可用的 Agent，让它接着推进。</p>
+<p>重点是提前。<strong>如果 Codex 当前会话已经无法执行，就不能指望它继续调用 acpx。</strong> 因此，阶段性保存交接材料比等到额度耗尽才想办法更实用。</p>
+<p>换 Agent 时，已有文件能留下，任务进度和判断依据也要留下。把这些交代清楚，接手方才不用重新走一遍探索过程。</p>
+<h2 id="场景三让另一个-agent-挑方案里的毛病">场景三：让另一个 Agent 挑方案里的毛病</h2>
+<p>也可以先不让对方改代码，只交一份方案，请它检查遗漏。</p>
+<p>例如，Codex 写出数据库迁移方案，交给 OpenCode 检查回滚路径和边界条件；读回意见后，继续在同一会话追问某一项风险。或者让 CodeBuddy 审阅修改说明，再由 Codex 对照实际代码核实。</p>
+<p>这类分工可以把审阅目标说得很窄：只找数据丢失风险，或者只检查兼容性。比起泛泛地“再看看”，范围明确的问题更容易产生可操作的反馈。</p>
+<h2 id="一个真坑退出码是-0不代表任务成功">一个真坑：退出码是 0，不代表任务成功</h2>
+<p>CodeBuddy 的测试让这一点变得很具体。</p>
+<p>默认模型 Step-5-Preview 当时遇到配额限制。acpx 的 quiet 输出没有正文，进程却退出 0。继续检查 ACP 事件，才看到 <code>stopReason=refusal</code>，以及错误元数据里的 429 quota 信息。</p>
+<p>如果协调方只检查退出码，就可能把这次失败算成完成。</p>
+<p>随后，我们在新的测试会话中指定 <code>--model hy3</code>，取得了两轮正确回复，没有修改全局默认模型。</p>
+<p>这意味着，自动调度至少要核对三件事：有没有有效回复，协议是否报告拒绝或错误，以及任务要求的产物是否存在。进程成功退出只是其中一个信号。</p>
+<p>Cursor 的情况则发生在另一层：握手与建会话都成功，但模型请求提示 <code>Upgrade your plan to continue</code>。客户端能连接，不代表账户具备执行条件。</p>
+<h2 id="有-cli-用-acp要进桌面就用-cua">有 CLI 用 ACP，要进桌面就用 CUA</h2>
+<p>这两篇文章解决的是同一个痛点：减少人在 Agent 之间传话。但操作对象不同。</p>
+<table>
+<thead>
+<tr>
+<th>需求</th>
+<th>可采用的路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>调用支持 ACP 的本机 CLI Agent</td>
+<td>Codex → acpx → ACP → 目标 CLI</td>
+</tr>
+<tr>
+<td>让任务与回复出现在目标桌面应用中</td>
+<td>Codex → CUA → 桌面 Agent</td>
+</tr>
+<tr>
+<td>查看或审查对方修改的文件</td>
+<td>访问约定的工作区与 diff</td>
+</tr>
+</tbody>
+</table>
+<p>ACP 接法可以直接围绕命名会话和返回结果组织调度。CUA 则适合需要进入桌面任务的情况，按钮、焦点和界面状态也成为流程的一部分。</p>
+<p>选哪条路径，取决于任务应该在哪里执行、结果应该在哪里出现。</p>
+<h2 id="把换个-ai-试试变成一次明确的交接">把“换个 AI 试试”，变成一次明确的交接</h2>
+<p>装更多 Agent，真正有用的地方，是能根据任务安排它们：一个实现，一个审查；一个额度不足，另一个接手；一份方案写完，再找另一个工具提出质疑。</p>
+<p>acpx 和 ACP 为本机 CLI 提供了一条已跑通的对话路径。Codex 可以把工作交出去，取得回复，再继续追问。围绕它，把范围、权限和验收条件说明白，就能少做几次终端切换，少搬几遍上下文。</p>
+<p>人负责目标与关键判断，工具之间的任务传递，则可以交给工具来做。</p>
+<hr>
+<p>本文依据 2026 年 10 月 20 日的本机实测记录整理，命令对应 acpx 0.19.6。资料：协议支持与实测记录第 9—11 节、Qoder / OpenCode 两轮结果、Cursor / CodeBuddy 测试结果。</p>
+<p>相关阅读：<a href="/blog/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A/">别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</a>。</p>
+<hr>
+<p>本系列：</p>
+<ul>
+<li>① <a href="/blog/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A/">别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</a></li>
+<li>② <a href="/blog/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB/">不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</a></li>
+<li>③ <strong>Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</strong>（本文）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/不用再盯着聊天框让-codex-直接给-qoder-桌面版派活/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</span></a><a class="post-nav-item post-nav-next" href="/blog/别再给-ai-当传话筒了让-codex-和-qoder-自己聊/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

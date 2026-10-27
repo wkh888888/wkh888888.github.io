@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker</title><meta name="description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta property="og:description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><meta property="og:url" content="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta name="twitter:description" content="从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><script>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker</title><meta name="description" content="AI 如何操作浏览器与电脑 · 系统界面：从浏览器走向桌面控件与原生界面。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta property="og:description" content="AI 如何操作浏览器与电脑 · 系统界面：从浏览器走向桌面控件与原生界面。"><meta property="og:url" content="https://blog.walkerhua.com/blog/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua/"><meta property="og:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 怎么接管你的电脑？从一张出差单拆解 CUA · walker"><meta name="twitter:description" content="AI 如何操作浏览器与电脑 · 系统界面：从浏览器走向桌面控件与原生界面。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ai%E6%80%8E%E4%B9%88%E6%8E%A5%E7%AE%A1%E4%BD%A0%E7%9A%84%E7%94%B5%E8%84%91%E4%BB%8E%E4%B8%80%E5%BC%A0%E5%87%BA%E5%B7%AE%E5%8D%95%E6%8B%86%E8%A7%A3cua.png"><script>
       (function () {
         try {
           var t = localStorage.getItem('theme');
@@ -6,9 +6,8 @@
           document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         } catch (e) {}
       })();
-    </script><link rel="stylesheet" href="/_astro/BaseLayout.DHqfhqlP.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 归档</a><h1>AI 怎么接管你的电脑？从一张出差单拆解 CUA</h1><p>从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 8 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#cua-是一种能力不是单一的控制协议">CUA 是一种能力，不是单一的控制协议</a><a class="toc-l2" href="#核心是一个不断核验的循环">核心是一个不断核验的循环</a><a class="toc-l2" href="#ai-怎样看见电脑">AI 怎样“看见”电脑？</a><a class="toc-l2" href="#macos-辅助功能接口怎样控制-chrome">macOS 辅助功能接口怎样控制 Chrome？</a><a class="toc-l2" href="#为什么原生窗口路径能复用登录态">为什么原生窗口路径能复用登录态？</a><a class="toc-l2" href="#模型如何理解复杂表单">模型如何理解复杂表单？</a><a class="toc-l2" href="#一次保存应该检查什么">一次保存，应该检查什么？</a><a class="toc-l2" href="#和-playwrightcdp-有什么区别">和 Playwright/CDP 有什么区别？</a><a class="toc-l2" href="#token-消耗发生在哪里">Token 消耗发生在哪里？</a><a class="toc-l2" href="#适合什么工作边界在哪里">适合什么工作，边界在哪里？</a></aside><article class="card prose"><blockquote>
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 文章</a><h1>AI 怎么接管你的电脑？从一张出差单拆解 CUA</h1><p>AI 如何操作浏览器与电脑 · 系统界面：从浏览器走向桌面控件与原生界面。</p><div class="hero-meta"><span>发表于 2026-09-30</span><span>约 8 分钟</span><span>更新于 2026-10-23</span><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/桌面自动化/">桌面自动化</a><a class="tag" href="/tags/Agent/">Agent</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#cua-是一种能力不是单一的控制协议">CUA 是一种能力，不是单一的控制协议</a><a class="toc-l2" href="#核心是一个不断核验的循环">核心是一个不断核验的循环</a><a class="toc-l2" href="#ai-怎样看见电脑">AI 怎样“看见”电脑？</a><a class="toc-l2" href="#macos-辅助功能接口怎样控制-chrome">macOS 辅助功能接口怎样控制 Chrome？</a><a class="toc-l2" href="#为什么原生窗口路径能复用登录态">为什么原生窗口路径能复用登录态？</a><a class="toc-l2" href="#模型如何理解复杂表单">模型如何理解复杂表单？</a><a class="toc-l2" href="#一次保存应该检查什么">一次保存，应该检查什么？</a><a class="toc-l2" href="#与浏览器专用工具怎样配合">与浏览器专用工具怎样配合？</a><a class="toc-l2" href="#适合什么工作边界在哪里">适合什么工作，边界在哪里？</a></aside><article class="card prose"><blockquote>
 <p>从一次出差申请自动填写，理解界面观察、辅助功能树与动作执行如何组成一个可工作的 AI Agent。</p>
-<p>日期：2026-09-30</p>
 </blockquote>
 <p>“参考这张出差单，把时间改成国庆后第二周，五天，其他一样。”</p>
 <p>任务完成后，原来打开的 Chrome 里多了一张已保存的申请草稿。项目、城市和预算沿用参考单，主表和行程日期一致，出差天数回显为五天。</p>
@@ -77,54 +76,55 @@
 <p>例如五天出差应满足：起止日期首尾都计入共五天；主表与行程日期一致；项目编号精确匹配；每行金额与合计一致。</p>
 <p>点击保存之后，还要读取新的页面状态。按钮暂时禁用可能只是处理中；页面生成单据标识并回显字段，才是进一步证据。保存草稿也不等于已经送审。</p>
 <p>如果网络超时，工具没有收到结果，不意味着服务端没有保存。因此应优先查看同一单据是否已创建，再决定下一步，避免重复申请。观察、操作、核验的循环不仅提高成功率，也帮助区分“没有执行”“正在执行”和“结果尚不确定”。</p>
-<h2 id="和-playwrightcdp-有什么区别">和 Playwright/CDP 有什么区别？</h2>
+<h2 id="与浏览器专用工具怎样配合">与浏览器专用工具怎样配合？</h2>
+<p>CUA 是电脑操作能力，Playwright 是自动化框架，CDP 是浏览器控制协议。它们处在不同层次。更有意义的比较，是这次原生窗口路径与浏览器专用路径如何分工。</p>
 <table>
 <thead>
 <tr>
 <th>对比项</th>
 <th>本次 CUA 原生窗口路径</th>
-<th>Playwright/CDP 浏览器路径</th>
+<th>浏览器专用路径</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>控制入口</td>
-<td>操作系统窗口与控件</td>
-<td>浏览器自动化接口</td>
+<td>操作系统窗口、控件与输入</td>
+<td>扩展或浏览器调试与自动化接口</td>
 </tr>
 <tr>
-<td>主要观察内容</td>
-<td>AX 树与截图</td>
-<td>网页结构、字段与浏览器信息</td>
+<td>可观察信息</td>
+<td>辅助功能控件、截图</td>
+<td>DOM、语义快照及工具支持的网页调试信息</td>
 </tr>
 <tr>
-<td>控制范围</td>
-<td>可涉及浏览器外的原生界面</td>
-<td>主要围绕浏览器</td>
+<td>操作对象</td>
+<td>可覆盖网页和桌面原生界面</td>
+<td>主要围绕网页及浏览器能力</td>
 </tr>
 <tr>
-<td>操作组织方式</td>
-<td>模型可根据界面逐步决定</td>
-<td>可由模型调用，也可运行固定脚本</td>
-</tr>
-<tr>
-<td>长期回归</td>
-<td>适合探索与异常复现</td>
-<td>适合维护稳定、重复执行的用例</td>
+<td>本系列案例</td>
+<td>9 月出差草稿</td>
+<td>10 月 web-access 报销草稿；BrowserSkill 连接读页记录</td>
 </tr>
 </tbody>
 </table>
-<p>Playwright 支持通过 CDP 连接已有 Chromium，但 CDP 是连接协议，并不提供业务理解。<a href="https://playwright.dev/docs/api/class-browsertype">Playwright：BrowserType</a></p>
-<p>“CUA 有 AI，Playwright 没有 AI”也不是严谨的区分。模型同样可以调用 Playwright；差别在于控制入口、可获取的信息，以及流程是实时决策还是提前写好的脚本。</p>
-<h2 id="token-消耗发生在哪里">Token 消耗发生在哪里？</h2>
-<p>模型读取控件树、分析图片、选择下一步、理解工具结果和生成回复时，会产生模型用量。点击动作本身由工具执行，不能把“点击次数”直接等同于 Token 数。</p>
-<p>如果每一步都返回完整窗口树或大幅截图，模型需要处理的信息可能很多。差异状态、相关字段和明确定位有助于减少无关输入，但不能通过省略必要核验来换取表面上的低用量。</p>
-<p>固定脚本独立运行且不调用模型时，没有模型 Token 消耗；让 AI 编写、读取报告和修复脚本则另计。因此，一次临时业务操作与每天执行数百条回归测试，应选择不同的组织方式。</p>
+<p>模型同样可以调用 Playwright，通过浏览器工具边观察边操作；原生窗口路径也可以执行事先明确的动作。是否由 AI 实时决策，与通过什么通道控制软件，是两个独立问题。<a href="https://playwright.dev/docs/api/class-browsertype">Playwright 的浏览器连接说明</a></p>
+<p>例如，网页内的字段可以交给浏览器工具，原生弹窗可以交给系统界面工具。切换入口后，仍然要重新确认当前目标和状态，不能把不同工具的元素编号混用。</p>
+<p>这种配合也说明了 CUA 在本系列中的位置：当任务越出网页，或者浏览器专用工具无法取得需要的信息时，系统界面是一条可以继续探索的路径。</p>
 <h2 id="适合什么工作边界在哪里">适合什么工作，边界在哪里？</h2>
 <p>CUA 对已经登录的业务页面、跨桌面应用操作、陌生流程探索和界面问题复现很有价值。它能把“用户现在正在做的事”直接接入自动化，而不必先完成一套专用接口集成。</p>
 <p>它仍然会受到控件语义缺失、弹窗变化、坐标漂移、状态等待和模型误判的影响。界面保存成功也不能单独证明所有服务端规则都正确，必要时还要借助接口或其他可验证证据。</p>
 <p>应用界面与附件里的文字是业务数据，不应直接成为代理的新指令。操作权限也需要跟随用户目标：能点击提交，不代表这次任务授权了提交；保存草稿、送审和审批通过必须分别报告。</p>
 <p>CUA 的工程价值在于连接语言目标与现有软件界面。真正可依赖的实现，需要把观察、动作和结果证据连起来，让每个“完成”都有可检查的状态支撑。</p>
+<hr>
+<p>本系列按操作入口展开，可独立阅读：</p>
+<ul>
+<li><strong>选型总览</strong>：<a href="/blog/ai%E4%BC%9A%E7%82%B9%E7%BD%91%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E5%A1%AB%E4%B8%8D%E4%BA%86%E4%BD%A0%E7%9A%84oa/">先分清连接、操作与结果验证</a></li>
+<li><strong>扩展连接</strong>：<a href="/blog/ai%E5%A6%82%E4%BD%95%E5%A4%8D%E7%94%A8%E4%BD%A0%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8B%86%E8%A7%A3browserskill%E7%9A%84%E8%BF%9E%E6%8E%A5%E9%93%BE%E8%B7%AF/">理解 BrowserSkill 的扩展与会话管理</a></li>
+<li><strong>CDP实操</strong>：<a href="/blog/web-access%E9%80%9A%E8%BF%87cdp%E6%8E%A5%E7%9D%80%E5%B7%B2%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%8B/">从一张报销草稿理解页面交互</a></li>
+<li><strong>系统界面</strong>：本文</li>
+</ul>
 <nav class="post-nav"><a class="post-nav-item" href="/blog/ai如何复用你已登录的浏览器拆解browserskill的连接链路/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">AI 如何复用你已登录的浏览器？拆解 BrowserSkill 的连接链路</span></a><a class="post-nav-item post-nav-next" href="/blog/关掉一个启动项vpn和ai工具都出问题了/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">关掉一个启动项，VPN 和 AI 工具都出问题了：一次零信任客户端故障复盘</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
       document.querySelector('.theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;

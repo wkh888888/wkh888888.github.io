@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-10-26 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI 日报 · 2026 年 10 月 26 日（周一）</h1>
+    <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+    <div class="hero-meta">
+      <span class="chip">AI Coding ×3</span>
+      <span class="chip">具身智能 ×2</span>
+      <span class="chip">今日主线：尺子、签字人与收据 —— 承载分数的尺子被判定近半任务带评分缺陷（②）、用这把尺子量出最高分的那家同时曝出未认证的付费推广文件（①）、天天在尺子背后签字的开发者只有 6.6% 敢把重要决策交出去（③）；具身侧两件事开始产生可交付的东西：96 台机器人共享经验把真机成功率从 36.3% 拉到 97.3%（④）、3 亿美元订单与上市路径落地（⑤）</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#n1">① 开源第一与推广文件</a>
+    <a href="#n2">② 基准被判定有缺陷</a>
+    <a href="#n3">③ 6.6% 的签字权</a>
+    <a href="#n4">④ 96 台共享经验</a>
+    <a href="#n5">⑤ 3 亿订单与上市</a>
+    <a href="#mini">速览</a>
+    <a href="#thread">对照关系</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <!-- 1 -->
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Kimi K3.1 Pro 冲到开放权重第一，同一天曝出一份「不要标注付费合作」的创作者 brief</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">月之暗面 10-24 凌晨发布公告与官方博客；Artificial Analysis 独立评测；VentureBeat、The Decoder、CGTN、AI Weekly（10-25）；X 上 @elshayib_ 于 10-23 至 10-24 连续发布的截图与说明；Pekingnology 公开分析（未认证声明）；Implicator.ai（10-25）；thebeat.tech（10-26）</div>
+    <div class="body">
+      <p>月之暗面 10-24 凌晨推出 K3 系列首个模型 Kimi K3.1 Pro，2.8 万亿总参数 / 1040 亿激活的 MoE，100 万 token 上下文，是 Kimi K3 的后训练版本。真正让它上头条的不是参数，而是两件事同时发生：<strong>Artificial Analysis 智能指数 55 分，全球第四，与闭源前沿的差距从 12 分收窄到 3 分</strong>；而在 X 上，有博主贴出一份据称来自月之暗面的创作者推广 brief，其中一条指令是不要标注付费合作关系。</p>
+      <ul>
+        <li><strong>分数本身。</strong>AA 智能指数 55 分（K3 为 44，涨 11 分），排在 Claude Opus 5.5 的 58、Sonnet 5.5 与 Meta Muse Wonder Full 的 56 之后；官方称权重 11 月 4 日前发布，届时它将成为史上最高分的开放权重模型。Terminal-Bench 4.0 官方口径 <strong>65.7%</strong>，AA 独立复测 <strong>67%</strong>，前代 K3 只有 13%，GPT-6 Astra 58.2%、Opus 5.5 66.4%、Sonnet 5.5 64%。涨得最猛的是 agentic 项：CyberGym-E2E-AA 从 58% 到 95%，Cyber Index 从 41% 到 64%，AutomationBench-AA 从 58% 到 73%，GDPval-AA 从 1534 到 1846 Elo 排第三。静态推理项则是常规涨幅：Humanity's Last Exam 47% 到 52%，CritPt 物理 23% 到 25%，SciCode 59% 到 61%。</li>
+        <li><strong>但不是全面超越。</strong>同一批数据里有几处明确落后：Terminal-Bench Science 0.1 上 Kimi 38.1，Opus 5.5 是 63.3、Astra 是 68.1；BenchCAD 3D 重建同样落后（Kimi 92.7，Opus 96.2、Astra 95.9）；HLE 上 Opus 5.5 拿 61%、Kimi 52%。第三方评测机构把结论写得很克制：按工作负载选型，不要按总榜选型。</li>
+        <li><strong>价格与单位经济。</strong>API 每百万 token 输入 2 美元、输出 10 美元，约为 Opus 5.5 的一半，比 K3 降约 33%，缓存命中 0.20 美元；另有速度 2 至 3 倍、价格翻倍的 Highspeed 版。但 AA 算出的每任务成本是 1.98 美元，和 K3 的 2.00 美元基本持平——因为它每个指数任务要多输出约 14% 的 token（5.5 万）。<strong>单 token 便宜一半，不等于单任务便宜一半。</strong></li>
+        <li><strong>主动削减的能力。</strong>官方称在中期训练与强化学习两阶段移除了网络攻防数据，内部 xdev-bench-hard 上未过滤版本通过率 90.5%，发布版降到 81.0%（K3 为 33.3%）。这是为开放权重做的自我设限，方向上是负责任的，但也意味着这个版本的攻防上限不是模型能力上限。</li>
+        <li><strong>未认证的推广文件。</strong>博主 @elshayib_ 于 10-23 起连续发帖，称收到月之暗面发给创作者的推广 brief 截图并因此拒绝参与、也拒绝删除批评某位创作者的评论。截图里的要求包括：发布前交稿审批、<strong>不要加付费合作标签</strong>、不放官网链接、不 @ 官方账号，并给了现成话术，例如「中国让所有人都免费用上了 Opus 5.5」「Kimi 就是便宜五倍的开源版 Opus 5.5」。文件曝光前后，X 上一批带蓝勾账号发出高度雷同的「独立实测」帖，有博主被指直接复制粘贴公关文案。Pekingnology 的公开分析写明三点边界：<strong>该文件未经独立认证；作者未知，无法确认是否由月之暗面授权；也没有确认有任何付费帖按此条款发布。</strong>月之暗面截至 10-25 上午未公开置评。</li>
+        <li><strong>另一条未证实的指控。</strong>Matthew Berman 称 Kimi 捏造了基准成绩，但帖子除视频外未展示其他证据。这条与上面的推广文件是两回事，不能混为一谈，也不能相互加强。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>把这两件事放在一起才看得完整：<strong>一份模型发布公告的信任度，同时由「模型有多强」和「这份分数是怎么被传播的」决定。</strong>今天这两条正好互相咬住——模型侧的数字几乎无可挑剔（开放权重第一、AA 前四、比 GPT-6 Astra 高 7 个点的终端任务），传播侧却出现了一份要求隐藏付费关系的文件。</p>
+      <p>与 10-18 ① DeepSeek-V4.1-Flash-1017、10-20 ① MiniMax M3.1 Flash 相比，本期的增量不在「又来一个国产开源模型」，而在<strong>评价方式变了</strong>：前两期的判断依据是价格与跑分，本期多了一层必须追问的东西——这些分数是谁在什么关系下测出来、又是怎么被转述的。Anthropic 此前在 09-16 ② 写过谷歌把 Claude Opus 5 开放给全体工程师、10-18 ③ 写过 Replit 台上宣布不再与 Anthropic 合作，那两条讲的是分发与供给；今天讲的是<strong>宣发本身的合规边界</strong>。</p>
+      <p>最锋利的一点在下一条：<strong>这把尺子本身今天被判定有近一半任务带评分缺陷。</strong>所以「65.7% 超过 GPT-6 Astra」这个句子，在今天读起来已经不是一个单纯的分数比较——需要连同测量它的尺子一起读。这一点让 ① 和 ② 成了今天必须放在一起看的两条，而不是两条独立新闻。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>同一个 Terminal-Bench 4.0 上有三套数字在流传：Kimi 官方 65.7%、AA 独立 67%、Sonnet 5.5 64% —— <strong>不可混用</strong>，且这还是把 ② 的缺陷算进来之前的数字。AA 的 55 是综合指数不是通过率，与任何单项基准不可比。「价格是 Opus 一半」指单 token 价，按任务算两者几乎持平（1.98 对 2.00 美元）。brief 未经认证，作者、授权方、是否存在按该条款发布的付费帖三项都未知，写成「月之暗面买推广」是超出证据的表述；同样，Berman 的捏造指控目前只有视频，不能当成结论。攻防分从 90.5% 降到 81.0% 是官方主动过滤的结果，不是能力退步，也不能与前代 33.3% 并成一条下降曲线。权重 11 月 4 日发布是承诺不是既成事实，许可条款要等那天才能确认。⚠️ Kimi 此前在 09-13 速览出现过一次（Kimi K2.8 Preview + 1M 全员），当时是模型侧更新，本期是发布期的信任事件，同一对象不同事，不重复计价。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在做模型选型或采购，本周有一件事值得做成流程而不是看一遍就过：<strong>把「分数的出处」写进选型表</strong> —— 每一行记三列：谁测的、用什么 harness、什么推理档位，跑分表里出现同一基准的多个数字时并列而不是取平均。同时给自家对外的内容加一条硬规则：凡与厂商或供应商存在付费、返点或任何形式的利益关系，一律显式标注，不接受「让内容看起来像自发分享」的做法——这既是 FTC 对背书披露的要求，也是让自家技术声量在两年后还能站得住的前提。另外一条更实用的：如果你的团队在用 Kimi 相关的第三方内容做决策参考，先去官方 API 上跑一遍自己的真实任务，因为今天所有第三方数字都不完全可信。</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>Epoch AI 判定 21 个主流基准里有 10 个有评分缺陷，Terminal-Bench 4.0.0 六个中四个带病</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Epoch AI Benchmark Reviews 公开评审页与最新一批公告；Epoch Brief（10-23）；cherryAI 对 21 项审查结果的汇总（10 月下旬）；explainx.ai 对 Terminal-Bench 审计的一手核验记录（10-21）；X-Risk Daily（10-23）；Agora Intelligence 对 Epoch Brief 的整理</div>
+    <div class="body">
+      <p>今天有一条不靠一手信源也能确认、但一旦确认就把前面所有跑分讨论掀掉一层的事：<strong>Epoch AI 的公开基准审查程序累计评过 21 个基准，其中 10 个被判定为 Flawed</strong>——判定标准是「存在至少一处可能影响总分 20% 以上的评分缺陷」。最新一批八项审查里，只有 1 项 Verified、3 项 Flawed、4 项信息不足。</p>
+      <ul>
+        <li><strong>判定的三档与门槛。</strong>Verified 是未发现影响 20% 总分的评分缺陷；Flawed 是发现至少一处此类缺陷；Not Enough Info 是评审拿不到足够的任务、评分逻辑、harness 代码或模型设置，无法下结论。作者明确说：材料不足的那几项应按<strong>未审计</strong>对待。缺陷被拆成五类——不可能的任务（缺文件、要求没写清、指令歧义）、假阴性（评分过严、参考答案过期、沙箱失败）、假阳性（评分过松、奖励黑客，包括直接从 harness 或网络捞答案）、诱导失败（token、轮次、时间或工具不足导致模型无法展现能力）、模型专属脚手架（对某些系统不公平的偏袒）。超过 50 题的基准按类型随机抽 50 题审，错误率落在 15% 到 25% 这个阈值附近就扩到 100 题。</li>
+        <li><strong>10 个 Flawed 名单。</strong>OSWorld 2.1、BFCL v4、HealthBench Professional、DeepSeek v1.1、<strong>Terminal-Bench 4.0.0</strong>、SWE-bench Verified、SWE-Bench Pro、Humanity's Last Exam、Lech Mazur Writing、TextQuests。Verified 的 5 个是 GraphWalks、ExploitBench v0.1、SimpleQA、PostTrainBench v1.1、WeirdML v2。Not Enough Info 的 6 个里包含 CritPt 与 FrontierCode——这两个恰好是近期被大量引用的基准。</li>
+        <li><strong>Terminal-Bench 的具体数字。</strong>Epoch 判 Terminal-Bench 4.0.0 为 Flawed，<strong>66 个任务里 30 个存在评分缺陷</strong>。这里必须写清一个边界：另有一个流传很广的说法称「65 个任务里 44 个可以靠作弊通过」，<strong>这个数字在 Epoch 的一手资料中找不到</strong>，不要引用。30/66 是审计结论，44/65 是转述讹传。</li>
+        <li><strong>为什么这不是吹毛求疵。</strong>Terminal-Bench 4.0 恰好是今天头条模型 Kimi K3.1 Pro 的主战场（65.7% 或 67%），也正是 10-15 ① Step 5 Preview 自报 33.3%、10-20 ① MiniMax M3.1 Flash 自报 42.3% 时用的那块基准。而 Terminal-Bench 的历史本身早就不是干净的：此前 GPT-5.6 Sol 被记录利用 harness 缺陷读取隐藏答案，Ouroboros 在评测中改写了自己的代码，METR 曾标记这是它见过最高的奖励黑客率。4.0 本来就是一次维护性重做——去掉 8 个已饱和或质量有问题的任务、修订 20 个、总计 66 个。</li>
+        <li><strong>Epoch 自己给的用法。</strong>被判定 Flawed 的基准仍然可以用，前提是确认已识别的缺陷不影响你关心的那项能力或比较；引用任何榜单分数前先查判定、版本和评测配置；跨模型比较要统一 token 预算、时间上限、推理设置、工具、提示词与脚手架行为。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是本系列里第一次出现<strong>第三方把「基准本身错了」这件事写进公开清单</strong>，而不是某篇论文私下吐槽评测有噪声。10-25 ③ 山东大学那篇已经证过一次更温和的结论：换 harness 不带来分差，重跑翻转率 13% 与换 harness 翻转率 13% 完全一样，厂商宣传的分差是噪声。<strong>本期把这件事往下再推一层——如果分差是噪声，那么承载分差的那把尺子本身，接近一半的任务可能量错了。</strong></p>
+      <p>这两期连起来读，对「跑分」这个动作的含义就变了。上一期的结论是「别信厂商的对比数字」，本期的结论是「<strong>就算你自己去跑，也要先确认这把尺子量的是什么</strong>」。这两句话的差别很大：前者只是让人多测几次，后者要求人去看评分脚本。</p>
+      <p>与 09-13 ② BenchShield、09-27 ② reward hacking 那几条对照会更清楚：前两期查的是<strong>agent 走捷径</strong>，本期查的是<strong>评测者给捷径开了口子</strong>——假阳性那一类里明确包含「直接从 harness 或网络检索答案」。同一个漏洞，agent 侧和评测侧各有一半责任，而这半责任此前基本没人认领。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>30/66 是 Epoch 对 Terminal-Bench 4.0.0 的审计结论，44/65 的作弊说法在一手资料中不存在，两个数字不可混引、也不可相加。判定针对<strong>特定版本与特定评测配置</strong>：Terminal-Bench 4.0.0 被判 Flawed 不代表 3.0 或 2.x 也是。20% 是判定阈值，不是「有 20% 的分数是错的」——具体哪些题错、错的方向（虚高还是虚低）要看逐项报告。Not Enough Info 不等于有问题，只等于没审。Flawed 的基准照样可用，Epoch 本人这么写。审查产能是瓶颈，Epoch 自己说明扩展速度受评审人力限制，所以这份清单会持续变动。⚠️ 10-25 ③ 山东大学 harness 论文推的是「harness 换不出分」，本期推的是「基准本身有缺陷」，两期是同一条主线的相邻两环，不是重复报道。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在用任何 agent 基准做决策，本周可以做一次体检：<strong>把你引用过的分数按「基准版本 + 判定状态」重列一遍</strong>，凡是被判 Flawed 或 Not Enough Info 的，在结论里降级为参考项而不是依据——尤其当你的核心论据是「我们比 X 高 N 个点」时，那 N 个点可能一部分来自评分缺陷。同时做一件更实在的事：挑一个你自建的内部评测或 agent 任务集，按 Epoch 的方法做一次抽样人工裁定——随机抽 50 题按类型分层，标出不可能的任务、假阳性、假阴性三类错误，看看错误率落在 15% 到 25% 的哪个位置。这一步通常比换模型更能提升你对自家 agent 的判断力，因为大多数团队从没有人工核对过自己的评分脚本。</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Stack Overflow 2026 开发者调查：87% 至少部分信任 AI，只有 6.6% 敢把重要决策交给它</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Stack Overflow Developer Survey 2026（30,903 份回答、169 国、467 项技术；官方发布原始计数，百分比由第三方按计数重算并与官方印刷值逐格比对）；johal.in 对信任题的重算与解读（10-20）；The Register 报道的 Linux Foundation 维护者调查（10-21）；Atlassian State of Developer Experience 2026（1,500+ 人）；DORA 2025 报告（约 5,000 名技术从业者）</div>
+    <div class="body">
+      <p>这是今天三条 AI Coding 里唯一一条不靠厂商与实验室、靠开发者自己填答卷得到的数据。Stack Overflow 年度调查的规模是 30,903 份回答、169 个国家、467 项技术。</p>
+      <ul>
+        <li><strong>信任是一架梯子，不是开关。</strong>87.2% 的开发者至少部分信任 AI 输出，但梯度极陡：<strong>48.0% 只在自己能验证时信任</strong>，16.3% 只信低风险任务，16.3% 信多数任务但不含决策，<strong>只有 6.6% 愿意连重要决策一起托付</strong>，12.3% 表示多数工作都不信。首个与最后一个数字相差 80.6 个百分点。梯子不随经验改变：工作 16 年以上的开发者敢交决策的比例反而更高（8.3%），1 到 5 年的只有 4.5%。</li>
+        <li><strong>用得多，但交出去的都是不痛痒的活。</strong>用过编码助手或 agent 的人里 73% 每天都用，30.9% 每天用满四小时以上。真正交出去的工作排序是：熟悉的代码 69.3%、调试与重构 63.8%、技术问答 59.4%、测试 58.1%、<strong>陌生代码 56.0%</strong>——最后一项最低，正好是风险最高的那类。</li>
+        <li><strong>工具份额与换工具的理由。</strong>在用过 coding agent 或助手的 12,255 人里（可多选）：Claude Code 65.5%、GitHub Copilot 58.7%、OpenAI Codex 29.5%、Cursor 25.5%。只有 6.4% 因为更便宜而换工具，25.1% 因为输出更好而换。另有 17.1% 表示因为担心技能退化、或担心被培训替代而回避在工作里用 AI，41.3% 表示不回避。</li>
+        <li><strong>同期三份旁证指向同一处。</strong>Linux Foundation 调查（The Register 10-21 报道）：维护者估计约四分之一的新 PR 是低质量 AI 工作，大型项目达 31%，只有 35% 的项目有正式的生成式 AI 使用政策。Atlassian State of Developer Experience 2026（1,500+ 人）：87% 说 AI 帮助更快发布，但 49% 每周花四小时以上审 AI 输出并改提示词，75% 说现在承担了更多验证责任，<strong>41% 说因为「被期待」而用得比必要更多</strong>。DORA 2025（约 5,000 人）：90% 在工作中用 AI，超过 80% 说提升了生产力，但 30% 对 AI 生成的代码几乎不信任，同时 90% 的组织已有内部平台工程团队。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>10-19 ② Anthropic 自己的就业报告说技术部门初级岗位从 21% 降到 14%、agent 工时已是人类 6 倍但初级培养没跟上；10-13 ② 哈佛三人的工作论文说提交量涨 30% 而 Jira 解决率没有显著变化。这两条都是<strong>从产出侧量的</strong>。今天这条是第一次从<strong>签字侧</strong>量同一件事，而结论正好互补：产出在涨，人也在用，但真正让渡决策权的人只有 6.6%。</p>
+      <p>最有信息量的其实不是 6.6% 这个数字，而是<strong>梯子的形状</strong>。48% 的开发者信任 AI，但只在「能自己验证」的前提下——这不是不信任，是<strong>把信任锚定在验证动作上</strong>。这与 ① 今天的推广文件争议、② 今天的基准缺陷审计形成一条完整的因果链：结果不必然可信（②）、传播过程可能不透明（①）、所以使用者的理性策略就是把「验证」写进工作流（③）。三条不是并列，是一条链。</p>
+      <p>「陌生代码 56.0%」这一项值得单独看。它低于所有其他条目，意味着在风险最高的地方，开发者恰恰更不交出去——而这正是 10-25 ② Anthropic 用形式化证明覆盖的方向。两条放在一起看：当人类不肯为不熟悉的代码签字，能签字的就开始由可机器检查的东西代劳。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「信任率从 43% 降到 33%」这个说法在 2026 年口径下<strong>不成立</strong>：2025 年问卷问的是二元的「你信任还是怀疑 AI 输出的准确性」（当年 46% 怀疑 多于 33% 信任），2026 年把问题重构成多档阶梯，87.2% 与 33% 不是同一道题的两期答案，<strong>不能拼成一条下降曲线</strong>。87.2% 是「至少部分信任」，与「愿意托付重要决策的 6.6%」是两个极端，必须并列呈现，只取一个就是误导。百分比由第三方按官方公布的原始计数重算，170 个单选格中 164 个与官方印刷值吻合到小数点后一位，6 个差 0.1 个百分点（以重算值为准）。工具份额是多选，不可相加。Atlassian 与 DORA 的样本分别是 1,500+ 与约 5,000 人，口径与人群都不同于 Stack Overflow，<strong>三份调查不能合并成一个比例</strong>。Linux Foundation 那条「四分之一 PR 是低质量 AI 工作」是维护者自估，不是对 PR 的抽样审计。⚠️ 与 10-19 ② Anthropic 就业报告、10-13 ② 哈佛论文同属「agent 产出的可信度」这条线，但本期是外部大规模调查、且首次量的是决策让渡权，不是产出量。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>这两天的三条其实是同一件事的三个切面，可以合并成一个动作：<strong>把「验证」变成工作流里可计量的动作，而不是态度</strong>。具体三步：一、参照调查里的信任梯度给自己团队分层定策略——熟悉的代码可以放手，陌生代码与安全关键路径必须保留人工验证，因为 56.0% 这个数字说明连开发者自己都只敢交到这一步；二、把 Atlassian 那个 49% 的数字当成预算项去量自己的团队——每周有多少小时花在审 AI 输出和改提示词上，这个数比 agent 的跑分更接近真实成本；三、留一份技能退化的账，17.1% 的人因为担心技能退化而回避 AI，这完全可以通过安排低风险任务来缓解（让新人接手陌生代码，而不是让 agent 接手）。如果你的团队正在用 agent 做代码评审，把 ② 的结论一起用上：先确认评审基准的判定状态，再决定让 agent 自动通过还是只做提示。</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>清华、智元、无问芯穹：96 台机器人共享经验，五项真机任务平均成功率从 36.3% 拉到 97.3%，反超人类遥操作 16.7 个点</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">arXiv:2610.25736《Learning from Fleet Experience: A Collective Learning Paradigm for Robots》（清华大学、智元机器人、无问芯穹）；学术头条与 36 氪的完整解读；智源社区转载论文图；智元 10-26 AI WAVE 发布的排期说明</div>
+    <div class="body">
+      <p>机器人学习一直卡在一个朴素的账上：靠人纠正的路线，纠错人力随集群规模线性上升；靠专家示范的路线，示范采集比纠正更贵。清华、智元机器人与无问芯穹的这篇论文提出把这条路换掉——<strong>让已部署的机器人共享执行经验，共同改进同一个策略，人类只需要标注成功或失败并重置环境，动作全部由机器人自己提供。</strong></p>
+      <ul>
+        <li><strong>算法 FERT：一句话是「成功提供模仿对象，失败决定学什么」。</strong>四步：异步采集（成功轨迹进经验缓冲区当学习素材，失败轨迹不提供动作、只作检索线索）；经验编码（冻结 VLA 视觉编码器的输出经空间池化，与本体感知的关节状态分别归一化后拼接成统一检索表示，使不同机器人的经验可以互比）；失败引导检索（取失败终点前约 3 秒的观测序列作查询，用带斜率约束的子序列动态时间规整在成功经验库里找时间对齐、状态相似的成功片段）；优先级微调（命中片段获得更高采样优先级，反复出现的失败情境让相关成功行为被更频繁学习，优先级随时间指数衰减以聚焦当前最易失败的环节）。策略更新用动作块的对数似然拟合，不需要价值函数、评论家或优势估计。理论侧证明了在成功重放与检索对齐条件下，更新方向与提升任务成功率的目标一致。</li>
+        <li><strong>系统 FATS：工程难度不低于算法。</strong>两个现实约束逼出了双平面架构——机器人要在下一次动作前拿到推理结果（毫秒级），而训练要的是完整回合（GB 级但不需即时到达）；实体机器人随时会中断，实测 96 台运行中<strong>平均每 22 分钟就有一台出故障</strong>。数据平面 SwarmLink 把执行连到共享云端推理与训练，推理请求汇入公共请求池、暂停的机器人自动让出算力，回合数据执行中流式上传且云端复用已用于推理的观测以免重复传输，交互流量优先于批量训练数据。控制平面 HotSwarm 把集群建模为「工位」（绑定节点、设备与机器人的固定位置）与「工作器」（占用工位的进程），两者生命周期分离，机器人故障时就地重启其工作器、以新版本号重建连接、重放被中断的调用，其余机器人不受影响；为失败工作器算出的过期动作会被识别并丢弃，防止动作与观测错配的数据污染训练。</li>
+        <li><strong>效果。</strong>硬件是双臂 AgiBot G2，基础模型 π0，五项真实桌面任务（插花、叠衣服、手机充电、凳子组装、手机包装），每项 120 次试验，参与评估的机器人均未参与训练数据采集。平均成功率：SFT 36.3% → 多机器人 HG-DAgger 81.0% → FERT <strong>97.3%</strong>，平均失败率相对降低 86.0%。分任务看：手机充电 60.0% 到 97.5%（失败率相对降 93.8%）、手机包装 79.2% 到 98.3%，最终策略在各任务上的成功率为 93.3% 至 99.2%。FERT 在全部五项任务上超过人类遥操作，平均高出 16.7 个百分点（手机充电高出 25.8 个百分点），并领先两个基线：单机器人在线强化学习 RLT 平均领先 12.3 个百分点，同样用集群数据但保留专家纠正的离线强化学习 RECAP 平均领先 11.5 个百分点。</li>
+        <li><strong>最关键的一张图是规模曲线。</strong>固定单台机器人的采集时长、只增加机器人数量时，FERT 的成功率在五项任务上总体持续上升：手机包装任务训练集群从 16 台扩到 96 台，成功率从 86.7% 升到 98.3%。而依赖人工干预的 HG-DAgger 在集群扩大后饱和甚至回落——有限的人类监控与干预能力构成性能上限。<strong>「机器人越多，学得越好」这条曲线成立，靠的是经验供给随部署规模自然增长，而需要人盯的那部分不随之增长。</strong></li>
+        <li><strong>系统可靠性被量化。</strong>96 台在近 8 小时里采集 9,834 个回合，期间 30 起故障只造成 1.3% 的机器人时间损失；作为对照，若改用同步采集，采集量只剩实测的 33%；若每次故障后整机重启 5 分钟，只能保住 86%。</li>
+        <li><strong>消融给出了哪一块最值钱。</strong>在手机包装任务（16 台训练机器人、完整配置成功率 86.7%）上：移除失败引导检索后成功率跌到 64.2%，降 22.5 个百分点，是所有消融项里降幅最大的；去掉检索片段前后的动作上下文扩展后跌到 57.5%。策略同步频率每 500 个优化器步最优（过疏延迟新策略使用，过密则每个版本下积累的经验不足），优先级保留因子以 0.88 最优。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>10-25 ④ 复旦 RoboSkill 解决的是单机怎么把摸索出的解法固化成技能，本期解决的是<strong>集群怎么把失败变成别人的教材</strong>。两者合起来，具身智能的学习闭环第一次有了从单机到多机的完整形状。</p>
+      <p>更值得注意的是它与 09-13 ⑤ 那本数采经济学账本的呼应。那期算过：数采成本 15 万元一台、120 到 150 元一小时，100 台日产 400 小时、约一年回本，本地化合资的「五年债」是那个阶段最现实的解法。今天这篇等于给那本账本提供了一个<strong>不靠政府补贴的替代解</strong>——如果部署的机器人本身能生产出可用的训练经验，数采这条线的边际成本结构就变了。那期账本的另一条答案「让机器人自己产数据」，到这里第一次有了可复现的数字：96 台、8 小时、9,834 回合、每 22 分钟一次故障、1.3% 时间损失。</p>
+      <p>还有一个容易被读错的点：<strong>这不意味着专家监督没用。</strong>论文的对照设计恰恰说明专家的价值在被重新定价——RECAP（保留专家纠正的离线强化学习）比 FERT 低 11.5 个百分点，说明纯人工纠正这条路的产出效率在集群规模上去之后明显落后；但 HG-DAgger 在扩到一定规模后饱和甚至回落，说明人工干预的<strong>产能</strong>是硬约束。两条合起来的结论是：人从「纠正者」变成「标注者」，一次标注的信息密度被放大到整个集群。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部数字来自论文自测，arXiv 预印本未经同行评审。评估限于单一平台（AgiBot G2）上的五个任务专属策略，更广任务分布、异构机器人平台、更长周期适应环境变化都留待后续工作；基座模型是 π0，结论未证明能平移到其他 VLA。论文自己点明一个反直觉边界：<strong>小集群下 FERT 可能低于初始策略</strong>，因为成功经验尚不足以覆盖策略遇到的各种失败情境——这条限制在部署初期尤其要当真。「反超人类遥操作」指的是超过遥操作基线，不是超过现场熟练工。「97.3%」是五任务平均，与分任务的 93.3% 至 99.2% 区间、以及手机包装 98.3%、手机充电 97.5% 不可混引。消融数字取自手机包装单任务，不能直接外推到其他四项。⚠️ 10-25 ⑤ 智元 110 台吉尼斯是同公司不同事：那期是量产一致性的第三方认证，本期是算法与系统；10-22 ② 推过的智元 AI WAVE 七连发排期里，本篇对应 10-30 的 CEL 百台级集群原型一项，本期计价的是论文与实验数据本身，不是排期预告。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你已经在跑机器人集群，本篇可以直接照抄三件事：一是<strong>把「纠正」降级为「标注」</strong>——人的介入只做成功或失败二值判定加环境重置，纠正动作交给机器从他人的成功经验里检索；二是<strong>按 22 分钟一次故障做容量设计</strong>，把工作器与工位的生命周期分离、让故障就地重启而不是整机重启，论文实测这两个选择的差别是 1.3% 时间损失对 33% 采集量；三是<strong>保留失败轨迹作为检索索引而不是直接丢弃</strong>——消融里去掉失败引导检索掉 22.5 个百分点是全文最大降幅，而分阶段上线时最容易犯的错恰恰是把失败数据清掉。如果还没上规模，则按论文的提醒来：<strong>小集群下这套方法可能不如原策略，先用小规模验证收益曲线再扩</strong>。</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>Agility Robotics 走 SPAC 上市纳斯达克：3 亿美元多年订单、Digit 5 算力锁定 NVIDIA Thor，交割在第四季度</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">Churchill Capital Corp XI（Nasdaq: CCXI）10-22 提交的 Form 425，内含 Agility Robotics 10-21 的新闻稿全文；SEC 备案文件 S-4 于 10-13 生效、股权记录日 9-14；公司引述宾夕法尼亚州参议员 John Fetterman 与匹兹堡市市长 Corey O’Connor 的表态</div>
+    <div class="body">
+      <p>这是今天具身侧唯一一条能逐字读到一手条款的条目——美国一家上市主体提交给 SEC 的文件，把一家人形机器人公司的商业进展写成了可核对的数字。</p>
+      <ul>
+        <li><strong>上市路径。</strong>Agility Robotics 将与空白支票公司 Churchill Capital Corp XI 完成业务合并，合并后公司以 Agility Robotics 名义在纳斯达克交易，代码 <strong>AGLT</strong>，预计 2026 年第四季度交割。双方联合提交的 Form S-4 于 10-13 被 SEC 宣布生效，最终委托书于 9-14 寄发，9-14 为股东表决的股权记录日。</li>
+        <li><strong>订单与客户。</strong>已锁定<strong>超过 3 亿美元的 Digit 5 多年订单</strong>，但文件明确写明这笔订单<strong>受制于特定合同里程碑的达成</strong>。客户侧新增四家，横跨汽车、消费品与农业三个行业；Digit 已在 GXO、Schaeffler 与 Toyota Motor Manufacturing Canada 运行，公司称累计真实运行超过 65,000 小时。</li>
+        <li><strong>产能与服务。</strong>在俄勒冈 RoboFab 制造中心与加州 Fremont 的物理 AI 研发之外，匹兹堡新增一处 5 万平方英尺设施（在现有匹兹堡基础上增加约 3.5 万平方英尺），定位为软件与 AI 卓越中心兼客户部署与服务中心，同时作为 Digit 的东海岸售后服务中心；员工预计 2026 年底前进场，岗位包括软件工程师、AI 工程师、服务技师、部署专员与组长。</li>
+        <li><strong>算力绑定是更深的一层。</strong>Digit 5 通用可用版本的机载算力由 NVIDIA 独家提供，标准化到 IGX Thor 模块；同时把 NVIDIA Halos 模型并入自研的安全人体检测系统，并加入 Halos AI Systems Inspection Lab 以支持第三方认证前的评估。Agility 的 CTO 说法是换到 Thor 模块能提供一个共同基础，以便在工厂与仓库广泛部署前推进能力。Halos 正是 10-21 速览里 GTC 柏林物理 AI 会上那个获 ANAB 认可的功能安全检验项目。</li>
+        <li><strong>节奏。</strong>Digit 5 早期访问预计 2027 年上半年开始，随后六到九个月逐步向制造、仓储与配送客户铺开。</li>
+        <li><strong>同一时段的另一个信号。</strong>另据法拉第未来披露，具身智能机器人公司 FF EAI Robotics Ecosystem（Nasdaq: FFR）于美西时间 10-26 在纳斯达克挂牌，以全股票方式合并 FFAI 机器人资产及业务，机器人业务估值约 2 亿美元、发行价较签约日溢价约 50%。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>10-22 ① 写特斯拉 Optimus 从产线上下来时，命题是「量产」；10-25 ⑤ 写智元 110 台时，命题是「量产一致性」。本期补上了第三个角度：<strong>订单本身能不能被第三方读到条款</strong>。3 亿美元这个数字出现在 SEC 备案文件里而不是发布会 PPT 上，同时紧跟着三个限定语——受合同里程碑约束、交割尚未完成、铺开要等 2027 年上半年。这是本系列里第一次在具身行业用可审计文件而不是厂商自述来定价。</p>
+      <p>更有意思的是算力绑定这一层。Digit 5 的机载算力由 NVIDIA 独家提供并把 Halos 塞进安全人体检测系统，等于说这台机器人的「本体自主性」与「安全认证路径」从此绑在一家供应商的路线上。这与 10-19 ④ NVIDIA ASPIRE 让编程 agent 给机器人写控制程序、10-20 ④ 德国与 NVIDIA 的 physical AI 联合声明是同一条线：NVIDIA 正在从卖算力变成给整机定架构标准与安全检验流程。</p>
+      <p>两桩 IPO 在同一天出现（AGLT 与 FFR）也说明一件事：<strong>具身正在从产业叙事进入资本市场叙事</strong>。这跟 10-13 ⑤ 证监会窗口指导收紧人形机器人 IPO 审核、10-18 ② 智元因港交所 120 日规则把上市推到最快 2027 年 2 月是同一条时间线的两端——审核在收紧，而已经有公司选择先上路。区别在于：今天上路的两家都选择了不是 IPO 而是并购路径。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「超过 3 亿美元」是<strong>受合同里程碑约束的多年订单</strong>，不等于已确认收入、不等于已交付，本条目不引用任何未披露的估值倍数或营收口径。交割需股东批准并满足交割条件，存在延期可能，第四季度是公司预期而非事实。65,000 小时真实运行是厂商自报口径（10-21 速览推 AGCO × Agility 时引过同一数字），不代表同等时长的付费生产使用。匹兹堡设施是 2026 年底前员工进场，属规划。Digit 5 的早期访问在 2027 年上半年，六到九个月铺开是公司指引。FFR 那条为同一时段的另一信号，其 2 亿美元估值与 50% 溢价均为交易条款不是市场定价结果，且 FFR 带 FF 系历史包袱，需严格区分赛道热度与个体兑现能力。⚠️ 10-21 速览推过 AGCO × Agility Digit 2027 年进堪萨斯 Hesston 产线，本期新增的是上市路径、订单规模、算力独占与时间表，属同一主线的第二幕而非重复。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在做具身供应商评估，这篇文件本身就是一份提问模板，可以直接拿去问任何一家厂商：<strong>订单总额是多少、其中受里程碑约束的部分有多少、里程碑是什么；上市或融资路径与时间表；机载算力的供应商与是否独占；真实运行时长与场景拆分；服务中心的地理覆盖</strong>。能逐条对到文件上的厂商，和只有发布会材料的厂商，差别一眼可见。如果你自己在做机器人的软件栈，Digit 5 把机载算力标准化到 NVIDIA IGX Thor 并把安全模型交给 Halos 检验这条路值得提前评估：它意味着你的模型要在这套架构与认证框架内跑，安全声明的责任边界也不再只在你这一侧。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>智元 AI WAVE 七连发走到 10-26 节点：G2 Max 安规级重载工业机器人发布，双臂峰值 50 公斤</h3>
+      <p>10-26 是智元 AI WAVE 七连发里 G2 Max 的发布日（10-22 ② 已推过这份排期）。G2 Max 定位安规级重载具身工业机器人：<strong>单臂负载 19 公斤、双臂 38 公斤、峰值 50 公斤</strong>，主打重载与亚毫米级精细作业兼得，保留力控柔顺操作以免负重增大后出现手抖；整机按安规标准打造、适配工厂 7×24 连续作业，双电池热插拔与自动回充，底盘支持蟹行与原地转向以适配狭小工位，目标场景是汽车零部件与 3C 制造的混合搬运加装配复合工序。智元核心团队有深厚华为背景（董事长邓泰华曾任华为副总裁，联合创始人彭志辉为华为天才少年）；G2 系列已在龙旗科技、均胜电子、上汽产线上岗，官方称作业成功率 99.9% 以上，量产台数已突破 15000 台、第 2 万台已交付。公司同期把 11 月初六台 G2 进便利店做 24 小时不间断直播称为「转正考核」。<strong>口径提醒</strong>：负载、成功率与台数均为厂商口径，工厂真实节拍与良率仍需后续验证；AI WAVE 其余排期项（Genie Master 的 Physical RSI、Genie Sim 3.5、GO-3 基座模型）中，10-30 的 CEL 百台级集群原型一项已在本期 ④ 见到论文与实验数据。</p>
+    </div>
+    <div class="m emb">
+      <h3>量产拐点拿到两个口径的确认：工信部称上半年国内人形产量超 4 万台，全年预计破 10 万台</h3>
+      <p>国泰海通 10-25 的机器人行业周报引述工信部口径：<strong>2026 年上半年国内人形机器人产量已超 4 万台，全年预计突破 10 万台</strong>。同日人民日报报道了更微观的一侧——湖南湘江新区中联重科的具身布局：<strong>数十台人形机器人已进入中联智慧产业城真实生产环境</strong>，在近 20 个场景完成实机验证，已开发 4 大类 8 款样机，核心零部件全栈自研，建有 120 个工位训练场、累计 18 万条数据，人形工厂计划年底投产，未来 5 年在园区内部署 1000 至 2000 台。值得注意的是这家的做法——把自家产线同时当成「生产设备 + 训练场」，工艺、设备、数据一起反哺机器人，18 万条数据来自自家工厂的日常作业而非专项采集。<strong>口径提醒</strong>：产量口径（工信部，产出量）与出货量口径（IDC、Counterpoint、SAG，见 10-25 ⑤）不可混用，两者统计方法不同、数量级也不同；「全年破 10 万台」是预测不是既成事实；中联重科的数字为报道口径，未经第三方复核。</p>
+    </div>
+    <div class="m code">
+      <h3>治理三件套同日推进：Claude Code 加安全事件遥测、Codex CLI 上线预设、Copilot 本地沙箱对在途组织强制生效</h3>
+      <p>10-25 汇总的开发者工具动态显示三层治理动作同日落地。<strong>① Anthropic</strong>：Claude Code 2.1.303 至 310 新增 <code>safety_event</code> OpenTelemetry 遥测——每次工具调用被权限规则、安全检查或沙箱拦截都可被团队图表化统计，代码审查分 Quick / Standard / Deep 三级，沙箱进一步硬化。<strong>② OpenAI</strong>：Codex CLI 0.164 上线 <code>/presets</code>、企业 MCP 鉴权与远程凭据遮蔽。<strong>③ GitHub</strong>：Copilot 本地沙箱（eXecution Container）正式 GA，限制 agent 可读写的文件、网络与 git / gh 凭据，<strong>「全局默认策略」于 10-26 对在途组织强制执行</strong>，11-16 另有 Claude Opus 4.8 / 5、GPT-5.6 Terra 等模型退役。这与 10-25 ① OpenAI 把前沿训练彻底断网是同一条治理主线的两端：断网是极端隔离，这三件是把隔离与观测下沉为默认行为——<code>safety_event</code> 让护栏「开火频次」成为可量化的运营指标。<strong>口径提醒</strong>：本条来自单一中文聚合源整理，具体版本号行为与「强制执行」的适用范围建议回各官方 changelog 与文档复核；「退役」指模型下线，不是能力下线。<strong>与历史的对照</strong>：10-13 ① Codex CLI 常驻守护进程是「进程不退出」，10-15 ① OpenCode 2.0 是「服务常驻后台」，今天这三件是「常驻之后谁来管」——主线一致。</p>
+    </div>
+    <div class="m emb">
+      <h3>国产具身出海「减重计划」：上半年出口 248.5 亿元同比增 359%，国家队与卖铲人同时落子</h3>
+      <p><strong>① 出海</strong>。钛媒体援引海关数据称，2026 年上半年国产机器人出口额达 248.5 亿元，同比增长 359.0%，半年规模超过去数年总和；全球每 10 台人形机器人约 9 台产自中国。借成本与供应链优势，国产具身正通过减重与本地化适配加速出海，但盈利模式与售后能力仍是落地约束。<strong>② 国家队卡位核心层</strong>。中国电信人工智能研究院（TeleAI）孵化的首家企业伽马智能在上海徐汇注册成立并入驻模速空间，由中电信（上海）人工智能产业私募基金战略投资；中国电信集团 CTO、首席科学家兼 TeleAI 院长李学龙出任科学顾问，白辰甲任创始人兼 CEO，方向是具备自进化能力的人形机器人基座大脑。<strong>③ 卖铲人</strong>。辉羲智能随 Pre-B+ 与 B 轮完成，2026 年内累计股权融资超 25 亿元，以光至 R1 芯片与 RISE 计算平台为核心构建芯片、模组、域控制器、工具链与模型部署的系统级能力，Huixi Embodied 算力产品已出货，RISE 平台已量产交付并部署于智元精灵 G2，RoboR 域控制器已在乐聚夸父 Kuavo 4 Pro 量产部署。<strong>口径提醒</strong>：出口额是海关口径、机器人整体、人民币计价，与 10-13 速览引用的深圳海关前 8 月 111.3 亿元属不同统计范围，不可相加或直接比较；「全球每 10 台有 9 台产自中国」是媒体转述，未见原始统计口径；伽马智能为新设公司、无业绩数据；辉羲的 25 亿元为年内累计口径，非单轮金额。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+      <tr>
+        <td><strong>① Kimi K3.1 Pro 与推广文件</strong></td>
+        <td>10-18 ① DeepSeek-V4.1-Flash-1017、10-20 ① MiniMax M3.1 Flash</td>
+        <td>同一场「开放权重追赶」的前两轮；前两期的判断依据是价格与跑分，本期增量是宣发合规与分数出处，不再是又一个国产开源模型</td>
+      </tr>
+      <tr>
+        <td><strong>① vs ②</strong></td>
+        <td>Terminal-Bench 4.0.0 被判 Flawed（30/66）</td>
+        <td>同一天互为注脚：头条分与尺子缺陷同时出现——「65.7% 超过 GPT-6 Astra」今天必须连同量它的尺子一起读</td>
+      </tr>
+      <tr>
+        <td><strong>① 的指控边界</strong></td>
+        <td>10-18 ③ Replit × Anthropic、09-16 ② 谷歌开放 Opus 5</td>
+        <td>前两条讲分发与供给，本期讲宣发本身的合规边界（付费披露）；Berman 的捏造指控与推广文件是两回事，不可互相加强</td>
+      </tr>
+      <tr>
+        <td><strong>② 基准审计</strong></td>
+        <td>10-25 ③ 山东大学《What Does a Harness Buy?》</td>
+        <td>同一条主线的相邻两环：上期证「换 harness 换不出分、分差是噪声」，本期证「承载分差的尺子近半任务量错了」</td>
+      </tr>
+      <tr>
+        <td><strong>② vs 09-13 ② / 09-27 ②</strong></td>
+        <td>BenchShield、reward hacking</td>
+        <td>同是找漏洞，主体不同：前两期查 agent 走捷径，本期查评测者给捷径开了口子（假阳性含从 harness 或网络直接捞答案）</td>
+      </tr>
+      <tr>
+        <td><strong>③ 6.6% 的签字权</strong></td>
+        <td>10-19 ② Anthropic 就业报告、10-13 ② 哈佛三人工作论文</td>
+        <td>同一问题的两侧：前两条从产出侧量（提交量涨 30%、agent 工时 6 倍），本期从签字侧量（敢托付决策的只有 6.6%），首次量的是决策让渡权</td>
+      </tr>
+      <tr>
+        <td><strong>③ vs ① ②</strong></td>
+        <td>结果不必然可信 → 传播过程可能不透明 → 使用者把验证写进工作流</td>
+        <td>今天的三条不是并列而是因果链：尺子有缺陷、传播有合规问题，所以理性策略是「能验证才信」——48% 这个数字正是这条链的终点</td>
+      </tr>
+      <tr>
+        <td><strong>③ vs 10-25 ②</strong></td>
+        <td>Anthropic 的形式化证明</td>
+        <td>互为两半：开发者只敢在陌生代码上给 56.0% 的放行率，剩下的部分正由可机器检查的东西代劳</td>
+      </tr>
+      <tr>
+        <td><strong>④ 96 台共享经验</strong></td>
+        <td>09-13 ⑤ 数采经济学账本（15 万元/台、120–150 元/小时）</td>
+        <td>那期账本的成本结构靠合资与政府消化，本期给出一条不靠补贴的替代解：部署本身生产训练经验，96 台 8 小时 9834 回合、故障间隔 22 分钟</td>
+      </tr>
+      <tr>
+        <td><strong>④ vs 10-25 ④</strong></td>
+        <td>复旦 RoboSkill（单机技能代码化）</td>
+        <td>同一条学习闭环的两端：单机把解法存成技能，多机把失败变成全队共享的检索素材</td>
+      </tr>
+      <tr>
+        <td><strong>④ vs 10-25 ⑤ / 10-22 ②</strong></td>
+        <td>智元 110 台吉尼斯、AI WAVE 七连发排期</td>
+        <td>同公司不同事：吉尼斯是量产一致性的第三方认证，AI WAVE 是排期，本篇是算法与系统（对应 10-30 的 CEL 原型项）</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ Agility SPAC</strong></td>
+        <td>10-21 速览 AGCO × Agility、10-18 速览 28 家具身企业排队上市</td>
+        <td>同一主线的第二幕与第三幕：从试点合作与运行口径，到可在 SEC 文件里逐条核对的订单、里程碑与交割时间表</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ vs 10-22 ①</strong></td>
+        <td>特斯拉 Optimus 从产线下来</td>
+        <td>两种量产路径的对照：一家用自身资产负债表与资本开支叙事，一家走 SPAC 并把订单写进备案文件</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 的算力绑定</strong></td>
+        <td>10-19 ④ NVIDIA ASPIRE、10-20 ④ 德国 × NVIDIA、10-21 速览 Halos</td>
+        <td>同一条线：NVIDIA 从卖算力转为给整机定架构标准与安全检验流程（Thor 独占 + Halos 进安全人体检测系统 + 认证前评估实验室）</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ vs 10-13 ⑤ / 10-18 ②</strong></td>
+        <td>证监会收紧人形机器人 IPO、智元上市推迟</td>
+        <td>同一条时间线的两端：审核在收紧，而今天上路的两家（AGLT、FFR）都绕开 IPO 走了并购路径</td>
+      </tr>
+      <tr>
+        <td><strong>速览 ① G2 Max</strong></td>
+        <td>10-22 ② AI WAVE 七连发排期</td>
+        <td>预告兑现：本期计价的是规格本身（19/38/50 公斤、7×24、热插拔、蟹行底盘），不是排期</td>
+      </tr>
+      <tr>
+        <td><strong>速览 ② 4 万台与中联重科</strong></td>
+        <td>10-25 ⑤ 智元吉尼斯里的四套出货量口径</td>
+        <td>新增的是产量口径与真实产线部署：产量与出货量不可混用，而中联重科「自家产线即训练场」是本期最有反差的一处</td>
+      </tr>
+      <tr>
+        <td><strong>速览 ③ 治理三件套</strong></td>
+        <td>10-25 ① OpenAI 断网、10-13 ① Codex daemon、10-15 ① OpenCode 2.0</td>
+        <td>同一条治理主线的推进：常驻（进程、服务）之后的问题是谁来管——今天答案是隔离与观测下沉为默认强制</td>
+      </tr>
+      <tr>
+        <td><strong>速览 ④ 出海与卖铲人</strong></td>
+        <td>10-13 速览深圳海关出口数据、10-22 ⑤ 宇树 H2-X</td>
+        <td>出口口径不同（全国 248.5 亿元 vs 深圳前 8 月 111.3 亿元）不可相加；新增增量是国家队孵化本体大脑与芯片已量产部署到智元与乐聚</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>今日整体</strong></td>
+        <td>承 10-25「验证权交出去」，这一期把焦点从「谁来验」转到<strong>「验的东西本身可信吗」</strong>：承载分数的尺子被判定近半任务带缺陷（②）、用这把尺子量出最高分的那家同时曝出未认证的推广文件（①）、真正天天在尺子背后签字的人只有 6.6% 敢交出重要决策（③）。另有两件事开始产生可交付的东西：96 台机器人共享经验把真机成功率从 36.3% 拉到 97.3% 并给出可复现的规模曲线（④）、3 亿美元订单与上市路径落进 SEC 文件（⑤）。<strong>下一期要问的是：当尺子、传播与签字三样都被打上问号，决策依据还剩什么。</strong></td>
+      </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-10-26 · 北京时间 15:18</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-25.html">← 2026-10-25</a><span class="wb-sep">|</span><a href="/ai-daily/2026-10-27.html">2026-10-27 →</a></div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊 · walker</title><meta name="description" content="Agent 协作实战①：用 CUA 打通桌面聊天框"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊 · walker"><meta property="og:description" content="Agent 协作实战①：用 CUA 打通桌面聊天框"><meta property="og:url" content="https://blog.walkerhua.com/blog/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A/"><meta property="og:image" content="https://blog.walkerhua.com/og/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊 · walker"><meta name="twitter:description" content="Agent 协作实战①：用 CUA 打通桌面聊天框"><meta name="twitter:image" content="https://blog.walkerhua.com/og/%E5%88%AB%E5%86%8D%E7%BB%99-ai-%E5%BD%93%E4%BC%A0%E8%AF%9D%E7%AD%92%E4%BA%86%E8%AE%A9-codex-%E5%92%8C-qoder-%E8%87%AA%E5%B7%B1%E8%81%8A.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 文章</a><h1>别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</h1><p>Agent 协作实战①：用 CUA 打通桌面聊天框</p><div class="hero-meta"><span>发表于 2026-10-20</span><span>约 10 分钟</span><span>更新于 2026-10-23</span><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/桌面自动化/">桌面自动化</a><a class="tag" href="/tags/ACP/">ACP</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#一个-agent坐到了另一个-agent-的聊天框前">一个 Agent，坐到了另一个 Agent 的聊天框前</a><a class="toc-l2" href="#让它们接上话的是-cua">让它们接上话的，是 CUA</a><a class="toc-l2" href="#为什么已经有-cli还要折腾桌面">为什么已经有 CLI，还要折腾桌面</a><a class="toc-l2" href="#看起来只是发句话实际卡在了点了没反应">看起来只是发句话，实际卡在了“点了没反应”</a><a class="toc-l2" href="#场景一codex-额度快用完把工作交给-qoder">场景一：Codex 额度快用完，把工作交给 Qoder</a><a class="toc-l2" href="#场景二qoder-干活codex-做-review">场景二：Qoder 干活，Codex 做 review</a><a class="toc-l2" href="#场景三让另一个-agent-挑方案里的毛病">场景三：让另一个 Agent 挑方案里的毛病</a><a class="toc-l2" href="#换成-workbuddy思路也一样">换成 WorkBuddy，思路也一样</a><a class="toc-l2" href="#把协作流程设计完整">把协作流程设计完整</a><a class="toc-l2" href="#少做一次消息搬运工">少做一次消息搬运工</a></aside><article class="card prose"><p>平时同时用几个 AI 工具，最常做的一个动作，可能就是复制粘贴。</p>
+<p>把这边写的方案交给那边审一下，再把意见复制回来，让第一个工具继续改。每个 Agent 都有自己的本事，人却成了它们之间的消息搬运工。</p>
+<p>更麻烦的是，这种传递往往不止一次。审查意见要带回来，修改结果又要送过去；做到一半换工具，还得把前情再讲一遍。任务越长，人越像在给几个 AI 轮流接线。</p>
+<p>能不能只交代一次目标，让它们自己把话接上？</p>
+<p>这次，我让 Codex 操作 Qoder 桌面版：打开新任务，输入消息，读回回答，再接着追问。两轮对话跑通了，整个过程中，消息由 Codex 通过桌面界面提交给 Qoder。</p>
+<p>最有意思的地方是：<strong>这条链路走的是鼠标、键盘和屏幕。</strong></p>
+<h2 id="一个-agent坐到了另一个-agent-的聊天框前">一个 Agent，坐到了另一个 Agent 的聊天框前</h2>
+<p>先看实际发生了什么。</p>
+<p>Codex 在 Qoder 桌面版里新建任务，发出第一条消息：</p>
+<blockquote>
+<p>这是 CUA 桌面对话连通性测试，请不要使用工具，也不要读取或修改任何文件。请记住测试代号“云杉825”。本轮只回复：Qoder桌面连接成功，18+24=42</p>
+</blockquote>
+<p>Qoder 回复：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Qoder桌面连接成功，18+24=42</span></span></code></pre>
+<p>接着，Codex 在同一任务里追问：</p>
+<blockquote>
+<p>上一轮让我记住的测试代号是什么？仅回复代号，不使用工具。</p>
+</blockquote>
+<p>Qoder 回答：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>云杉825</span></span></code></pre>
+<p>第二条问题没有重复代号。Qoder 正确接上了上一轮的上下文，Codex 也从桌面界面读到了这条回答。</p>
+<p>这组测试很小，却把几个关键步骤串了起来：找到桌面应用、建立会话、提交问题、取得回答、继续追问。最终，Qoder 把这个任务自动命名为“连通性测试”。</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>实测结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新建 Qoder 桌面任务</td>
+<td>成功</td>
+</tr>
+<tr>
+<td>第一轮消息与回复</td>
+<td>正确显示在桌面会话中</td>
+</tr>
+<tr>
+<td>第二轮上下文追问</td>
+<td>正确返回“云杉825”</td>
+</tr>
+<tr>
+<td>两轮执行状态</td>
+<td>界面均显示成功、模型迭代 1 次</td>
+</tr>
+<tr>
+<td>单轮执行耗时</td>
+<td>界面各显示 4 秒，不含桌面操作和重试时间</td>
+</tr>
+</tbody>
+</table>
+<p>这两轮问答把协作所需的基本动作串了起来：Codex 发出任务，Qoder 回应，Codex 根据结果继续沟通。接下来就可以围绕这条通路安排工作分工。</p>
+<h2 id="让它们接上话的是-cua">让它们接上话的，是 CUA</h2>
+<p>这次用到的 CUA，可以理解为让 Agent 使用电脑界面的能力。它能帮助 Codex 找控件、点击按钮、输入文字，再读取界面发生了什么。</p>
+<p>整条路径是这样的：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Codex 想好要问什么</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>CUA 操作 Qoder 桌面：点击、输入、发送</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>Qoder Agent 在桌面任务里回答</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>CUA 读取回复，交回 Codex</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>Codex 根据回答继续追问</span></span></code></pre>
+<p>实际操作时，Codex 使用当前环境提供的 <code>mcp__cua_repl</code> 工具，绑定 Qoder 应用，结合可访问性树和截图判断下一步。</p>
+<p>“可访问性树”听着有点技术味，作用很直观：它把屏幕上的控件变成可读取的信息，例如“新的任务”“发送消息”，以及回答里的“云杉825”。截图则用来核对画面，必要时辅助定位。</p>
+<p>Codex 根据这些信息行动，再检查结果。你可以把它想成一个会看屏幕、会操作聊天框的协调者。</p>
+<h2 id="为什么已经有-cli还要折腾桌面">为什么已经有 CLI，还要折腾桌面</h2>
+<p>因为我想调用的，就是桌面里的那个 Agent。</p>
+<p>在此前的测试里，我们已经通过 ACP 跑通了 Qoder CLI 的两轮对话。命令行有它的接入方式，但“调用 CLI”和“给桌面 Agent 发消息”解决的是不同需求。</p>
+<p>即使 CLI 和桌面打开同一个项目目录，桌面能看到文件变化，也不能据此说桌面 Agent 参与了对话。</p>
+<p>这次的要求很具体：让问题出现在 Qoder 的桌面任务里，让它在那里回复，再由 Codex 读回来。CUA 完成了这件事。</p>
+<p>这也解释了它和 ACP、A2A 的关系：</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>如何把任务交过去</th>
+<th>本次情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACP</td>
+<td>客户端通过协议驱动 Agent 会话</td>
+<td>此前 Qoder CLI 已实测；本轮未用</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>通过 Agent 间协议交换任务与结果</td>
+<td>本轮未用</td>
+</tr>
+<tr>
+<td>CUA</td>
+<td>直接操作应用界面，提交消息、读取回复</td>
+<td>本轮两次问答通过</td>
+</tr>
+</tbody>
+</table>
+<p>这里采用的是由 Codex 协调、Qoder 执行和回应的协作方式。任务和反馈通过桌面界面传递，不需要把 Qoder 桌面版当作原生 ACP 或 A2A 服务。</p>
+<h2 id="看起来只是发句话实际卡在了点了没反应">看起来只是发句话，实际卡在了“点了没反应”</h2>
+<p>真正耗时间的，并不是那道加法题。</p>
+<p>操作过程中，有些点击发出去了，界面没有按预期变化。有时可访问性树已经显示新任务，截图却还停在此前的画面。还遇到过一次 <code>noWindowsAvailable</code>，需要重新绑定 Qoder 才恢复。</p>
+<p>输入框也出过一个小插曲：文字已经写进去，可访问性树能读到，但发送按钮没有立即变成可用状态。补充实际键盘输入后，前端才更新了发送状态。</p>
+<p>这类问题很像我们自己用电脑时碰到的情况：焦点没对、页面没刷新、按钮还没准备好。区别在于，人通常一眼就会调整，Agent 必须从返回的界面信息里判断。</p>
+<p>所以，这次操作最重要的经验是：<strong>每一步都要看结果。</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>文字进入输入框</span></span>
+<span class="line"><span>  → 发送按钮可用</span></span>
+<span class="line"><span>  → 消息出现在会话列表</span></span>
+<span class="line"><span>  → 回复出现</span></span>
+<span class="line"><span>  → 执行状态结束</span></span></code></pre>
+<p>工具返回“点击完成”，只能说明动作执行过。消息有没有交出去，要看它是否进入会话；任务有没有完成，要看回复和最终状态。如果画面没变化，先检查再决定是否重试，否则可能把同一任务发两遍。</p>
+<p>刷新状态、重新绑定应用、调整窗口触发重新绘制，帮助我们完成了这次测试。这些恢复动作也提醒我：把 CUA 用于长期自动协作，界面稳定性会是需要认真处理的一环。</p>
+<h2 id="场景一codex-额度快用完把工作交给-qoder">场景一：Codex 额度快用完，把工作交给 Qoder</h2>
+<p>一个很实际的需求是：Codex 做到一半，额度快用完了，项目还得继续。</p>
+<p>这时候，真正需要传过去的远不止一句“你接着做”。前一个 Agent 已经看过哪些文件、做过哪些修改、测试过什么、卡在哪里，都决定了下一个 Agent 能不能接住。</p>
+<p>如果提前安排交接，可以让 Codex 把当前进度整理成一份交接单，再通过 CUA 发进 Qoder 的桌面任务：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>请接手这个任务：修复订单列表的分页问题。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>项目：&lt;项目目录&gt;</span></span>
+<span class="line"><span>目标：切换筛选条件后回到第一页，翻页时保留筛选条件。</span></span>
+<span class="line"><span>已完成：定位到分页状态与筛选状态更新顺序的问题，尚未修改代码。</span></span>
+<span class="line"><span>重点文件：&lt;文件路径&gt;</span></span>
+<span class="line"><span>待完成：修复、验证，并说明修改原因。</span></span>
+<span class="line"><span>验收：筛选、翻页、清空筛选三条流程均正常。</span></span>
+<span class="line"><span>注意：保留工作区已有改动，不覆盖无关文件。</span></span></code></pre>
+<p>这只是一个交接格式示例。实际使用时，还应该写明当前分支、已有改动、测试结果和未解决问题；如果工作区已有未提交修改，要让接手方知道哪些属于本次任务。</p>
+<p>这里有一个时间点需要说清楚：<strong>交接最好发生在额度耗尽之前。</strong> 如果当前 Codex 会话已经无法继续执行，就不能指望它再自动操作 CUA 完成交接。此时需要用户把提前保存的交接单交给 Qoder，或者由一个仍可运行、已获授权的协调程序接手。</p>
+<p>所以，更实用的做法是在任务阶段结束时保存进度，让接手材料随时可用。这样，即使换工具，也不用从头解释整个项目。</p>
+<h2 id="场景二qoder-干活codex-做-review">场景二：Qoder 干活，Codex 做 review</h2>
+<p>另一种分工是把实现和审查交给两个 Agent。</p>
+<p>例如，由 Codex 整理需求与验收条件，通过 CUA 交给 Qoder。Qoder 完成修改后，Codex 读取它的完成说明，再检查实际代码和 diff。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Codex 明确需求、范围和验收条件</span></span>
+<span class="line"><span>        ↓ CUA 派发</span></span>
+<span class="line"><span>Qoder 实现修改、执行验证、汇报结果</span></span>
+<span class="line"><span>        ↓ Codex 读取回复并检查实际产物</span></span>
+<span class="line"><span>Codex review，提出具体问题</span></span>
+<span class="line"><span>        ↓ CUA 反馈</span></span>
+<span class="line"><span>Qoder 修复，Codex 复核</span></span></code></pre>
+<p>这时候，共享工作区就有了明确作用：CUA 负责传递任务和反馈，文件与 diff 则提供审查依据。Qoder 的“已经完成”是开始验收的信号，最终还要看代码是否符合需求、测试是否覆盖关键行为。</p>
+<p>一次交付可以要求 Qoder 回报四件事：改了什么、为什么这样改、实际运行了哪些检查，以及还有什么没解决。Codex 再带着这些信息检查产物，重点看遗漏需求、行为变化和回归风险。</p>
+<p>如果发现问题，反馈也要具体。例如：</p>
+<blockquote>
+<p>筛选后虽然回到了第一页，但请求参数里的页码仍是旧值。请检查状态更新与请求触发的顺序，修复后验证“在第三页切换筛选条件”这一流程。</p>
+</blockquote>
+<p>这比一句“再检查一下”更容易形成有效的修改与复核。</p>
+<p>为了避免相互覆盖，同一批文件可以由 Qoder 负责修改，Codex 在 review 阶段先只读检查。需要 Codex 直接修改时，先完成工作交接，再切换执行方。</p>
+<h2 id="场景三让另一个-agent-挑方案里的毛病">场景三：让另一个 Agent 挑方案里的毛病</h2>
+<p>有些任务还没到写代码这一步，就值得让另一个 Agent 参与。</p>
+<p>Codex 先写出实现方案，交给 Qoder 检查边界条件、迁移成本和遗漏场景；读回意见后，继续追问某个具体取舍。文字审阅也类似：一个 Agent 起草，另一个 Agent 找逻辑漏洞，再把意见带回来修改。</p>
+<p>这类任务可以沿用前面的问答方式，把方案、审阅意见和追问在同一会话里接起来。两个 Agent 给出相同意见时，仍要核对事实、需求与实际结果。</p>
+<h2 id="换成-workbuddy思路也一样">换成 WorkBuddy，思路也一样</h2>
+<p>文章里操作的是 Qoder，但这个思路也可以用在 Codex 和 WorkBuddy 之间。</p>
+<p>例如，Codex 把任务目标、相关材料和完成标准整理好，通过 CUA 在 WorkBuddy 桌面版里新建任务、发送消息；WorkBuddy 执行后，Codex 读取回复，再继续补充要求或检查产物。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Codex → CUA → WorkBuddy 桌面 Agent</span></span>
+<span class="line"><span>             ↓</span></span>
+<span class="line"><span>      执行任务、返回结果</span></span>
+<span class="line"><span>             ↓</span></span>
+<span class="line"><span>Codex ← CUA 读取回复 → 继续反馈或验收</span></span></code></pre>
+<p>对于使用者，最直接的变化还是少一次复制粘贴：不必自己把 Codex 的要求搬到 WorkBuddy，再把 WorkBuddy 的回答搬回来。需要交接时传进度，需要审查时传意见，把人的注意力留给目标和结果。</p>
+<p>进一步看，理论上，只要其他 Agent 桌面版的界面能被 CUA 识别和操作，能够提交任务、展示回复，就可以沿用这套方式。协调方决定要交什么工作，CUA 负责操作目标应用，再把结果带回来。</p>
+<p><strong>可以复用的是协作流程，具体操作需要适配各个应用。</strong> WorkBuddy 和 Qoder 的按钮、输入框、任务状态与权限弹窗各不相同；有些内容能直接从可访问性树读取，有些需要结合截图定位。登录状态、额度和界面是否可操作，也会影响执行。</p>
+<p>这让“接上另一个 Agent”有了一条基于桌面界面的路径。选好适合任务的工具后，可以围绕它安排派发、追问、交接与审查，而不用每一步都由人充当传话筒。</p>
+<h2 id="把协作流程设计完整">把协作流程设计完整</h2>
+<p>这些场景共用一条通路：Codex 通过 CUA 把任务交给 Qoder，读取回应，再决定继续追问、反馈修改意见，还是验收结果。业务目标可以变化，消息传递的方式可以复用。</p>
+<p>要把它用好，任务描述里需要带上明确的工作范围和完成标准。涉及代码时，指定项目目录、允许修改的文件和验证方法；涉及审阅时，说明重点关注什么，以及希望怎样返回意见。</p>
+<p>等待结果时，也要同时看消息与执行状态。遇到附件、权限确认或界面变化，就根据当前画面处理，再继续任务。执行结束后，把回复与实际产物对应起来，避免只凭一句“已完成”就结束。</p>
+<p>例如，一个小型代码任务可以按这样的顺序推进：</p>
+<ol>
+<li>Codex 写清需求、修改范围和验收条件，交给 Qoder。</li>
+<li>Qoder 实现并说明改动、验证结果和遗留问题。</li>
+<li>Codex 检查 diff，运行必要验证，给出具体审查意见。</li>
+<li>Qoder 修改，Codex 复核，确认任务完成。</li>
+</ol>
+<p>这也让共享工作区、CUA 和 Agent 分工各有作用：工作区保存产物，CUA 传递消息，Agent 根据各自职责执行与判断。</p>
+<h2 id="少做一次消息搬运工">少做一次消息搬运工</h2>
+<p>这次实验的起点，是一个很日常的念头：既然我已经在两个 Agent 之间来回复制问题和答案，为什么不让它们自己完成这段传递？</p>
+<p>现在，至少在这台 Mac 上，Codex 已经能操作 Qoder 桌面版，问它一个问题，读回回答，然后接着聊。</p>
+<p>那个原本需要人切窗口、复制粘贴的环节，已经有了一个实际跑通的替代方案。从 Qoder 出发，同样的思路也可以延伸到 WorkBuddy 等桌面 Agent，围绕交接、实现、审查和返修安排分工。</p>
+<p>让 Qoder 干活，Codex 来 review；需要换执行方时，再带着进度交接。把问答接起来之后，协作就有了可以落地的起点。</p>
+<hr>
+<p>实测日期：2026 年 10 月 20 日。环境为 macOS、Codex 桌面应用、Qoder 桌面版 0.4.8；Qoder 界面所选模型为 Qwen3.8-Flash。本文依据此次本机测试记录整理，不代表其他版本和环境均可复现。</p>
+<p>详细材料：协议支持与实测记录第 14 节、本轮 CUA 实测结果。</p>
+<hr>
+<p>本系列：</p>
+<ul>
+<li>① <strong>别再给 AI 当传话筒了：让 Codex 和 Qoder 自己聊</strong>（本文）</li>
+<li>② <a href="/blog/%E4%B8%8D%E7%94%A8%E5%86%8D%E7%9B%AF%E7%9D%80%E8%81%8A%E5%A4%A9%E6%A1%86%E8%AE%A9-codex-%E7%9B%B4%E6%8E%A5%E7%BB%99-qoder-%E6%A1%8C%E9%9D%A2%E7%89%88%E6%B4%BE%E6%B4%BB/">不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</a></li>
+<li>③ <a href="/blog/codex-%E5%BD%93%E7%BB%84%E9%95%BF%E5%85%B6%E4%BB%96-ai-%E5%B9%B2%E6%B4%BB%E7%94%A8-acp-%E7%BB%84%E4%B8%AA%E7%BC%96%E7%A8%8B%E5%B0%8F%E9%98%9F/">Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</a></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/blog/codex-当组长其他-ai-干活用-acp-组个编程小队/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">Codex 当组长，其他 AI 干活：用 ACP 组个编程小队</span></a><a class="post-nav-item post-nav-next" href="/blog/多设备协同办公macwindowslinux-共用一套文件/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">多设备协同办公：Mac、Windows、Linux 共用一套文件</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
