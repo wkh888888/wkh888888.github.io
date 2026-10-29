@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P026 · 脱敏门禁「只拦 P1」的注释与实际行为不符：P2 命中照样中止发布 · walker</title><meta name="description" content="发布 AI 日报前预扫，命中 1 处 P2："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p026-%E8%84%B1%E6%95%8F%E9%97%A8%E7%A6%81p2%E5%91%BD%E4%B8%AD%E4%B9%9F%E4%BC%9A%E4%B8%AD%E6%AD%A2%E5%8F%91%E5%B8%83/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P026 · 脱敏门禁「只拦 P1」的注释与实际行为不符：P2 命中照样中止发布 · walker"><meta property="og:description" content="发布 AI 日报前预扫，命中 1 处 P2："><meta property="og:url" content="https://blog.walkerhua.com/pits/p026-%E8%84%B1%E6%95%8F%E9%97%A8%E7%A6%81p2%E5%91%BD%E4%B8%AD%E4%B9%9F%E4%BC%9A%E4%B8%AD%E6%AD%A2%E5%8F%91%E5%B8%83/"><meta property="og:image" content="https://blog.walkerhua.com/og/p026-%E8%84%B1%E6%95%8F%E9%97%A8%E7%A6%81p2%E5%91%BD%E4%B8%AD%E4%B9%9F%E4%BC%9A%E4%B8%AD%E6%AD%A2%E5%8F%91%E5%B8%83.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P026 · 脱敏门禁「只拦 P1」的注释与实际行为不符：P2 命中照样中止发布 · walker"><meta name="twitter:description" content="发布 AI 日报前预扫，命中 1 处 P2："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p026-%E8%84%B1%E6%95%8F%E9%97%A8%E7%A6%81p2%E5%91%BD%E4%B8%AD%E4%B9%9F%E4%BC%9A%E4%B8%AD%E6%AD%A2%E5%8F%91%E5%B8%83.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P026 · 脱敏门禁「只拦 P1」的注释与实际行为不符：P2 命中照样中止发布</h1><p>发布 AI 日报前预扫，命中 1 处 P2：</p><div class="hero-meta"><span>踩坑于 2026-10-28</span><span>约 3 分钟</span><a class="tag" href="/tags/发布链路/">发布链路</a><a class="tag" href="/tags/脱敏/">脱敏</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防--检查项">预防 / 检查项</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-28</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>发布链路 / 脱敏</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（发布被卡在门禁；脚本已推 GitLab 会留半推送状态）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>redact-sensitive、P2、level P1、退出码、publish.sh、脱敏门禁、class_ip、169.254.169.254、RFC 3927、IMDS、误报、skip-redact</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>发布 AI 日报前预扫，命中 1 处 P2：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>P2 待确认  公网 IP  ai-daily-2026-10-28.html:324  169.254.169.254  &lt;服务器IP&gt;</span></span></code></pre>
+<p>该地址是云厂商实例元数据服务（IMDS）的标准地址，日报正文在讲模型探测裸云元数据，属于<strong>公开且无害</strong>的引述。以为 P2 不会拦发布，于是跑了完整脚本，结果被卡住：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[redact] 检出敏感内容（P0/P1），已中止发布：先 apply 脱敏再重跑，或加 --skip-redact 绕过</span></span></code></pre>
+<h2 id="根因">根因</h2>
+<p><code>publish.sh</code> 的门禁段跑 <code>redact.py check ... --level P1</code>，判据是<strong>退出码</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python3</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REDACT</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF"> check</span><span style="color:#9ECBFF"> src/content</span><span style="color:#9ECBFF"> src/pages</span><span style="color:#9ECBFF"> public/ai-daily</span><span style="color:#79B8FF"> --level</span><span style="color:#9ECBFF"> P1</span></span>
+<span class="line"><span style="color:#E1E4E8">RC</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$?</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> [[ $RC </span><span style="color:#F97583">-eq</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> ]]; </span><span style="color:#F97583">then</span><span style="color:#79B8FF"> echo</span><span style="color:#9ECBFF"> "[redact] 检出敏感内容（P0/P1），已中止发布"</span><span style="color:#E1E4E8">; </span><span style="color:#79B8FF">exit</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">fi</span></span></code></pre>
+<p>而 <code>redact.py</code> 的 <code>main()</code> 结尾是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> args.mode </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "check"</span><span style="color:#F97583"> or</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> per_file:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> all_rows </span><span style="color:#F97583">else</span><span style="color:#79B8FF"> 0</span></span></code></pre>
+<p><strong><code>all_rows</code> 不按等级过滤</strong> —— <code>--level P1</code> 只影响「哪些规则参与扫描」，不影响「命中后算不算数」。所以只要扫出任何一行（哪怕是 P2），退出码就是 1，门禁照样中止。</p>
+<p><strong>脚本注释写的是错的</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 只拦 P0（凭证）和 P1（内网设施/身份/私有词）；P2 是待确认项（公网 IP 之类，</span></span>
+<span class="line"><span style="color:#6A737D"># 已知 about 页 SVG path 会被误报），不拦，避免误伤发布。</span></span></code></pre>
+<p>注释与 <code>redact.py</code> 的实际行为不符。<strong>别信注释，去看退出码怎么来的。</strong></p>
+<p>顺带一个坑：<code>--level P1</code> 时，被 probe「降级」的 P2 也会算命中 —— <code>class_ip</code> 对公网 IP 返回 <code>("公网 IP", "P2")</code>，probe 降级后的等级仍进了 <code>all_rows</code>。</p>
+<h2 id="解法">解法</h2>
+<p><strong>改门禁的分类规则，不改文章，不长期 <code>--skip-redact</code>。</strong> 给 <code>class_ip</code> 加 RFC 保留段跳过（与既有的 <code>DOC_NETS</code>、RFC 6598 CGNAT 同理）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 169</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 254</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> None</span><span style="color:#6A737D">   # RFC 3927 link-local（169.254.0.0/16）：云元数据服务标准地址，永不是真实公网 IP</span></span></code></pre>
+<p><code>169.254.0.0/16</code> 是 RFC 3927 link-local，不可路由、且 IMDS 地址本身早已公开，<strong>不可能是真实公网 IP 或内网设施</strong>，与 <code>100.64.0.0/10</code>（RFC 6598 CGNAT）是同一类问题。</p>
+<p>改完必须做回归，确认真内网仍判 P1、真公网仍报 P2。<strong>回归样例本身不能把 IP 字面量写进文档</strong> —— 脱敏门禁会把它当真实地址命中（本文档就是这么把自己卡住的）。用变量拼接或直接查 <code>class_ip</code> 的行为描述：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># 回归矩阵（地址字面量请在本地拼好再跑，别写进要发布的文档）</span></span>
+<span class="line"><span style="color:#6A737D">#   内网三段（10.x / 172.16-31.x / 192.168.x）→ 内网 P1</span></span>
+<span class="line"><span style="color:#6A737D">#   文档段（RFC 5737）→ skip</span></span>
+<span class="line"><span style="color:#6A737D">#   CGNAT（RFC 6598）→ skip</span></span>
+<span class="line"><span style="color:#6A737D">#   link-local（RFC 3927，本例新增）→ skip</span></span>
+<span class="line"><span style="color:#6A737D">#   真公网 → 公网 P2</span></span>
+<span class="line"><span style="color:#6A737D">#   非 link-local 的 169.x → 公网 P2</span></span></code></pre>
+<p>同步更新脚本头部变更日志（≤10 行，每行「日期 / 改了什么 / 回归结果」）与 <code>~/docs/skill使用说明/redact-sensitive使用说明.md</code> 的「自动放过」清单。</p>
+<h2 id="预防--检查项">预防 / 检查项</h2>
+<ol>
+<li><strong>发布前预扫必须真的看退出码</strong>，不能只看「命中等级是 P2」。<code>redact.py check</code> 退出码 1 = 会中止发布，不管命中什么等级。</li>
+<li><strong>凡有公网 IP 类误报，先查能不能按 RFC 保留段跳过</strong>，别改文章、别 <code>--skip-redact</code>：RFC 3927（link-local）、6598（CGNAT）、5737（文档网段）、5735、4193 等都是同类。</li>
+<li><strong>门禁中止后先看 GitLab 是否已推</strong>（脚本第 1 步先推 GitLab 再同步再构建），中止会留半推送状态；重跑用完整脚本，别加 <code>--skip-gitlab</code>。</li>
+<li><strong>预扫要放在跑脚本之前</strong>。门禁在构建前，<code>publish.sh</code> 却已经把改动推上 GitLab 了 —— 中止等于「推了源码、没上线站点」，比一开始就预扫失败更被动。</li>
+<li>预扫除了门禁范围，还要单独扫当日日报源文件（<code>~/WorkBuddy/每日 AI 新闻推送/ai-daily-&lt;日期&gt;.html</code>），它此时还没同步进 <code>public/ai-daily/</code>，不在门禁扫描范围内。</li>
+<li>改 <code>redact.py</code> 后同步更新使用说明文档（<code>~/docs/skill使用说明/redact-sensitive使用说明.md</code>），并在脚本头部留变更日志 —— 该 skill 不在 git 下，变更日志是唯一的可追溯手段。</li>
+</ol>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/.agents/skills/redact-sensitive/scripts/redact.py</code>（<code>class_ip</code> 判定、<code>main()</code> 退出码）</li>
+<li><code>~/.agents/skills/blog-publish/scripts/publish.sh</code>（2.5 脱敏门禁段）</li>
+<li><code>~/docs/skill使用说明/redact-sensitive使用说明.md</code>（「自动放过」清单）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p025-videogen三硬事实_水印左上15s上限与额度耗尽/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P025 · 宿主 VideoGen 三个硬事实：水印在**左上**、单段最长 15s、额度耗尽即 429 需购买</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
