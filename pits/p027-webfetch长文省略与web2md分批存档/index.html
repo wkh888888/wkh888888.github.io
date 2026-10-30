@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P027 · WebFetch 长文会被悄悄省略，web2md 存档漏章节 · walker</title><meta name="description" content="用 web2md 存一篇 15 节公众号长文，存档只覆盖约一半章节：缺 一/五/六/九/十三/十四 整节 + 9 个二级小节（二缺第二步/第三步、三缺 3.1/3.4、七缺 7.1/7.3/7.4、八缺 8.1、十缺 1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p027-webfetch%E9%95%BF%E6%96%87%E7%9C%81%E7%95%A5%E4%B8%8Eweb2md%E5%88%86%E6%89%B9%E5%AD%98%E6%A1%A3/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P027 · WebFetch 长文会被悄悄省略，web2md 存档漏章节 · walker"><meta property="og:description" content="用 web2md 存一篇 15 节公众号长文，存档只覆盖约一半章节：缺 一/五/六/九/十三/十四 整节 + 9 个二级小节（二缺第二步/第三步、三缺 3.1/3.4、七缺 7.1/7.3/7.4、八缺 8.1、十缺 1"><meta property="og:url" content="https://blog.walkerhua.com/pits/p027-webfetch%E9%95%BF%E6%96%87%E7%9C%81%E7%95%A5%E4%B8%8Eweb2md%E5%88%86%E6%89%B9%E5%AD%98%E6%A1%A3/"><meta property="og:image" content="https://blog.walkerhua.com/og/p027-webfetch%E9%95%BF%E6%96%87%E7%9C%81%E7%95%A5%E4%B8%8Eweb2md%E5%88%86%E6%89%B9%E5%AD%98%E6%A1%A3.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P027 · WebFetch 长文会被悄悄省略，web2md 存档漏章节 · walker"><meta name="twitter:description" content="用 web2md 存一篇 15 节公众号长文，存档只覆盖约一半章节：缺 一/五/六/九/十三/十四 整节 + 9 个二级小节（二缺第二步/第三步、三缺 3.1/3.4、七缺 7.1/7.3/7.4、八缺 8.1、十缺 1"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p027-webfetch%E9%95%BF%E6%96%87%E7%9C%81%E7%95%A5%E4%B8%8Eweb2md%E5%88%86%E6%89%B9%E5%AD%98%E6%A1%A3.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P027 · WebFetch 长文会被悄悄省略，web2md 存档漏章节</h1><p>用 web2md 存一篇 15 节公众号长文，存档只覆盖约一半章节：缺 一/五/六/九/十三/十四 整节 + 9 个二级小节（二缺第二步/第三步、三缺 3.1/3.4、七缺 7.1/7.3/7.4、八缺 8.1、十缺 1</p><div class="hero-meta"><span>踩坑于 2026-10-29</span><span>约 2 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/Skill 管理/">Skill 管理</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><blockquote>
+<p>长文“网页转 Markdown”不能只抓一次就存；某 skill 不触发先查 settings.json 的 skillOverrides。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-10-29</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / Skill 管理</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（存档缺内容，事后难察觉）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>web2md、WebFetch、长文省略、[…] 占位、skillOverrides、分批抓取、公众号存档、存档漏章节</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>用 <code>web2md</code> 存一篇 15 节公众号长文，存档只覆盖约一半章节：缺 一/五/六/九/十三/十四 整节 + 9 个二级小节（二缺第二步/第三步、三缺 3.1/3.4、七缺 7.1/7.3/7.4、八缺 8.1、十缺 10.1）。WebFetch 返回里多处出现 <code>[...]</code> 占位，不报错只省略。</p>
+<p>附带踩到第二个坑：第一次想加载 <code>web2md</code> 时 Skill 工具报 <code>disabled via skillOverrides</code>，匹配也不触发。</p>
+<h2 id="根因">根因</h2>
+<p><strong>直接原因</strong>：WebFetch 是模型抽取（生成式），对长文会“挑重点”跳过中间整段，表现为输出插 <code>[...]</code> 或整节消失——它不会像爬虫那样确定性返回全文。</p>
+<p><strong>根本原因</strong>：把“网页转 Markdown”误当成确定性抓取。WebFetch 本质是“读后总结/转写”，长文保真度无保证；而 <code>skillOverrides: "off"</code> 是之前手动禁用的残留，导致 skill 根本不加载。</p>
+<h2 id="解法">解法</h2>
+<p><strong>1. 启用被禁用的 skill</strong>：编辑 <code>~/.workbuddy/settings.json</code>，删掉 <code>skillOverrides</code> 里的 <code>"web2md": "off"</code> 一行（删后务必 <code>python3 -c "import json;json.load(open(...))"</code> 校验 JSON 合法）。该改动即时生效，无需重启。</p>
+<p><strong>2. 长文防遗漏（已固化进 web2md SKILL.md v1.0.2，步骤 2「长文防遗漏」）</strong>：</p>
+<ol>
+<li><strong>先取大纲</strong>：一次 WebFetch，prompt 只列所有一/二级标题原文（按序），不要正文；末尾说明一级标题从几到几、共几个。</li>
+<li><strong>判断是否分批</strong>：大纲一级标题 ≥ 5 个，或全文抓取出现 <code>[...]</code> / 缺标题 → 分批；短文（&lt;5 节且无 <code>[...]</code>）直抓即可。</li>
+<li><strong>分批抓取</strong>：按 3–5 个一级标题一组切片，逐批 WebFetch，prompt 明令“只输出指定节全部正文，保留标题层级/列表/代码块/表格，不要省略、不要用 […]”，各批结果按原序拼接。</li>
+<li><strong>补齐缺口</strong>：拼接后逐条核对大纲，缺失标题单独再抓一次，直到与大纲一致；重复标题去重只留一处。</li>
+</ol>
+<p><strong>3. 兜底</strong>：jina reader（<code>https://r.jina.ai/&lt;URL&gt;</code>）保真度更高，但本沙箱实测被网络拦截（SSL 错误），当前只能走 WebFetch 分批。</p>
+<h2 id="预防规则判断是否上浮-l1">预防规则（判断是否上浮 L1）</h2>
+<ul>
+<li><strong>铁律</strong>：长文网页存档，绝不一抓即存——先取大纲、按需分批、拼接后核对缺口。</li>
+<li><strong>检查项</strong>：某 skill 匹配却触发不了，先看 <code>~/.workbuddy/settings.json</code> 的 <code>skillOverrides</code> 是否被设成 <code>off</code> / <code>user-invocable-only</code>。</li>
+<li>这两点偏“操作纪律 + 配置排查”，留 L2 即可；web2md 的「长文防遗漏」策略已直接写进 skill 正文（运行时约束），无需上浮。</li>
+</ul>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/.workbuddy/skills/web2md/SKILL.md</code>（v1.0.2，步骤 2 含分批策略）</li>
+<li><code>~/.workbuddy/settings.json</code>（<code>skillOverrides</code> 段，已移除 <code>web2md: off</code>）</li>
+<li><code>~/docs/web2md/</code>（<code>~/docs</code> 子目录，存档落位点）</li>
+<li>备份：<code>/tmp/settings.json.web2md-enable-bak</code></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p026-脱敏门禁p2命中也会中止发布/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P026 · 脱敏门禁「只拦 P1」的注释与实际行为不符：P2 命中照样中止发布</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
