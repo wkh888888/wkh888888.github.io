@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-04 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 4 日（周三）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：「能不能做」后面那半句，被五件事同时摊开</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① OpenAI 用十周重造 Git 后端</a>
+      <a href="#n2">② 高盛收回 Claude Code</a>
+      <a href="#n3">③ 腾讯混元 Hyra 2.0</a>
+      <a href="#n4">④ 百度 Apollo World 世界模型</a>
+      <a href="#n5">⑤ 小米机器人干满 8 小时</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>OpenAI 用十周重造了 Git 的后端：Codex 把自家仓库的可靠性压到一度跌破 90%，新系统 Pando 完全兼容 Git 协议，把推送中位延迟压掉近 80%，每天投递接近 1 PB</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">OpenAI 工程博客《Scaling Git at OpenAI》（2026-11-02 发布）；FreeBuf 与源码技术网深度解析（11-03 至 11-04）；边界科技《源码管理再更新》给出的三条路线对照；全部指标为 OpenAI 自报的生产环境数据</div>
+    <div class="body">
+      <p>过去一年里被反复讨论的那件事 —— agent 让代码量暴涨 —— 今天有了一个非常具体的落地答案，而且答案不在模型侧，在仓库侧。</p>
+      <ul>
+        <li><strong>旧系统是怎么撑不住的。</strong>从 2025 年末前后开始，OpenAI 那个单一仓库开始出现抓取与推送变慢、合并失败，可靠性一度跌破 90%。原因不在 Git 的数据结构，而在承载方式：Codex 让一名工程师同时并行推进多项改动，分支、提交、测试与修订的密度远超人类工作流；每一次推送又会触发多个自动化任务去抓取同一份代码。</li>
+        <li><strong>做法是留在 Git 上，重做服务端。</strong>Pando 完全兼容标准 Git 协议与客户端，工程师和 agent 的日常命令一个不用改；被换掉的是服务端的存储与投递。核心拆成三块：blob 存储保存不可变的 packfile，元数据存储维护引用版本与依赖关系，Express 负责区域缓存分发。</li>
+        <li><strong>让不同分支的写入不再互相排队。</strong>Pando 用因果一致性换取写入扩展，放弃了全仓库同一时刻的快照。单个引用内部的更新仍可串行化，但同时拉取多个分支的客户端可能看到不同时间点的组合。</li>
+        <li><strong>让读取复用而不是重算。</strong>传统抓取要为每个客户端算差集再重新打包；Pando 直接复用此前推送时存下的 packfile。默认只通告主干分支作为基底，产出的推送包中位数不到 20 KiB，99 分位不到 3 MiB。</li>
+        <li><strong>用 packfile-uri 把数据推给缓存。</strong>走 Git 协议 v2 的 packfile-uri 能力，主响应里只发一个空包，真实数据由区域缓存投递；官方称缓存命中率超过 99%，在标准云虚拟机上克隆与抓取能跑满 10 Gbps 链路。</li>
+        <li><strong>借鉴 LSM 树做后台压缩。</strong>每次推送产生一个 L0 包，后台 worker 逐级收拢成覆盖层的 cover，目前大仓库最多用到 L4。官方特别说明各级的包不会被丢弃或垃圾回收，而是持续用于服务客户端。</li>
+        <li><strong>这个系统是怎么被造出来的，本身就是新闻。</strong>核心架构由一名工程师设计，实现由 Codex 完成，从立项到进入生产只用 10 周，2026 年 4 月起承接生产流量。智能体还写了 Lean 与 TLA+ 代码，把这套设计的性质形式化，用于发现并修复实现中的 bug；多个连续会话运行数百小时专门围猎边界情况；另有具备 Daybreak 能力的模型对 Git 与 Pando 做全天候红队测试。上线方式是读写双通代理与旧系统保持同步，再逐个把流量安全迁过来、不停机。</li>
+        <li><strong>最终数字。</strong>合并可靠性提升，推送中位延迟降低近 80%（约合 5 倍）；每天投递接近 1 PB 的 Git 数据，单小时峰值超过 57 TB，其中超过 99% 的字节来自本地磁盘缓存；这部分吞吐只用了屈指可数的几个 CPU 核心。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>第一件事是这道题今天换了人答。10-14 那一期推过 Anthropic 的 Scion —— 那期讲的是「Anthropic 每天合并 3 万次改动，人还审什么」，今天这一期是 OpenAI 给出的第二种解法：不动客户端，只换后端。两条路线不是技术偏好的差别，是约束不同：Anthropic 那边的客户端几乎全是在线运行的 agent 与自动化任务，传统离线全量克隆成了纯负担，所以连客户端一起换；OpenAI 这边开发者与 agent 都在用标准 Git 客户端，推倒重来不划算，于是把力气全花在服务端的一致性边界、存储组织与传输上。两期合起来才看得出，「agent 规模的源码管理」不是一个技术决定，是一组决定。</p>
+      <p>第二件事是「谁来写这个系统」本身就是答案的一部分。核心架构一个人设计，实现交给 Codex，投产 10 周，还用形式化方法验证自己的性质、用红队测试围猎边界。这件事跟 09-21 ① 推过的微软用 Agent 把 Copilot 运行时从 TypeScript 重写成 Rust 是同一个方向 —— 把 agent 从「用工具的人」变成「造工具的人」。但要记住分工：人做架构判断，agent 做实现与验证，两边没有抢位置。</p>
+      <p>第三件事是别把「兼容 Git」当成没有代价。因果一致性意味着你不能假设两个分支读出来是同一个时间点。官方自己划了边界：如果构建或发布流程需要跨多分支的严格一致快照，就该用不可变的 commit id、发布清单，或者额外的协调机制。少一个全局快照，换来的是互不相关的分支不再互相排队 —— 这是一笔要自己算清楚的账。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>推送中位延迟降近 80%、每天近 1 PB、单小时超 57 TB、缓存命中率超 99%，全部是 OpenAI 自报的生产环境指标，不是第三方独立基准；10 周与一人设计也是官方口径。同一件事在官方博客与官方社交账号上有两种表述（「降低接近 5 倍」与「降低近 80%」），两者指向同一量级，但不要当成两个数据分别引用。</p>
+      <p><b>三条路线的数据不能横向跑分。</b>Anthropic 的 Scion 与 OpenAI 的 Pando 披露的是生产实测，Cursor 的 Origin 披露的是合成压测（推送吞吐约 120 次每秒，S3 Express One Zone 下超过 300 次每秒，读吞吐可扩到 100 副本）；Scion 与 Pando 都是服务自家超大 monorepo 的内部基建，Origin 是面向外部团队的商业产品早期形态。这张表适合看架构取舍，不适合做性能排名。</p>
+      <p><b>「回馈上游」目前是单向的。</b>OpenAI 维护了自己的 Git 发行版，把 packfile 并行下载、索引、传输恢复与可观测性等部分改进推回上游 Git，其中 explicit haves 一项允许服务端检查目标分支状态、同时限制客户端排除共享历史。但这些改动何时进入 Git 官方主线没有承诺。Pando 本身不开源，官方说在探索对外分享相关能力，目前仍仅限内部使用。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的团队已经在用 agent 并行改代码，先量三个数而不是先换系统：一次推送会触发多少个自动化任务去抓同一份代码、每个任务是不是都做全量克隆、合并队列在哪里排队。这三个环节是并发上来之后最先卡住的地方。</p>
+      <p>如果确实要动基础设施，先分清你要的是哪一种：客户端几乎全是 agent、离线全量克隆已成负担，才考虑离开 Git；已经在用标准 git 客户端并且依赖周边生态，先看托管服务端路线；只是存储与投递扛不住，保留协议换后端是改动最小的一条。</p>
+      <p>兼容性上有一个具体提醒：如果你的流程里有跨分支的一致性假设，比如发布清单要读多个分支的同一时刻状态，因果一致性的模型不满足这个假设，需要显式引入不可变标识或协调机制，别默认它成立。另外，先给智能体装好迁移技能再切换 —— 官方这次正是靠这一步让 Codex 帮开发者把自己的开发环境迁到新系统上。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>高盛把 Claude Code 收回给工程师：数月前还在公开鼓励投行与交易员「vibe coding」，10 月的内部指引把权限收缩到工程岗 —— 工具没变，认账的人变了</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">彭博社报道（依据高盛 10 月更新的内部使用指引，2026-11-02 发布）；新浪财经环球市场播报、财联社、腾讯新闻与网易转载（11-02 至 11-03）；高盛发言人 Nick Carcaterra 的回应</div>
+    <div class="body">
+      <p>这件事的时间跨度只有四个月，而这四个月本身比结论更值得看。</p>
+      <ul>
+        <li><strong>发生了什么。</strong>彭博看到的高盛 10 月内部指引，把 Anthropic 的 Claude Code 与微软 GitHub 相关编程工具的使用权，从投行与交易岗全员可用收缩为仅对工程师开放。这份指引不是高盛官网的产品公告，是媒体引述的内部文件。</li>
+        <li><strong>这套工具在交易台上做过什么。</strong>知情人士称，交易员此前用它们监控客户交易流水、给市场变化与持仓变动建模、生成文字与图表材料；禁令让一部分交易员感到受挫。</li>
+        <li><strong>反差在四个月前的口径。</strong>7 月，高盛首席信息官 Marco Argenti 还公开称赞非技术岗做「编程氛围」：交易员或资产管理人员有了想法，先用 AI 工具迅速做出原型，再交给公司 1.2 万名工程师里的部分人优化、投入正式生产。</li>
+        <li><strong>官方的理由是有顺序的。</strong>发言人 Nick Carcaterra 说：「我们向员工开放部分 AI 工具，探索集团不同业务线的最优落地场景。经过一段试验期，综合评估效率、风控等多项因素后，我们把工具权限交给最适合长期运用它们的人员。」先评估生产力和风控，再决定给谁 —— 关键在「谁用、用在什么上」没法在风控上闭环，不在工具不好用。</li>
+        <li><strong>有豁免。</strong>新规不适用于量化策略师，也就是横跨交易、量化研究与软件工程的那一类岗位。</li>
+        <li><strong>这不是第一次收紧。</strong>高盛今年早些时候已单独限制过香港地区员工使用 Claude；摩根大通 7 月也提过类似要求，让员工按需选模型，避免为摘要研报这类简单任务调用高价大模型。高盛本身还自研了一款整合 OpenAI、Anthropic 与谷歌模型能力的助手。</li>
+        <li><strong>一个绕不开的身份。</strong>高盛是 Anthropic 这轮上市的主承销商，也和英伟达合作牵头过多笔大额债券融资。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>第一件事是这个故事只有四个月长。7 月的公开口径是「非技术岗搭雏形、1.2 万名工程师优化」，11 月的口径是「只给工程师」。这不是踩了坑之后的修补，是一次在真实试用之后收回授权的重新归类 —— 而且它发生在最不该发生的时间点：模型厂商正忙着推新一代编码智能体的时候。</p>
+      <p>第二件事是它给「企业铺开 AI Coding」提供了一份现成的分级模板。收回的不是工具，是岗位。按职责与数据边界分批授权，而不是一次性全员放开 —— 高盛的做法是：能用代码执行权碰业务数据的位置（交易流、持仓模型）划出去，纯工程岗位留着；横跨三类的量化策略师反而保留，因为它的工作本身就在写软件。这条比「要不要用 Claude Code」这个问题实用得多。</p>
+      <p>第三件事是它与本期第一条构成一组很硬的对照。OpenAI 在 Pando 那件事上展示的是「让 agent 参与建设基础设施」；高盛展示的是「不要把有代码执行权的 agent 交给不懂代码的人」。两件事同一天发生，说明 agent 的边界正在从技术问题变成组织问题 —— 而组织问题的解法不是更强的护栏，是更细的授权表。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部信息来自彭博引述的 10 月内部指引与发言人回应，不是高盛官网的产品公告，也未覆盖高盛的所有 AI 助手 —— 它并不禁止全部模型对话。各地区、各条线的执行也可能不一致。</p>
+      <p><b>「效率」这一侧没有数字。</b>官方的说法只有「试验期后综合评估」，没有给出收紧前后的产出对比、错误率或风控事件数，也没有说清是 Claude Code 这一件工具被收回，还是这一类权限整体收缩。摩根大通那条属于「提出要求」，不是已执行的政策。</p>
+      <p><b>还有一个未被这条报道覆盖的变量是模型本身。</b>同期 Anthropic 在别处收紧：10 月 30 日 Claude Code 加上了禁止写出工作目录的开关，11 月 3 日起部分模型生成的文本在列出的平台上带水印。企业收紧权限未必只由一次安全事件触发 —— 把模型侧的约束与权限侧的收紧混在一起评估，容易得出「工具不能用」的错误结论。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你准备在企业里铺开 AI Coding，抄这一条：先按三个维度给岗位分组 —— 能不能执行代码、能不能触达生产或客户数据、任务出错可不可回滚。第一组永远不开放，第二组走沙箱加审批，第三组才给到工程编制。</p>
+      <p>收回权限时，把理由写在风控能闭环的那一处，而不是「工具变危险了」。高盛那句话可以直接改写成内部文件：先在哪些业务线试、试了多久、按什么维度评估、为什么这些岗位保留而那些岗位收回。理由写不清，下次扩张就没人敢批。</p>
+      <p>最后把两件事分开看：模型能力侧的约束（提示词限制、工作目录开关、输出水印）和权限侧的收回不是同一件事。多数情况下问题出在授权对象，而不是工具本身。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>腾讯混元 Hyra 2.0：把科研 agent 的赌注从「刷题分数」换成「造出下一轮能接着用的工具」，三层分工、独立复核与必须附代码版本和日志的结论要求，同时交出五指「旋梯手」</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">腾讯混元官方发布与技术文章（2026-11-02，成果页 hy.tencent.com/research/hyra）；GitHub 仓库 Tencent-Hunyuan/Hyra-results（Apache-2.0，权重与代码随发布同步放出）；腾讯新闻、凤凰网科技、AIBase 报道（11-02 至 11-03）</div>
+    <div class="body">
+      <p>研究型 agent 这一年最大的变化，不是分数变高了，而是产出物的定义变了。</p>
+      <ul>
+        <li><strong>换赌注。</strong>Hyra 1.0 的成绩是全自动解出加法组合学上的最优指数问题；2.0 的重点不再是反复采样解一道题，而是让 agent 去研发并升级科学模型、研究工作流与软件工具本身。官方的说法是：升级一件工具，所有下游任务一起受益，这才叫复利。</li>
+        <li><strong>三层分工。</strong>Overall 对接研究人员、排优先级；Mission 对一个研究问题长期负责；Worker 负责读代码、跑实验、分析失败，并可以向 Mission 提出异议。系统配持久化任务队列、Research Board，以及一个独立的复核 Worker。</li>
+        <li><strong>结论必须带证据。</strong>官方要求每个结论附上代码版本、实验结果与日志，存疑时另起一个 agent 复核；跑通的经验沉淀进共享知识库 Books，再整理成 skill。系统接进了企业微信、算力平台与代码仓库，涉及花钱多或涉及共享知识的操作需要人工批准。</li>
+        <li><strong>交出来的成果是可下载的。</strong>成果仓库以 Apache-2.0 协议放出权重、推理代码与技术报告：HyInv 是 196 万参数的蛋白质逆折叠消息传递图网络（骨架到序列），用结构奖励强化学习训练；HyPLM-Flash 是 6.5 亿参数的蛋白质语言模型，带 INT8 推理引擎，单张 H20 上每秒约 13 万残基；HyCell 是 1610 万参数的单细胞嵌入模型，在 7950 万个人类细胞上预训练且不使用细胞类型标签，把原始计数映射到 512 维嵌入并可解码回基因表达，在七个留出图谱上冻结嵌入总分 0.735，与 2180 万参数的 Stack（0.736）持平。</li>
+        <li><strong>力场与数学结果也在同一批里。</strong>HyFF 是一组五套机器学习力场（Presto、Vivace、Moderato、Andante、Largo，230 万至 12 亿参数，覆盖 83 种元素，在 OMol25 上训练）；官方数据是 Andante 的力误差 7.65 meV/angstrom 对 UMA-S-1.2 的 7.55 meV/angstrom、速度为其 29 倍，Largo 的能量误差 0.364 meV/atom 低于 DPA4-Pro 的 0.380 meV/atom、速度为其 9.7 倍。数学侧给出了 Petty 与 Yau 猜想的结果、一个经认证的三维 Blaschke-Lebesgue 下界（达到 0.411040473721188，已知下界约为 0.380799109526），以及 Beurling-Ahlfors 变换的幂次界和立方区间偏 Hadamard 矩阵计数。</li>
+        <li><strong>还长出了手。</strong>机器人结构探索产出了五指「旋梯手」：在 DR5 仿真评测中，经相同预算的策略微调后，物体旋转速度比论文最优设计快 28.6%，尚未经过真机验证，相关成果将持续公开到 GitHub 供社区检验。</li>
+        <li><strong>编排器本身不公开。</strong>公开的只是成果仓库。官方称 Hyra 2.0 已参与下一代混元模型的预训练、后训练与推理优化。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>第一件事是它把 agent 的产出从「结论」换成了「工具」。11-02 ① 那一期推过 DeepSeek 开源 Super-agent，讲的是让一个 agent 去管多个 agent，解决的是会话数量的问题；这期解决的是产出物的问题 —— 一个跑完就丢的答案没有价值，一个下次能接着用的模型与脚本才有。这是同一条线上很关键的一步：把 agent 从「答题的人」变成「留下工具的人」。</p>
+      <p>第二件事是它把审计写进了流程，而不是写进文档。结论要附代码版本、实验结果与日志，存疑另起 agent 复核，经验沉淀成 skill —— 这套要求和 10-30 ② 那一期讲的 Anthropic 六层审查流水线指向同一个方向：让结论的成立与否不依赖读轨迹的人有多仔细。区别是那期靠人审，这期靠 agent 审 agent，而且审的痕迹落在代码与日志里。</p>
+      <p>第三件事是「旋梯手」这条容易被略过，但它恰恰说明了这套系统的边界。一个只在既有文献里找答案的研究 agent，产出的永远是别人的成果；它自己设计出一只五指机械手并写进仓库，说明它参与的是设计而不只是求解。28.6% 是在仿真里用同预算微调得来的、尚未上过真机 —— 这条限制比那个数字本身更值得记。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部性能数字均为厂商自测，未见第三方独立复现；官方称数学结果已与数学家协同核验，但能核验的仍只是那几篇论文与仓库里的权重。7.65 对 7.55 meV/angstrom 这类比较，参照系是各团队自报的结果，测试细节（力场训练数据、模拟步长、硬件配置）未完全公开，不能当成严格排名。HyCell 的 0.735 对 0.736 与 1610 万对 2180 万参数，差距在噪声范围内，宜表述为「量级相当」而不是「超过」。</p>
+      <p><b>「旋梯手」尚未经过真机验证</b>，这一条官方写得很明确，转述时不要省掉。DR5 仿真中的 28.6% 与真实机械手的可制造性、耐久性、力控表现之间没有可推断的关系。</p>
+      <p><b>编排器不公开，意味着整套分工机制无法复现。</b>现在能复现的只有仓库里那几件具体的东西（权重、推理代码、技术报告），整条流水线怎么跑、Books 与 skill 如何沉淀，读者看不到。这与 11-01 ① 那一期讲的 Rust 重写验收方式形成一组对照 —— 那期是人用影子流量逐请求比对，这一期是流程本身还没开放。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在做内部研究或自动化实验流程，可以直接拿仓库当起点：HyInv、HyPLM-Flash、HyCell、HyFF 四件都有权重与代码，协议是 Apache-2.0。但先做一件事 —— 逐项核对许可证、权重版本与评测条件，至少用自己的一条实验流程把其中一件跑通，再谈接入。</p>
+      <p>真正值得抄的是那三条流程约束，而不是那四个模型：结论附代码版本与实验结果、存疑另起一个 agent 复核、跑通的经验沉淀成可复用的 skill。这三条不需要等编排器公开就能落进自己的 agent 流程里。</p>
+      <p>如果你在评估「让 agent 自己造工具」这条路，先量一个数：你的流程里现在有多少结果是「跑完即丢」的。这个比例决定了投不投得下去 —— 如果九成的产出都不会被下一次调用复用，换工具链是没有意义的。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>百度首次披露 Apollo World 世界模型：世界模型不当「画师」而当「考官」，提出因果性与交互性两道门槛加物理准确性、持久性、实时性三项进阶指标，萝卜快跑已用它做全球化测试与验证</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">百度 AI Day·Apollo 专场（2026-11-03，深圳）；百度官方公众号发布；中证网（记者 杨洁）、每日经济新闻（记者 可杨）、中国基金报与深圳商报当日报道</div>
+    <div class="body">
+      <p>世界模型这一轮最热闹的争论是「像不像」，百度这次直接换了一道考题。</p>
+      <ul>
+        <li><strong>它是什么。</strong>百度 Apollo 首次披露面向物理 AI 的智能体驱动全模态世界模型 Apollo World，目前已用于萝卜快跑的全球化测试与验证。</li>
+        <li><strong>一句话概括定位。</strong>百度智能驾驶事业群组首席架构师、IDG 技术委员会主席王亮的说法是：世界模型不能只做「生成炫酷视频的画师」，更要成为验证无人驾驶安全性的「考官」。</li>
+        <li><strong>虚拟城市里没有道具。</strong>车辆、行人等交通参与者都被建模为具备决策和交互能力的 AI 智能体，根据周围交通变化调整行动。无人车减速、变道或让行，都会引发其他参与者的不同反应 —— 世界会回应。</li>
+        <li><strong>让无人车看得见。</strong>Apollo World 可实时生成相机、激光雷达等多模态观测数据，天气改变时相机与激光雷达同步变化。系统作出驾驶决策后，环境随之变化，再向系统提供新的反馈，形成端到端闭环。</li>
+        <li><strong>「2+3」判断标准。</strong>两道基础门槛 —— 因果性（遵循时间单向性，由过去决定未来，基于当前状态预测下一刻，而不是拼凑画面、反推过去）与交互性（能动态响应外部干预，注入动作影响未来世界状态）；三项进阶指标 —— 物理准确性（模拟状态有多可靠、是否符合世界规律，学到的能力回到物理世界还能不能用）、持久性（长时间运行物体和细节会不会漂移）、实时性（低时延，生成世界复杂度的增长不影响模型推理时间）。</li>
+        <li><strong>场景不是一条路。</strong>支持无人车在虚拟城市中从任意起点驶向任意终点，连续经过不同道路和交通场景，完成从接单、载客到送达的完整出行任务；闭环也不只运行在一个路口或一段道路上。</li>
+        <li><strong>底座数字。</strong>萝卜快跑已落地全球 28 座城市，累计完成超 2300 万次出行服务，自动驾驶总里程突破 3.5 亿公里，其中全无人驾驶里程超过 2.4 亿公里，并已在左右舵市场开展无人驾驶实践。行业人士称 Apollo World 可「日行十万公里」，其一天完成的虚拟路测里程相当于一辆配备安全员的真实路测车连续测试约三年。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>第一件事是它把世界模型的评判标准从「像不像」换成了「算不算」。因果性与交互性这两道门槛，衡量的其实是世界模型有没有能力承受智能体的干预 —— 一个不能被动作改变的世界，是视频生成器，不是模拟器。而物理准确性这一条里那句「学习获得的能力回到物理世界还能不能用」，问的是训练与部署之间的迁移损耗。这是本期五条主榜里最接近「怎么验收」这个主题的一条。</p>
+      <p>第二件事是它顺带给「为什么无人驾驶比机器人难」下了一个工程注解。王亮的说法是：会跳舞、叠衣服的机器人很厉害，但学会开车是另一重难题；机器人只需在受限空间执行规划动作，无人驾驶则身处开放道路，持续与海量不可预判的交通参与者博弈，对一台近两吨重、几十公里时速的车辆来说，安全决策周期要严格限定在 1/30 秒内 —— 所以世界模型不能只满足于「像」。这和 11-03 ④ 那一期讲的智元便利店 24 小时是同一件事的两面：那期是受限空间里的连续作业，本期是开放环境里的可判定性。</p>
+      <p>第三件事是它在数据飞轮里的位置。真实运营 → 提取高价值场景 → 转成可重复的虚拟测试 → 反复演练验证 → 结果反哺系统迭代 → 回到真实道路接受检验。这条链条和 10-30 ⑤ 那一期讲的触觉数据、11-03 速览④ 简智机器人的「无本体数据产线」是同一个逻辑：具身智能最贵的资产不是本体，是可复现的验证环境。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>「2+3」是百度自己提出的判断标准，不是行业标准，也不是任何第三方评测机构的指标；六个词各自怎么算，官方未公开可复现的度量方法。「日行十万公里」是行业人士给出的估算（一天虚拟路测里程约等于安全员路测车连续三年），不是百度披露的实测吞吐量，这个换算依赖「真实路测速度」这一假设值 —— 一台真车的安全员路测一天能跑多少公里，直接决定这个倍数是否成立。</p>
+      <p><b>萝卜快跑那组数字不是 Apollo World 的效果指标。</b>28 城、2300 万次出行、3.5 亿公里与 2.4 亿公里全无人里程是累计运营口径，说明的是萝卜快跑本身的体量，不能读作世界模型的训练数据规模或仿真精度。</p>
+      <p><b>另需说明两件事。</b>其一，官方明确说 Apollo World 的技术栈可拓展至机器人等更广泛的物理 AI 场景，这是方向性表述，本期没有任何机器人侧的落地数据。其二，「百度 Apollo」与美国人形机器人公司 Apptronik 的 Apollo 是两个完全不同的主体，10-14 ③ 那一期推过的真机演示属于后者，不要混淆。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在做具身或自动驾驶的世界模型，这套「2+3」可以直接当自检清单用：先问因果性（能不能从当前状态预测下一刻，而不是拼凑画面），再问交互性（能不能被注入动作改变），最后才谈物理准确性、持久性与实时性。顺序很重要 —— 前两条不达标，后面三条没有意义。</p>
+      <p>做验收设计时把「以真机执行结果作为世界模型的评分参照」写进方案：世界模型不能自己给自己打分，得有一个真值来源，而真实运营里程、故障与接管记录就是最自然的那个参照。</p>
+      <p>如果你在评估仿真替代真机的比例，先分清哪一类任务可以搬进虚拟环境（低频、可枚举、后果可控），哪一类不行（罕见、高危、长尾）。日行十万公里解决的是前者，对后者只能缩短发现问题的周期，不能替代。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>小米人形机器人第一次在汽车工厂干满 8 小时整班：中控台侧盖板排序工站满足全天生产需求、能自主纠偏并与产线系统协同，具身基座模型同时在青年公寓跑通 50 多个任务的长程链</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">小米集团创始人雷军社交平台发文（2026-11-03 下午，财联社 11-03 16:43 电）；21 世纪经济报道（11-03）、腾讯新闻与快科技（11-04）转载；TechWeb（11-04）</div>
+    <div class="body">
+      <p>这次披露里最有信息量的不是任何一个百分比，是「8 小时」这个单位。</p>
+      <ul>
+        <li><strong>这次的进展是什么。</strong>雷军发文称，小米人形机器人在汽车工厂中控台侧盖板排序工站首次挑战 8 小时稳定作业，满足了工站全天生产需求，并实现作业过程异常自主纠偏与产线系统级协同；机器人能从配送箱里捡取汽车盖板并插入排序架。</li>
+        <li><strong>数字是一条阶梯，不是一个点。</strong>2026 年 3 月，机器人在自攻螺母上件工站实现连续 3 小时自主作业，双侧安装成功率 90.2%，满足 76 秒产线节拍；7 月，同一工站作业成功率提升到 98%，并新增中控台侧盖板排序与料箱折叠回收两个复杂工站，首次实现柔性工件长时作业；到 11 月，8 小时整班作业通关。</li>
+        <li><strong>另一条线同时在跑。</strong>小米的具身基座模型已在小米青年公寓「试运营」，目前可以完成连续超 30 分钟、覆盖 3 个房间、包含 50 多个任务的长程任务链。任务链跑通了工具准备、沙发与桌面整理、垃圾清理、物品分类归位，到房间巡检、全屋复检和离场的完整闭环，全程由机器人自主规划路径、规避障碍和调度任务流程，并在家务场景收集真实使用数据。</li>
+        <li><strong>官方自己留了余地。</strong>测试阶段，速度还比较慢；目前还只是单一工位的测试，不是全车间大规模上岗。要大面积替换人工，还要继续解决成本、可靠性，以及更多工序适配的问题。</li>
+        <li><strong>另一处公开信息。</strong>报道提到，小米的机器人技术拿到世界互联网大会领先科技奖，小米集团拿到杰出贡献奖。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>第一件事是「8 小时」这个单位的含义。它不是精度指标，是续航指标 —— 对一个工站的全天生产节拍来说，能连续干完一整个班次，和能干活但是干不满，是两种完全不同的产品形态。3 月是 3 小时、7 月是 98% 加两个工站、11 月是 8 小时，这条阶梯的每一步都在回答同一个问题：能不能常态化上岗，而不是能不能表演一次。</p>
+      <p>第二件事是「自主纠偏」和「与产线系统协同」这两个短句。自主纠偏意味着它自己发现异常、自己处理，不需要人来兜；与产线系统协同意味着它接的是真实的工站节拍和物料流，而不是一个封闭的测试台。这两条比 8 小时这个数字更难，也更接近 11-03 ④ 那一期智元便利店给出的三条准入标准 —— 任务边界清、结果易核验、异常能自恢复。小米这次交的是同一张卷子的另一份答案。</p>
+      <p>第三件事是两条线并行的思路。工厂和公寓同时推进，前者打磨稳定性与节拍，后者积累长程任务数据与真实家庭场景的操作样本。11-02 ⑤ 那一期推过 2000 台进厂的人形机器人和一条长着六条胳膊的产线，那期给出的最扎心的数字是双臂人形的人效只有熟练工的 30%；这期小米没有给效率比，只给了续航与纠偏能力 —— 而这恰恰是 30% 背后真正卡住的那一层。</p>
+    </div>
+    <div class="caveat">
+      <p><b>时点提醒。</b>雷军发文的本体事件在 11 月 3 日下午（财联社 11 月 3 日 16:43 电），11 月 4 日早间各媒体跟进并配了视频，本期取的是这个披露，不是当日新发生的事件。</p>
+      <p><b>口径提醒。</b>8 小时是「在中控台侧盖板排序工站这一个工位」的连续作业，不是整条产线、也不是多工站连续切换；官方同时说明速度还比较慢。因此「满足工站全天生产需求」应读作「跑满了工站的一个班次时长」，不等于节拍已经追平人工作业。3 月与 7 月两个数字来自雷军发文时的回顾，本次披露本身没有新增第三方复核。</p>
+      <p><b>公寓那条线的时间与范围也要看准。</b>连续超 30 分钟、覆盖 3 个房间、50 多个任务，是在「试运营」环境下由厂商自测的能力展示，不是在真实客户家庭中的长期运行数据；「自主规划路径、规避障碍」同样为官方口径，未公布远程接管次数等常见缺口指标。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在评估一台人形机器人能不能进厂，别先问精度和自由度，先问三件事：连续作业时长是多少、有没有自主纠偏、能不能接产线系统。这三条决定它是设备还是演示。</p>
+      <p>如果要给自己的场景定试点顺序，抄小米这条双线思路：一条线选节拍稳定、工位边界清晰、异常可判定的工序拉时长；另一条线选一个封闭可控的空间拉长程任务链。两条线可以共用一套模型与数据闭环，但验收指标完全不同。</p>
+      <p>对任何「已经干满 X 小时」的发布，都追问三件事：是单一工位还是多工站切换、期间有没有人工或远程介入、异常是自己处理还是等恢复。这三个问题的答案，比时长本身更能说明常态化的程度。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>HiState：把混合模型里循环层的 checkpoint 挪到 SSD，coding agent 长会话的 p99 首字延迟最多快 5.73 倍</h3>
+      <p>arXiv 2610.41508（10 月 30 日提交，Zaifeng Pan 等八位作者）。混合模型同时有全注意力与循环线性层，前缀缓存能复用 KV，却无法从更短的前缀恢复循环层状态；现有系统只在少数边界保存 checkpoint，而 agent 反复改写、回看早期上下文时，需要的 checkpoint 往往没存或已被挤掉。简单保留更多 checkpoint 又会挤掉别的会话可复用的前缀。作者的关键观察是：前缀复用一个匹配的 KV 条目集合，但只取一个循环层 checkpoint，与保留了多少 checkpoint 无关 —— 正是这个不对称，让历史 checkpoint 可以放在 SSD 上、KV 留在快速内存，每次命中只取一个与上下文长度无关的 checkpoint；再配合自适应间隔控制与统一驱逐。在 vLLM 上实现，用两个公开的 coding agent 轨迹数据集评测，p99 首字延迟相对 vLLM-Marconi 最多快 5.73 倍、相对 SGLang-HiCache 最多快 5.44 倍。<strong>口径提醒：</strong>倍数是特定负载与特定基线下测得的结果，不是通用加速比；两个轨迹数据集的公开地址与负载构成需要自行核对，不要把「最多快 5.73 倍」当成任何场景下的稳态提升。</p>
+    </div>
+    <div class="m code">
+      <h3>Google 把安卓开发工具开放给 Claude、Codex 等第三方智能体：IDE 里能继承项目上下文，终端里能渲染 Compose 预览，还能连实验室的实体设备</h3>
+      <p>这批更新在 Android Dev Summit 上公布。Android Studio Rabbit 2 的「自带智能体」进入稳定版，支持超过 40 款遵循 Agent Client Protocol 的编码智能体，含 Anthropic 的 Claude Agent、OpenAI 的 Codex 与谷歌自家的 Antigravity；接入的智能体可以继承 IDE 对项目的既有理解，包括项目结构、构建配置、符号、Compose Preview、模拟器与 Logcat，还新增了 Change Review 功能，对智能体待处理的改动做智能体式审查并引导开发者走查。官方同时推出面向 Claude Code 与 Codex 的 Android 命令行界面插件（项目创建、模拟器管理、界面检查、安卓文档查询），可在终端直接渲染 Jetpack Compose 预览的 <code>android preview</code> 命令，可让智能体访问谷歌实验室实体设备的 <code>android device remote</code>，以及把安卓系统指标与 Firebase Crashlytics 崩溃数据接进同一终端工作流的 <code>android signals</code>。谷歌称使用预览功能的智能体完成界面类任务速度提升 77%、token 最多减少三倍；另一次演示中 Claude Code 与开源泄漏检测库 LeakCanary 协作排查内存泄漏，此类调查速度提升近两倍、token 最多减少 25%。安卓产品副总裁 Matthew McCullough 强调，要给予开发者自由选择模型和编码智能体的权利。<strong>口径提醒：</strong>77% 与「近两倍」两组效率数字均为谷歌自测，官方明确说明未详细说明测量方法；Android Dev Summit 的具体举办日期官方文章未标注，中文圈在 11 月 1 日至 4 日之间陆续报道，本期按「近三日内公布、中文圈近两日集中解读」处理。报道同时提醒，曾有开发者目睹 Claude Code 提交的一个 Linux 内核修复方案被审核人员发现存在竞态条件问题。</p>
+    </div>
+    <div class="m emb">
+      <h3>优必选发布 Thinker-Sim 具身智能仿真平台：Real2Sim2Real 全链路闭环，单节点一天合成 390 小时仿真数据</h3>
+      <p>11 月 2 日优必选正式发布 Thinker-Sim，以 Real2Sim2Real 为核心，覆盖真实场景数字化重建、规模化仿真数据合成与机器人能力评测。平台搭载自研的 Thinker-GS 高保真场景重建算法与 SimReady 资产自动化生成管线，可把工厂产线、商业展厅等真实环境快速转化为数字孪生场景，并自动完成材质与碰撞体适配；内置任务模板与可视化拖拽编排，官方称适配 90% 以上仿真场景；搭载 Ulab-Agent 支持自然语言调度仿真任务。底层工程数字：自研渲染引擎使渲染效率提升 67.3%，单节点 8 GPU 日均可持续合成 390 小时仿真数据，SIL（软件在环）与 HIL（硬件在环）通信效率提升超过 400%。评测环节可复现现实环境中的不确定性，对感知、导航、操作抓取做鲁棒性测试。平台优先服务优必选自身人形机器人研发，后续将对外开放。同一篇行业观察引用的缺口口径是：全球合规真实物理交互数据仅约 50 万小时，而训练通用模型却需千万小时级。<strong>口径提醒：</strong>67.3%、单节点日合成 390 小时、通信效率提升 400% 均为厂商自测；「适配 90% 以上仿真场景」未给出判定标准。平台目前尚未对外开放，开发者只能沿用其公开描述来评估自己的方案，无法自行验证这套数字。</p>
+    </div>
+    <div class="m code">
+      <h3>商汤 SenseNova 6.8 Flash 正式版：把长期记忆做成能被验证的主动交互，设计侧输出可继续编辑的工程文件</h3>
+      <p>11 月 2 日商汤推出日日新 SenseNova 6.8 Flash 正式版。办公侧依托长期记忆与主动交互能力支持跨任务、跨会话协作，能在相关信息发生变化时识别可能受影响的事项并提出调整建议；官方给的案例是：客户曾因产品不支持私有化部署而拒绝合作，一个月后产品升级补齐了该能力，模型在准备销售例会汇报时主动提醒这位客户值得重新跟进。设计侧把生成拓展到 Web、SVG、Three.js、Blender 与 PPT，支持动态 PPT、动态海报与 Agentic 3D，可接入 Figma 等工作流；Blender 走「生成—观察—反馈—修改」的多轮可编辑工程输出。官方称在智能体协作、数据分析与演示生成等场景超过部分国际前沿模型，同步开源了 SenseNova Loop-9B-Preview（9B 级 Looped Transformer 的开源实践）。<strong>口径提醒：</strong>基准对比全部为厂商自测，未见第三方复现，其中数据分析与演示文生成两项使用的是商汤内部自研的评测基准，与其他机构的榜单不可直接比较；长期记忆与主动交互的案例是官方演示脚本，第三方接入后能否复现该行为，取决于上下文范围与权限配置。动态 3D 功能依赖本地环境搭建与多轮交互，不是开箱即用的能力。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① OpenAI 用十周重造 Git 后端</td>
+      <td>10-14 ① Anthropic 用 7 个人 5 个月把 git 换成自研的 Scion（日合并量从 2,500 涨到 30,000）</td>
+      <td>同一压力的第二家解法：那期离开 Git、把客户端一起换，本期留在 Git、只换存储与投递层。约束不同导致路线不同，两期合起来才看得出「agent 规模的源码管理」是一组选择而不是一个技术决定</td>
+    </tr>
+    <tr>
+      <td>① OpenAI 用十周重造 Git 后端</td>
+      <td>10-07 ② GitHub 正在飞行中重建 Git 底座（9 月单月 73.8 亿次提交，三条原则里写着「人还能 review、还能 approve」）</td>
+      <td>同一件事在通用托管侧的版本：那期是平台方动手，本期是自家仓库先扛不住自己动手。而那期三条原则里的「人还能 approve」，本期用「兼容标准 Git 客户端」同样守住了 —— 换后端不动客户端，正是一条让现有流程不必重写的理由</td>
+    </tr>
+    <tr>
+      <td>① OpenAI 用十周重造 Git 后端</td>
+      <td>09-21 ① 微软用 Agent 把 Copilot 运行时从 TypeScript 重写成 Rust（43 万行、12 万美元、15.9 倍）</td>
+      <td>「谁来写基础设施」这个问题的两个答案：那期是 agent 参与一次既有系统的重写，本期是 agent 参与一次从零建设 —— 两期都留了人做架构判断的位置，这是与「agent 自己造工具」的分野所在</td>
+    </tr>
+    <tr>
+      <td>① OpenAI 用十周重造 Git 后端</td>
+      <td>10-30 ② Anthropic 每天合并三万次改动之后把审批做成分级闸门（智能体的批准永远不算人的批准）</td>
+      <td>合并规模问题的两半：那期讲合并之后怎么审，本期讲合并之前仓库本身还撑不撑得住 —— 先有承载能力，后有审查能力，顺序不能倒</td>
+    </tr>
+    <tr>
+      <td>② 高盛收回 Claude Code</td>
+      <td>10-18 一辑 ③ Replit 台上宣布「不再与 Anthropic 合作」（称 Sol 与 Astra 在从零建 vibe-coded 应用上持续更好）</td>
+      <td>同一个词的两面：那期是开发者侧对 vibe coding 工具链的去留，本期是金融机构侧对 vibe coding 使用者的收回 —— 一年之内，「让所有人写代码」在开发者那边是产品路线，在监管那边成了权限问题</td>
+    </tr>
+    <tr>
+      <td>② 高盛收回 Claude Code</td>
+      <td>09-16 ② 谷歌向全体工程师开放 Claude Opus 5（内部「只用 Gemini」的规矩守不住了）</td>
+      <td>方向完全相反的两次授权：那期是大厂向全员开放，本期是金融机构向少数岗位收回 —— 中间隔了不到两个月，说明「谁能用编码 agent」是一个半年内就能翻面的变量</td>
+    </tr>
+    <tr>
+      <td>② 高盛收回 Claude Code</td>
+      <td>10-30 ② Anthropic 的分级审批闸门（低风险零人审、高风险两人签）</td>
+      <td>权限分级的两种实现：那期在厂商内部按风险分级，本期在企业客户侧按岗位收回 —— 一致的是「高风险动作需要明确的人来认账」，不同的只是认账的人从审批者变成了职位</td>
+    </tr>
+    <tr>
+      <td>③ 腾讯混元 Hyra 2.0</td>
+      <td>11-02 ① DeepSeek 开源 Super-agent（一个人同时盯三五个会话就是人的天花板）</td>
+      <td>同一条演进线的两端：那期解决会话数量（横向扩展），本期解决产出物（纵向沉淀）—— 一个让 agent 管更多事，一个让 agent 留下能接着用的东西</td>
+    </tr>
+    <tr>
+      <td>③ 腾讯混元 Hyra 2.0</td>
+      <td>10-30 ② Anthropic 六层审查流水线（结论要能被人独立复核）</td>
+      <td>审计位置的重合：那期靠人审，这期靠 agent 审 agent，而且审的痕迹落在代码版本、实验结果与日志里 —— 两期都指向同一句，结论的成立不该依赖读轨迹的人有多仔细</td>
+    </tr>
+    <tr>
+      <td>③ 腾讯混元 Hyra 2.0</td>
+      <td>10-21 ① DeepSeek 开源 DeepInfer（把推理栈连同「每卡每小时 38 美元」的账本一并交出来）</td>
+      <td>交账方式的重合：那期交成本账本，本期交权重与代码（Apache-2.0）—— 都把「我说我做得好」的依据变成可下载、可复现的东西，而不是让读者信一句结论</td>
+    </tr>
+    <tr>
+      <td>④ 百度 Apollo World 世界模型</td>
+      <td>11-03 ④ 智元便利店 24 小时收官（受限空间里的连续作业，差距由厂商自己说出口）</td>
+      <td>同一主题的两面：那期是封闭场景里能不能连轴转，本期是开放场景里能不能被判定 —— 无人驾驶比机器人难，正因为容错空间接近零</td>
+    </tr>
+    <tr>
+      <td>④ 百度 Apollo World 世界模型</td>
+      <td>11-02 ⑤ 2000 台进厂的人形机器人和六条胳膊的产线（双臂人形的人效只有熟练工的 30%）</td>
+      <td>一个讲进场后的效率比，一个讲进场前的验证环境 —— 没有后者，前者的效率比无从谈起</td>
+    </tr>
+    <tr>
+      <td>④ 百度 Apollo World 世界模型</td>
+      <td>09-14 ④ 生数 Motus2 世界模型（预测—执行—评估闭环）</td>
+      <td>世界模型的不同侧重：那期在通用具身的预测—执行闭环，本期把重点放在「怎么判断这个模拟器值不值得信」—— 前者是能力，后者是验收</td>
+    </tr>
+    <tr>
+      <td>⑤ 小米机器人干满 8 小时</td>
+      <td>11-03 ④ 智元便利店 24 小时（三条准入标准：任务边界清、结果易核验、异常能自恢复）</td>
+      <td>同一张卷子的两份答卷：那期是门店连续作业，本期是工站整班作业；两期都由厂商自己给出边界与差距，而不是靠外部评价 —— 这类从内部流出来的数字，可信度高于任何发布会上的能力清单</td>
+    </tr>
+    <tr>
+      <td>⑤ 小米机器人干满 8 小时</td>
+      <td>11-02 ⑤ 2000 台进厂（双臂人形的人效只有熟练工的 30%）</td>
+      <td>那期给出效率比的上限，本期给出续航与纠偏能力这一层 —— 30% 背后真正卡住的，正是能不能干满一个班次</td>
+    </tr>
+    <tr>
+      <td>⑤ 小米机器人干满 8 小时</td>
+      <td>09-29 ⑤ 云深处更新招股书（人形机器人两年只卖出 4 台，撑起 3.37 亿营收的是机器狗）</td>
+      <td>反向镜像：那是卖不动，本期是终于能上工站 —— 但能干满 8 小时与能卖出量之间，还隔着成本与可靠性这两道门</td>
+    </tr>
+    <tr>
+      <td>速览① HiState</td>
+      <td>11-03 ② Anthropic Messages API 消息线程（首字等待中位砍 35%，但 token 一个没省）</td>
+      <td>上下文的两个层面：那期讲怎么少传，本期讲怎么少算 —— 前者省上传带宽，后者省重复计算，两条都指向同一句，长会话的瓶颈不只在模型，也在状态放在哪一层、由谁回收</td>
+    </tr>
+    <tr>
+      <td>速览② Google 开放安卓工具链</td>
+      <td>09-17 ③ vivo 把 Harness 写进系统内核（6000 多个原子技能变成工具）</td>
+      <td>同一层上的两种做法：那期是手机厂商自己做内核适配，本期是平台方主动把 IDE、终端与实体设备的接口交给第三方 agent —— 谁先交出接口，谁就在定义 agent 的边界</td>
+    </tr>
+    <tr>
+      <td>速览② Google 开放安卓工具链</td>
+      <td>10-31 ② Claude Code 官方 VS Code 扩展在 Cursor 市场被投毒（约 11 小时窗口、最多 5000 名开发者受影响）</td>
+      <td>同一层上的反面：那条讲分发渠道被污染，这条讲官方把接口交出去 —— 权限给得越大，供应链风险与接口开放度就越必须放在一起看</td>
+    </tr>
+    <tr>
+      <td>速览③ 优必选 Thinker-Sim</td>
+      <td>10-18 速览② 优必选 Thinker-WM（RGB 加深度加动作挤进同一表征，自报三个世界模型基准第一）</td>
+      <td>同一 Thinker 系列的不同产品线：一条是世界模型，一条是仿真平台。本期只取其工程口径（渲染效率、单节点日合成小时数、软硬件在环通信效率），不重复世界模型的分数</td>
+    </tr>
+    <tr>
+      <td>速览③ 优必选 Thinker-Sim</td>
+      <td>09-15 ⑤ 国家数据局（适时推动具身智能数据标准建设，缺口 99%）</td>
+      <td>同一个缺口的两种解法：那期建标准，本期造产线 —— 标准说数据要什么样，仿真平台是让数据先有地方来</td>
+    </tr>
+    <tr>
+      <td>速览③ 优必选 Thinker-Sim</td>
+      <td>11-03 速览④ 简智机器人 1 亿美元 A+ 轮（无本体数据路线，单季交付百万小时级）</td>
+      <td>互补而不是重复：那期用真机采集换数据，本期用仿真合成换数据 —— 两条路在填同一个坑，一个走量、一个走成本</td>
+    </tr>
+    <tr>
+      <td>速览④ 商汤 SenseNova 6.8 Flash</td>
+      <td>11-01 速览④ 关于智能体该记多少，同一天出现两个相反答案（清空记忆最高 +39 分，按任务分流能省 72% 接口成本）</td>
+      <td>那期在争论「该记多少」，本期是厂商直接把长期记忆做成产品能力，并给出商业理由 —— 记忆量的工程问题，最终落到了「记住的客户需求要不要重新跟进」这种业务问题上</td>
+    </tr>
+    <tr>
+      <td>速览④ 商汤 SenseNova 6.8 Flash</td>
+      <td>11-03 速览② Kimi 游戏开发方案（Agent 进引擎自验证，交付物从一段代码变成一份能接着改的工程）</td>
+      <td>交付物升级的同一条线：那期在工程侧，本期在设计侧 —— 输出的都是可继续编辑的工程文件，而不是一段能看不能改的结果</td>
+    </tr>
+    <tr>
+      <td>今日整体</td>
+      <td>10-29「所有人都在换尺子」→ 10-30「代理被放到五个位置上」→ 10-31「能做的已经能做了，每一步都要有人认账」→ 11-01「人退到架构、裁判、否决、指标四个位置」→ 11-02「参数表失效之后，谁在现场给出新数字」→ 11-03「连续作业的成本与验收，今天同时被摊开」→ 本期</td>
+      <td>今天五条主榜讲的是同一件事：<strong>「能不能做」后面那半句</strong>。① 是承载 —— 仓库装不装得下，OpenAI 用十周重造了后端；② 是授权 —— 高盛把工具收回给工程师；③ 是沉淀 —— Hyra 让 agent 造出下一轮能接着用的工具；④ 是判据 —— Apollo World 给世界模型立了因果性与交互性两道门槛；⑤ 是续航 —— 小米让人形机器人干满 8 小时整班。承 11-03「连续作业的成本与验收被同时摊开」：上一期讲连续作业要付多少钱、由谁认账，这一期讲连续作业的五个前提 —— 装得下、给得准、留得下、判得清、干得久</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-04 · 北京时间 10:15</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-03.html">← 2026-11-03</a></div>
+</body>
+</html>
