@@ -6,7 +6,7 @@
           document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         } catch (e) {}
       })();
-    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点</h1><p>做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/多模态生成/">多模态生成</a><a class="tag" href="/tags/工具选型/">工具选型</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#备援通道agnes-ai本机已有-skill--key">备援通道：Agnes AI（本机已有 skill + key）</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P024 · 图像生成双通道：宿主 ImageGen 429 限流时，Agnes AI 备援的四个实操点</h1><p>做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 429（连发 1 张也限流），</p><div class="hero-meta"><span>踩坑于 2026-10-14</span><span>约 2 分钟</span><a class="tag" href="/tags/多模态生成/">多模态生成</a><a class="tag" href="/tags/工具选型/">工具选型</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#历史备援通道agnes-ai当前已移除">历史备援通道：Agnes AI（当前已移除）</a><a class="toc-l2" href="#教训">教训</a></aside><article class="card prose"><table>
 <thead>
 <tr>
 <th>元信息</th>
@@ -32,16 +32,15 @@
 </tr>
 <tr>
 <td>状态</td>
-<td>有效（Agnes 图像通道实测可用；视频下载 bug 见 agnes-image-video skill 文档）</td>
+<td>历史案例；2026-11-05 已停用并归档，不作为当前工具选型或服务能力结论。旧视频下载 bug 说法已被后续端点诊断纠正。</td>
 </tr>
 </tbody>
 </table>
 <h2 id="现象">现象</h2>
 <p>做小说漫剧国风版，连续调用宿主 ImageGen 全部返回 <code>429</code>（连发 1 张也限流），
 等待 60–105 秒后仍 429 —— 短时间大量生成（图+视频混跑）会触发配额级限流，恢复窗口不明。</p>
-<h2 id="备援通道agnes-ai本机已有-skill--key">备援通道：Agnes AI（本机已有 skill + key）</h2>
-<p><code>~/.agents/skills/agnes-image-video/agnes_cli.py</code>，key 在 <code>~/.zshrc</code> 的 <code>AGNES_API_KEY</code>
-（非登录 shell 不导出，需 <code>export AGNES_API_KEY=$(grep -m1 AGNES_API_KEY ~/.zshrc | cut -d= -f2 | tr -d '"'"'"' ')</code>）。</p>
+<h2 id="历史备援通道agnes-ai当前已移除">历史备援通道：Agnes AI（当前已移除）</h2>
+<p>历史 Skill 源码已归档至 <a href="~/.agents/backups/skills/agnes-image-video/retired-20261105-135329/source/SKILL.md">agnes-image-video</a>。以下为当时实测经验，不表示当前已安装、服务可用或允许恢复调用。凭据未随此次移除更改。</p>
 <p><strong>四个实操点（都实测过）</strong>：</p>
 <ol>
 <li><strong>输出 CDN 免 auth</strong>：<code>data[0].url</code> 指向 <code>platform-outputs.agnes-ai.space</code>，

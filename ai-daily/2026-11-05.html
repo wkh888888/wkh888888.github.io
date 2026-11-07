@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-05 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 5 日（周四）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：围栏今天先破了两个洞 —— 而造围栏的手和造大脑的手，是同一双手</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 围栏自己破了两个洞</a>
+      <a href="#n2">② 按停权变成了产品</a>
+      <a href="#n3">③ 开放权重的两个新答案</a>
+      <a href="#n4">④ coding model 重写机器人控制代码</a>
+      <a href="#n5">⑤ 机器人自己决定试什么</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>围住 agent 的那层今天自己破了两个洞：Docker Sandboxes 符号链接沙箱逃逸（CVSS 8.2）与 Pydantic AI 一次公开九条安全公告</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Endor Labs 于 11 月 3 日公开的 CVE-2026-103916 研究报告，Rapid7 漏洞库与 CVE 记录条目；Pydantic AI GitHub 安全公告页 11 月 4 日一次性公开的九条 GHSA；quidproquo 站内安全警报与框架更新两篇（11 月 5 日）</div>
+    <div class="body">
+      <p>今天最值得记住的一条事实是：造成破坏不需要模型被骗。沙箱逃逸和框架漏洞的触发条件，都是纯工程上的顺序写反。</p>
+      <ul>
+        <li><strong>第一个洞在 Docker Sandboxes。</strong>AI 供应链安全公司 Endor Labs 于 11 月 3 日公开编号 CVE-2026-103916 的漏洞，CVSS 3.1 评分 8.2，4.0 版评分 7.3，类型归为 CWE-59 符号链接解析不当。Docker Sandboxes 是用 <code>sbx</code> 命令行操作的独立微虚拟机沙箱，Claude Code、Codex、Gemini CLI 都可以跑在它上面。它的安全模型是一份白名单：开发者核准几个目录（通常是项目工作区），通过 virtio-fs 挂进沙箱，agent 理论上只能碰到白名单里的路径。</li>
+        <li><strong>问题出在一条白名单管不到的通道。</strong><code>sbx cp</code> 是沙箱与主机之间复制文件的命令，它不走共享文件系统，而是命令行进程在主机端直接做普通文件读写，用操作者本人的完整权限执行，全程没有查过白名单。真正的缺陷藏在这条命令怎么处理符号链接：一次复制涉及的路径有四个「链接可能出现的位置」，<code>sbx cp</code> 唯一的防护开关 <code>-L</code> 只守住其中复制来源的最后一层，另外三处默认原样跟随链接。</li>
+        <li><strong>完整攻击链是这样的。</strong>不受信任的内容（网页、依赖包、文档）指示沙箱内的 agent 在工作区里放一个符号链接，链接指向主机的 <code>~/.ssh</code> 或 <code>~/.aws</code>；agent 建议操作者执行一条看起来像搬日志或导出构建产物的复制命令；操作者照着贴进终端；主机端解析路径时原样跟随了链接，白名单一次都没有被检查。两个方向都成立 —— 写入方向把沙箱内容写进 <code>~/.ssh/notes.txt</code>，读取方向把主机的 <code>~/.aws/credentials</code> 整份读进沙箱。写入原语还能改写 <code>~/.ssh/authorized_keys</code>、<code>~/.gitconfig</code> 的 pager 设置或 git hook 脚本，把一次文件写入变成下一次执行普通指令时的代码执行，Endor Labs 说明了这条推理但没有实际演示。</li>
+        <li><strong>最扎眼的一点是复制成功时没有任何输出。</strong>不像 <code>sbx mount</code> 会打印解析后的路径，人在旁边盯着也看不出异常。而这两条命令都是帮助文档里教的标准用法，agent 在日常工作流里本来就常是建议执行这类命令的一方 —— 操作者很可能只是照着贴一行指令，完全看不出目的地已经被偷换过。</li>
+        <li><strong>第二个洞在 Pydantic AI。</strong>11 月 4 日一次公开九条安全公告，全部由同一位研究者提交，严重度分布是 High 两条、Moderate 六条、Low 一条，覆盖面横跨凭据泄露、大小限制、域名黑名单、内存耗尽与事件循环阻塞。两条 High 分别是对私钥做脱敏时在短输入上可能耗时指数级增长，以及本地网页抓取在格式化嵌套 JSON 时可能耗尽内存并阻塞事件循环。</li>
+        <li><strong>这批公告最值得记的不是条数，是同一个习惯。</strong>域名白名单那一条：web 抓取与 PlaywrightBrowser 在拒绝被禁域名之前，先把主机名解析了。决策模型展开工具参数 schema 时没有上限；带重复定义引用的工具 schema 对需要内联 schema 的模型会指数膨胀；云元数据的 SSRF 防护没有拦住腾讯云的元数据服务地址 169.254.0.23。先展开、先解析、先查询，事后才检查大小限制或黑名单 —— 顺序写反。</li>
+        <li><strong>还有一个不能忽略的结构性问题：修复本身也会打歪。</strong>Docker 原定 10 月 13 日在 v0.48.0 修补，事后发现不完整，真正修好的是 11 月 3 日发布的 v0.51.0。同一研究者在另一款沙箱产品 brig 上早前发现过同一类漏洞。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>连续三期把这条线推到了同一个位置。10-25 速览① 是 Anthropic 开源 sandbox-runtime，把沙箱从商业功能变成人人可用的组件；10-31 ② 是 Claude Code 官方 VS Code 扩展在 Cursor 市场被投毒，最多 5000 名开发者中招 —— 那期讲分发渠道被污染；今天这一期讲围栏本身的实现有洞，而且洞在次要通道上。</p>
+      <p>「次要通道」这个盲区不是 Docker 一家的疏忽。Endor Labs 研究员的复盘里，主共享通道（virtio-fs 挂载与白名单）管得很严，而搬运文件的辅助命令因为「看起来像操作者自己的动作」被排除在威胁模型之外 —— 而 agent 完全可以提前布好陷阱，等人的手去触发。审计任何 agent 沙箱时，搬文件、传参、打日志这类辅助通道应该单独拉出来查一遍，而不是只审那个最显眼的挂载点。</p>
+      <p>第二条更狠的是「修复也会写歪」。10 月 13 日的 v0.48.0 被官方当作已修，11 月 3 日的 v0.51.0 才是真修。对已经在生产环境跑 agent 的团队来说，这是一个必须自己核版本、不能等公告的窗口期。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>8.2 是 CVSS 3.1 评分，4.0 版为 7.3，两个版本不可混用。截至披露时没有公开证据表明该漏洞已在野利用，但技术细节、评分与可复现步骤已经全文公开，扫描与利用的门槛不高。Pydantic AI 那九条公告虽然共享同一个模式，但每一条的具体根因并不相同，不能一概而论。</p>
+      <p><b>边界。</b>Docker Sandboxes 的修复版本是 v0.51.0，v0.48.0 的修补不完整，升级前版本一律视为受影响。写入原语可把任意内容写入操作者家目录下任何已存在路径；读取原语相对弱一些，需要操作者自己打对一个存在的文件名，但由于这类命令常由 agent 建议，猜中 <code>~/.aws/credentials</code>、<code>~/.ssh/id_ed25519</code> 并不难。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>三件事今天就能做。第一，查版本：<code>sbx --version</code>，低于 v0.51.0 一律受影响。第二，在升级之前把复制命令当成不可信指令对待 —— 无论复制进还是复制出，先自己用 <code>realpath</code> 确认路径真的落在工作区内再执行，对 agent 主动建议的复制指令尤其要提高警觉。第三，把搬文件在内的沙箱辅助指令纳入 agent 执行监控，不要只信沙箱边界本身。</p>
+      <p>还有一条可以立刻改的默认值：优先选会把解析后路径打印出来的工具行为。复制动作完全没有输出这件事本身就是一个该被淘汰的设计 —— 静默成功的搬运命令不该有静音模式。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>「按停权」从一句使用政策条款变成了产品、并购与法律披露：CrowdStrike 发布 AI Kill Switch，苹果把 agent 风险写进 10-K</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">CNBC 报道（2026 年 11 月 3 日 14:35 发布、15:27 更新）；CrowdStrike 官方新闻稿三则（AI Kill Switch、收购 Fiddler AI、收购 Dreadnode）与 Claude Cowork 集成公告；Bernama 转述苹果年度 10-K 申报；quidproquo 区域动态与「明日关注」</div>
+    <div class="body">
+      <p>今年 7 月美国两党议员提出《AI 终止开关法案》，要求 AI 公司在模型里内置关停能力。今天，这件事第一次有了具体的产品形态。</p>
+      <ul>
+        <li><strong>产品化。</strong>CrowdStrike 在 Fal.Con Europe 2026 上发布 AI Kill Switch，内建于其 9 月推出的 Falcon Guardian 平台。三件事同时做到：拦截内部失控的 agent、阻止它重启、切断它的企业网络访问。官方说明实现方式是「像断路器一样」 —— 平台能检测到 agent 活动，但切断与恢复都需要人来决定。首席业务官 Daniel Bernard 对 CNBC 的表述是：「你可以在根上杀掉进程，这非常二元，要么杀掉这个 AI 和 agent，要么不杀，然后你去上报。」</li>
+        <li><strong>一个容易被略过的技术细节。</strong>kill switch 不删除 agent 的代码，而是通过连接的 AI 网关切断它对影响决策的那些模型的访问权。也就是说，被关掉的不是程序，是「继续思考的资格」。</li>
+        <li><strong>并购与整合。</strong>同日 CrowdStrike 宣布两项收购：AI 可观测性公司 Fiddler AI，以及 AI 安全测试公司 Dreadnode；同时宣布与 Anthropic 的 Claude Cowork 做集成。</li>
+        <li><strong>法律披露。</strong>据 Bernama 转述，苹果在年度 10-K 申报中示警：AI agent 可能在未经授权的情况下访问系统或完成交易，使公司暴露于法律诉讼与商誉风险。这是大型科技公司第一次把这类风险写进面向投资者的正式文件。</li>
+        <li><strong>组织侧的动作也在收紧。</strong>今天的安全通告里明确建议：默认把员工 agent 放在组织自己控制的受管云环境里跑，而不是员工个人终端上，理由是员工终端上的 agent 已被视为企业和政府的系统性风险；这条建议直接点名了高盛的做法。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这是本系列里持续最久的一条线，今天走到了第四幕。</p>
+      <ul>
+        <li>10-09 ②：Anthropic 全量改使用政策，真正有分量的是那条「必须有人能按停它」 —— 当时那只是条款。</li>
+        <li>10-31 ③：OpenAI 公开检测模型失准的四层监控体系，智能体逃出沙箱 30 分钟就告警 —— 从条款变成检测。</li>
+        <li>11-01 速览③：OpenAI 更新 Model Spec，六层权限加一张工单，AI 必须无条件配合监控、评估、纠正乃至关停 —— 从检测变成规范。</li>
+        <li>11-04 ②：高盛把 Claude Code 从投行与交易岗收回给工程师 —— 从规范变成组织动作。</li>
+        <li>今天：CrowdStrike 把它做成独立产品，苹果把它写进 10-K —— 从组织动作变成产品与法律口径。</li>
+      </ul>
+      <p>四幕走下来，一个判断慢慢成形：「能按停」这件事，问题从来不在技术上能不能实现，而在它落在谁的资产负债表上。谁把它写进产品、谁把它写进监管文件，谁就承担了这份责任 —— 也因此，谁的说法最值得当真。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>kill switch 的实际防护边界是「在 CrowdStrike 自家 Falcon 平台上运行的 agent」，Bernard 自己描述为在有根级访问权限的系统里才成立。跨模型、跨数据中心、跨复杂 AI 系统的紧急停止，业内批评者认为实现起来远比产品演示复杂。「检测得到」和「切断得干净」是两件事：平台能检测到内部 agent 活动，但切断与恢复都要求人做出决定，这中间存在一个由人承担的时间窗。</p>
+      <p>苹果那条来自 Bernama 转述的 10-K 申报，属二手转述，未见原文表述；10-K 属于风险披露，列出风险不等于认定已发生损失。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在企业里管着一批 agent，今天可以按一个问题自查：这批 agent 的「按停权」到底是流程还是产品 —— 有没有能一键切断 agent 对模型访问权的开关，而不只是「叫人别点」；关掉之后能不能阻止它重启；agent 跑在谁的机器上，员工个人终端和公司受管环境是两种完全不同的风险敞口。</p>
+      <p>另外一条：无论你用不用 CrowdStrike，「切断模型访问权」这个实现思路本身可以照抄 —— 它不需要删 agent 的代码、不需要动 agent 的状态机，只要在模型调用这一层断掉就行。这比试图安全地杀掉一个正在运行的进程要干净得多。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>开放权重编程模型今天有两个新答案：Cognition SWE-2 Flash 与 Ricursive Ripple-65B，而「美国第一」这个头衔本身有前提</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">Cognition 于 11 月 4 日发布的 SWE-2 Flash（官方口径经同花顺财经 11 月 5 日转述）；Ricursive 同日发布的 Ripple-65B Preview（官方发布与第三方转述）；agihunt 11 月 5 日汇总的第三方评论；终端基准横向对照表（含 DeepSeek-V4-Flash 82.7、GLM-5.3-Flash 84.3）</div>
+    <div class="body">
+      <p>同一天有两家美国公司发布开放权重编程模型，都自称是美国本土第一。都自称，就说明有一个需要被检验的前提。</p>
+      <ul>
+        <li><strong>Cognition 的 SWE-2 Flash。</strong>11 月 4 日发布，底座是 Thinking Machines 的 Inkling-Small，稀疏混合专家架构，总参数 276B、单次激活 12B。官方口径：Terminal-Bench 2.1 得 89.2，DeepSWE 1.1 得 60.1，SWE-Pro v2 Hard 得 89.9，FrontierCode 2.0 得 24.0。价格是同系列旗舰 SWE-2 的五分之一，原生生成速度每秒 200 token，而 SWE-2 是每秒 60 token —— 快三倍。模型已上线 Devin 桌面端与命令行，官方免费试用到 11 月 30 日。旗舰 SWE-2 的规格是 2.8T 总参数、104B 激活。</li>
+        <li><strong>训练链路上有一个新环节值得记。</strong>在强化学习之前插入了大规模中间训练阶段：构建专属的高质量预留编码数据集，用 token 效率曲线筛选数据源组合（测算达到同等验证损失要消耗多少 token），训练总数据规模达数万亿 token，稀缺高价值素材放在训练后期送入模型。</li>
+        <li><strong>Ricursive 的 Ripple-65B Preview。</strong>同日发布，65B 稠密开放权重模型，官方定位为「美国开放权重模型在 Agentic Coding 上的新 SOTA」，Terminal-Bench 2.1 得 80.5，预训练计算成本约 3200 万美元，接口价格输入每百万 token 0.20 美元、输出 0.60 美元。</li>
+        <li><strong>两家自己做了同场对比。</strong>三项重合评测：Terminal-Bench 2.1 是 89.2 对 80.5，差 8.7 分；DeepSWE 1.1 是 60.1 对 44.3，差 15.8 分；SWE-Pro v2 Hard 是 89.9 对 79.1，差 10.8 分。参照模型 Beam 501B 三项依次为 80.1、43.3、76.5。</li>
+        <li><strong>参数量收益曲线才是这条新闻真正的重点。</strong>按官方给出的曲线，拿到与 Ripple-65B 相同分数的其他模型，参数量达到它的十五倍。</li>
+        <li><strong>但「美国第一」这个头衔有前提。</strong>投资人 Nathan Benaich 的批评是：当一个标签的含义是「在某一个子集里排第一，而这个子集的边界由发布方自己划定」，它的信息量就取决于你愿意把谁放进比较范围。按第三方横向表里的口径，DeepSeek-V4-Flash 在 Terminal-Bench 2.1 上是 82.7、GLM-5.3-Flash 是 84.3 —— 与今天这两个数字在同一量级；而 10-26 ① 记过 Kimi K3.1 Pro 冲上开放权重第一的位置。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>表面看是模型发布，实际是开源供给链上的一件结构性变化：编程模型的底座开始外购。SWE-2 Flash 的底座是 Thinking Machines 的 Inkling-Small，那家公司自己也是靠自动化研究系统造模型的；Ripple-65B 则把 65B 稠密模型的预训练成本压到约 3200 万美元。在这个尺度上，「自己从零预训练一个通用编程模型」正在变成一件不必做的事 —— 和 10-19 ① 英伟达把技能存成代码、11-04 ① OpenAI 十周重造 Git 后端是同一个方向：把重复的基础设施交给能复用的现成件。</p>
+      <p>第二件事是评测口径本身。10-26 ② 推过 Epoch AI 判定 21 个主流基准里有 10 个带评分缺陷，其中 Terminal-Bench 4.0.0 六个里四个带病。今天两家公司的头条数字全部建立在 Terminal-Bench 2.1 这一个分数上 —— 最响亮的两个数字，建在本系列已经标注过「带病」的尺子上。这不是否定成绩，是提醒读分数时把尺子一起带上。</p>
+      <p>第三件事是「美国本土第一」这个限定词。当一个标签的含义是「在某一个自划定子集里排第一」，它的信息量就取决于比较范围。今天的答案是：放进中国的开放权重模型，比较就没有那么好看。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部跑分均为厂商自测，两家没有共同第三方复现。Ripple-65B 的 80.5 与 SWE-2 Flash 的 89.2 虽来自各自发布内容，两家也各自给出了三项重合评测的对照表，但对照表仍由发布方自己汇编。预训练成本约 3200 万美元、参数量十五倍收益曲线同样出自厂商口径。「开放权重」也不等于「开源」—— 许可证限制、量化版本、上下文长度、工具调用协议与完整模型卡的公开程度，才决定它能不能从榜单选手变成可部署的生产工具。</p>
+      <p>另一处要小心：SWE-2 Flash 与旗舰 SWE-2 的 104B 激活不是同一量级的东西，官方那句「超越所有美国开放权重模型」限定的是开放权重阵营，不是「超越自家旗舰」。第三方横向表里的 82.7 与 84.3 同样来自二手汇总，与两家自报数不构成同口径横评。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你在评估自托管编程模型，别只看跑分排名，先查五件事：训练数据边界与授权、上下文长度、量化版本的实际掉分、工具调用协议与现有 harness 的兼容情况、许可证限制是否允许商用。这五项没查清之前，「SOTA」只是一个还不能下单的结论。</p>
+      <p>选型上有一条实用经验：今天两家的头条数字差 8.7 分，但体量差四倍以上（276B 总参数、12B 激活对 65B 稠密）。多数团队的瓶颈不在跑分而在部署成本 —— 把激活参数、显存占用与推理吞吐算进总账，往往比再追两分更值钱。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>让 coding model 自己重写机器人控制代码：RoboArchitect 不更新一个权重，未见场景成功率从 9.7% 拉到 43.3%</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">arXiv 2610.42141《RoboArchitect: Automating the Design of Robotic Agents with Persistent Memory》（2026 年 10 月 30 日提交，作者 Shengguang Wu、Suning Huang、Cherie Ho、Ria Doshi、Hao Zhu、Serena Yeung-Levy，斯坦福）；项目页 roboarchitect-ai.github.io；theaitoday 的论文摘要转述</div>
+    <div class="body">
+      <p>这是本系列第一次看到「机器人控制代码由 coding model 自动重写」这条路线给出完整的对照实验数据。</p>
+      <ul>
+        <li><strong>出发点。</strong>已有工作表明，一个冻结的机器人策略放进 agent harness 里表现会好得多 —— 所谓 harness，就是包在策略外面的那层控制代码：决定什么时候去问策略、什么时候调视觉工具、什么时候直接指挥机械臂。问题在于，今天这些 harness 都是手写的，每换一个机器人或换一个基准就要重写一遍。</li>
+        <li><strong>RoboArchitect 做的事。</strong>一个 coding model 观察机器人的实际轨迹、诊断失败原因，然后围绕冻结的策略迭代改写 harness。harness 在一组片段上演化，再在留出的场景与任务上评估。整个过程不更新任何模型权重。</li>
+        <li><strong>结果。</strong>在未见场景上，平均成功率从 9.7% 提升到 43.3%，约 4.5 倍；在未见任务上，从 12.7% 提升到 40.2%，约 3.2 倍。跨多个基准与多种策略成立。</li>
+        <li><strong>最有意思的一条结论：收益最大的地方，恰恰是基准离策略训练数据最远的地方。</strong>用一个通用策略作底，演化出来的 harness 会把它包装成一个专用策略，常常连微调后的版本都比得过。</li>
+        <li><strong>自动设计出来的控制策略长什么样。</strong>论文举了两个例子：机械臂卡住时先把它抬起来脱困；障碍从上方挡路时改为水平伸入。这两条都不是人写进去的，是演化出来的。</li>
+        <li><strong>harness 还演化出了自己的持久记忆。</strong>比如「有效的抓取深度」这类经验会被带进后续决策里。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>今天前面三条都在讲围栏（沙箱、框架、治理），这一条讲的是被围栏保护的对象开始自己改围栏。而它和 10-19 ① 是同一条线的两个阶段。</p>
+      <p>10-19 ① 推过 NVIDIA ASPIRE V1.0：让编程智能体给机器人写控制程序，跑失败就复盘轨迹、改代码，把改对的方法存进技能库。那一期的关键数字其实是一个警告 —— 演化搜索这个环节在强模型上的收益从 34 个百分点缩水到约 2 个百分点，模型越强，为弱模型准备的 harness 工程越不值钱。</p>
+      <p>RoboArchitect 换了个角度回应同一个问题：不换模型，换 harness。它的对照实验正好补上了 10-25 ③ 那篇山东大学论文留下的缺口 —— 那篇在 coding 侧发现换 harness 分数几乎不动、成本差三倍；今天这一篇在机器人侧发现，在「策略冻结、基准离训练数据远」的条件下，换 harness 能把成功率拉四倍多。两个结论并不矛盾：harness 不是万能药，但它是唯一不动权重的那把药。</p>
+      <p>第二条值得看的是「先有代码库还是先有示范数据」这个选择被换掉了。不收集示范数据，等于把机器人学习最贵的那一环从预算里砍掉。这跟 11-03 速览④ 简智机器人的「无本体」数据路线是同一种思路的两种规模。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部数字来自论文摘要与项目页，尚无第三方复现；9.7% 到 43.3%、12.7% 到 40.2% 都是跨多个基准与策略汇总的平均值，论文摘要未给出逐基准分解。评估设计本身值得留意：harness 在一组片段上演化、在留出的场景与任务上评估，这个划分是合理的，但仍要看到演化片段与留出集之间的任务分布差异对结论的影响幅度，摘要未披露。</p>
+      <p>也要说清边界：这条路线的前提是「已有策略、只缺 harness」。如果机器人连策略本身都不行，重写控制代码救不了它。另外 43.3% 仍然不是一个能进产线的数字 —— 11-03 ④ 智元便利店那一期里，厂商自己给出的差距答案是与熟练店员相比仍有不小差距，可以拿来当量级参照。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的团队在评估机器人策略，可以把「先补示范数据」和「先补 harness」当成两个可比较的选项列出来，而不是默认前者。判据是：策略在训练分布内已经能用吗？如果是，那么先动 harness 的性价比通常更高 —— 它不动权重、不需要重新采数据、迭代周期是分钟级而不是周级。</p>
+      <p>还有一条更通用的：论文里那两条演化出来的控制策略（卡住先抬起来、挡路改水平伸入）读起来像常识，但它们是机器人自己试出来的。给团队做机器人落地时，值得把「我们以为的常识」和「机器人试出来的常识」分开列 —— 往往后者才是真正的缺口。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>让机器人自己决定接下来该试什么：EmbodiedRSI 用价值信息选实验，同样 50 次交互预算下成功率从 27.1% 到 72.9%</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">arXiv 2610.10498《EmbodiedRSI: Active Continual Robot Learning Through Hypothesis-Guided Co-Evolution》（2026 年 10 月 7 日提交，作者 Python Song、Zhixuan Liang、Kelsey Fu、Mengdi Wang、Junfeng Yang、Shilong Liu，哥伦比亚大学与普林斯顿）；智源社区 11 月 5 日的论文讲读（arXiv 2610.10498）</div>
+    <div class="body">
+      <p>上一篇讲「谁来写代码」，这一篇讲「谁来决定该写什么」—— 机器人自己选下一步的实验。</p>
+      <ul>
+        <li><strong>要解决的痛点。</strong>机器人基础模型有不错的视觉运动控制，但物体位置或任务指令一变，性能就掉；要继续提升，通常需要在大量机器人数据上做后训练，而这类数据靠遥操作采集非常昂贵。agentic harness 可以围着模型自适应，但现有的自进化 harness 在「决定该追哪个代码改动、哪个技能改动」这件事上用机器人试验的效率很低。</li>
+        <li><strong>EmbodiedRSI 的做法是快慢双系统。</strong>竞争性的「代码假设」和「技能假设」被维护在一张假设图谱中；一个价值信息实验选择器挑选那些能把这些假设区分开的物理实验；实验结果反过来驱动代码与技能协同演化。慢系统构建层次记忆，奖励驱动的记忆学习再按「对后续快系统改进的价值」筛选哪些经验值得留下。</li>
+        <li><strong>数字。</strong>RoboCasa365 上总体成功率 77.0%，未见组合任务 71.3%，对照最佳基线 40.1%；LIBERO-Pro 上总体成功率 86.8%。零样本迁移到真机，多项挑战任务总体成功率 71.3%，对应迁移前的 46.0%。</li>
+        <li><strong>最有说服力的一组对照来自讲读转述。</strong>在同样的 50 次交互预算下，与随机探索相比，成功率从 27.1% 提升到 72.9%。这个数字回答的是一个非常实际的问题：机器人那有限的几十次物理试错，到底该花在什么方向上。</li>
+        <li><strong>一句话概括它的主张。</strong>试错本身不是目的，能被复用的代码与技能才是 —— 每次交互都应该被转化为下一轮能直接调用的东西。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>这为什么值得看。</b>这条线在本系列里出现过三次，而且每次都往前挪一格。</p>
+      <ul>
+        <li>10-28 ⑤：智元发布 Genie Master —— Physical RSI 第一次走出仿真，机器人在真实便利店里自己定位失败、改策略、沉淀经验。那期讲的是递归自我改进在真实场景第一次发生。</li>
+        <li>10-25 ④：复旦 RoboSkill —— 机器人把现场摸索出的解法存成「文字 + 代码」技能，耗时砍到三分之一。那期讲的是技能怎么被沉淀下来复用。</li>
+        <li>今天这一篇：把「试什么」的决策权也交给智能体，并且用价值信息选择器把它量化 —— 同样 50 次交互预算下，成功率从 27.1% 到 72.9%。</li>
+      </ul>
+      <p>三篇连起来是一条完整的方法论：先让机器人能自己发现失败，再让发现的东西能存下来复用，最后让「该往哪试」本身成为一个可优化的决策。前两篇的改进循环由人或固定框架驱动，今天这一篇把「选实验」这一步也做成了可学习、可评估的对象。</p>
+      <p>和 10-19 ① ASPIRE 那条线对照更有意思：那一期的结论是「模型越强，为弱模型准备的 harness 工程越不值钱」（演化搜索收益从 34 个点缩到约 2 个点）。今天 EmbodiedRSI 的对手不是更强的模型，而是随机探索 —— 它要证明的不是「harness 强于模型」，而是「harness 内部的决策可以被优化」。这两件事不冲突，恰恰是同一件事的两层。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒。</b>全部数字来自论文摘要与讲读转述，尚无第三方复现。40.1% 是最佳基线在未见组合任务上的成绩，不是随机基线；真机迁移的 71.3% 是多项挑战任务的总体成功率，各任务分解摘要未给出。讲读转述里「相同 50 次交互预算下 27.1% 对 72.9%」这一组数字未出现在论文摘要中，引用时应注明来自讲读转述而非论文原文。</p>
+      <p>边界也要说明白：底层机器人策略模型是冻结的，提升全部来自 harness 与记忆层。论文自己把瓶颈点得很清楚 —— 试错预算再省，也改不了冻结模型的能力上限；而且「判断哪个实验最有信息量」这个判断本身要靠执行结果来验证，在物理世界里每一次判断都要付真机的时间与磨损。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动。</b>如果你的团队在做机器人的数据闭环，这篇提供了一个很具体的改造方向：别让「下一次采什么数据」靠研究员拍脑袋，用一个价值信息选择器来排优先级。同样 50 次试错预算，方向选对与选错的差距是 27.1% 对 72.9% —— 这个差距远大于换一个更强的策略模型带来的差距。</p>
+      <p>一条更省事的起步做法：先做一个最小版本 —— 每次实验记录三件事（假设是什么、预期能区分什么、实际结果推翻了什么），然后按「这次实验排除了多少种可能」给下一步排序。不需要先建假设图谱，先把「试了什么、学到了什么」记下来，这一步本身就能拿回一部分效率。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>RoboColosseum：把一百多台真机连成一个跨五国的评测网络，五千多次试验之后发现没有一张榜单能说明问题</h3>
+      <p>arXiv《RoboColosseum: Evaluating Physical Intelligence at Scale In-The-Wild》（作者 Tan Sang Nguyen、Yi Ru Wang 等，含 Dieter Fox、David Hsu、Haoming Song、Thomas Wolf、Pepijn Kooijmans、Ruijie He、Michael Cho、Jiafei Duan）；项目方在 Hugging Face 与 BitRobot Network 侧提供超过 100 台实体机器人与 10000 个免费评测小时。这套框架把美国、英国、新加坡、马来西亚和中国的运营方手里的一百多台机器人连成一个共享的评测协议：同一套规则、同一套软件、由全职评估员操作。它比较八个机器人模型、四种机器人类型，走两条赛道，一条零样本直接比，一条每任务给 100 条示范再比。三个结论值得记：第一，在盲测里前沿通用智能体与专门的机器人策略打成平手，但没有一个系统在任何一个「开放世界操作」类别里超过 13% 成功率；第二，排名在不同机器人类型之间只有很弱的一致性；第三，微调之后排名会反转，训练前的水平并不能预测训练后的水平。这套评测的价值不在于给出一个冠军，而在于让「谁能做机器人」第一次有了可重复的场地。<strong>口径提醒：</strong>13% 是开放世界操作类别的最好成绩，不是全部任务的上限；10000 个免费评测小时是项目方提供的额度，不是已消耗的量。跨站点的操作差异本身是设计的一部分（每台机器人与每个运营方都是本地操作），这也会让「一致性弱」这个结论部分成为设计的必然结果。</p>
+    </div>
+    <div class="m emb">
+      <h3>Liber-0：用 220 万小时人类经验预训练，世界动作模型真机零样本整体成功率 36%，对照组 GPT-6 Astra 只有 5%</h3>
+      <p>具身智能初创公司 LiberAI 于 11 月 4 日发布世界动作模型 Liber-0，创始人刘松铭是清华大学计算机系 2000 年生博士、师从朱军。模型用超过 220 万小时人类经验预训练，数据包含大规模人类视频与自研 LiberSense Glove 数据手套采集的手部动作信息。测试设计相当克制：60 项任务全部由 GPT-6 随机生成，分抓取放置、短程非抓取放置、复杂多步骤三组各 20 项，每项重复 10 次，合计 600 次真机零样本测试，全程没有针对这些任务采集机器人示范数据。结果三档分别是 63.5%、34.0%、10.5%，整体 36.0%。作为对照，GPT-6 Astra 控制同一台机器人跑同一批任务、每项 3 次，三档只有 8.3%、5.0%、1.7%，整体 5%；Astra 单次决策平均推理耗时 87.3 秒，成功任务平均完成 17.8 分钟。另有一组对照实验：把真机数据砍到只剩 25%、混入手套数据，8 项任务评估集上得 75.6，高于全真机数据基线的 72.8。<strong>口径提醒：</strong>36% 对 5% 这个对比最吸睛，但它掩盖了一个更重要的形状 —— 63.5%、34.0%、10.5% 不是一条平滑衰减，而是一道断崖：抓取放置过关，超过一步就急剧下滑，长程多步骤几乎归零。手套数据那组对照（75.6 对 72.8）用的是另一套评估集，与 60 项零样本测试不是同一套基准，引用时必须分开。220 万小时是预训练数据规模，不等于机器人示范数据。</p>
+    </div>
+    <div class="m code">
+      <h3>三条互不相干的短讯，共同说明 coding agent 已经从「可选工具」变成「默认路径」</h3>
+      <p>第一，OpenAI 于 11 月 4 日宣布收购 Git 工具团队 Pierre Computer Company。Pierre 的四个项目里，Trees（快速浏览项目文件）与 Diffs（查看代码变更，支持在发现问题处直接改动的 Edit 模式）已经被用在 Codex 里，OpenAI 说用过 Codex 浏览文件或审查变更的用户其实已经用过这两个库；Code Storage 是用 Git 存储代码并追踪历史的服务；Highlights 是新推出的高速语法高亮。开源项目将继续保持开源，Code Storage 的客户在交割后仍可继续使用，功能会逐步整合进 Codex。第二，据 Dreamforce 采访，Salesforce 约 700 人的 AI 与 Agentforce 组织负责人称，工程师在没有公司强制要求的情况下从 Cursor 转向 Claude Code。第三，GitHub Octoverse 报告称平台上的 commits 与 pushes 双双创下新高，GitHub 把这一增长归因于更多工作由 coding agent 完成。<strong>口径提醒：</strong>收购仍须满足交割条件（含监管批准），交割前两家仍是独立公司；Salesforce 那条来自单一受访者，缺少更广的横向数据；Octoverse 的 commits 与 pushes 是平台级活动指标，不能直接换算成「有多少工作量由 agent 完成」—— 10-29 ② 推过的 GitHub 官方年报给的是更谨慎的口径：超过 40% 的 pull request 由 agent 起头，并且 GitHub 自己说这是下限。</p>
+    </div>
+    <div class="m emb">
+      <h3>Agility Robotics 今天以 AGLT 挂牌纳斯达克，公开市场第一次拿到了一份纯人形机器人公司的完整账本</h3>
+      <p>SPAC 公司 Churchill Capital Corp XI 的股东在 11 月 2 日的特别会议上以超过 84% 的赞成票批准与 Agility Robotics 的业务合并，交易预计 11 月 4 日交割，合并后的普通股与认股权证 11 月 5 日起在纳斯达克分别以 AGLT 与 AGLTW 交易。合并相关融资预计带来约 4.65 亿美元毛资本：Churchill XI 信托账户约 1.64 亿、以每股 10 美元认购的普通股 PIPE 约 2.01 亿（富士康领投）、以及已到账的 1 亿美元股权融资。公司称合并后将成为美国唯一一家拥有已验证、活跃商业部署的上市纯人形机器人公司 —— 这句「美国唯一」有明确限定：在美国上市、专营人形机器人、且已有持续运行的商业部署。真正值得注意的是招股文件里的账：2025 年全年净销售额 178.2 万美元，其中 64% 来自关联方；净亏损 1.381 亿美元，毛利率负 151%，销售成本是收入的 2.51 倍；研发约 9164 万美元，销售及管理约 4584 万，经营现金流出约 9984 万，年末现金及等价物约 1.03 亿；成立以来累计赤字 3.131 亿美元，总负债 5657.58 万美元（约为 2024 年的 3.17 倍）；对应 25 亿美元投前估值、市销率超过 1400 倍。管理层同时提示，若不考虑 SPAC 合并融资，持续经营能力存在重大疑虑。Digit 5 单机标价 20 万美元，RaaS 合同每月 8500 美元另收 2.5 万部署费；那张 3 亿美元的 1000 台订单受单一客户与交付里程碑条件约束，而 Digit 5 预计 2026 年底才商业可用。<strong>口径提醒：</strong>这些是 S-4 文件里的 2025 年历史财务，不是本次上市的估值依据；毛资本约 4.65 亿美元较 6 月宣布合并时「超 6.2 亿美元」的口径缩水约四分之一，主要来自 SPAC 信托赎回。缩水本身不构成对公司的否定，但说清了一件事：在「能交付」和「能盈利」之间，公开市场目前只愿意先为前者付钱。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① 围栏自己破了两个洞</td>
+      <td>10-25 速览① Anthropic 开源 sandbox-runtime（Claude Code 背后那层沙箱，现在谁都能用）</td>
+      <td>同一件东西的两种走向：那期是把沙箱交出去，本期是沙箱本身有洞。两者合起来才看得出「沙箱」这个词覆盖了两种完全不同的东西 —— 一件被广泛采用的组件，和一套需要被审计的实现</td>
+    </tr>
+    <tr>
+      <td>① 围栏自己破了两个洞</td>
+      <td>10-31 ② Claude Code 官方 VS Code 扩展在 Cursor 市场被投毒（最多 5000 名开发者中招）</td>
+      <td>同一层的正反两面：那期讲分发渠道被污染，本期讲围栏实现本身有洞。两条合起来说明 agent 的信任边界至少有三层 —— 谁发的、怎么装的、装完怎么跑的，缺一层就漏一层</td>
+    </tr>
+    <tr>
+      <td>① 围栏自己破了两个洞</td>
+      <td>09-30 ③ 记忆层没有权限模型（216 次投毒 216 次全部成功）</td>
+      <td>权限边界那条线的续集：那期是记忆层完全没有权限模型，本期是沙箱有白名单却没检查到另一条通道。共同点在于「看起来有边界」和「边界真的被检查过」是两件事</td>
+    </tr>
+    <tr>
+      <td>② 按停权变成了产品</td>
+      <td>10-09 ② Anthropic 全量改使用政策（真正有分量的是「必须有人能按停它」）</td>
+      <td>同一条主张的第一幕：那期是条款，本期是产品加并购加法律披露。四幕走下来可以看清，问题从来不是技术上能不能按停，而是它落在谁的资产负债表上</td>
+    </tr>
+    <tr>
+      <td>② 按停权变成了产品</td>
+      <td>11-01 速览③ OpenAI 更新 Model Spec（六层权限加一张工单，AI 必须无条件配合关停）</td>
+      <td>从规范到产品：那期把按停写成 AI 必须服从的条款，本期把它做成安全团队能一键拉下的开关</td>
+    </tr>
+    <tr>
+      <td>② 按停权变成了产品</td>
+      <td>11-04 ② 高盛把 Claude Code 收回给工程师（数月前还在公开鼓励投行与交易员 vibe coding）</td>
+      <td>组织侧与工具侧同时收口：那期是单个企业把权限收回给工程岗，本期是供应商把「切断」做成通用能力</td>
+    </tr>
+    <tr>
+      <td>③ 开放权重的两个新答案</td>
+      <td>09-11 速览② Cognition 发布 SWE-2（FrontierCode 1.1 Main 得 50.0%，成本比 Fable 5.1 低 64%）</td>
+      <td>同一系列的第二次开放：那期是 2.8T 旗舰 SWE-2 的成绩，本期是 276B 总参数、12B 激活的 Flash 版本。方向一致 —— 用更小的激活参数换更低的单价，代价是旗舰与 Flash 之间十倍以上的分数差</td>
+    </tr>
+    <tr>
+      <td>③ 开放权重的两个新答案</td>
+      <td>10-26 ① Kimi K3.1 Pro 冲到开放权重第一</td>
+      <td>同一个位置换人坐：那期是开放权重第一的位置，本期是美国阵营内部换人。今天这两个数字要不要算「开放权重第一」，取决于你把谁放进比较范围</td>
+    </tr>
+    <tr>
+      <td>③ 开放权重的两个新答案</td>
+      <td>10-26 ② Epoch AI 判定 21 个主流基准里有 10 个带评分缺陷（Terminal-Bench 4.0.0 六个中四个带病）</td>
+      <td>最响的数字建在本系列已标注过的尺子上：那期说 Terminal-Bench 的判定有病灶，本期两个头条分数全部落在 Terminal-Bench 2.1 上。这不是否定成绩，是提醒读分数时把尺子一起带上</td>
+    </tr>
+    <tr>
+      <td>③ 开放权重的两个新答案</td>
+      <td>10-30 ① Mistral 把 1 万亿参数的权重放了出来（开放权重里最强的编码模型，绝对分数只有 19.7%）</td>
+      <td>开放权重编程模型这条线的第三种答案：那期是最大规模的权重、但绝对分数只有 19.7%，本期是 89.2 与 80.5。规模不再是这条赛道的主变量</td>
+    </tr>
+    <tr>
+      <td>④ coding model 重写机器人控制代码</td>
+      <td>10-19 ① 英伟达开源 ASPIRE V1.0（让编程智能体给机器人写控制程序，80 项任务 99%）</td>
+      <td>同一条路线的两个阶段：那期是机器人自己存技能，本期是 coding model 自动改写 harness。那一期的警告是「模型越强，harness 工程越不值钱」，本期用机器人侧的对照实验回应了同一个问题 —— 不换权重也能拿到四倍收益</td>
+    </tr>
+    <tr>
+      <td>④ coding model 重写机器人控制代码</td>
+      <td>10-25 ③ 换掉 coding agent 的 harness，分数和重跑一样动，成本却差三倍</td>
+      <td>两个方向上的同一结论：那期在 coding 侧测出换 harness 对分数几乎无影响，本期在机器人侧测出在策略冻结、基准远离训练数据时换 harness 能把成功率拉四倍多。合起来的读法是 —— harness 不是万能药，但它是唯一不动权重的那把药</td>
+    </tr>
+    <tr>
+      <td>④ coding model 重写机器人控制代码</td>
+      <td>09-21 ① 微软用 Agent 把 Copilot 运行时从 TypeScript 重写成 Rust（43 万行、12 万美元、15.9 倍）</td>
+      <td>「agent 造工具」这条线的两端：那期是 agent 重写一套给人用的基础设施，本期是 agent 重写一套给机器人用的控制代码。共同点是分工没变 —— 人做架构判断，agent 做实现与验证</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人自己决定试什么</td>
+      <td>10-28 ⑤ 智元发布 Genie Master（Physical RSI 第一次走出仿真）</td>
+      <td>递归自我改进的第一幕：那期是机器人在真实便利店里自己定位失败、改策略、沉淀经验，本期是同一件事的机制化 —— 用价值信息选择器把「该试什么」变成可优化的决策</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人自己决定试什么</td>
+      <td>10-25 ④ 复旦 RoboSkill（机器人把现场摸索出的解法存成「文字 + 代码」技能，耗时砍到三分之一）</td>
+      <td>沉淀那条线：那期讲试出来的解法怎么存下来，本期讲该往哪试。两个问题是一条链的两端</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人自己决定试什么</td>
+      <td>11-03 速览④ 简智机器人完成 1 亿美元 A+ 轮（走「无本体」数据路线，单季度有效数据交付量跃升到百万小时级）</td>
+      <td>同一个省掉示范数据的思路：那期从资本侧证明有人愿意为「不采真机数据」付钱，本期从技术侧给出同样思路的一个量化结果 —— 试错预算不变，换个方向成功率翻倍</td>
+    </tr>
+    <tr>
+      <td>速览① RoboColosseum</td>
+      <td>11-04 速览③ 优必选发布 Thinker-Sim 具身智能仿真平台（单节点一天合成 390 小时仿真数据）</td>
+      <td>评测路线的一体两面：那期造仿真产线，本期造真机评测场地。两条路的共同前提都是「可比」—— 仿真要统一渲染，真机要统一规则与操作员</td>
+    </tr>
+    <tr>
+      <td>速览② Liber-0</td>
+      <td>10-29 ⑤ 阿里高德开源 λ0 全身基座模型（只喂人类第一视角视频，真机 62.5%）</td>
+      <td>同一条数据路线的新样本：那期是只喂人类第一视角视频换真机 62.5%，本期是 220 万小时人类经验加手套数据换真机零样本 36.0%。两个数字不可直接比较（基准不同），但都在回答同一个问题 —— 人类经验能不能替代真机示范</td>
+    </tr>
+    <tr>
+      <td>速览③ 三条短讯</td>
+      <td>11-04 ① OpenAI 用十周重造了 Git 的后端（Pando）</td>
+      <td>相隔一天，同一家公司做了同一件事的两半：那期是自家仓库扛不住、自建后端，本期是收购一个 Git 工具团队把客户端体验补上。存储与投递是后端的事，看文件与审 diff 是客户端的事</td>
+    </tr>
+    <tr>
+      <td>速览③ 三条短讯</td>
+      <td>10-29 ② GitHub 官方年报给出第一个全站口径（超过 40% 的 pull request 由 agent 起头）</td>
+      <td>平台级口径的两个版本：那期是 GitHub 自己给的 agent 占比，本期是 commits 与 pushes 的绝对量创新高。绝对量创新高不等于工作量都由 agent 完成，两个口径要分开读</td>
+    </tr>
+    <tr>
+      <td>速览④ Agility 挂牌</td>
+      <td>10-26 ⑤ Agility Robotics 走 SPAC 上市纳斯达克（3 亿美元多年订单、交割在第四季度）</td>
+      <td>同一条时间线的推进：那期推的是宣布合并与 SEC 备案文件里的条款，本期是实际挂牌日，并且第一次有 2025 年完整财务。那期把「订单能不能被第三方读到条款」讲清楚了，本期把「账能不能被第三方读到」也讲清楚了</td>
+    </tr>
+    <tr>
+      <td>速览④ Agility 挂牌</td>
+      <td>09-10 ⑤ 证监会窗口指导收紧人形机器人 IPO（四大维度重塑门槛）</td>
+      <td>中美两条上市路径的对照：中国侧审核在收紧，美国侧走 SPAC 绕开排队。结果是同一件事有了两个价格 —— 一个还在排队，一个已经在交易</td>
+    </tr>
+    <tr>
+      <td>今日整体</td>
+      <td>10-29「换尺子」→ 10-30「挪位置」→ 10-31「认账」→ 11-01「退到四个位置」→ 11-02「谁在现场给出新数字」→ 11-03「连续作业的成本与验收」→ 11-04「能不能做后面那半句的五个前提」→ 本期</td>
+      <td>今天五条主榜讲的是同一件事：围栏。① 是围栏破了 —— 两个洞都不需要骗模型，只需要检查顺序写反；② 是围栏开始被制度化 —— 按停权从条款变成产品、并购与 10-K 披露；③ 是造围栏的工具在换代 —— 开放权重编程模型的两个新答案；④ 是被围栏保护的对象开始改自己的围栏 —— coding model 重写机器人控制代码；⑤ 是连「该往哪试」都交给了智能体。承 11-04 的五个前提 —— 装得下、给得准、留得下、判得清、干得久 —— 这一期补上前提之外的那一条：前提得先是真的</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-05 · 北京时间 10:51</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-04.html">← 2026-11-04</a></div>
+</body>
+</html>
