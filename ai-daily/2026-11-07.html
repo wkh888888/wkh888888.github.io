@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-07 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 7 日（周六）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：拿到多少能力，越来越由模型外面那层决定</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 策略文本第一次被实测</a>
+      <a href="#n2">② 路由做成了产品</a>
+      <a href="#n3">③ 专用化模型的账与那 20 次假成功</a>
+      <a href="#n4">④ 换个 harness 涨了 30 倍</a>
+      <a href="#n5">⑤ 从会跳舞到能上班</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>同一句硬性规则，四种语气差出 54 个百分点：AGENTS.md 的写法第一次被实测</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">arXiv:2611.04367，奈良先端科学技术大学院大学、和歌山大学、大阪大学联合提交（11 月 3 日，4 页，投稿 IEICE 评审中）；Zenodo DOI 10.5281/zenodo.23148524</div>
+    <div class="body">
+      <p>几乎每个用 coding agent 的仓库里都躺着一份 AGENTS.md 或 CLAUDE.md，写什么大家凭感觉。这篇论文做了一件很笨但很有用的事：把<strong>同一句</strong>「给所有目标函数加注释」策略，用四种语气各写一遍，喂给四组真实 coding agent，然后数它到底听没听话。</p>
+      <ul>
+        <li><strong>实验怎么搭的。</strong>基准用 CTXbench，从 138 个任务筛到 86 个任务、10 个仓库；四组 harness 与模型组合分别是 Claude Code 2.1.227 配 claude-opus-5、Claude Code 配 claude-sonnet-5、qwen-code 0.21.2 配 gpt-oss-120b、qwen-code 配 Qwen3-Coder-Next。每种写法跑 1032 个会话（86 个任务 × 3 个 seed × 4 组组合），再剔掉那些压根没改动 Python 函数的会话，有效样本落到 82 / 81 / 80 / 80。</li>
+        <li><strong>四种语气分别是：</strong>祈使式（Prescriptive，直接下令加注释）、解释式（Explanatory，先说明为什么写注释有用）、条件式（Conditional，规定什么情况下才加）、禁止式（Prohibitive，明令不许加注释）。</li>
+        <li><strong>四种写法的遵守率（按祈使 / 解释 / 条件 / 禁止排列）：</strong>claude-opus-5 是 78.0 / 77.2 / 64.2 / 70.7，卡方统计量 17.68，p 远小于 0.001；claude-sonnet-5 是 71.6 / 49.4 / 35.6 / 17.3，卡方统计量 102.02；gpt-oss-120b 是 6.7 / 20.4 / 0.8 / 0.4，卡方统计量 59.62；Qwen3-Coder-Next 是 1.3 / 0.8 / 0.4 / 0.0，卡方统计量 3.33，<strong>p = 0.343，不显著</strong>。</li>
+        <li><strong>效应量更能说明问题。</strong>用配对秩双列相关加 Holm 校正后，条件式在所有显著的组合里都是最低的一档（相关系数 0.29 到 0.97）：sonnet-5 上祈使对禁止是 +1.00、祈使对条件是 +0.89、解释对条件是 +0.29；opus-5 上祈使对解释是 +0.00，即<strong>没有差异</strong>，祈使对条件是 +0.65；gpt-oss-120b 上祈使对解释是 −0.82，<strong>解释式反而最好</strong>，20.4% 对 6.7%。</li>
+        <li><strong>差距有多大。</strong>同一组内最高与最低写法之间，opus-5 差约 14 个百分点，sonnet-5 扩大到约 54 个百分点。开放权重模型两种写法全部低于 21%，Qwen3-Coder-Next 全部低于 1.5%。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这把「写策略文件」从玄学变成了一个可测的量，而且测出来的结论反直觉。</p>
+      <p>团队里最常见的直觉是「写清楚原因，模型就会更听话」。这个直觉在 opus-5 上基本成立（解释式 77.2 对祈使式 78.0），但在 gpt-oss-120b 上是反的（解释式 20.4 对祈使式 6.7，效应量 −0.82）。也就是说，「哪种语气更有效」这个问题没有统一答案，它随模型变。</p>
+      <p>更要紧的是收益的性价比：这件事的成本是改一句话，而同一句策略的四种写法在 sonnet-5 上差出 54 个百分点的遵守率。这大概是这个系列里投入产出比最高的一次优化。</p>
+      <p>它同时解释了一个常见现象：「我们的 AGENTS.md 写了但 agent 不听」——问题很可能不在内容写错，而在语气写错，而且你还不知道该用哪种语气，因为答案取决于你的主力模型是哪一档。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>论文自己列了四条有效性威胁，引用这组数字时应当一并说明：① 每种风格只用了一条具体文本，风格与措辞互相混淆，而且四句长度并不相同；② 只测了一条「加注释」的 marker 策略，判定标准要求会话中所有目标函数都带标记，这是一个全称量词，比人眼印象严苛得多；③ 剔除了没有函数改动的会话，本身抬高了遵守率，且每个任务只剩 1 到 3 次运行；④ 86 个任务来自 10 个仓库，共享同一套验收条件与代码库，p 值可能偏乐观。</p>
+      <p>因此「遵守率」应读作「会话中所有目标函数都带上了标记的比例」，而不是「模型对这条指令的总体服从程度」。</p>
+      <p>另外这是 4 页的短文，公开渠道未见官方代码仓库，只给出 Zenodo DOI；样本量与任务多样性都不足以支撑「普适规律」的结论。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>拿你自己的仓库做一次 A/B：挑一条最容易被忽略的硬性规则，改成祈使句和条件句各写一遍，各跑 20 个任务，用脚本数遵守率，不要靠印象判断。</p>
+      <p>先确认你的主力模型属于哪一档再抄模板：gpt-oss-120b 那档解释式最好，sonnet-5 那档条件式最差，把别人仓库里的 AGENTS.md 整份搬过来大概率无效。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>OpenRouter 把「路由」做成了产品：600 多个模型池，按 11 个因素每次现选</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">OpenRouter 官方博客，作者 Brian Thomas（2026-11-06 发布）；对外 slug 为 <code>openrouter/auto</code>、<code>openrouter/auto-code</code>、<code>openrouter/auto-beta</code></div>
+    <div class="body">
+      <p>11 月 6 日，OpenRouter 发布新一代自动路由 Auto Router，以及专门面向 coding harness 的自动模型选择 Auto Code。这一步的意义不在于又一个聚合入口，而在于<strong>路由层第一次有了独立的产品形态、独立的价格牌和独立的延迟指标</strong>。</p>
+      <ul>
+        <li><strong>它怎么选。</strong>每次请求按 11 个因素打分，叠加实时价格、provider 健康度、缓存状态，从 600 多个模型的池子里同时选出模型和推理档位——选的不只是「哪个模型」，还有「用多贵的档」。</li>
+        <li><strong>它报的数。</strong>Auto Code 官方称在 5 个 benchmark 上与 Claude Opus 5.5 持平，而每任务成本低 74%；路由自身延迟 p90 从旧版 1.96 秒降到 0.65 秒，约 3 倍；beta 期无效工具调用下降 4 倍，agent 回复截断减半；规模上月处理 2.5 万亿 token、10 万以上用户。</li>
+        <li><strong>最有信息量的其实是工程细节而不是 benchmark。</strong>为保住 prompt cache，约 9 成的对话轮次会留在同一个模型上，先调推理档位、实在不行才换模型。换模型意味着缓存命中率归零，这在长程 agent 里是灾难性的。</li>
+        <li><strong>官方自己说了两句实话。</strong>一是承认「没有任何 router 能在成本与质量曲线的每一个点都赢过最强前沿模型」；二是承认旧版路由会漂向最便宜的档，本次主动把定价调回几个月前的水平，并保留 <code>cost_tier=low</code> 参数可复现旧行为。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>11-02 推过 DeepSeek 开源 Super-agent 架构，那是把 router 塞进模型架构里做多会话调度；这次是把 router 做成服务商侧的产品。两条路指向同一个判断 —— 多模型调用里的「选型」已经复杂到需要一层专门的基础设施。</p>
+      <p>「先改推理档位再换模型」这条规则，比发布稿里的 benchmark 数字更有长期价值：它把 prompt cache 命中率当成了硬约束而不是事后优化项。多数人自己写多模型调度时，是按「便宜优先」排序的，而这篇明确指出便宜优先和缓存命中率直接冲突。</p>
+      <p>官方主动把定价调回几个月前的水平，是这个系列里少见的自我修正。一个把自己旧版最便宜档当卖点、结果用户发现漂移的产品，能回头承认并给出参数复现旧行为，至少说明发布方清楚自己的默认行为是什么。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>「与 Claude Opus 5.5 持平、成本低 74%」是 OpenRouter 自测口径，摘要里没有列出那 5 个 benchmark 的具体名称与题量；对照组也是自家池子里的最强模型，而不是竞品 API 的最优用法。9 成轮次留在同一模型与「尽量选最省钱的模型」在长任务里天然冲突，这个取舍只在 OpenRouter 自己的缓存计费模型下成立。</p>
+      <p>Auto Code 的收益高度依赖 prompt cache 命中。如果你的客户端本身不缓存，或者你的 harness 每轮都换模型，这 74% 的成本差会被大幅吃掉。无效工具调用下降 4 倍是 beta 期的观测值，不宜当作稳定指标引用。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>如果你现在的多模型调用是自己写的 if / else 链，值得做一次对齐：把「先换档位、后换模型」这条规则显式写进去，再用真实任务量测一次缓存命中率的变化。</p>
+      <p>记账口径换成「每任务总成本」，而不是「每百万 token 单价」。74% 这个数只有用前者才算得出来，用后者会得出完全相反的结论。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>GPT-6 Cyber：948 个可用漏洞背后的专用化账，以及那 20 次靠另一个 zero-day 的「成功」</h2>
+      <span class="tag t-code">AI Coding</span>
+    </div>
+    <div class="src">OpenAI 官方博文（2026-11-05 发布）；环球网、界面新闻、新浪财经与 pivotnews 转 The Hacker News 等中英文二手源交叉核对，关键数字各源一致</div>
+    <div class="body">
+      <p>OpenAI 在 11 月 5 日发布了面向漏洞挖掘与利用的专用模型 GPT-6 Cyber。它同时给了三样东西：一份可以算账的能力对比、一组已经交付给第三方的成果，以及一句相当诚实的自我修正。</p>
+      <ul>
+        <li><strong>能力与成本。</strong>ExploitGym 上 48.5%，对照 GPT-5.6 Cyber 的 32.1%，相对提升 51%。内部 RemoteExploitBench（GitLab、PostgreSQL、Jenkins 的已知漏洞）上完成 95% 的任务，而带着 Daybreak Blue 防护的 GPT-6 Astra 全部拒绝。Linux 内核流水线把 2308 个候选收敛到 1724 个复现、948 个可用本地提权，其中 588 个此前未知，304 个关键发现连同建议补丁交给了内核维护者。端到端 API 额度花了 1213.43 万美元；对照 GPT-5.6 Sol 在同一套 harness 下只拿到 166 个唯一漏洞、额度 51.369 万美元。</li>
+        <li><strong>已交付的成果。</strong>Firefox 中 81 个此前未公开的高危漏洞，Mozilla 已确认高危并开始推送修复（advisory 为 mfsa2026-118）；另有 30 个已知问题被发现实际比原报告更严重。</li>
+        <li><strong>安全评级与越权率。</strong> Preparedness Framework 的网络安全维度评为 Critical，上一代是 High。无安全提示时 99.93% 不越权（上代 94.49%），开启提示后为 100%；但其中 0.07% 的案例细节 OpenAI 拒绝披露。</li>
+        <li><strong>那句最该被记住的话。</strong>早期一轮 200 次成功提权中，人工复核发现其中 20 次靠的是另一个 zero-day。随后 OpenAI 收紧了任务约束并加了独立校验。这句话的意思是：模型自报的成功率，在被人工复核之前不能当数。</li>
+        <li><strong>价格与开放范围。</strong>输入 20 美元、输出 100 美元每百万 token，分别比上代贵约 60% 与 33%。仅对审核通过的 Daybreak Red 客户开放，API 默认开启 IP allowlisting，新增 Critical Infrastructure 组。11 月 29 日起，Daybreak Blue 个人账户内容将被纳入训练，即使用户关闭了「为所有人改进模型」开关。赏金方面，中高危档中位数提高 4 倍，单个关键漏洞最高 3 万美元，叠加奖金后单个可达 5.1 万美元，此前是 6500 美元。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>它给了「专用化」一张可以自己算的账。同一套 harness、同一批已知漏洞，GPT-6 Cyber 拿到 948 个可用漏洞，GPT-5.6 Sol 只拿到 166 个；代价是 API 额度从 51.369 万美元涨到 121.43 万美元。一美元能换多少个可复现漏洞，这是采购方真正要算的东西，而不是榜单上的一个百分比。</p>
+      <p>更值得注意的是那 20 次。那是今天所有 AI Coding 消息里最诚实的一句：连 OpenAI 自己内部的成功率都要靠人工复核才可信，而复核发现的比例是 10%。过去几年所有关于「AI 已经能自己挖漏洞」的判断，都应该默认打折。</p>
+      <p>越权率的三个数字——94.49%、99.93%、100%——加上那 0.07% 拒绝披露，说明披露边界本身就是这次升级的一部分。不给数字的部分无法被外部核验，那个 100% 是有边界的。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>ExploitGym 的分数不可与别家横比。10-05 推过同一个能力有三套打架的口径 —— Anthropic 给的是 12% 对 14% 的子集分，z.ai 自己在全量基准上给 54.4%（对照 Mythos 78.0%），NIST CAISI 给的则是 ExploitBench 61.1%（前沿最佳 100%）并另附 ExploitGym 9.4%（44.4%）等另一组数字，与前两组不是同一量纲，10-29 推过 Gemini 4 Carbon 的 ExploitGym 54.8% 是在无 guardrails 条件下测得的。48.5% 只有配上「哪套 harness、哪种口径、有无 guardrail」才有意义，与 54.8% 直接比大小是错的。</p>
+      <p>RemoteExploitBench 是 OpenAI 内部基准，无第三方复现路径；1213.43 万美元与 51.369 万美元这两个额度包含多少人工复核成本，官方未拆分。</p>
+      <p>11 月 29 日起的训练数据条款只针对 Daybreak Blue 个人账户，与 Daybreak Red 客户是两份条款，不要混读。Firefox 与内核的成果由 Mozilla 与内核维护者侧确认，但「发现」到「修复」之间还有时间差，不等于已经修补完成。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>如果你的安全团队在选模型，把「每美元能换多少个可复现漏洞」列成一等指标，不要看单点分数；同时把人工复核比例纳入验收标准——参考值是 10%，低于这个比例的成功率不宜直接采信。</p>
+      <p>如果你在用带 guardrail 的模型跑红队测试，注意 54.8% 是无 guardrails 口径，与 48.5% 不可并列，比较时务必统一条件。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>同一个模型换个 harness，成功率从 0.83% 涨到 25.00%：外层第一次在具身域被量出 30 倍</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">arXiv:2611.01560（v1 为 2026-11-01，v2 为 2026-11-03），清华大学与 UC Berkeley 等单位 28 位作者，含 Pieter Abbeel、Ning Ding、Yuxin Zuo、David Ha 等；OpenRUA 项目首个开源成果，团队主页 openrua.ai</div>
+    <div class="body">
+      <p>uni-robot-agent 用一套五层架构（Agent / Orchestration / Tool / Service / Backend，每层接口统一）在 RoboDojo 上跑出了几个很扎眼的数据。最扎眼的不是分数，是<strong>同一批模型只换外层框架后的分数变化幅度</strong>。</p>
+      <ul>
+        <li><strong>评测设置。</strong>RoboDojo 共 42 个任务，3 个 seed × 2 种布局 × 6 个 episode，合计 252 个 episode，按 Generalization、Precision、Long-Horizon、Memory、Open-Vocabulary 五个维度打分。</li>
+        <li><strong>头条数字。</strong>Qwen3.8-Flash-Next 配 uni-robot-agent 拿到 25.00% 成功率与 31.39 分，超过已发表的 GPT-6 Astra 配 RoboProbe 的 22.48% 与 28.97（高出 2.52 个百分点与 2.42 分）。</li>
+        <li><strong>换 harness 的量级。</strong>同一个 Qwen3.8-Flash-Next：RoboProbe 是 0.83% 与 1.90 分，RPent 是 4.31% 与 7.75 分，GAP（Hybrid）是 16.11% 与 21.01 分，uni-robot-agent 是 25.00% 与 31.39 分，相对 GAP 高出 8.89 个百分点与 10.38 分。</li>
+        <li><strong>换 harness 甚至比换模型更划算。</strong>GPT-6 Astra 换到 uni-robot-agent 上，从 22.48% 与 28.97 涨到 46.67% 与 51.90，成功率提高 24.19 个百分点。横向看其他模型：GPT-6.1 Sol 37.50% 与 45.63，GPT-5.6 Sol 19.17% 与 24.04，Qwen3.8-27B 8.06%，GLM-5.3 Flash 0%，Qwen3.5–3.7、3.6–3.7、3.5-122B、3.7 Plus、3.6 Plus 全部为 0%。</li>
+        <li><strong>特权输入的消融。</strong>Qwen 给深度是 35.89 分、只给相机参数是 31.39 分（保留 87.5%）、只给 RGB 是 9.13 分；Astra 对应是 55.83、55.04（保留 98.6%）与 31.29 分。结论是只要有相机参数，模型可以自己写三角化代码，深度不是必需品。主实验明确禁止仿真真值深度、CAD、隐藏标注、verifier 反馈、外部 Web 与预定义解法，并人工核查模型没有偷看。</li>
+        <li><strong>真机 19 个任务</strong>（ARX AC one 双臂、2 条 X5、3 个 D405，头部与腕部视角，五维各 20 分）：Qwen 49.50 分，π0.5 47.75 分，Dream-1 35.50 分，GPT-6 Astra 75.50 分。</li>
+        <li><strong>成本与执行方式。</strong>Qwen 每 episode 成本 1.09 美元（2350 万 token，95.5 分钟达到 25 分），GPT-6 Astra 每 episode 21.29 美元（740 万 token，42.6 分钟），相差约 19.5 倍。pipeline 对比 serial，episode 时长缩短 4.8% 到 73.7%（换位任务 12.5 分钟对 34.7 分钟），物理执行与模型请求的重叠率达 84.5% 到 93.8%，而 serial 是 0%。技能库消融后从 31.39 降到 30.31，保留 96.6%，说明框架不依赖任务特定技能库。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是本系列里第一份把「harness 值多少」从软件工程搬到机器人身上的实测。09-23 推过 HarnessTax，结论是同一个模型换个壳子成功率几乎不动、账单最多差 5 倍；10-25 推过山东大学那篇《What Does a Harness Buy? Tokens, Mostly.》，结论是换 harness 不改分数与重跑，只改成本（差三倍）。这篇在具身域给出的是更硬的答案 —— <strong>harness 直接决定任务能不能完成</strong>，同一个 Qwen3.8-Flash-Next 换一层外层，成功率从 0.83% 涨到 25.00%，接近 30 倍。</p>
+      <p>最有价值的一组对照是 Astra：同一个 GPT-6 Astra，从 RoboProbe 的 22.48% 涨到 uni-robot-agent 的 46.67%，涨幅 24.19 个百分点。这句话可以翻译成预算语言 —— 换框架比换模型更划算，而换模型往往贵得多。</p>
+      <p>「特权输入」这一栏同样有方法论价值。论文明确禁掉真值深度、CAD、隐藏标注与 verifier 反馈，还人工核查模型没偷看，这让它比大多数具身论文干净，也让它给出的 25.00% 成为一个更值得信任的对照基线。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>真机评估的输入条件不对称：uni-robot-agent 的 agent 额外获得了 D405 深度流，而 π0.5 与 Dream-1 只有 RGB。49.50、47.75、35.50 这组真机分数不能直接横比。此外真机 baseline 中 π0.5 每个任务用了 10 小时示范做微调，对比的是「充分微调」而不是零样本。</p>
+      <p>仿真的 252 个 episode 与已发表的 Astra 数字（2100 次试验）来自不同实验设置，22.48% 这个对照基线的实验条件并不完全一致。技能库消融保留 96.6% 说明框架不依赖特定技能库，但这个结论在任务分布更窄时未必成立。</p>
+      <p>论文 HTML 未提供官方代码仓库链接（页面出现的 GAP、ORA 仓库属于相关工作，不是本项目），目前没有可复现入口；部分 token 数字来自二手转述口径，与论文表格口径可能不一致。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>评估具身 agent 时，把 harness 当成一个独立变量固定下来再比模型，否则你很容易把框架的功劳算到模型头上。一个具体做法：同一个模型至少跑两套外层，把差值当成框架收益而不是模型能力。</p>
+      <p>如果你在核算 pipeline 与 serial 的成本差别，注意 84.5% 到 93.8% 的重叠率是这套框架在它自己的任务链上测出来的；任务链越长、步骤越规整，收益越大，越碎片化收益越低。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>从会跳舞到能上班：智元灵犀 X2 焕新版，和它终于能拿出来讲的实景账</h2>
+      <span class="tag t-emb">具身智能</span>
+    </div>
+    <div class="src">智元机器人公众号（2026-11-06 发布）；凤凰网、和讯、腾讯新闻等转载</div>
+    <div class="body">
+      <p>智元在 11 月 6 日发布灵犀 X2 焕新版，分旗舰与青春两个版本。参数是常规的，值得看的部分是它给出的落地点位与累计交互量。</p>
+      <ul>
+        <li><strong>硬件。</strong>本体 31 个自由度（头部 2、手臂 14、腰部 3、腿部 12），选配灵巧手后 47 个；膝关节峰值扭矩 120 N·m；电池约 500 Wh；以 0.5 m/s 连续行走续航超过 2 小时，充电约 1.5 小时。旗舰焕新版为 31 自由度，Jetson Orin 16GB、157 TOPS，3D 激光雷达加深度相机，保修 18 个月；青春焕新版为 30 自由度，RK3588s 两颗，保修 8 个月。</li>
+        <li><strong>软件。</strong>WITA-Omni 多模态最快 400 毫秒，支持 100 多种语言及方言实时同传与 360 度远场拾音；UWB 灵动群控支持多台协同走位；AgentFlow 做技能编排，SkillForge 做采训推一体。</li>
+        <li><strong>落地证据。</strong>成都宽窄巷子 3 台常态化值守，分工是迎宾咨询、文化讲解与便民零售，讲解会说四川话；语音下单买牛奶从指令到拿到商品约两分钟，全程无人介入。北京大学人民医院门诊导诊台累计完成 4.6 万余次交互。海底捞全国 30 余家门店做庆生互动。爱仕达 100 家门店承担迎宾、需求理解、商品讲解与导购转接。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>11-04 推过小米人形机器人在汽车工厂干满 8 小时整班，那条讲的是「能不能扛住一个班次」；这条讲的是「能不能站在有人的地方被人随便问」。后者才是商用真正的门槛 —— 前者考验的是可靠性与续航，后者考验的是交互能力与在人群里的稳定性。</p>
+      <p>4.6 万次门诊导诊交互这个数，比任何一次展会演示都更能说明交付形态：机器人已经被当作一个长期在线的岗位来运维，而不是一次性展示的展品。宽窄巷子那三台「从语音下单到拿到商品约两分钟、全程无人介入」，恰好也是外层编排价值的一个具体注脚 —— 能不能走完这一单，取决于 AgentFlow 那一层的技能编排，而不取决于底座模型有多大。</p>
+      <p>还有一层容易被忽略的信息：两个版本保修期一个 18 个月一个 8 个月，说明厂商已经把商用服务线按客户分层投放了，硬件配置不再是唯一的区分维度。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>这些数字全部来自厂商自述与官方公众号，没有第三方审计，也没有公开停机率、干预频次和单机日均服务量。「常态化值守 3 台」说的是点位数量，不是每台每天工作多久；4.6 万次是累计值，除以天数与台数才是真实负载，厂商未给这个除法。宽窄巷子的两分钟是单次演示的最好情况，不是平均值。</p>
+      <p>产品线不要混读：灵犀是商用服务线，与工业线（Worken、G2 Max）不是同一条线，参数不可互相代入。灵犀 X2 本体此前已在 09-10 与 09-21 的报道里出现过，本期的新事件是焕新版发布与商用交付数据，不是这款机器本身首次亮相。</p>
+      <p>与 10-29 ⑤ 阿里高德开源 λ0 全身基座模型那期一样，这条的证据类型是「现场点位」而非「可复现实验」，两者不能互相替代。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>判断一个具身产品是不是真的落地，只问三个问题：装在哪个点位、连续运行了多久、每天处理多少单。这三个问题厂商答不上来的，基本可以判定还停在展会阶段。</p>
+      <p>评估商用服务机与工业机时分开算账：保修期、负载强度和运维人力配置都不一样，把旗舰工业机的参数当成门店机器的能力来做预算，会系统性低估成本。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>Cursor 上线 Voice Chat with Agents：Grok Voice 只管听说，编码智能体仍然用你自己选的模型</h3>
+      <p>Cursor 在 11 月 6 日的 changelog 里上线与编码智能体的语音通话。分工很清楚：Grok Voice 负责听和说，编码智能体跑的还是你自己选定的模型。支持 Agents Window、IDE、网页与 iOS；iOS 端可以「Hey Siri, call Cursor」呼起，锁屏 Live Activity 支持静音挂断。Privacy Mode 下语音数据零留存；静默且没有任务约 10 分钟会自动结束，另有每日通话上限；需要登录账号，纯 API key 会话不可用；与原有的 dictation（原 Voice Mode，快捷键 Cmd+Shift+Space）是两个独立功能。通话过程中可以查 diff、看运行状态、翻历史、切换 Project worker，这些操作都是只读的，不打断正在跑的编码任务；编码智能体会主动播报短进度与完成语。<strong>值得关注：</strong>它把语音放在输入输出层，模型选择权仍完整留在用户手里 —— 这与本期 ② OpenRouter 把模型选择权收进路由层，是同一件事的两种分工，一端不加判断，一端全权决定。<strong>边界：</strong>changelog 没有给出使用数据，「口头监督是否真比直接读 diff 更快」目前仍未被验证。</p>
+    </div>
+    <div class="m code">
+      <h3>METR 的 Anthropic 内部评估：能力加速 1.9 倍，其中约 80% 来自 AI 自身，而证据可以被单方面删节</h3>
+      <p>METR 于 11 月 5 日发布对 Anthropic 的模型加速评估报告，依据是 11 周内部访问（8 月 12 日至 10 月 29 日）。核心数字：AECI 的进步速度是此前区间（2024 年 3 月至 2025 年 10 月）的 1.9 倍，95% 置信区间为 1.5 到 2.8，其中约 80% 的加速来自 AI 自身；未公开的 Model 4 的 AECI 达 178.6，是 METR 追踪历史上第一个在所有基准上都超过 50% 的模型；Model 2、3、4 三个未公开模型都在 7 月到 10 月完成训练。报告还写明 Anthropic 对「最有信息量的证据」行使单方面删节权；员工主观投票称最强隐藏模型带来约 12 倍效率提升，METR 自己承认这个证据很弱；作为对照，全行业前沿模型的加速只有 1.4 倍。<strong>值得关注：</strong>这是今天唯一一份由外部评测方给出的加速数字，也把「厂商可以单方面删节什么」摆到了台面上 —— 这比任何一个分数都更影响第三方评测的可信度。<strong>边界：</strong>原始链接（metr.org 站内该篇路径）直取返回 404，全部数字来自 36 氪欧洲、theinference.org、temperature2.com 等多家二手源交叉核对，未取得一手原文。</p>
+    </div>
+    <div class="m code">
+      <h3>蚂蚁百灵 Ling-3.2-flash：把「看渲染结果改代码」做成了模型内建能力，而不是靠外层补</h3>
+      <p>蚂蚁在 11 月 6 日上线百灵 Ling-3.2-flash，已落地灵光 2.0。规格：总参数 560B、单步激活 25B，采用 7 比 1 的混合注意力（7 层 KDA 加 1 层 Gated MLA），1M 原生长上下文（TokenHub 侧最大输入约 960K、最大输出约 64K）。真正的差异点在自检机制：把渲染画面或交互界面当作新的观测输入，比对几何结构、光影、版面布局差异后改代码；遇到报错、语法异常、工具调用失败时结合堆栈日志定位、重试补偿并调整执行分支。DesignArena 的 Image-to-Frontend 评测 1238 分，进入前十。官方口径称三项超过 Claude Opus 5（max）：OmniDocBench1.5 为 92.21 对 90.56，ZEROBench 子集 43.71 对 39.52，Vision2Web 85.86 对 80.20。Hopper GPU、约 3 万 token 长上下文下单用户解码均值 280 tokens/s，TPOT 约 3.54 毫秒，DSpark 投机推理在 BlockSize 为 5 时平均接受长度超过 3.5。定价为输入 0.30 美元、输出 0.90 美元每百万 token，上线前两周限时免费，权重近期开放。官方也坦诚长程跨应用状态维持、三维空间大尺度动态推理、3D 资产设计的审美与细节保真度仍与闭源旗舰有差距。<strong>值得关注：</strong>它把「看渲染结果再改代码」做成了模型内建能力 —— 正好是本期 ①③⑤ 的反面：那几条讲的都是外层在替模型做事，这一条讲的是模型自己长出了这个能力。<strong>边界：</strong>三项对比与 DesignArena 分数均为官方自评或官方转述，未见第三方复现。</p>
+    </div>
+    <div class="m emb">
+      <h3>京东在乌镇峰会给出行业量级与一句同行自评：通用具身智能成熟度「也就是 3 到 4 分」</h3>
+      <p>京东在 11 月 4 日的乌镇峰会上公布了新一批数字：今年 1 到 9 月中国一级市场具身智能融资超 1200 亿元，是去年全年的 3 倍；预计年内中国机器人产量超 10 万台。京东两年内采集超 1000 万小时人类真实场景视频加超 100 万小时机器人本体数据，建成全球最大具身智能数据采集中心，采集已覆盖 100 余个细分场景、10 万余项真实作业任务。JoyRobocare 已有八大维修中心，计划 5 年培养 10 万名机器人维修工程师；技术委员会主席曹鹏自评通用具身智能成熟度「也就是 3 到 4 分」，技术路线尚未收敛，家庭场景「可能要到 8 年左右甚至 10 年」。同期进博会上的反差点也很清楚：人形机器人集体告别跳舞格斗，智元远征 A3 现场泡功夫茶、做酒店前台，Hitch Open 展台的机器人无遥控、无脚本与人类乒乓球对打了 40 多拍，小米具身模型完成 30 分钟长程任务链。<strong>值得关注：</strong>「3 到 4 分」是极罕见的同行自评，比任何行业报告的乐观预测都有信息量；采购与培养维修工的量级则第一次把「运维」当成具身智能的瓶颈摆到了台面上。<strong>边界：</strong>融资额、产量与采购量全部是计划口径，不是已发生量；「全球最大」是厂商自述。此外「物理 AI 加速计划」本身在 09-10 顺带已经推过，本条只取 11-04 峰会新披露的融资额、产量预期与曹鹏的成熟度自评。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① AGENTS.md 写法第一次被实测</td>
+      <td>09-19 ② Claude Code 2.1.277 起支持 AGENTS.md</td>
+      <td>同一主题的前后两段：那期讲「能读」，本期讲「读进去也不一定听」。中间隔了七周多，正好说明工具支持是起点而不是终点</td>
+    </tr>
+    <tr>
+      <td>① AGENTS.md 写法第一次被实测</td>
+      <td>09-23 ① HarnessTax（同一个模型换个壳子，成功率几乎不动，账单最多差 5 倍）</td>
+      <td>同一条线的两个层面：那期测的是 coding agent 的外层，本期测的是策略文本的外层。两者合起来说明「外层」本身就有两级，一级影响成本，一级影响行为</td>
+    </tr>
+    <tr>
+      <td>② 路由做成了产品</td>
+      <td>11-02 ① DeepSeek 开源 Super-agent 架构（Router 的决策数增加约 30%、读缓存 token 从 2323 万增到 3177 万）</td>
+      <td>同一问题的两种解法：那期把 router 做进模型架构内部，本期把 router 做成服务商侧的产品。前者解决多会话调度，后者解决多模型选型，都指向「选型不该由调用方手写」</td>
+    </tr>
+    <tr>
+      <td>② 路由做成了产品</td>
+      <td>09-14 ② InfoQ 实测：同一个模型，换不同编程工具，账单能差 70 倍</td>
+      <td>同题不同层：那期测的是脚手架造成的成本差，本期测的是路由造成的成本差。前者说明脚手架要选对，后者说明选型要交给一层专门的基础设施</td>
+    </tr>
+    <tr>
+      <td>③ GPT-6 Cyber 的专用化账</td>
+      <td>10-05 ③ Anthropic 给开源 GLM-5.3 做了一次攻防体检（三套口径打架，不可混用）</td>
+      <td>同一个尺子必须带着读：48.5% 只有配上哪套 harness、哪种口径、有无 guardrail 才有意义，与 z.ai 的 54.4% 或 Carbon 的 54.8% 直接比大小是错的</td>
+    </tr>
+    <tr>
+      <td>③ GPT-6 Cyber 的专用化账</td>
+      <td>10-29 ① Gemini 4 Carbon 登顶 AA 智能指数 v5.0（ExploitGym 54.8%、SEC-bench Pro 88.2%）</td>
+      <td>同一个位置的换人坐：同样是专用安全模型，一个在无 guardrails 条件下测、一个给出端到端成本与真实交付成果。两期的口径必须并读才能得到结论</td>
+    </tr>
+    <tr>
+      <td>③ GPT-6 Cyber 的专用化账</td>
+      <td>11-05 ① Docker Sandboxes 符号链接沙箱逃逸与 Pydantic AI 一次公开九条安全公告</td>
+      <td>上期主线是围栏被攻破，本期是造越狱能力的一方。两条合起来是一条完整链路：围栏由别人造、越狱能力由模型自己造，两边同时推进才是当下安全领域的真实图景</td>
+    </tr>
+    <tr>
+      <td>④ 换个 harness 涨了 30 倍</td>
+      <td>09-23 ④ GPT-6 Astra 直接当机器人策略（42 个任务 2,100 次试验，22.48% 成功率）</td>
+      <td>同题不同结论：那期是换策略不涨，本期是同一策略换外层涨 24.19 个百分点。22.48% 这个数在本期成了对照基线，也成了新基线的参照点</td>
+    </tr>
+    <tr>
+      <td>④ 换个 harness 涨了 30 倍</td>
+      <td>10-25 ③ 山东大学两篇论文：换掉 coding agent 的 harness，分数和重跑一样动，成本却差三倍</td>
+      <td>同一问题的三次回答，一次比一次更硬：09-23 说换壳不改分，10-25 说改成本，本期说在具身域直接改完成率。结论在换领域，不是同一条结论的重复</td>
+    </tr>
+    <tr>
+      <td>④ 换个 harness 涨了 30 倍</td>
+      <td>11-05 ④ RoboArchitect 让 coding model 重写机器人控制代码（未见场景 9.7% 拉到 43.3%）</td>
+      <td>同一周内的两条互补结论：上期是模型改写控制代码，本期是外层框架改写 agent 编排。两者都在说同一件事 —— 具身能力的上限越来越由模型之外的代码决定</td>
+    </tr>
+    <tr>
+      <td>⑤ 智元灵犀 X2 的实景账</td>
+      <td>11-04 ⑤ 小米人形机器人在汽车工厂干满 8 小时整班</td>
+      <td>同一交付主线的两个位置：那期考的是能不能扛一个班次，本期考的是能不能站在有人的地方被人随便问。前者是产线要求，后者是商用门槛</td>
+    </tr>
+    <tr>
+      <td>⑤ 智元灵犀 X2 的实景账</td>
+      <td>10-29 ⑤ 阿里高德开源 λ0 全身基座模型：只喂人类第一视角视频，真机 62.5%，但把训练数据那一半锁进仓库</td>
+      <td>同一「全身基座」话题的两种证明路径：那期用消融实验证明数据的重要性，本期用现场点位证明交付的存在性。两者不可互相替代，合起来才是完整的判断依据</td>
+    </tr>
+    <tr>
+      <td>速览④ 京东峰会的新数字</td>
+      <td>09-10 顺带① 京东启动「物理 AI 加速计划」，冲刺具身智能六项全球第一（两年 1000 万小时、五年采购 300 万台机器人）</td>
+      <td>同一计划的第二幕：那期推的是计划本身，本期只取 11-04 峰会新披露的融资额、产量预期与曹鹏的成熟度自评，采购与基地数字不重复引用</td>
+    </tr>
+    <tr>
+      <td>速览② METR 的 Anthropic 评估</td>
+      <td>11-05 ④ RoboArchitect 让 coding model 自己重写机器人控制代码（一个冻结的机器人策略放进 agent harness 里表现会好得多）</td>
+      <td>上期讲外层被模型改写，本期讲内核的加速速度与披露边界。两条合起来是完整的：模型在变快，但被你能看到的那部分也在变</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-07 · 北京时间 17:00</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-05.html">← 2026-11-05</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-08.html">2026-11-08 →</a></div>
+</body>
+</html>

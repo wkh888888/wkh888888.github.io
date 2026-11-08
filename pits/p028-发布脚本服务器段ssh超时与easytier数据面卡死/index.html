@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P028 · 发布脚本服务器段 SSH 超时：EasyTier 定向数据面瞬时卡死，别重跑全流程 · walker</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p028-%E5%8F%91%E5%B8%83%E8%84%9A%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%AE%B5ssh%E8%B6%85%E6%97%B6%E4%B8%8Eeasytier%E6%95%B0%E6%8D%AE%E9%9D%A2%E5%8D%A1%E6%AD%BB/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P028 · 发布脚本服务器段 SSH 超时：EasyTier 定向数据面瞬时卡死，别重跑全流程 · walker"><meta property="og:description" content><meta property="og:url" content="https://blog.walkerhua.com/pits/p028-%E5%8F%91%E5%B8%83%E8%84%9A%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%AE%B5ssh%E8%B6%85%E6%97%B6%E4%B8%8Eeasytier%E6%95%B0%E6%8D%AE%E9%9D%A2%E5%8D%A1%E6%AD%BB/"><meta property="og:image" content="https://blog.walkerhua.com/og/p028-%E5%8F%91%E5%B8%83%E8%84%9A%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%AE%B5ssh%E8%B6%85%E6%97%B6%E4%B8%8Eeasytier%E6%95%B0%E6%8D%AE%E9%9D%A2%E5%8D%A1%E6%AD%BB.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P028 · 发布脚本服务器段 SSH 超时：EasyTier 定向数据面瞬时卡死，别重跑全流程 · walker"><meta name="twitter:description" content><meta name="twitter:image" content="https://blog.walkerhua.com/og/p028-%E5%8F%91%E5%B8%83%E8%84%9A%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%AE%B5ssh%E8%B6%85%E6%97%B6%E4%B8%8Eeasytier%E6%95%B0%E6%8D%AE%E9%9D%A2%E5%8D%A1%E6%AD%BB.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P028 · 发布脚本服务器段 SSH 超时：EasyTier 定向数据面瞬时卡死，别重跑全流程</h1><p></p><div class="hero-meta"><span>踩坑于 2026-11-07</span><span>约 3 分钟</span><a class="tag" href="/tags/网络/">网络</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#先排除的看起来合理的解释">先排除的「看起来合理」的解释</a><a class="toc-l2" href="#真正的根因">真正的根因</a><a class="toc-l2" href="#处置套路核心">处置套路（核心）</a><a class="toc-l2" href="#️-两段式跑完的副作用发布记录被污染">⚠️ 两段式跑完的副作用：发布记录被污染</a><a class="toc-l2" href="#通用教训">通用教训</a><a class="toc-l2" href="#关联">关联</a></aside><article class="card prose"><blockquote>
+<p>2026-11-07 记录。场景：<code>blog-publish</code> 三路发布，GitLab / GitHub Pages 均成功，服务器段 rsync 前置 ssh 超时。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-11-07</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>网络 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（发布中断，需人工补跑单段）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>blog-publish、publish.sh、SSH 超时、22222、EasyTier、easytier-cli peer、数据面、控制面、raw socket 复测、–skip-gitlab、–skip-github、分段重跑、发布记录污染、宝塔面板 IP 白名单</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[github] 已推送 GitHub Pages（线上生效约 1-2 分钟）</span></span>
+<span class="line"><span>ssh: connect to host 192.0.2.1 port 22222: Operation timed out</span></span></code></pre>
+<p>服务器是 <code>walker@192.0.2.1:22222</code>，走 EasyTier 虚拟内网（<code>utun4</code>，本机 <code>192.0.2.2</code>，peer 段 <code>192.0.2.0/24</code>）。</p>
+<h2 id="先排除的看起来合理的解释">先排除的「看起来合理」的解释</h2>
+<table>
+<thead>
+<tr>
+<th>猜想</th>
+<th>实际排查结果</th>
+<th>判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务器宕机</td>
+<td>❌ 机器活着</td>
+<td><code>https://blog.walkerhua.com/</code> 仍 200，nginx <code>last-modified</code> 还是上一期产物</td>
+</tr>
+<tr>
+<td>SSH 密钥失效 / 被拒</td>
+<td>❌ 不是认证问题</td>
+<td>超时发生在 TCP connect 阶段，<strong>根本没走到认证</strong>（认证失败会立刻回 <code>Permission denied</code>）</td>
+</tr>
+<tr>
+<td>SSH 端口改了</td>
+<td>❌ 端口没变</td>
+<td><code>~/.ssh/known_hosts</code> 里 <code>[192.0.2.1]:22222</code> 仍是当前 key；22222 与 22 全超时说明是「连不上」而非「端口拒绝」</td>
+</tr>
+<tr>
+<td>本机隧道整体故障</td>
+<td>❌ 只是定向到该节点</td>
+<td>对 <code>192.0.2.11</code> / <code>.12</code> 的 22 端口 nc <strong>秒连成功</strong></td>
+</tr>
+<tr>
+<td>宝塔面板侧可绕</td>
+<td>❌ 白名单挡住</td>
+<td>面板 28888 公网可达，API 签名正确，但返回「IP校验失败,您的访问IP为[203.0.113.10]」——本机出口 IP 不在白名单</td>
+</tr>
+</tbody>
+</table>
+<h2 id="真正的根因">真正的根因</h2>
+<p><strong>EasyTier 隧道到该服务器的「数据面」定向卡死，控制面仍正常。</strong></p>
+<ul>
+<li><code>easytier-cli peer</code> 显示 <code>192.0.2.1</code> 在线、<code>p2p</code> 直连、<strong>0% 丢包</strong> → 控制面（peer RPC / 路由同步）活着</li>
+<li>但 ping / nc 对该节点的<strong>所有端口</strong>（22 / 22222 / 80 / 443 / 3306 / 8888）<strong>全部超时</strong> → 数据面（真实业务流量）不通</li>
+<li>同一时刻其他 peer 一切正常 → 本机 easytier-core 进程（<code>launchctl</code> 里的 <code>com.easytier.walker</code>）健康，不是本机整体问题</li>
+</ul>
+<h2 id="处置套路核心">处置套路（核心）</h2>
+<p><strong>不要重跑整个 <code>publish.sh</code></strong> —— 重跑会重复 commit、重复构建、重复推送，而且脚本判据是「工作区干净就跳过 commit」，已推送的内容不会再推一遍，容易造成状态混乱。</p>
+<p>正确做法是<strong>只补跑服务器段</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 1) 先 raw socket 复测端口（比 nc/ssh 少一层封装，更能反映真实连通性）</span></span>
+<span class="line"><span style="color:#B392F0">python3</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> "</span></span>
+<span class="line"><span style="color:#9ECBFF">import socket,time</span></span>
+<span class="line"><span style="color:#9ECBFF">s=socket.socket(); s.settimeout(60); t=time.time()</span></span>
+<span class="line"><span style="color:#9ECBFF">try:</span></span>
+<span class="line"><span style="color:#9ECBFF">    s.connect(('192.0.2.1',22222)); print('CONNECTED in',round(time.time()-t,1),'s')</span></span>
+<span class="line"><span style="color:#9ECBFF">except Exception as e: print('FAIL after',round(time.time()-t,1),'s:',e)</span></span>
+<span class="line"><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 2) ssh 复测（确认认证也通）</span></span>
+<span class="line"><span style="color:#B392F0">ssh</span><span style="color:#79B8FF"> -p</span><span style="color:#79B8FF"> 22222</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> LogLevel=ERROR</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> BatchMode=yes</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> ConnectTimeout=</span><span style="color:#79B8FF">15</span><span style="color:#9ECBFF"> walker@192.0.2.1</span><span style="color:#9ECBFF"> "echo SSH_OK; uptime"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 3) 只补服务器段</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> ~/.agents/skills/blog-publish/scripts/publish.sh</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> "&lt;消息&gt;"</span><span style="color:#79B8FF"> --skip-gitlab</span><span style="color:#79B8FF"> --skip-github</span></span></code></pre>
+<p>第 1 步实测<strong>立即 CONNECTED</strong>（0.0s）—— 说明隧道卡死是瞬时的，自己会恢复，多等一会儿就好。</p>
+<h2 id="️-两段式跑完的副作用发布记录被污染">⚠️ 两段式跑完的副作用：发布记录被污染</h2>
+<p>第二段用 <code>--skip-gitlab --skip-github</code> 跑，脚本的自动留痕会把这一行写成：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>| 16:53 | AI 日报 2026-11-05 | `116f746` | `—` | ——✓ | 首页 200 |</span></span></code></pre>
+<p>Pages 仓哈希丢成 <code>—</code>，三路标记变成「——✓」，<strong>与实际（GitLab ✓ / Pages ✓ / Server ✓）不符</strong>。</p>
+<p>→ <strong>必须手工改回</strong> <code>116f746</code> / <code>bfa5c27</code> / ✓✓✓。查实际哈希：<code>git -C &lt;Pages仓&gt; log --oneline -1</code>。</p>
+<h2 id="通用教训">通用教训</h2>
+<ol>
+<li><strong>「连接超时」与「认证失败」是两回事</strong>：前者说明链路/服务没通，后者说明密钥/账号问题。排查顺序必须先分清，否则会在密钥上白费功夫。</li>
+<li><strong>多路径部署脚本要能分段重跑</strong>：全流程重跑比单段补跑风险大得多（重复副作用、状态混乱）。有 <code>--skip-*</code> 就该优先用。</li>
+<li><strong>备用通道要先验证可用性再依赖它</strong>：宝塔面板 crontab 拉包法看着能用，实际卡在 IP 白名单 —— 备用方案也要先探活。</li>
+<li><strong>自动化留痕会因分段执行失真</strong>：脚本只知道自己这次跑了什么，不知道上次跑了什么 → 分段跑完要人工校对留痕。</li>
+</ol>
+<h2 id="关联">关联</h2>
+<ul>
+<li>项目侧细节（发布流程、踩坑脱敏门禁）见 <code>~/projects/server-apps/astro-blog/.workbuddy/memory/MEMORY.md</code></li>
+<li>同族的 SSH 挂起问题见 <a href="P020-git-push%E6%8C%82%E8%B5%B7%E4%B8%8Essh-config%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%A4%B1%E8%B4%A5.md">P020</a>（那次是 GitHub 侧 DNS，这次是 EasyTier 隧道侧数据面）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p027-webfetch长文省略与web2md分批存档/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P027 · WebFetch 长文会被悄悄省略，web2md 存档漏章节</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
