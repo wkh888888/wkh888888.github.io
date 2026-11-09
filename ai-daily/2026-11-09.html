@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-09 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 9 日（周一）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：能力不再往上走之后，差别全部落在出事之后</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 明文凭据 1122 个文件</a>
+      <a href="#n2">② 币安 63.4 亿美元</a>
+      <a href="#n3">③ 换 7 种 harness</a>
+      <a href="#n4">④ 8000 次操作零失误</a>
+      <a href="#n5">⑤ 机器人要办身份证</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>一个正常的审批动作，把明文密码写进了项目文件：1122 份公开的 Claude Code 权限文件里藏着 1379 个凭据，其中 539 个仓库是智能体自己提交的</h2>
+      <span class="tag t-code">AI Coding · 权限与凭据</span>
+    </div>
+    <div class="src">Apiiro 研究报告《Local Approvals Become Public Secrets》（研究员 Shmulik Cohen 与 Matan Giladi，11 月 5 日发布）；研究方法为 11 月 1 日至 3 日的只读 GitHub 代码与提交检索；多方转述与核对（The CISO Brief、aib.vote、imtr.net、clawdbytes）</div>
+    <div class="body">
+      <p>这条不是漏洞公告。没有 CVE、没有 CVSS、没有 CWE 编号 —— 它讲的是一件在正常开发流程里就会发生的事。</p>
+      <ul>
+        <li><strong>机制简单到有点难以置信。</strong>Claude Code 在执行 shell 命令前会弹窗请求许可。如果用户选择「以后别再问」（英文菜单项 Yes and do not ask again），这条被批准的<strong>整条命令</strong>就会被逐字写进项目目录下的 <code>.claude/settings.local.json</code>，变成一条 allow 规则，之后不必再问就能重跑。只要这条命令里带着从配置文件复制过来的密码，密码就以明文躺在了这个文件里。</li>
+        <li><strong>扫描规模。</strong>研究方在 11 月 1 日至 3 日用只读的 GitHub 代码与提交检索，下载了 <strong>104,185 份</strong>公开的 <code>.claude/settings.local.json</code>（分布在 103,617 个公开仓库），另外还检查了 76,011 份共享的 <code>.claude/settings.json</code>。</li>
+        <li><strong>结果：1,122 份文件含至少一个真实密钥，合计 1,379 个不同凭据</strong> —— 636 个厂商 key 加 743 个密码或 token。分类看，379 个数据库密码、122 个 Supabase service-role key、43 个指向公网服务器的 SSH 登录凭证、42 个 GitHub / GitLab / npm token、23 个 AWS key。</li>
+        <li><strong>把范围再放大一次会到 2,539 个。</strong>加上历史版本里的 734 个密钥（分布在 509 个仓库）、211 个来自 74 个仓库的 fork、120 份共享智能体对话记录（87 个仓库）、9 个仓库的记忆文件、33 份交接或部署笔记，以及 173 份 VS Code Copilot 自动批准设置里的 9 个，合计 <strong>2,539 个密钥、1,994 个仓库、63 家组织</strong>。</li>
+        <li><strong>两个数字比 1122 更值得盯。</strong>其一，1,105 个可追溯仓库里，有 <strong>539 个</strong>是 Claude 作为共同作者修改过那个文件 —— 也就是说，一半以上的泄露路径上，是智能体自己把带着密钥的文件提交上去的。其二，<strong>215 个文件两套主流扫描器都没报</strong>：gitleaks 只标出 1,122 份中的 564 份，TruffleHog 标出 643 份。原因是写死在命令行里的密码长得像普通词，比如 <code>PGPASSWORD=</code>、<code>sshpass -p</code> 或者请求头里的授权字段，根本不长得像厂商 key。</li>
+        <li><strong>防护为什么没兜住。</strong>Claude Code 在首次写入这个文件时，会把它加进<strong>用户全局</strong>的 git 排除列表，但<strong>不会写进仓库自己的 .gitignore</strong>。这个保护只在那台机器上生效，不随仓库走，也管不到「文件夹后来才变成仓库」和「文件早被跟踪」这两种情况。研究方在 11 月 2 日和 3 日向相关组织通报，文件当时仍在默认分支上，中位仓库里这个文件的首次提交时间是 <strong>217 天前</strong>。</li>
+        <li><strong>具体是什么。</strong>包括某数据库厂商的管理员级云 API key、一个生产环境 Azure PostgreSQL 密码、一个 Square 生产 token、一个病历数据库的 owner 密码。研究方没有验证大部分凭据是否仍然可用，但<strong>有一家公司确认自己的 key 当时依然是活的</strong>。</li>
+        <li><strong>不是模型的问题。</strong>研究方在 Opus 5.5 与 Fable 5.1 上都复现了这个行为，并明确指出这是 Claude Code 这个产品的行为，不是模型的行为。在他们横向比较的 <strong>16 个编码智能体里，只有 Claude Code 被确认默认把完整批准命令存进项目文件</strong>。</li>
+        <li><strong>Anthropic 的回应与研究方的结论并不一致。</strong>Anthropic 称该文件会自动加入 .gitignore，泄露的文件是人工创建并提交的；Apiiro 对这个解释提出了异议 —— 那是用户全局排除列表而非仓库级忽略，且 539 个仓库里是 Claude 自己改的文件。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是一次正常的审批流程触发的泄露 —— 不需要恶意 prompt，不需要被盗账号，不需要第三方动手。11-05 ① 那期讲围住 agent 的那层自己破了两个洞，11-08 ③ 讲多智能体团队里藏个破坏者都抓不住，这一期是第三种形态：<strong>不是洞，是出厂设置</strong>。</p>
+      <p>第二，1,122 这个数字容易被误读成用户手滑，但真正该看的两个数是 539 和 215。前者说明泄露路径上一半以上是自动化本身在走 —— 智能体把自己写的密钥提交了；后者说明你现有的 CI 密钥扫描大概率看不见这一类，因为触发它的不是 key 格式，而是一行普通的命令行。</p>
+      <p>第三，修复顺序被普遍搞反了。所有人第一反应是删文件，但删文件不解决已经泄露的凭据 —— 历史版本、fork 和别人的克隆里都还在。正确的第一步是<strong>轮换</strong>。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>四个分母必须分开写，否则会差一个数量级：104,185 是被下载检查的公开副本数（不是泄露数）；1,122 是含至少一个真实密钥的<strong>文件</strong>数；1,379 是这些文件里的<strong>不同凭据</strong>数；2,539 是把历史版本、fork、共享配置、对话记录、记忆文件全算进去之后的总数。说「泄露 2539 个密钥」和说「1122 个文件泄露」都不算错，但含义差很远。</p>
+      <p>研究方没有验证大部分凭据是否仍然有效，只有一家公司确认其 key 当时是活的；也没有报告任何实际被利用的案例。这是数据暴露，不是软件漏洞，没有 CVE / CVSS / CWE 编号。</p>
+      <p>样本是 GitHub 上的公开副本，不含私有仓库与企业自建的 GitLab 实例；实际暴露面很可能比这个数更大。</p>
+      <p>Anthropic 的回应与 Apiiro 的结论存在直接冲突（自动加 .gitignore 且系人工提交 vs 只是用户全局排除列表且 539 个仓库是 Claude 自己改的）。引用时两方都要写，不要只挑一方。</p>
+      <p>另外别把它和 11-01 ③ 的技能审计、09-30 ② 审计出的「不存在的评分员」混为一谈 —— 那两条查的是 agent 在想什么，这一条查的是文件里存了什么。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>今天就做两件事，顺序别换：先在仓库和历史里搜 <code>.claude/settings.local.json</code> 与 <code>.claude/settings.json</code>，把命中的凭据<strong>全部轮换</strong>；再谈清理历史（git-filter-repo 或 BFG）与 untrack。</p>
+      <p>把仓库级 .gitignore 补上，不要依赖用户全局排除列表 —— 后者只保护一台机器。</p>
+      <p>改用环境变量或密钥管理器引用（例如把连接串写成 $DB_URL 再传给客户端），不要把密码写在命令行里：命令行会被逐字存进 allow 规则。</p>
+      <p>批准权限时用<strong>模式</strong>而不是整条命令，比如 Bash(npm run:*) 不会把参数里的密钥存下来。</p>
+      <p>给 CI 加一条规则：扫命令行参数里的密码与授权头，不要只扫已知 key 格式 —— 215 这个数字就是这条规则的必要性。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>币安 63.4 亿美元被盗：入口是一段在搜索 AI 编程工具时被篡改的安装包，而横向渗透用的还是币安自己的内部 AI 工具</h2>
+      <span class="tag t-code">AI Coding · 供应链与攻击面</span>
+    </div>
+    <div class="src">币安《10 月 29 日安全事件初步调查结果及应对措施更新》（11 月 3 日发布）；中文转述（参考消息、法新社、界面新闻、钜亨网、台湾产经，11 月 4 日至 8 日）</div>
+    <div class="body">
+      <p>这是有记录以来规模最大的加密货币盗窃案，约 63.4 亿美元。而它的攻击链里，AI 编码工具和内部 AI 工具各占一头。</p>
+      <ul>
+        <li><strong>第一阶段（6 月）：入口在包管理器的搜索结果里。</strong>币安钱包基础设施团队的一名工程师<strong>在搜索并安装一款 AI 编程工具时，下载了搜索结果中被篡改的 Homebrew 安装包</strong>，文件内含恶意代码，却没有逃过公司安全团队的检测 —— 他们发现后更换了设备。但那名工程师的岗位职能和多位同事的信息已经落到攻击者手里。</li>
+        <li><strong>第二阶段（9 月）：一次做了两轮的假面试。</strong>攻击者先以项目总监的身份通过合法招聘平台联系到另一名软件工程师，随后通过社交应用进行视频面试和社媒面试，自称某公司 CEO，最后要求对方下载一份面试作业。这份作业实为恶意代码仓库，其中<strong>一个 3,414 字节的文件绕过了终端安全防护</strong>，并利用币安的内部 AI 工具去定位钱包运维团队工程师的相关痕迹。</li>
+        <li><strong>第三阶段（10 月 20 日）：内部 AI 工具成了横向渗透的武器。</strong>攻击者利用这台已被感染的电脑，<strong>动用币安自己的内部 AI 工具</strong>，接管了另外两名钱包软件工程师的工作电脑。</li>
+        <li><strong>第四阶段（10 月 29 日）：触发脚本，四小时搬空。</strong>攻击者远程登录第三名工程师的电脑，触发恶意脚本发起攻击。区块链分析公司 TRM 认为，攻击者入侵的是币安用于授权交易的签名基础设施并借此发出指令，绝大部分转出在约 20 分钟内完成，整个事件持续约四小时。</li>
+        <li><strong>追回进度。</strong>约 28.5 亿美元已被冻结或拦截；截至 10 月 31 日，98% 的受影响代币资产已由 SAFU 基金与公司资金补足，币安称已预留超过全额损失的资金。美国联邦调查局认定幕后黑手与朝鲜有关联，朝方否认。</li>
+        <li><strong>币安的整改方向全部指向 AI 那一层。</strong>在受影响环境中重建钱包系统，<strong>重建受影响的内部 AI 工具和访问控制系统</strong>，收紧钱包服务风控，<strong>扩充基于 AI 的行为异常检测</strong>，并聘请第三方安全机构做全面审查，接下来加大对 AI 安全与预防的投资。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是第一次「AI 编码工具」和「内部 AI 工具」同时出现在一条国家级攻击链的两端：入口是开发者搜索 AI 编程工具时下载的那个包，横向渗透用的还是公司自己的内部 AI 工具。11-05 ① 讲围栏自己破洞、11-08 ③ 讲监控抓不住破坏者，这一期讲的是<strong>攻击者已经在用 agent 的默认工作方式了</strong>。</p>
+      <p>第二，「被篡改的 Homebrew 安装包」这个细节值得单独拎出来：主流包管理器的搜索结果页本身成了投毒面。10-31 ② 讲 Claude Code 官方扩展在 Cursor 市场被换成带后门的版本，10-05 速览③ 讲有人在公网搜捕跑偏的 agent —— 三期指向同一件事：<strong>开发者工具的分发渠道正在从防护层变成攻击面</strong>。</p>
+      <p>第三，币安复盘里有一个被普遍忽略的结论：安全团队<strong>确实发现了</strong>那个被篡改的安装包并换掉了设备，但因为没有把「谁下载过什么」当作一条可追的资产链，攻击者仍在四个月后拿到了钱包权限。<strong>检测到了不等于拦住了</strong>。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>四个日期必须分开写：攻击链从 6 月开始布局，9 月是假面试环节，10 月 29 日事发，11 月 3 日至 4 日币安发布初步报告。<strong>这不是当日新闻</strong>，本期是它的中文扩散期。</p>
+      <p>金额有三个口径，不能互相替代：约 63.4 亿美元「受影响」（含后来补足的）、已冻结或拦截约 28.5 亿美元、截至 10 月 31 日 98% 已补足。</p>
+      <p>日期上报告本身有出入：标题写 10 月 29 日，正文另有一处写 10 月 30 日 4 时 05 分热钱包被攻击，中文媒体两种都出现过。</p>
+      <p>部分技术细节币安称要保密以免被模仿；调查仍在进行，结论还要接受独立复核。FBI 的朝鲜关联是美方认定，朝方否认。</p>
+      <p>不要把它读成「AI 编程工具本身不安全」。报告原文是工程师<strong>在搜索并安装一款 AI 编程工具时</strong>下载了搜索结果中被篡改的 Homebrew 安装包 —— 投毒的是包管理器的分发结果，不是工具本体。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>查一遍你的机器上「AI 编程工具是怎么装上去的」：走的是 brew、官方安装器，还是直接下 tar 包？如果是 brew，检查一下有没有启用第三方 tap 或非官方镜像源。</p>
+      <p>把「谁在什么时候装了哪个工具」当成一条可追的资产链，而不是靠人记得 —— 这和 11-03 ③ 讲的监控要抓在途组织是同一条链的两端。</p>
+      <p>在 EDR 里设一条行为链检测：包管理器下载目录写入 + 随后子进程外联。报告里那个 3,414 字节的文件是绕过终端防护的。</p>
+      <p>对接外部工具链、尤其是能改文件能跑 shell 的 agent，默认不授予长期凭据；需要凭据的步骤走人工或独立服务。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>同一个前沿模型换 7 种 harness：通过率分不出来，账单差两倍多 —— 而作者自己把「分不出来」的分辨率边界写清楚了</h2>
+      <span class="tag t-code">AI Coding · harness 选型</span>
+    </div>
+    <div class="src">Garry Tan（Y Combinator 总裁兼 CEO）于 X 发帖与开源仓库 garrytan/g-harness-evals（MIT，11 月 8 日 18:09 UTC 发布，北京时间 11 月 9 日凌晨）；中文转述（aicoder，11 月 9 日）</div>
+    <div class="body">
+      <p>方法很干净：固定模型、固定任务，只换外面那层壳。结论也干净到有点扎人。</p>
+      <ul>
+        <li><strong>方法。</strong>固定模型（Opus 5.5 或 GPT-6.1 Sol）与 20 个公开的多用户任务，只更换 harness（系统提示、工具、记忆）三个变量；指标是通过率、每解一题成本、单次耗时中位数。仓库里的完整记分表与收据都放了出来，任何人可以自己重新评分。</li>
+        <li><strong>核心结论只有一句：分不出来。</strong>作者写明，在这 20 个公开多用户任务上，<strong>任何一对被测组合的通过率都分不出来</strong>；QM 的组合没有测；<strong>小于 7.7 到 14.2 分的差距可能藏得住</strong>。所以最终的排名只能是成本和速度。</li>
+        <li><strong>Opus 5.5 上的四个格子。</strong>QM（Pi loop）通过率 72.5%、每解一题 $0.19（区间 $0.13 至 $0.28）、40.1 秒；Claude Code 76.3%、$0.22（$0.16 至 $0.30）、40.1 秒；Hermes Agent 78.8%、$0.24（$0.18 至 $0.36）、64.6 秒；OpenClaw 76.3%、$0.44（$0.33 至 $0.63）、99.4 秒。</li>
+        <li><strong>GPT-6.1 Sol 上的三个格子。</strong>Codex 71.3%、$0.17（$0.12 至 $0.26）、30.1 秒；Hermes Agent 75.0%、$0.19（$0.14 至 $0.28）、81.5 秒；OpenClaw 73.7%、$0.20 至 $0.30、83.6 秒。</li>
+        <li><strong>钱具体花在哪儿，这个结论比「prompt 膨胀」精确得多。</strong>OpenClaw 在 Opus 上比 Claude Code 多出来的那部分成本，<strong>约 81% 是缓存写入</strong> —— 它重发更大的系统提示和更大的工具结果。在 Sol 上它与 Codex 的差距则主要是输出（282,492 个输出 token 对 32,226），另外每次试验有 $0.036 是一次超时流按全额预留计费。</li>
+        <li><strong>还有一条可以直接抄的：规则放在哪里，决定它有没有被遵守。</strong>写在系统提示或启动文件里的规则，30 轮里有 30 轮被遵守；放在每轮 hook 里是 26 轮；什么都不放是 18 轮。Codex 那边只要 hook、系统提示、启动文件任一位置就都是 30 轮，没有规则只有 6 轮。</li>
+        <li><strong>顺带量出来的权限结论。</strong>共享记忆 gbrain 用一个 bot 级 token 时，51 次试验里分别有 33、20、17、9 次返回了提问者无权查看的记录；改成按成员的访问规则后，四个格子全部是 0 次 / 51。</li>
+        <li><strong>作者自己列的缺陷，一条比一条实在。</strong>这些是公开任务上的开发结果，不是留出集确认；成本差异是描述性的，没做显著性检验；Claude Code 和 Codex 各自只能跑自己的模型，所以两者从不互比；两个 OpenClaw 格子不完整（最后一个任务因达到上限而停止）；QM 跑在默认 Docker bridge 上，网络没有固定，因此它的对比没有被测试。</li>
+        <li><strong>利益披露必须一起看。</strong>gstack 与 gbrain 都是 Garry Tan 自己的项目；QM 是 YC 的项目，而 YC 由他运营；YC 是 Hermes 的投资方；OpenAI 从 YC Research 起步，而 YC 也由他运营；<strong>OpenAI 现在是 OpenClaw 的主要赞助方，OpenClaw 的作者 Peter Steinberger 在 OpenAI 工作</strong>。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是 09-23 ① HarnessTax 的第二次独立测量，结论方向一致但<strong>量级更小也更干净</strong>：那期在公开基准上量到账单最多差 5 倍，这一期在前沿模型上量到 2 倍出头。而且这一次作者把「分不出来」的分辨率边界写清楚了 —— 7.7 到 14.2 分以内的差距这套题测不出来。<strong>换句话说，平局不是一个结论，是一个精度声明</strong>，这个写法值得抄。</p>
+      <p>第二，它和 11-07 ④ 正好构成一对：具身域换 harness 涨了 30 倍（0.83% 到 25.00%），编码域换 harness 几乎不动但账单差两倍多。<strong>同一件东西，在两个域里的杠杆位置完全不同</strong> —— 具身侧外层是能力放大器，编码侧外层是成本放大器。</p>
+      <p>第三，两条结论可以直接用：钱主要花在缓存写入上，比笼统说「上下文膨胀」精确得多；规则要放在 agent 每轮都能看见的地方，系统提示或启动文件 30 轮全中，什么都不放只有 18 轮。</p>
+      <p>第四是那条被顺带量出来的权限结论：共享记忆用 bot 级 token，51 次试验里最多 33 次越权，换成按成员的访问规则后归零。这和 11-01 ③ 的技能审计、09-30 ② 的权限模型是同一条线上的第三个证据。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p><strong>非当日首发</strong>：原帖是 11 月 8 日 18:09 UTC（北京时间 11 月 9 日凌晨），仓库更早，仓库里的矩阵报告日期是 11 月 4 日。本期引用的是昨晚到今晨的中文扩散。</p>
+      <p>三个数字不要混用：20 个公开多用户任务的通过率、每解一题成本、单次耗时中位数是三个不同指标。每解一题成本是该格子的全部花费（含被排除的失败试验）除以计分通过数。</p>
+      <p>通过率「打平」有明确的分辨率限制：作者的区间很宽（多数落在 50% 到 95% 之间），并且自己写明 7.7 到 14.2 分以内的差距可能测不出来。<strong>不能读成四款 harness 一样好</strong>，只能说这套题分不出来。仓库自己也写了这是开发结果、不是留出集确认。</p>
+      <p>成本差异没有做显著性检验，是描述性的；QM 的对比因为网络没固定而未被测试。</p>
+      <p>利益披露必须一起写。这不代表数据有问题，但读者需要知道 gstack、gbrain 是作者自己的项目，QM 是 YC 项目，YC 投资了 Hermes，而 OpenAI 是 OpenClaw 的主要赞助方。</p>
+      <p>这不是厂商的官方 benchmark，是个人发起的开源评测，20 个任务、7 种组合，样本量远小于任何正式榜单。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>拿你最常用的两个 harness，在<strong>同一批真实任务</strong>上跑一次对照，只看两件事：每解一题成本，和单次耗时中位数。通过率通常分不出来，成本和速度分得出来。</p>
+      <p>打开 agent 的账单明细，把 cache write 单独拉出来看。如果成本高在缓存写入而不是输出，那就是系统提示或工具结果太大 —— 削这两处比换模型便宜得多。</p>
+      <p>检查你的规则写在哪儿。放进系统提示或启动文件，比放在文档里等着被读到可靠得多（30 轮对 18 轮）。</p>
+      <p>如果有共享记忆或共享检索，改用按成员的访问规则，不要用 bot 级 token。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>50 天、8000 多次物理操作、执行层面零失误：合碳智能的轮式双臂机器人 Talos 在药企真实实验室里跑完了分子纯化，第二单来自丹纳赫</h2>
+      <span class="tag t-emb">具身智能 · 真实作业现场</span>
+    </div>
+    <div class="src">东方网与上观新闻报道（11 月 8 日），东方财富转载（11 月 8 日）；云琪资本播客《Attent!on》对谈（陈志刚、方焯、余桑）；具身智能商业化要闻聚合（11 月 9 日）</div>
+    <div class="body">
+      <p>不是演示，也不是展会。这是跨国药企把核心流程交出去之后，机器人连续跑五十天交出来的读数。</p>
+      <ul>
+        <li><strong>三个数字。</strong>合碳智能研发的轮式双臂机器人 Talos，在国内头部创新药企的真实实验室里<strong>连续运行 50 天</strong>，完成 <strong>50 多个药物分子中间体的纯化任务</strong>，累计 <strong>8000 多次物理操作</strong>，<strong>执行层面零失误</strong>。</li>
+        <li><strong>最关键的设计约束：不改造现有实验室，直接操作存量仪器。</strong>全流程包括取样、扫码、由 AI 决策引擎设计溶剂体系、点板（体系不合用就由模型重调、再点一次）、装柱过柱、摄像头读结果、取样送质谱、合并旋蒸。合碳创始人兼 CEO 陈志刚的说法是：<strong>每一步的下一步都要基于上一步的结果去分析、去判断，动态地调整该怎么做</strong>。</li>
+        <li><strong>它切的是哪一段工时。</strong>药化学家设计反应路线大约只占 10% 的工时，剩下七八成都耗在湿实验上。陈志刚的原话是：「你今天给我解决 10% 的问题，那能不能帮我解决 70%、80% 的问题？」</li>
+        <li><strong>节奏也变了。</strong>过去科学家投完反应要等三天拿产物，现在机器人夜间连续运行，次日早晨就能进入下一步。</li>
+        <li><strong>客户路径是关键。</strong>第一站是百济神州，真实环境跑通 50 天；<strong>第二单</strong>是 2026 年 9 月与丹纳赫在深圳签署战略协议并达成订单合作，共建 AI 机器人智能生物工艺开发实验室，纳入 Danaher Beacon 科研合作计划 —— 丹纳赫官方明确这是其携手中国具身智能企业开展的<strong>首个 Danaher Beacon 项目</strong>。</li>
+        <li><strong>客户方的表述把分工讲得很清楚。</strong>丹纳赫中国首席科学官方焯说：未来的实验室不是简单地用机器人替代科学家，而是让机器人进入现有环境，理解真实工作流程，学习使用已有设备和工具，与科学家安全、自然地协同工作；他特别强调让机器人承担重复、标准化乃至有一定风险的实验操作，而科学家继续负责提出问题、作出判断、探索未知。他自己的说法是：「我们现在了解的部分可能不到 1%，有 99% 都是未知可以探索的。」</li>
+        <li><strong>政策环境是同频的。</strong>上海「十五五」规划把科学智能、具身智能列为重点方向，浦东新区随之推出人工智能加生物医药集聚区方案，在张江配套算力支持、数据共享和 20 亿元种子基金。本届进博会张江孵创展团首次亮相，31 家企业覆盖从科学模型到具身智能的完整链条。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是少见的<strong>执行零失误不是演示指标而是客户现场指标</strong>的案例，而且出自一个不做整机、只做轮式双臂机器人的团队。10-30 ④ 讲具身第一次同时给出真实工位和出货量两个不是演示的数字，11-04 ⑤ 讲小米干满 8 小时整班 —— 这一期多了一层：<strong>它是跨国药企把核心流程交出去之后的连续读数，而且是第二单</strong>。</p>
+      <p>第二，最值得抄的是它的商业设计：不改造实验室，直接操作存量仪器。这一条把采购决策从「要不要重建一个自动化实验室」降级成「要不要买一台机器」，门槛低了一个量级。这和 11-02 ⑤ 那条形成对照 —— 那条讲的是产能瓶颈与人效只有熟练工 30%，这条讲的是用「不破坏现状」绕开部署成本。</p>
+      <p>第三，50 天这个数字的含金量在于它是跨周期的。11-01 ⑤ 给的四把尺子里有「失败可恢复率」，11-03 ④ 的智元便利店强调「恢复力」，但那些都是围绕任务成败展开的；合碳这 8000 次零失误是<strong>动作层面</strong>的零失误，量纲不同，而且是在药物纯化这种出错代价极高、量少物杂的流程上。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p>「零失误」是<strong>执行层面</strong>的说法，出自企业自述与媒体转述，没有第三方审计报告，也没有给出「失误」的定义边界 —— 是指取样、扫码这类操作，还是包含对结果的判定。</p>
+      <p>50 天发生在头部创新药企，报道未点名具体是哪一家；第一站百济神州是公开可查的，但不能外推到一般实验室。</p>
+      <p>「8000 多次物理操作」不是 8000 个完整任务 —— 一个纯化任务由多次操作组成，这两个数字不能换算成日均完成多少个分子。</p>
+      <p>时间要点：本次媒体披露是 11 月 8 日；与丹纳赫的协议签署在 2026 年 9 月，百济神州的 50 天验证也发生在更早。本期取的是 11 月 8 日这一篇媒体的完整披露，不是当日新事件。</p>
+      <p>别把它和 09-23 ④「GPT-6 Astra 直接当机器人策略」、11-05 ④ RoboArchitect 混为一谈：合碳这一条的关键不是模型有多强，而是<strong>它在别人现有的实验室里、用别人现有的仪器、把纯化流程跑完了</strong>。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>找一条你所在行业里「重复性高、创新价值低、但错误代价高」的流程。合碳选中的是药物纯化（占药化学家 70% 到 80% 工时），这个挑法的逻辑可以照抄。</p>
+      <p>评估机器人方案时，把「要不要改造现场」当成第一问。能不改就不改的那条路，采购决策周期短得多。</p>
+      <p>把「执行层面零失误」和「任务完成率」分成两个指标分别验收。合碳的 8000 次和 50 多个分子是两种证据，缺一不可。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>工信部要给每台机器人发身份证：一机一码、终身不可篡改、存量也要备案，适用范围从人形扩到全品类</h2>
+      <span class="tag t-emb">具身智能 · 监管与追溯</span>
+    </div>
+    <div class="src">工信部装备工业一司《机器人产品标识码管理暂行办法（征求意见稿）》（11 月 5 日网站发布、11 月 6 日起公开征求意见，公示期至 12 月 5 日）；中证网、IT 之家、凤凰网科技、腾讯新闻、北京青年报（11 月 6 日至 7 日）</div>
+    <div class="body">
+      <p>机器人第一次有了身份证这件事，条款比想象中细。</p>
+      <ul>
+        <li><strong>定位。</strong>建立统一的机器人产品「身份证」，规范机器人产品生产制造，<strong>从供给侧防范机器人应用安全风险</strong>，支撑行业安全治理。</li>
+        <li><strong>标识结构与依据。</strong>机器人产品标识码由<strong>机器人制造商代码、产品说明代码、产品顺序号代码和其他代码</strong>四部分组成，编码与赋码应执行 <strong>GB/T 48541-2026《机器人产品标识码》</strong>国家标准 —— 该国标 2026 年 1 月下达计划、由全国机器人标准化技术委员会归口，目前也还在征求意见阶段。</li>
+        <li><strong>适用范围从人形扩到全品类。</strong>办法所称机器人产品是指在国内生产制造的机器人整机产品，包括工业机器人、服务机器人和特种机器人等。这跟今年 5 月那套只管人形的平台相比，是一个明显的扩面。</li>
+        <li><strong>赋码要求。</strong>制造商应当在产品出厂前对每台机器人赋码，确保标识码与真实信息一致，实现<strong>「一机一码」</strong>；至少采用<strong>数字存储标识、供人识读标识和机器识读标识</strong>三种方式，且多种标识形式对应的产品信息必须一致；标识应当清晰、可见、耐久且不易损毁、不易更换，<strong>终身不变、不可篡改、不可擦除</strong>。</li>
+        <li><strong>数量上限这条最狠。</strong>制造商应当合理确定标识码申请数量，<strong>当年度累计申请数量一般不超过上一年度实际产量的 300%</strong>；确需增加的，可通过平台提交产量等证明材料继续申请；投产不满一年或首次申请的，可依产能设计报告等材料确定数量。</li>
+        <li><strong>备案与注销。</strong>赋码后 <strong>20 个工作日内</strong>通过标识码服务平台填报已使用信息完成备案，并对备案信息的真实性、准确性、完整性负责；<strong>上一年度已申领但截至当年 1 月 31 日仍未备案的，由平台予以注销</strong>。</li>
+        <li><strong>存量设备也要进池子。</strong>办法实施前已出厂、销售的机器人产品，制造商应当通过平台备案<strong>自定义的产品序列号</strong>。这条意味着它不只管新设备。</li>
+        <li><strong>前置的基础已经有了。</strong>2026 年 5 月，工信部人形机器人与具身智能标准化技术委员会已牵头发布全国首个人形机器人全生命周期管理服务平台，配套的《人形机器人全生命周期管理规范》采用 <strong>29 位四段式编码</strong>（国家码、企业码、产品码、序列码），覆盖从出厂、流通、使用到报废回收的全链条；截至 5 月，该平台已覆盖 100 余家企业、<strong>2.8 万余台</strong>人形机器人完成赋码。</li>
+        <li><strong>场景侧已经有了样本。</strong>2026 年 8 月，北京经开区落地全国首个具身机器人演出「沙盒审批」试点，首形科技、中科慧灵、阿卡帕尼三家企业获得准入证明；审核覆盖责任主体、信息安全、表达安全，要求配备经过培训的专业安全员，每次演出需报备并审核，现场设专业摄像头实时监控、机器人运行状态实时共享，形成<strong>身份准入、内容审核、现场监控、状态回传、责任到人</strong>的闭环。地方上，11 月 4 日北京市经济和信息化局已召开机器人产品标识码赋码工作动员部署会。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是把机器人从「一台机器」变成「一个可追责主体」的制度底座。10-31 ⑤ 讲美国认定进口机器人威胁国家安全却先不征税、给了 180 天谈判窗口，11-08 速览② 讲工信部给智能体终端设备加进网这道门 —— 这一期是同一件事在机器人侧的对应物：<strong>不给放行，但先给编号</strong>。</p>
+      <p>第二，三个细节决定了这份稿子的分量：适用范围从人形扩到全品类，意味着工业、服务、特种机器人全部进入同一套编码框架；「终身不变、不可篡改、不可擦除」把标识从标签变成了法律意义上的身份；存量设备也要备案自定义序列号，意味着在跑的设备会被一起拉进可追溯的池子。</p>
+      <p>第三，「当年度申请不超过上年度实际产量的 300%」看着琐碎，实则是最狠的一条：它把「多申领码」这个套利路径提前堵死。没有这条，标识码体系很快会被囤码炒高。</p>
+      <p>第四，和进博会演出「沙盒审批」试点并读，是这套体系真正的走向：<strong>通用规则给身份底座，垂直场景验证核验与过程监管的流程</strong>，两者互为补充。这跟 09-08 ⑤ 的人形机器人国标、11-02 速览④ 的具身数据集质量标准是同一套治理节奏的三个层级 —— 从标准层到数据层再到行政规章层。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b></p>
+      <p><strong>这是征求意见稿，不是正式规章</strong>，公示期到 12 月 5 日，条款可能变。引用时必须写明征求意见稿四个字。</p>
+      <p>公开日期有两个口径：工信部网站 11 月 5 日发布、装备工业一司 11 月 6 日开始征求意见、公示期至 12 月 5 日。写哪个都行，但要写清是哪个环节。</p>
+      <p>GB/T 48541-2026 目前<strong>也在征求意见阶段</strong>，尚未成为正式标准；而 GB/T 是国家推荐性标准、企业可自愿采用，只有被行政规章引用之后，才在其适用范围内产生事实上的约束力。所以现在的状态是「赋码义务在推、国标在配套」，不能说国标已生效。</p>
+      <p>「一机一码」覆盖的是<strong>产品身份</strong>，不等于联网准入、数据安全或运行责任的全套制度。11-08 速览② 的智能体终端进网管理是另一条线，不能混谈。</p>
+      <p>前置的 5 月平台数据（100 余家企业、2.8 万余台）是人形机器人这一个品类的覆盖量，不能当作全品类基数。</p>
+      <p>执行细则还没出：标识码服务平台的具体接口、赋码硬件方案、跨境产品的兼容性都没有公布。企业现在只能做合规准备，不能据此做产品决策。</p>
+    </div>
+    <div class="act">
+      <p><b>可以行动：</b></p>
+      <p>现在就把产品身份纳入产品定义：你的机器人有没有一个终身不变的序列号？出厂前赋码这一步落在工厂还是集成商？存量设备有没有序列号可以备案？这三个答案会直接决定 12 月 5 日之后要不要返工。</p>
+      <p>按 300% 的额度上限倒推一次申报量，别按「明年要扩产」的乐观口径申领。</p>
+      <p>三种标识方式（数字存储、供人识读、机器识读）意味着你的结构件、包装与出厂流程里要同时留出三个位置，现在不改版就来不及。</p>
+      <p>如果你在做演出、展陈或公共服务场景，盯一下北京经开区「沙盒审批」试点怎么要求状态实时共享与安全员配置 —— 那是这套体系在场景侧的具体形态。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>McKinsey：大公司里 AI 编程的收益高度分化，头部 20% 到 25% 拿到 2 倍，多数只有 10% 到 20%</h3>
+      <p>AI Engineer 活动上，McKinsey 的 Martin Harrysson 与 Prakhar Dixit 给出的口径是：<strong>目前大企业中有 20% 到 25% 已经看到 AI 在软件工作上的端到端 2 倍收益</strong>，而多数公司只报告编码快了 10% 到 20%。Harrysson 说很多客户试过把 agent 塞进旧流程里，卡住了；Dixit 说赢家在做的是<strong>把两周 sprint 换成一到两天的 Kanban 循环</strong>，agent 跑夜班、人来验证，再按信心水平调整人工复核强度 —— 前提是 PRD 与规范这类产物被标准化，让 agent 每次拿到形状一致的上下文。团队在变小、角色在合并：Dixit 看到的是两到四人的 pod，产品侧趋向 definer、开发与测试趋向 builder。他把工具栈说成「已经解决了」，真正的差距在<strong>语义层</strong>——那些告诉 agent「在这个代码库里什么算好」的策展过的公司知识，因为太多上下文还留在老员工脑子里，所以策展现在比可得性更值钱。但速度制造了质量问题：一位讲者说<strong>缺陷数在上升</strong>，按人均和按 PR 算都在涨，审查必须跟着生成速度一起长；她的解法是 golden examples 加上每个检查点喂给 agent 的可维护性与合并安全策略。Harrysson 则说很少有公司确信自己在跟踪真实产出对 token、工具与再训练成本，他的近期捷径是纯算术：<strong>把 pod 规模减半、团队数量翻倍</strong>。另有针对 334 名产品与工程负责人的另一项调查显示，只有 25% 的人表示 AI 让较大范围的团队显著加速，30% 反而观察到团队生产率下降，约 80% 的开发人员平均只拿到 3% 的效率提升而最好的 20% 达到 55%；一个被调查的环境里编码活动增长了 180%，正式发布数量却只增加 30%。</p>
+    </div>
+    <div class="m code">
+      <h3>Memorilla：把整个文档库压成 16 个记忆 token，比全上下文又快又准</h3>
+      <p>斯坦福团队（Jure Leskovec 团队，memory.stanford.edu，仓库 snap-stanford/memorilla）提出的做法是：把每份文档一次性编码成可复用的嵌入，再用一个可训练的记忆模块读取整个集合，把当前问题真正需要的内容压成<strong>固定 16 个记忆 token</strong>，直接注入 LLM 的输入嵌入空间；<strong>LLM 权重全程冻结</strong>，只训练记忆模块。结果是八个基准中五个拿到最佳，超过 Mem0 与 MemoRAG：<strong>FactKG 准确率 84.33%，高于全上下文推理的 80.43%</strong>，而表示源文档的 token 少了 108 倍。速度上，单张 H100 跑 Qwen3-8B、塞进 512 篇文档（约 128K 上下文）时，全量推理一次要 19.9 秒，Memorilla 固定只要 <strong>0.74 秒，快 27 倍</strong>；在长篇剧本和书籍测试里文档 token 消耗最高直接砍掉 <strong>4212 倍</strong>。最反直觉的一组是跨一百多轮历史对话的 PersonaMem-v2：把三万多 token 原封不动全塞进窗口，准确率只有 27.9%，少用了近两千倍 token 的 Memorilla 反而做到 44.6%。在 TextWorld 里，智能体在已探索房间之间徘徊减少，平均成功率从全历史上下文学习的 18.6% 提升到 24.2%。代价同样明确：可能丢失精确名字这类细节，需要开放权重，还得为不同 LLM 分别训练记忆模块。</p>
+    </div>
+    <div class="m emb">
+      <h3>智元便利店 24 小时的成绩揭晓：首日 28.6%，第五天 85.7%，六台里四台转正</h3>
+      <p>之前推过两件相关的事：10-28 ⑤ 推的是 Genie Master 框架本身（Physical RSI 第一次走出仿真，机器人自己定位失败、改策略、沉淀经验），11-03 ④ 推的是 24 小时收官且<strong>当时成绩尚未公布</strong>。本期取的是公布出来的数字：搭载 Genie Master 的精灵 G2 在熟食打包、取货、补货等任务上，<strong>流程成功率从首日的 28.6% 提升到第五天的 85.7% 并趋于稳定</strong>。六台上岗，<strong>四台转正、两台未转正</strong>。直播还设了特邀体验官巡场加难度：从有糖和无糖可乐里辨认并取出指定商品、路线上临时放人和箱子挡路、夹取熟食时晃动容器，机器人一边语音抱怨「工作好难」一边完成了辨认取货、遇障绕行、在晃动中调整动作完成夹取。机制上，Genie Master 是六台机器人共同的「大脑」，其具身执行协议把判断、执行、反馈连成闭环，成功与失败的轨迹经每日总结进入长期记忆，遇到同类任务直接调用，有效的调整过程则转为训练数据反哺动作策略优化。口径上要留意：<strong>28.6% 与 85.7% 是前期测试阶段的数据</strong>，24 小时直播是在这个基础上的压力测试，夜间低客流时的设备疲劳、深夜值守稳定性、次日早高峰的并发冲击都是五天迭代里没有完全覆盖的变量；行业普遍认为在开放式环境里更重要的指标是<strong>恢复力</strong>而不是成功率。</p>
+    </div>
+    <div class="m code">
+      <h3>UndoBench：名义完成 83.54%，一遇到故障就掉到 46.72%，朴素重试有 53.33% 的试验做出重复副作用</h3>
+      <p><strong>非当日首发</strong>：arXiv:2610.05622（10 月 4 日提交，仓库 tradertanmay/undobench），本周中文技术媒体与 AI Engineer CODE Summit 的讲台上重新被讲起。方法是把任务完成能力和故障恢复能力拆开测：36 个企业工作流配 36 个故障场景，覆盖 8 个企业领域，用<strong>相同随机种子做反事实配对试验</strong>（每次故障运行都有一个干净的孪生对照），再配线级的效果历史与环境状态 oracle，记录 agent 对外部世界真正做了什么，而不是它说自己做了什么。规模是 12 个留出工作流、5,760 次执行、2,880 组配对试验，覆盖两个开放权重模型、两个框架、三种恢复范式，扩展到商业 API 模型复现了同样的分裂。三个数字：<strong>名义任务完成率 83.54%</strong>；注入丢失确认类故障后，<strong>条件恢复成功率掉到 46.72%</strong>；<strong>朴素重试在 53.33% 的试验里产生了重复的外部效果</strong> —— 付款付了两次、工单建了两次、邮件发了两次。阶段依赖是核心结论：状态变更之前各方法表现相近且少有重复；部分变更期间，朴素重试、单次调用幂等、零权限日志在复合工作流上全面失效；提交之后但确认之前，校验加服务端幂等能显著提升安全性。所以修法不在提示词里，而在另一头 —— 工具能不能告诉 agent 一句「你已经做过了」。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① Claude Code 明文凭据</td>
+      <td>10-31 ② Claude Code 官方 VS Code 扩展在 Cursor 市场被换成带后门的版本（最多 5000 名开发者中招）</td>
+      <td>同一层的正反两面：那期是第三方市场里的包被替换，这期是官方工具自己把凭据写进明文文件；一个要防供应链，一个要防默认值</td>
+    </tr>
+    <tr>
+      <td>① Claude Code 明文凭据</td>
+      <td>09-08 ③ 一周内 601 个 MCP 工具从「只读」悄悄变成「可写可删」，版本号还没变</td>
+      <td>权限那条线的续集：那期是权限在版本之间悄悄放宽，这期是权限文件把密钥原样存下来；两期都是用户以为收紧了、其实没有</td>
+    </tr>
+    <tr>
+      <td>① Claude Code 明文凭据</td>
+      <td>11-05 ① Docker Sandboxes 符号链接沙箱逃逸（CVSS 8.2）与 Pydantic AI 九条安全公告</td>
+      <td>同一条外层的两种破法：那期是外层被攻破，这期是外层出厂就带着一条写明文的路；一个要补洞，一个要改默认</td>
+    </tr>
+    <tr>
+      <td>① Claude Code 明文凭据</td>
+      <td>11-01 速览③ OpenAI 更新 Model Spec（六层权限加一张工单，AI 须无条件配合关停）</td>
+      <td>规范与实现之间的缺口：那期在规范层要求 agent 无条件配合监控与关停，本期是产品层自己先违规；这个缺口第一次被量化到文件数</td>
+    </tr>
+    <tr>
+      <td>② 币安 63.4 亿美元</td>
+      <td>10-05 ③ Anthropic 给开源 GLM-5.3 做了一次攻防体检（一条 Chrome 攻击链花了 20.40 美元）</td>
+      <td>同一条链的两种量法：那期量的是单条攻击链的成本，这期量的是同一条链走完四个月之后的账单</td>
+    </tr>
+    <tr>
+      <td>② 币安 63.4 亿美元</td>
+      <td>10-31 ② Claude Code 官方 VS Code 扩展在 Cursor 市场被换成带后门的版本（最多 5000 名开发者中招）</td>
+      <td>入口的一次挪位：那期是插件市场被投毒，这期是包管理器搜索结果里的安装包被篡改；分发渠道正在从防护层变成攻击面</td>
+    </tr>
+    <tr>
+      <td>② 币安 63.4 亿美元</td>
+      <td>09-13 ① 工信部印发《「人工智能+软件」专项行动实施方案》（六方面任务里「推进软件生产变革」排在第一位）</td>
+      <td>国家任务表与真实案例的两端：那期把软件生产变革写进任务表，本期是一个国家级案例，说明开发工具链本身如何变成攻击面</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>09-23 ① HarnessTax（同一个模型换个壳子，成功率几乎不动，账单最多差 5 倍）</td>
+      <td>同题第二次独立测量：结论方向一致但量级更小也更干净，这期在前沿模型上量到 2 倍出头，而且作者把「分不出来」的分辨率写成了 7.7 到 14.2 分</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>09-14 ② InfoQ 实测（同一个模型，换不同编程工具，账单能差 70 倍）</td>
+      <td>极端值与典型值的区别：那期是 70 倍的极端值，这期是同一模型下最省与最贵的稳定区间（$0.17 对 $0.44）；量级差 30 倍，两个数字不能互相替代</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>11-07 ④ uni-robot-agent（同一个模型换个 harness，成功率从 0.83% 涨到 25.00%）</td>
+      <td>同一件东西在两个域里的杠杆位置完全不同：具身域外层放大能力 30 倍，编码域外层几乎不动能力、只放大账单</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>11-07 ② OpenRouter 把「路由」做成了产品（600 多个模型池，按 11 个因素每次现选）</td>
+      <td>同层不同路线：那期选的是这次用哪个模型，这期选的是这个模型该套哪层壳；两期结论一致，选型重心已从模型能力转到外层设计</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>11-08 ② 把 89 道题的说明改掉 17 行，一批模型从并列变成相差 23 分</td>
+      <td>同题互证：那期说榜单上的平局是假平局，这期说这套题连 7.7 到 14.2 分以内的差距都测不出来；两期一起把「平局」变成了必须标注分辨率的词</td>
+    </tr>
+    <tr>
+      <td>③ 7 种 harness 评测</td>
+      <td>09-30 ② 审计数千条 agent 轨迹：超过 80% 都在推理一个根本不存在的评分员</td>
+      <td>查的东西不一样：那期查 agent 在想什么，这期查壳子让 agent 做了什么；外层既决定能力上限，也决定它偏离的方向</td>
+    </tr>
+    <tr>
+      <td>④ 合碳智能 Talos</td>
+      <td>11-04 ⑤ 小米人形机器人第一次在汽车工厂干满 8 小时整班</td>
+      <td>同一类现场读数的两种量纲：那期看的是班次稳定性与产线协同，这期看的是 8000 多次动作级操作零失误；一台在工厂，一台在实验室</td>
+    </tr>
+    <tr>
+      <td>④ 合碳智能 Talos</td>
+      <td>11-02 ⑤ 2000 台进厂的人形机器人和一条长着六条胳膊的产线（双臂人形的人效只有熟练工的 30%）</td>
+      <td>同题不同解：那期讲产能瓶颈与人效压力，这期讲把重复性最高的那一段单独交给机器人；两期合起来是先挑工时占比最高的那一步</td>
+    </tr>
+    <tr>
+      <td>④ 合碳智能 Talos</td>
+      <td>11-01 ⑤ 启元给消费级机器人立了四把尺子（首次成功率 / 失败可恢复率 / 人工介入率 / 单次任务成本）</td>
+      <td>验收尺子的两种口径：那期给的是消费级机器人的通用口径，这期是一家药企实验室的真实读数；在合碳这个场景里，失败可恢复率被执行零失误替代了</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人身份证</td>
+      <td>09-08 ⑤ 人形机器人国标 GB/T 47245-2026 正式实施</td>
+      <td>标准层与规章层：那期是国标（本体标准），这期是行政规章（身份与追溯）；而这期办法引用的 GB/T 48541-2026 本身也还在征求意见阶段</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人身份证</td>
+      <td>11-02 速览④ 具身智能数据集质量标准 11 月 1 日起正式实施</td>
+      <td>治理的两层：数据层管喂给模型的东西，身份层管这台机器是谁；两期合起来是一条从数据到身份的完整链条</td>
+    </tr>
+    <tr>
+      <td>⑤ 机器人身份证</td>
+      <td>11-08 速览② 工信部《加强智能体终端设备进网管理的通知》（智能体第一次有了进网这道门）</td>
+      <td>同一个月内的两条规矩：一个给终端设备加进网这道门，一个给机器人本体发身份证；工信部同时在两条线上立制度</td>
+    </tr>
+    <tr>
+      <td>速览① McKinsey 收益分化</td>
+      <td>09-14 顺带③ 麦肯锡 2026 AI 状态（32% 组织跳过采购改用 agentic coding 工具自建）</td>
+      <td>同题不同层：那期量的是采纳率，这期量的是采纳之后的收益分布；32% 在自建，头部 20% 到 25% 拿到 2 倍</td>
+    </tr>
+    <tr>
+      <td>速览② Memorilla</td>
+      <td>11-08 ① Anthropic 给出 agent 记忆的四层结构，以及一个叫「做梦」的整理过程</td>
+      <td>同题不同解：那期让模型自己把笔记整理成结构化 wiki，这期把整个文档库压成固定 16 个 token 直接注入输入空间；一个是选对要记什么，一个是全都记但只占 16 个 token</td>
+    </tr>
+    <tr>
+      <td>速览③ 智元 85.7%</td>
+      <td>10-28 ⑤ 智元发布 Genie Master：Physical RSI 第一次走出仿真，在真实便利店里机器人自己定位失败、改策略、沉淀经验；11-03 ④ 六台机器人在一家便利店连续上班 24 小时（最终成绩尚未公布）</td>
+      <td>同一主线的第三幕：那期推的是框架与机制，11-03 ④ 推的是收官且当时成绩未公布，本期才第一次给出数字</td>
+    </tr>
+    <tr>
+      <td>速览④ UndoBench</td>
+      <td>10-30 速览① 支付 AgentKit 600 次测试里出现 70 次重复扣款（约 11.7%）</td>
+      <td>同一现象的两套口径：那是特定支付 agent 在 600 次测试里的 11.7%，且原始来源自身标注为单一聚合源、未独立核实；这是注入丢失确认故障后朴素重试的 53.33%，两组口径不同，不能互相替代</td>
+    </tr>
+    <tr>
+      <td>速览④ UndoBench</td>
+      <td>11-08 ③ 四人小队里藏一个破坏者，队友几乎一次都没抓出来：Anthropic 的 Project EVE（Opus 4.6 / 4.7 / 4.8 能抓到 30% 到 40%）</td>
+      <td>同层不同面：那期是监控看不见破坏者，这期是智能体自己会把副作用做两遍；两期都在说出一错了没人接</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-09 · 北京时间 10:21</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-08.html">← 2026-11-08</a></div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P029 · 新写的坑文会在下一轮发布突然中止整条流水线：门禁在「已推 GitLab」之后 · walker</title><meta name="description" content="发 AI 日报时顺手同步了一批源笔记，门禁直接中止整轮发布："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p029-%E6%96%B0%E5%86%99%E7%9A%84%E5%9D%91%E6%96%87%E4%BC%9A%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%BD%AE%E5%8F%91%E5%B8%83%E4%B8%AD%E6%AD%A2%E6%B5%81%E6%B0%B4%E7%BA%BF/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P029 · 新写的坑文会在下一轮发布突然中止整条流水线：门禁在「已推 GitLab」之后 · walker"><meta property="og:description" content="发 AI 日报时顺手同步了一批源笔记，门禁直接中止整轮发布："><meta property="og:url" content="https://blog.walkerhua.com/pits/p029-%E6%96%B0%E5%86%99%E7%9A%84%E5%9D%91%E6%96%87%E4%BC%9A%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%BD%AE%E5%8F%91%E5%B8%83%E4%B8%AD%E6%AD%A2%E6%B5%81%E6%B0%B4%E7%BA%BF/"><meta property="og:image" content="https://blog.walkerhua.com/og/p029-%E6%96%B0%E5%86%99%E7%9A%84%E5%9D%91%E6%96%87%E4%BC%9A%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%BD%AE%E5%8F%91%E5%B8%83%E4%B8%AD%E6%AD%A2%E6%B5%81%E6%B0%B4%E7%BA%BF.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P029 · 新写的坑文会在下一轮发布突然中止整条流水线：门禁在「已推 GitLab」之后 · walker"><meta name="twitter:description" content="发 AI 日报时顺手同步了一批源笔记，门禁直接中止整轮发布："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p029-%E6%96%B0%E5%86%99%E7%9A%84%E5%9D%91%E6%96%87%E4%BC%9A%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%BD%AE%E5%8F%91%E5%B8%83%E4%B8%AD%E6%AD%A2%E6%B5%81%E6%B0%B4%E7%BA%BF.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P029 · 新写的坑文会在下一轮发布突然中止整条流水线：门禁在「已推 GitLab」之后</h1><p>发 AI 日报时顺手同步了一批源笔记，门禁直接中止整轮发布：</p><div class="hero-meta"><span>踩坑于 2026-11-08</span><span>约 3 分钟</span><a class="tag" href="/tags/网络/">网络</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#处置套路">处置套路</a><a class="toc-l2" href="#通用教训">通用教训</a><a class="toc-l2" href="#关联">关联</a></aside><article class="card prose"><blockquote>
+<p>内容管线是「全量同步 + 门禁卡在提交之后」，所以<strong>新写的源笔记不会立刻出事，而是下一轮发布时才炸</strong>，且炸的时候 GitLab 已经推上去了。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-11-08</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>网络 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（发布中断，且留半推送状态）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>全量同步、发布门禁、半推送状态、源笔记隔离、mtime 判据、预构建、同步产物单向覆盖、P026、P028</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>发 AI 日报时顺手同步了一批源笔记，门禁直接中止整轮发布：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[redact] 检出敏感内容（P0/P1），已中止发布：先 apply 脱敏再跑，或加 --skip-redact 绕过</span></span></code></pre>
+<p>关键在于<strong>源笔记是新写的</strong>：写它的那一轮发布已经跑完了，它当时还没被同步，所以一切正常；
+下一轮发布才把它带进 <code>src/content/</code> → 门禁命中 → 中止。</p>
+<ul>
+<li>中止点在脚本第 2.5 步（构建前），而<strong>第 1 步已经 <code>git push origin main</code></strong> → 留半推送状态（GitLab 已收新内容，Pages 与服务器还是旧的）。</li>
+<li>脚本注释写「门禁中止时不落提交，保持工作区原样」——那只对<strong>同步产物</strong>成立，第 1 步的 commit 早于同步，工作区里手写的改动照旧被推走了。</li>
+</ul>
+<h2 id="根因">根因</h2>
+<p>三个设计叠在一起，缺一不可：</p>
+<ol>
+<li><strong>同步是全量的</strong>：源目录里新增的笔记会被下一轮自动带进公网产物，不需要任何人批准。</li>
+<li><strong>门禁只看产物</strong>：它扫 <code>src/content</code> / <code>src/pages</code> / <code>public/ai-daily</code>，扫不到源目录 —— 所以源笔记里的敏感内容在写入那一刻没有任何拦截。</li>
+<li><strong>门禁排在提交之后</strong>：敏感内容是在「已经推上 GitLab」之后才被发现的。</li>
+</ol>
+<p>结果就是<strong>问题被推迟到下一轮暴露</strong>，而暴露时流程已经跑了一半。</p>
+<h2 id="处置套路">处置套路</h2>
+<p><strong>① 先判「这轮会不会带出新东西」，再决定是否隔离。</strong></p>
+<p>发版前把源目录与目标目录做差集，看有没有源有目标无的新文件。判它是不是「待发稿」要两条硬判据，缺一不可：</p>
+<ul>
+<li>源文件 mtime 是否<strong>晚于上一轮发布时刻</strong>（晚于 = 真正新稿；早于 = 上一轮本该带上却被漏掉的「补收录」，后者可放行）；</li>
+<li>是否被源目录索引或任何发布记录提及（= 有明确待发意图）。</li>
+</ul>
+<p>两条都不满足 → 判为未发布新稿，<strong>隔离</strong>。</p>
+<p><strong>② 隔离要挪「源 + 目标 + dist 产物」三处。</strong></p>
+<p>只挪目标无效 —— 全量同步会从源重建它。只挪源、目标与产物都没有 → 只挪源一件即可（三处一起挪的前提不成立时，多挪反而多余）。<strong>源和目标绝不能挪进同一个目录</strong>：<code>mv</code> 第二次会覆盖第一次，原始源文件直接丢失。</p>
+<p><strong>③ 敏感内容改源文件，不改产物。</strong></p>
+<p>同步脚本每次发布单向覆盖目标产物，改产物下次就被原样同步回来。改源文件。</p>
+<p>改完<strong>必须复扫</strong>：0 命中才算过。</p>
+<p><strong>④ 预构建。</strong></p>
+<p>脚本第 1 步先推 GitLab 再构建，构建失败会留半推送状态。所以先手工 <code>npm run build</code> 跑一遍，
+确认构建能过再让脚本接管。</p>
+<h2 id="通用教训">通用教训</h2>
+<ol>
+<li><strong>「写入时没报错」不等于「会安全发布」</strong>：全量同步管线里，源目录的每一次新增都是一份对下一轮发布的承诺。</li>
+<li><strong>门禁的位置决定了失败形态</strong>：排在提交之后 → 失败时状态是「一半已推」。判断一个发布流程安不安全，先看门禁在第几步。</li>
+<li><strong>自动化留痕不等于内容被审过</strong>：脚本会替你发布，但不会替你决定该不该发布。</li>
+<li><strong>发布脚本的注释与实际行为要对照着读</strong>：注释说的保护范围可能只覆盖部分产物，不覆盖你在工作区里的手写改动。</li>
+</ol>
+<h2 id="关联">关联</h2>
+<ul>
+<li>门禁的等级阈值行为（<code>--level</code> 是否真阈值）见 <a href="P026-%E8%84%B1%E6%95%8F%E9%97%A8%E7%A6%81P2%E5%91%BD%E4%B8%AD%E4%B9%9F%E4%BC%9A%E4%B8%AD%E6%AD%A2%E5%8F%91%E5%B8%83.md">P026</a></li>
+<li>多段式发布脚本的副作用见 <a href="P028-%E5%8F%91%E5%B8%83%E8%84%9A%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%AE%B5SSH%E8%B6%85%E6%97%B6%E4%B8%8EEasyTier%E6%95%B0%E6%8D%AE%E9%9D%A2%E5%8D%A1%E6%AD%BB.md">P028</a></li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p028-发布脚本服务器段ssh超时与easytier数据面卡死/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P028 · 发布脚本服务器段 SSH 超时：EasyTier 定向数据面瞬时卡死，别重跑全流程</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
