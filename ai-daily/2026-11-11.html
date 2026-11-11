@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-11 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 11 日（周三）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：能力之外，今天比的是账本 —— 谁定口径、谁付成本、谁给得出可复核的证据</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① Carbon 开放与口径</a>
+      <a href="#n2">② 上下文压缩小模型</a>
+      <a href="#n3">③ Android Bench 四量纲</a>
+      <a href="#n4">④ Robotics 2.5 上岗</a>
+      <a href="#n5">⑤ 触觉统一表征</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>Gemini 4 Carbon 正式交给开发者：三项编程与智能体基准登顶、单任务成本自称比次优低一半，但同一个模型在 ARC-AGI-3 上同时报出 99.1% 与 65.1% 两个分数 —— 而介绍价 12 月 1 日就要翻倍</h2>
+      <span class="tag t-code">AI Coding · 旗舰开放与评测口径</span>
+    </div>
+    <div class="src">Google 官方博客《Gemini 4 Carbon is now available》与 DeepMind 公告（11 月 10 日美东）；Cursor、ARC Prize、Perplexity、Simon Willison 当日实测；Artificial Analysis 联合 MKA 基准；科创板日报、CNMO、IT 之家、FAV0 AI Daily、《AI 综合早报》多源交叉核对</div>
+    <div class="body">
+<p>先把时间线接上：10 月 29 日那期推过 Carbon 登顶 Artificial Analysis 智能指数 v5.0、领先只有 1 分，标题里那句是<strong>「而且先不给开发者」</strong>。今天兑现的就是这半句 —— 模型通过付费 Gemini API 与 Google AI Ultra 订阅正式开放，普通消费者要订阅 Ultra 才能用。定位写得很具体：多步编码、复杂知识工作，以及需要反复验证的科研任务。</p>
+      <ul>
+        <li><strong>官方给的三项第一。</strong>CursorBench 4.0、Perplexity WANDR、Zapier AutomationBench 均排名第一，<strong>单任务成本比表现次优的外部竞争模型低一半以上</strong>。Antigravity 里新增 <strong>/swarm</strong>，可用指令组织多个智能体分工；Sundar Pichai 演示 builder 与 reviewer 两个 agent 在 Blender 与 Three.js 之间迭代并检查渲染结果。官方还称 Carbon 交付过完整的开放世界 3D 游戏，并基于 7 份城市规划 PDF（含 206 张工程图纸）在通宵运行中生成约 <strong>90.6 万个三角形</strong>的交互式 3D 模型；Hassabis 演示它分析 Theme Park 原始二进制、加了一个 DeepMind 主题游乐设施并产出浏览器版本。</li>
+        <li><strong>生态侧当天就给了实测。</strong>Cursor 上线日接入并报 CursorBench high effort <strong>60.4%</strong>，为当时该榜最高；Perplexity 在 Computer 里给 Pro 与 Max 用户提供 Carbon，可跑常驻 Teammates 或一次性作业，报 WANDR <strong>0.857 / 每任务 5.86 美元</strong>；Simon Willison 更新 llm-gemini 0.36 支持 Carbon，并用同一个 SVG 生成任务跑了 low、medium、high 三档。</li>
+        <li><strong>同一模型，两套分数差 34 个百分点。</strong>ARC Prize 报 ARC-AGI-3 成绩：用 provider adapter、medium reasoning 是 <strong>99.1%</strong>；用标准 harness、low reasoning 是 <strong>65.1%</strong>；<strong>high reasoning 的标准跑没有完成</strong>，原因是部分游戏会话过期。这不是模型波动，是测量装置不同。另由 Artificial Analysis 联合推出的 MKA 多模态知识工作基准上，Carbon 只拿<strong>第二</strong>，但任务成本是<strong>第一名的六分之一</strong> —— 谷歌明显想把「最强」的定义从分数挪到性价比。</li>
+        <li><strong>价格有时间表，这是最容易被漏掉的一行。</strong>介绍期输入 <strong>2 美元</strong>、输出 <strong>10 美元</strong>每百万 token（与 Argon 相同），<strong>11 月 30 日结束</strong>；<strong>12 月 1 日起分别调到 4 美元和 20 美元</strong>，等于翻倍。所有基于「单任务成本低一半」做的预算，都得按 12 月的价格再算一遍。</li>
+        <li><strong>安全与科研侧的数字。</strong>官方口径红队单次突破率由 <strong>3.1% 降到 0.8%</strong>、诚实度通过率 <strong>92%</strong>；内部系统漏洞扫描召回率 100%、分类精确率 95%；Carbon 协助 Wiz 在不到两小时内发现两家大型 SaaS 服务商的零日漏洞，模拟攻击测试中阻断 99% 的攻击路径。同日 DeepMind 另发 AlphaProof Code（见速览①）。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，<strong>同一周两家前沿实验室给出了方向相反的动作</strong>。11 月 10 日那期是 Anthropic 发 Fable 5.2 时主动把「加速器内核优化」与「大模型架构改进」两项能力按在 Opus 5.5 水平，并在训练期与推理期各加一道锁；今天是 Google 全速放能力，同时用「成本」改写「最强」的评价维度。<strong>规则之争已经从「要不要给能力」变成「用什么尺子量能力」</strong> —— 谁掌握基准与口径，谁就掌握发布叙事。</p>
+      <p>第二，99.1% 与 65.1% 是这一周里第三次独立佐证「分数由模型外面那层决定」。11 月 8 日 MaxxBench 只改说明文字就让 74% 的并列群裂开 23 个百分点；11 月 9 日 g-harness-evals 用同一个前沿模型换 7 种 harness，通过率分不出来、账单差两倍多；今天是同一个模型、同一套题、换 adapter 与推理档位，差出 34 个百分点。<strong>引用任何旗舰分数而不带 harness 与档位，已经不能算合格引用。</strong></p>
+      <p>第三，对工程团队最实际的是那张价格时间表。介绍价 11 月 30 日结束、12 月 1 日翻倍，意味着「性价比」这个卖点本身有截止日。长程编程任务吃的是输出 token，单价翻倍会直接放大总账单 —— 这与 11 月 10 日 Fable 5.2 那期「单价降 20%、最高档每任务成本却是 2.6 倍」是同一个陷阱的两种形态。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>三项登顶、成本低一半、红队 3.1% 降到 0.8%、漏洞扫描 100% 召回率，均为谷歌官方自测或官方口径经媒体转述，<strong>未见第三方独立复现</strong>；「表现次优的外部竞争模型」没有点名，比较口径未公开。</p>
+      <p><strong>99.1% 与 65.1% 不是同一套条件</strong>，前者是 provider adapter 加 medium reasoning，后者是标准 harness 加 low reasoning，high 档标准跑未完成，不能取最大数当模型能力。MKA 的「六分之一成本」与 Perplexity 的「每任务 5.86 美元」是两套任务口径，不可互换，也不可与 CursorBench 60.4% 横向比较。</p>
+      <p>90.6 万三角形、Theme Park 移植、/swarm 演示都是官方演示，没有公开复现步骤与失败率。介绍价有截止日，消费者需 AI Ultra 订阅。</p>
+      <p><strong>两条容易混读的边界：</strong>其一，「系蝴蝶结」「奔驰产线 96%」属于 Gemini Robotics 2.5（本期④），不是 Carbon；其二，Carbon 本体在 <strong>10-29 ①</strong> 已作为主榜推过（登顶 AA 智能指数 v5.0、领先 1 分、先不给开发者），11-10 ① 又作为 Fable 5.2 的跑分对照出现。本期取的是<strong>「正式开放 + 定价时间表 + 生态实测 + 多套口径」这一新阶段</strong>，不是把同一个发布再推一遍。</p>
+    </div>
+    <div class="act">
+<p>做 12 月预算时把成本模型跑两遍：介绍价与 12 月 1 日后的价格，并代入自己长程任务的实际输出 token 量，别只按输入单价折算。</p>
+      <p>内部引用 Carbon 分数时强制带上 harness 与 effort 档位，把 provider adapter 与标准 harness 分开记；「平局」或「未完成」要照实写，不补成数。</p>
+      <p>若把 /swarm 或常驻 Teammates 上生产，给 reviewer agent 一份独立于 builder 的验收口径，别让两个角色共用同一套自评标准。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>aiXcoder 开源 aiXcompact-4B：把「上下文压缩」这项高频杂活从通用大模型手里拆出来，单次 API 调用 0.019 元 —— 但官方自己的对照表里，压缩质量的多数指标其实低于教师模型</h2>
+      <span class="tag t-code">AI Coding · 上下文压缩</span>
+    </div>
+    <div class="src">aiXcoder（北京硅心科技，孵化自北京大学软件工程研究所）官方公众号与 GitHub 仓库 aixcoder-plugin/aiXcompact-4B（11 月 11 日）；CSDN 同日报道；官方 Private 164-case 评测表与配图数据交叉核对</div>
+    <div class="body">
+<p>这是一个 <strong>4B 专用小模型</strong>，单张 A100-40GB 显卡即可私有化部署，面向编程智能体的长程复杂研发任务。主流 Agent Harness（Claude Code、OpenCode 等）做上下文压缩时直接调通用大模型，这次是把这件高频、边界明确的工作单独交给一个小模型，让通用大模型专心做需求拆解、复杂推理与架构设计。</p>
+      <ul>
+        <li><strong>压缩不是写摘要，是一组可审计的结构化决策。</strong>三类处理：核心需求与关键约束（例如兼容现有接口、不引入外部依赖）<strong>原样保留</strong>；文件读取、代码搜索、测试运行的长输出<strong>保留调用关系、换成压缩文本</strong>；重复记录与已失效的中间输出<strong>删除</strong>，并配套校验确保关键调试信息已进任务摘要。每一步都留下操作记录，开发者可以检查哪些被保留、替换、删除。</li>
+        <li><strong>输出是一套能直接续跑的消息序列</strong>，不是一大段无结构总结，完整维持工具调用与返回结果的配对关系，另附结构化任务摘要（用户意图、关键技术信息、错误与修复过程、当前工作、待办）。目标任务场景下平均把历史上下文压到原长度的 <strong>25.89%</strong>。</li>
+        <li><strong>成本账。</strong>在 Terminal-Bench 上接入 OpenCode 测试，官方称相对 DeepSeek-V4-Pro「整体任务完成准确率并未下降」。私有化部署情景下、针对特定任务的 Benchmark 上，单次 GPU 推理成本从 <strong>0.9518 元降到 0.2076 元（降 78.19%）</strong>。按公开 API 费用代理估算，单次压缩请求 <strong>0.019 元</strong>，对比 DeepSeek-V4-Pro 的 0.702 元、GLM-5.3 的 0.648 元、Qwen3.8-Max 的 0.936 元，分别降 <strong>97.30% / 97.08% / 97.98%</strong>。</li>
+        <li><strong>官方表格里更值得读的是另一半。</strong>那份 Private 164-case 评测（规则质量，越高越好）里，aiXcompact-4B 对 DeepSeek-V4-Pro：规则综合分 <strong>0.7012 对 0.7332</strong>、格式有效率 <strong>0.9939 对 1.0000</strong>、严格格式有效率 <strong>0.9573 对 0.9817</strong>、决策覆盖 <strong>0.9936 对 1.0000</strong>、替换质量规则分 <strong>0.4011 对 0.4556</strong>，只有信息保留规则分 <strong>0.4981 对 0.4968</strong> 略高。平均保留率（全部样本、失败按原文保留）<strong>25.89% 对 18.46%</strong>，意味着小模型<strong>压得更少、留了更多原文</strong>；成功样本目标偏差 <strong>15.07 对 12.60 个百分点</strong>，也是偏大的一侧。</li>
+        <li><strong>技术路径与产品矩阵。</strong>教师大模型蒸馏 + 4B 学生模型 LoRA 微调 + 结构化压缩决策，训练数据全部来自真实研发场景的 Agent 运行轨迹，经轨迹归一化、过滤筛选与压缩触发点采样，由教师模型生成参考决策再校验。此前已有 aiXcoder-7B（代码生成补全）、aiXapply-4B（代码变更应用）、aiXpruner-4B（Token 消耗优化），下一步是面向 Agent 决策环节的 aiXdecision。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是 11 月 7 日与 11 月 8 日那两期「拿到多少能力越来越由模型外面那层决定」的又一步，而且拆得更细。09-08 的 Spotify shunt 是拦截大文件读取交给便宜模型，09-10 的微软 FastContext 是把「找代码」从主模型里拆出去 —— 那两次改的都是<strong>读什么</strong>；这次改的是<strong>记住什么</strong>：由专用模型决定哪些历史信息值得留给下一轮。</p>
+      <p>第二，对私有化部署的团队，上下文压缩第一次从「通用大模型的一次调用」变成可以单独核算、单独优化的一行成本。与 09-12 ① Devin Fusion「前沿模型做规划、便宜模型干活」相比，同一套分工从任务级下沉到了上下文级。</p>
+      <p>第三，也是最有价值的一点：<strong>官方表格自己给出了反证</strong>。「准确率并未下降」是 Terminal-Bench 的整体任务完成口径，压缩质量的五项规则指标却几乎全线低于教师模型。这两个口径不能互相担保 —— 任务做对了，不等于压缩决策做对了；压缩丢掉的那部分信息，可能在更长、更复杂的任务里才显出代价。厂商愿意把这张表放出来，比只报「降 97%」更值得认真读。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>「准确率并未下降」未给出具体数值、置信区间与任务明细，且是 Terminal-Bench 单基准、OpenCode 单 harness。0.019 元是<strong>按公开 API 费用代理估算</strong>，不是实际账单；0.9518 元与 0.2076 元是「私有化部署情景下、针对特定任务的 Benchmark」口径，两者不是同一笔账。</p>
+      <p>评测为 Private 164-case，样本不公开；比较的是 4B 小模型与总参数量 1.6 万亿的教师模型在<strong>压缩决策质量</strong>上的差异，不是通用能力对比。平均保留率 25.89% 高于 18.46% 表示保留原文更多，不能读成「压得更狠」；把「单次压缩费用降 97%」直接折算成整个任务的总成本降幅，是常见误读。</p>
+      <p><strong>与 11-08 ① 的边界要说清</strong>：Anthropic 那份 agent 记忆四层结构里，明确把「上下文压缩摘要」<strong>排除</strong>在记忆定义之外（它排除的是改权重、单次会话内学习与上下文压缩摘要）。这里是把它做成一个独立可售、可部署的产品，两者不是同一层概念。</p>
+      <p>公司此前多次出现在本报的上下文压缩相关讨论中（09-14、09-18、09-19、09-24、10-25、11-08 都谈过压缩策略与 harness），本次的新东西是「专用小模型 + 开源 + 可审计的结构化决策」，不是压缩这个思路本身。</p>
+    </div>
+    <div class="act">
+<p>接入前先在自己的长程任务上量两个数：压缩后的任务完成率，以及压缩决策日志里「删除」与「替换」的比例；官方提供保留、替换、删除记录，正好拿来做审计。</p>
+      <p>把「单次压缩费用」与「整轮任务总 Token 费用」分开记账，并用 12 月 1 日后的模型单价重算，别用 97% 直接折算总成本。</p>
+      <p>任务里若有强合规约束（接口兼容、不引入依赖、沿用某个鉴权组件），把这类原文加进强制保留白名单，不交给模型的保留判断。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>谷歌第一次公开 Android Bench 三款模型跑分：Kimi K3.1 Pro 通过率 24.0% 却要跑 27.4 小时、花 317.4 美元，DeepSeek V4.1 Flash 17.3% 只要 12.0 小时、9.9 美元 —— 四个数字各有各的量纲</h2>
+      <span class="tag t-code">AI Coding · 基准与选型</span>
+    </div>
+    <div class="src">谷歌官方 Android Developers（@AndroidDev）11 月 10 日 X 推文；IT 之家 11 月 11 日转述、网易科技转载核对</div>
+    <div class="body">
+<p>Android Bench 是 Google 面向 Android 开发场景推出的 AI 编程基准，考的是应用创建、功能开发、代码迁移与应用转换这类真实工程任务。这次是官方账号<strong>首次公开三款模型的成绩</strong>，而且一次给了四个量：通过率、平均完成度、平均耗时、单次基准运行成本。</p>
+      <ul>
+        <li><strong>Kimi K3.1 Pro</strong> 使用 kimi-code 智能体，在 <strong>30 项长程任务</strong>上取得通过率 <strong>24.0%</strong>、平均完成度 <strong>82.3%</strong>、平均耗时 <strong>27.4 小时</strong>、单次基准运行成本 <strong>317.4 美元</strong>（约合 2,123 元人民币）。横向对比，它高于 GPT-6 Astra、Claude Fable 5.1 与 Gemini 4 Argon，但低于 <strong>GPT-6.1 Terra 的 28.7%</strong>。</li>
+        <li><strong>DeepSeek V4.1 Flash 1017</strong> 使用 opencode 智能体，通过率 <strong>17.3%</strong>、平均完成度 <strong>71.2%</strong>、平均耗时 <strong>12.0 小时</strong>、单次基准运行成本 <strong>9.9 美元</strong>（约合 66.2 元人民币）。通过率低 6.7 个百分点，平均完成度低 11.1 个百分点，但成本约为前者<strong>三十二分之一</strong>、耗时约为<strong>一半不到</strong>。</li>
+        <li><strong>24.0% 与 82.3% 并列并不矛盾。</strong>一个任务全部做对才算通过，部分完成计入平均完成度 —— 大量任务「做了一大半但没全过」正是这个形状。把 82.3% 当成通过率，或把 24.0% 当成「模型能力只有四分之一」，都是错读。</li>
+        <li><strong>27.4 小时是跑完整个基准的墙钟量级</strong>，不是单个任务的耗时，更不是人类工时；317.4 美元与 9.9 美元是<strong>单次基准运行成本</strong>，不是单任务成本，也不是 token 单价。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是少见的官方基准<strong>一次把四个量同时摆出来</strong>，而不是只给一个分数。09-11 ① 的 SWE-Bench Pro Verified 用反作弊控制让 GLM-5.2 从 78.80% 掉到 57.32%，11-08 ② 的 MaxxBench 只改说明文字就让榜单裂开，11-09 ③ 的 7 种 harness 实验证明通过率分不出胜负 —— 这一路追的都是「分数之外还有什么决定能不能用」，今天终于有厂商把它写进发布材料。</p>
+      <p>第二，32 倍成本差对 6.7 个百分点通过率差，把「选模型」变成一道可以写进表格的预算题：同样的长程 Android 工程任务，值不值用 32 倍的钱换 6.7 个点，取决于它是每天跑还是一年跑一次。这比「每百万 token 多少钱」更接近真实账单，也与 09-14 ② InfoQ 实测「同一个模型换不同编程工具账单能差 70 倍」指向同一件事 —— <strong>成本黑洞在脚手架与运行方式，不在单价</strong>。</p>
+      <p>第三，它是 11-09 ③ 的镜像实验。那期是<strong>固定模型、换 7 种 harness</strong>，结论是通过率分不出来、账单差两倍多；这期是<strong>换模型、同时也换了 harness</strong>（kimi-code 对 opencode），却只报了四个合并数字。两者放一起看，正好说明为什么「换 harness 就重测」不是洁癖而是必要条件。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>两个模型用了<strong>不同的智能体</strong>（kimi-code 与 opencode），harness 不同，因此四个数字的差异<strong>不能全部归因给模型本身</strong>。通过率、平均完成度、墙钟耗时、单次基准运行成本是四个不同量纲，彼此不能相除或互相替代。</p>
+      <p>GPT-6.1 Terra 的 28.7% 只给了通过率，其余三个量未披露，因此「谁最强」在这张表里其实无法判定。数据源为一条 X 推文经媒体转述，未见官方完整榜单与逐任务明细，也没有重复运行次数与方差。</p>
+      <p>30 项任务、Android 单一平台，不可外推到通用软件工程；与本期①的 CursorBench 60.4%、Perplexity WANDR 0.857 是三套不同基准，不可横向比较。</p>
+      <p>Kimi K3.1 与 DeepSeek V4.1 Flash 在本报历史中多次出现（10-26 至 11-10 多期），本次取的是<strong>谷歌官方基准这一新口径</strong>，不是模型发布或版本更新。</p>
+    </div>
+    <div class="act">
+<p>内部做模型选型时，把这张表抄成四列模板：通过率、平均完成度、墙钟耗时、整轮成本；缺任何一列都不下结论，并单独记录所用 harness 与版本。</p>
+      <p>换 harness 就重测，不沿用旧分；把「换模型」与「换工具」的效果拆成两组实验，否则省下的钱不知道该记在谁头上。</p>
+      <p>对长程任务先定预算上限与可接受墙钟，再去看排行榜 —— 32 倍成本差这类数字，比几个百分点的通过率更能决定能不能上生产。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>DeepMind 发布 Gemini Robotics 2.5：200 多项真实任务、部分任务成功率最高翻倍，Apollo 2 在奔驰在用产线上做到 96% 分拣成功率 —— 但这个 96% 是两个模型合起来的成绩，且官方没给产线节拍</h2>
+      <span class="tag t-emb">具身智能 · VLA 工业上岗</span>
+    </div>
+    <div class="src">Google DeepMind 官方博客（11 月 10 日美东）；科创板日报、财联社、凤凰网科技、腾讯新闻（11 月 11 日）多源交叉核对；FAV0 AI Daily 当日条目</div>
+    <div class="body">
+<p>DeepMind 称这是谷歌迄今能力最强的<strong>视觉-语言-动作（VLA）模型</strong>，已面向谷歌的机器人合作伙伴开放，官网说它可跨不同机器人本体工作，包括人形与双臂夹爪平台。</p>
+      <ul>
+        <li><strong>评测规模与任务类型。</strong>团队在 <strong>200 多项真实任务</strong>上评估，任务包括用食品夹分餐、给礼盒系蝴蝶结、液体移液、叠衣服、分点心，考察的是复合技能：使用高级工具、对可变形物体做复杂操作、精细处理易碎物品。官方给出的提升是<strong>按任务类型不同，成功率较此前基线高出 30% 到 100%，完成速度快 20% 到 30%</strong>，属于实验室评测数据，不能取上限当整体提升。</li>
+        <li><strong>奔驰产线是真正的分量所在。</strong>DeepMind 与 Apptronik、梅赛德斯-奔驰合作，在<strong>匈牙利凯奇凯梅特与德国辛德尔芬根的在用汽车生产线</strong>上做概念验证：Apptronik 的 Apollo 2 人形机器人完成 kitting（汽车零件分拣）—— 从散装料箱按产线顺序拣取金属支架，放入对应排序容器，<strong>成功率 96%</strong>。这项重复性强、体力消耗大、容错空间有限，是总装与物料准备环节里最典型的活。</li>
+        <li><strong>96% 是双模型联合成绩，不是 2.5 单项。</strong>分工写得很清楚：<strong>Gemini Robotics ER 负责跟踪整个任务流程，Gemini Robotics 2.5 负责控制手臂与手部动作</strong>。Apptronik 联合创始人兼 CEO Jeff Cardenas 称，经过短短几周后训练性能显著提升，迁移到奔驰真实生产线后性能下降幅度很小。</li>
+        <li><strong>同步放出越狱测试基准。</strong>DeepMind 开源 ASIMOV-Jailbreak，包含数百条伪装成正常请求的提示词、覆盖数十类场景，用于测试针对机器人的越狱攻击（用对抗性指令绕过安全约束）。官方博客里该组的抗越狱率 <strong>99.5%</strong>，上一代基线 Gemini Robotics ER 2 是 <strong>82%</strong> —— <strong>注意这组数字属于 Gemini 4 Argon，不是本次发布的 Robotics 2.5</strong>。</li>
+        <li><strong>开放方式与未披露项。</strong>目前仅面向谷歌的机器人合作伙伴开放，是否及何时向公众开放未说明；试点仍处概念验证阶段，官方<strong>未披露任务时长、试验次数、产线节拍</strong>等工程化指标。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，具身侧今年最难过的一道门是「从演示样机到在用产线」。11-09 ④ 是药企实验室 50 天 8000 多次物理操作，11-10 速览④ 是酒店与门店的常态运营，今天这 96% 出现在<strong>真实总装的物料准备环节</strong>，离工业节拍更近一步。它同时也把 11-07 ④「外层在具身域被量出 30 倍」的抽象结论落成了具体架构：<strong>ER 管流程、2.5 管动作</strong>，上层跟踪、下层执行，与 11-08 ④ 苹果 HALO 的三层控制栈是同一思路的工业版本。</p>
+      <p>第二，厂商自己开始量化「机器人被提示词攻击」这件事。ASIMOV-Jailbreak 的出现，说明物理世界的安全边界已经从碰撞、力矩这类传统问题，扩展到语言入口 —— 与 11-09 ① 凭据写进项目文件、11-09 ② 被篡改安装包引发 63.4 亿美元损失，在 AI Coding 侧是同一条风险线的两端。</p>
+      <p>第三，「几周后训练 + 迁移到真实产线后性能下降很小」这句，比 96% 本身更有产业含义：如果跨场景迁移的衰减真的可控，VLA 的商业化瓶颈就会从「每个场景重训」转向「数据与安全验证」。但官方没给这个衰减的具体数字，也正因如此，它目前仍是一句需要自己验证的说法。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b><strong>96% 是 Gemini Robotics ER 与 2.5 双模型联合取得</strong>，不能记成 2.5 单项能力；且属于概念验证，官方未给任务时长、试验次数与产线节拍，无法判断能否满足量产节拍。30% 到 100%、20% 到 30% 是<strong>按任务类型不同</strong>的实验室区间，媒体报道里常见的「最高提升 100%」「最高提速 30%」是取上限，不是整体。</p>
+      <p>ASIMOV-Jailbreak 的 99.5% 属 <strong>Gemini 4 Argon</strong>、82% 属 Robotics ER 2，与本次 2.5 无关，标题极易混读。模型仅面向合作伙伴，没有公开权重或 API，第三方无法复现。</p>
+      <p><strong>两条辨析：</strong>其一，「系蝴蝶结」「奔驰产线」属 Robotics 2.5，不是本期①的 Gemini 4 Carbon；其二，Gemini Robotics 这条产品线在 <strong>09-23 ④</strong>（当时指出 Gemini Robotics 2 与 Intrinsic Core 两半「尚未看到明确接口」）与 <strong>10-28</strong>（Argon 与 Gemini Robotics 绑定的仿真验证实验）已出现，Apptronik 在 10-09、10-14、11-04 也出现过。本次是<strong>版本迭代加真实产线验证</strong>，不是全新主体。</p>
+    </div>
+    <div class="act">
+<p>评估 VLA 供应商时，在「任务成功率」后面强制补三列：单次任务时长、连续运行时长、试验次数；缺这三列的百分比不进 TCO 表。</p>
+      <p>采用「上层流程模型 + 下层动作模型」分层时，给两层之间定义明确的交接契约与失败回退，别让 96% 这类联合成绩掩盖了单层的失败模式。</p>
+      <p>机器人的语言入口按越狱面管理：把 ASIMOV-Jailbreak 这类对抗性提示词集纳入上线前测试，与权限、力矩、急停放在同一份验收清单里。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>蚂蚁灵波开源 LingBot-Touch：4983 小时真实触觉数据训出一套跨传感器的「手感」，四种动作模型接入后平均成功率提高 14 到 26 个百分点 —— 增益的对照是「没有触觉」，不是「直接喂原始信号」</h2>
+      <span class="tag t-emb">具身智能 · 触觉基础模型</span>
+    </div>
+    <div class="src">蚂蚁灵波科技官方公众号与技术报告（arXiv:2611.12806，11 月 10 日）；GitHub Robbyant/lingbot-touch（Apache 2.0）、Hugging Face 模型合集、魔搭社区；央广网、中华网财经、量子位、爱范儿、AI 门户多源交叉核对</div>
+    <div class="body">
+<p>它补的不是视觉，是<strong>接触之后</strong>的那一段判断：抓稳了吗、是否正在打滑、下一步该加力还是松手。拧瓶盖时画面能说明手指在哪，却分不清「瓶盖已松动」与「指腹沿盖壁打滑」—— 这两种情况看起来相似，动作调整却相反，而接触位置与受力变化往往被手指和物体遮住。</p>
+      <ul>
+        <li><strong>数据规模与构成。</strong>预训练用 <strong>4983 小时</strong>真实触觉数据、约 <strong>46.4 万段</strong>交互、<strong>13.3 亿帧</strong>；按传感原理拆分是<strong>压阻式 2197 小时</strong>（人戴手套采集）、<strong>磁触觉 1136 小时</strong>（人戴手套）、<strong>视触觉 1650 小时</strong>（遥操 Sharpa Wave 双臂灵巧手）。约三分之二的接触数据来自真人戴手套，<strong>不依赖机器人本体</strong>，这是另一条规模增长曲线。动作覆盖抓握、旋转、滑动、擦拭、装配与双手配合。</li>
+        <li><strong>方法。</strong>按传感原理分别设置编码入口，把不同布局的触点映射到统一的指尖坐标空间，输出带时间、手指编号与三维位置的触觉 Token；训练时对触点密度与位置做扰动，防止模型记住某一款传感器的排布。采用 <strong>JEPA</strong>（联合嵌入预测架构）：遮住一段记录中的部分触点，让模型根据其余触点的变化推断被遮区域可能发生哪种接触，在特征空间比对而<strong>不执着于还原原始读数</strong> —— 因为触觉信号稀疏，伸向目标与调整姿态时读数接近零，只有接触瞬间才有效。</li>
+        <li><strong>真机验证。</strong>在 Sharpa Wave 与 XHand1 两款灵巧手上做 <strong>26 项任务、每项 20 次</strong>，含翻书页、拧瓶盖、辨识麻将牌、钥匙开锁、挤牙膏、压合密封袋。接入后 <strong>LingBot-VLA、pi0.5、Diffusion Policy、T-Rex</strong> 四种动作模型的平均任务成功率，较<strong>无触觉</strong>提高约 <strong>14 到 26 个百分点</strong>。官方给的单项三组对照最干净：T-Rex 控 Sharpa Wave 拧瓶盖，<strong>无触觉 56.25%，直接输入传感器原始信号 62.5%，接入 LingBot-Touch 表征 90%</strong>。</li>
+        <li><strong>跨硬件与轻量化。</strong>XHand1 所用磁触觉传感器型号<strong>不在预训练数据里</strong>，模型学到的磁触觉经验全部来自人戴手套采集；换到这只灵巧手后保持 LingBot-Touch 参数不变，只用 XHand 的操作示范训练动作模型，即完成零改动迁移。26 项测试全部使用约 <strong>530 万参数</strong>的 LingBot-Touch-Tiny，接入后动作模型参数量仅增加约 <strong>0.13% 到 0.16%</strong>；另有容量更大的 Small 版，官方称数据增至近 5000 小时时仍能从新增数据获益。</li>
+        <li><strong>不绑定自研动作模型</strong>，技术报告、代码与权重已在 GitHub、Hugging Face 与魔搭社区开源。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，具身这条线一直在补「大脑」，今天补的是<strong>指尖</strong>。更关键的是它把触觉从硬件绑定里解耦出来：换传感器不用重采数据、重训触觉，对采购或改装灵巧手的团队，这比任何单一成功率数字都值钱。与 11-08 ④ 苹果 HALO 整栈开源、11-10 ④ GR00T 2 跨本体预训练，是同一个诉求的三种做法：<strong>让能力在不同本体与硬件之间可复用</strong>。</p>
+      <p>第二，530 万参数、参数增量 0.13% 到 0.16% 是工程可行性上最硬的一行 —— 这套感知层几乎不占端侧算力预算，与 09-14 速览① LingBot-Map「普通摄像头实时重建 3D」是同一产品线的同一取向：把物理模态做成便宜、可插拔的基础设施。</p>
+      <p>第三，56.25% 到 62.5% 再到 90% 这组三组对照，把「装了传感器」和「会用传感器」清楚分开。今天五条主榜里，这是唯一把基线拆成三档、让人能自己算出净增益的一组消融 —— 也正因为拆得这么细，+14 到 26 个百分点这个区间才需要格外小心地读（见口径提醒）。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b><strong>+14 到 26 个百分点的对照是「无触觉」，不是「直接输入原始信号」，也不是「其他触觉表征」</strong>；相对原始信号的净增益要看单项数据，官方只公开了拧瓶盖这一项。4983 小时是<strong>触觉录制时长</strong>，不是机器人自主工作时长，也不是已完成的生产任务数量。</p>
+      <p>26 项任务每项 20 次，样本量小，且集中在桌面精细操作，未覆盖高负载、高速或长程工业作业。跨传感器验证只覆盖「<strong>磁触觉型号未在预训练中出现</strong>」，不等于任意新传感原理都已验证。全部数字来自厂商自测与技术报告，未见第三方复现。</p>
+      <p><strong>主体辨析：</strong>蚂蚁灵波在 <strong>09-09</strong>（国大药房 80 厘米货架分拣）、<strong>09-14 速览①</strong>（LingBot-Map 开源）已出现，LingBot 系列此前还有 VLA 2.0、World 2.0 等版本；这次是同一产品线的<strong>触觉模态扩展</strong>，不是新公司，也不是该系列第一份开源。</p>
+      <p>与 11-10 ④ GR00T 2 那条「40.27 万小时人类第一视角视频」不是同一量纲：那边是视频时长，这边是触觉录制时长，都是预训练规模而非部署成效。</p>
+    </div>
+    <div class="act">
+<p>选型灵巧手时，把「换传感器是否需要重采触觉数据」写进供应商问卷；用 XHand1 那套「未见型号 + 冻结感知层 + 只训动作模型」做一次自己的验收测试。</p>
+      <p>汇报成功率提升时必须标明基线属于哪一档（无触觉、原始信号、其他表征），三者不能互换，也别把区间上限当整体。</p>
+      <p>端侧算力紧张就先用 Tiny 版（530 万参数），把 0.13% 到 0.16% 的参数增量当作基线，再决定要不要上 Small 版。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>DeepMind 用多智能体 4 周验证 Signal 的编译后机器码：600 万行 Lean 证明、约 1% 需人工复核，把历史 bug 重新注入后全部报「不安全」</h3>
+      <p>11 月 10 日 DeepMind 发布 <strong>AlphaProof Code</strong> 框架：研究者定义要证明的性质，由智能体帮忙构造形式化证明。与以往对着源码或协议规范做验证不同，这次的 Signal 加密协议研究把选定的密码学性质<strong>对照编译后的机器码</strong>核对。官方给出的量级是生成超 <strong>600 万行 Lean 证明</strong>、约 <strong>1% 需人工复核</strong>、全程 <strong>4 周</strong>，并称传统方法需要数年；把历史 bug 重新注入后，系统均报「不安全」。工件将开源，HN 当日 577 分、177 条评论，Pichai 与 Hassabis 均转发。<strong>与 11-10 速览③ 的辨析</strong>：那期是 PSI 用一款未公开模型 3 天证明 2008 年的阿伦森-安拜尼斯猜想，Lean 4 内核校验通过但未经同行评审；这期是同一类 Lean 工具链对准<strong>已经在跑的加密协议实现代码</strong>，性质由人定义、证明由 agent 构造 —— 一个是数学命题，一个是生产代码，结论强度与验收方式都不同。</p>
+    </div>
+
+    <div class="m code">
+      <h3>Vercel 说 Security Review 不到一周扫出 57,897 个问题、由 agent 修补 14,665 个；同日三家都在把编码智能体的工作面开放给团队</h3>
+      <p>Vercel CEO Guillermo Rauch 11 月 10 日公布早期数字：<strong>57,897 个问题、其中 6,029 个被判为 high 或 critical、14,665 个由 agent 修补</strong>，用时不到一周。数字来自 Vercel 自家产品报告，<strong>没有第三方基线，也未说明误报率与重复项归并口径</strong>，宜按产品遥测而非独立评测读。同一天还有三处同向动作：<strong>Cursor Projects</strong> 让队友共享任务板与项目上下文、同时保留各自的会话与 agent；<strong>OpenAI 公开 MCP extensions 仓库</strong>（侧栏、自定义文件查看器、composer 里引用资源），并扩大 Sign in with ChatGPT，让 Business 用户接 Notion、v0、Amp、Kilo Code、Warp 与 OpenClaw；<strong>Claude 扩展 MCP Apps</strong>，支持 app tools、侧栏与会话内嵌站点。呼应 11-10 ① 提到的 Fable 5.2 prompting guide 更新：Anthropic 专门讲了代码归属、审批与进度报告，Simon Willison 挑出的是「说清模型何时有权改进既有代码」那一条 —— <strong>工作面越开放，「谁批准改动」越要写进提示词</strong>。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>北京人形发布 Hi-WBC 通用全身控制模型：不原样复刻人类动作、不加力传感器也能估接触力，多台机器人一镜到底完成会议室整理</h3>
+      <p>「慧思开物」平台 11 月上旬更新正式发布，记者 11 月 9 日获悉、11 月 10 日央广网与腾讯新闻报道。三个能力底座：<strong>持续进化与技能拓展</strong>用 MoE 加策略蒸馏，跑跳、搬运、越障各有专项「技能导师」，再蒸馏进通用主策略，学新技能不忘旧本领，不必每加一个任务就重调控制器；<strong>强交互与大负载</strong>只凭关节电流、运动状态等本体感知估负载变化与外部接触力，<strong>不需额外力传感器</strong>，配短时域动力学优化实时调重心、姿态与支撑点；<strong>复杂地形自主适应</strong>把地形感知嵌进运动控制链路，识别台阶、斜坡、障碍后重规划落脚点、摆腿轨迹与身体姿态，守住原始运动意图而不是照抄示范步态。实景样本是多台机器人<strong>一镜到底</strong>完成会议室整理长程作业（搬座椅、捡杂物、搬垃圾袋、下蹲拾纸团），多机可分工接续。<strong>边界</strong>：全篇无量化指标、无成功率与试验次数，为发布方自述；行业整体仍卡在仿真与真实物理世界的鸿沟，工业现场与特种高危场景比家庭非结构化场景更可能先落地。北京人形在 09-07、09-15、09-18 已出现，本次是同一主体的控制模型更新。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>傅利叶把「采数据」本身做成产品：CoRL 2026 展出六目头环加触觉手套，一套套件同步采第一视角视觉、动作与触觉</h3>
+      <p>CoRL 2026 于当地时间 <strong>11 月 9 日至 12 日</strong>在美国得州奥斯汀举办。傅利叶携第三代 GR-3 参展，首次展示与一行凌光、启能机器人联合研发的<strong>物理 AI 数据采集套件</strong>。硬件是<strong>六目采集头环</strong>（5 路广角加 1 路鱼眼，360 度水平视场，单路 1600×1200、30fps，同步采集带时间戳的六轴 IMU 数据）与<strong>触觉加 EMF 数据采集手套</strong>（标准配置单手 360 个触觉单元、密度 9 点每平方厘米、采样率 120Hz，可选 600 单元升级版），另配一体化处理平台，覆盖配置检查、佩戴校准、多设备联合采集、标注到结构化交付，同步采操作者第一视角视觉、动作姿态与触觉反馈。本体 GR-3 是 <strong>165cm、71kg、55 个自由度</strong>，最高行走 6.1 km/h、单臂负载 3kg，已在康养陪伴与科研教育场景应用。<strong>边界</strong>：这是数据采集方案的技术验证与生态开放，不是模型能力或量产数据，官方未给采集成本、数据规模与下游任务增益。<strong>主体辨析</strong>：傅利叶在 11-02 速览① 与 11-03 ⑤ 已出现（与 Meta 合作家庭人形原型 Max 的两版报道，第二版把商业结构还原为 ODM 样机），那两条讲的是本体合作与商业结构，这一条是数据基础设施，不是同一事件。</p>
+    </div>
+
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① Carbon 正式开放</td>
+      <td>10-29 ① Google 两周内第二次刷新旗舰：Gemini 4 Carbon 登顶 AA 智能指数 v5.0，领先只有 1 分，而且先不给开发者</td>
+      <td>标题里那半句「先不给开发者」，今天兑现。同一个模型从「领先只有 1 分」到「两套 harness 差 34 个百分点」，中间只隔了 13 天 —— 变的不是模型，是测量它的方式被摆到了台面上</td>
+    </tr>
+    <tr>
+      <td>① Carbon 与 11-10 ① 的相反策略</td>
+      <td>11-10 ① Anthropic 发布 Fable 5.2 与 Mythos 5.2：跑分登顶、价格下调 20%，同时主动把「加速器内核优化」和「大模型架构改进」两项能力按在 Opus 5.5 水平</td>
+      <td>同一周两家给出方向相反的动作：一家在训练期与推理期各加一道锁、公开划出不受影响的边界；一家全速放能力，同时用「成本」改写「最强」的评价维度。规则之争从「要不要给能力」变成「用什么尺子量能力」</td>
+    </tr>
+    <tr>
+      <td>① ARC-AGI-3 的 99.1% 与 65.1%</td>
+      <td>11-08 ② 把 89 道题的说明改掉 17 行，一批模型从并列变成相差 23 分：MaxxBench 证明榜单上的平局是假平局</td>
+      <td>一周内第三次独立佐证「分数由模型外面那层决定」：那期改的是说明文字，今天换的是 provider adapter 与推理档位，而 high 档标准跑干脆没完成。引用旗舰分数不带 harness，已经不能算合格引用</td>
+    </tr>
+    <tr>
+      <td>① 介绍价 12 月 1 日翻倍</td>
+      <td>09-14 ② InfoQ 实测：同一个模型，换不同编程工具，账单能差 70 倍——成本黑洞在「脚手架」不在模型</td>
+      <td>成本从来不只在单价：那期是同一模型换工具差 70 倍，11-10 ① 是单价降 20% 而每任务成本涨到 2.6 倍，今天是卖点本身附了一个 11 月 30 日的截止日。三期的读法一致：算总账，别算单价</td>
+    </tr>
+    <tr>
+      <td>② aiXcompact-4B 拆走上下文压缩</td>
+      <td>09-10 ② 微软开源 FastContext：把「找代码」从主模型里拆出去，主模型 Token 最多省 60%</td>
+      <td>同题不同解：那次拆的是「读什么」，这次拆的是「记住什么」。两次都是把外层里高频、边界明确的一环交给专用模块，让通用大模型只做需要判断的部分</td>
+    </tr>
+    <tr>
+      <td>② 单次压缩 0.019 元</td>
+      <td>09-08 ① Spotify 用 shunt 插件把 Claude Code 的 Token 消耗砍掉 90%：拦截读文件，交给便宜模型</td>
+      <td>同一个思路的第三代：从拦截读文件、到外包代码侦察，再到把压缩做成可私有化部署的 4B 模型。也延续同一条教训 —— 当年「省 90%」被 HN 指出实为输入 token、账单只降约两成，今天 97% 同样是单次压缩口径，不是整轮任务口径</td>
+    </tr>
+    <tr>
+      <td>② 压缩与记忆的边界</td>
+      <td>11-08 ① 记忆不是越多越好，而是要选对：Anthropic 给出 agent 记忆的四层结构，以及一个叫「做梦」的整理过程</td>
+      <td>Anthropic 在定义里明确把「上下文压缩摘要」排除在记忆之外；这里把它做成一个独立产品。两者不冲突，反而说明了同一件事：压缩是成本手段，记忆是跨会话的状态管理，别用一边的指标给另一边背书</td>
+    </tr>
+    <tr>
+      <td>② 大小模型分工下沉</td>
+      <td>09-12 ① Cognition 的 Devin Fusion：前沿模型做规划、便宜模型干活，第三方实测每任务省 36% 到 43%</td>
+      <td>同一套分工从任务级下沉到上下文级：那期是规划与执行分给两档模型，这期是连「决定哪些历史该留」都不再麻烦主模型。省的比例也从任务级换成调用级</td>
+    </tr>
+    <tr>
+      <td>③ Android Bench 的四个量</td>
+      <td>11-09 ③ 同一个前沿模型换 7 种 harness：通过率分不出来，账单差两倍多 —— 而作者自己把「分不出来」的分辨率边界写清楚了</td>
+      <td>互为镜像：那期固定模型换 7 种 harness、结论是通过率分不出来；这期换模型的同时也换了 harness（kimi-code 对 opencode），却只报了四个合并数字。放在一起正好说明「换 harness 就重测」不是洁癖</td>
+    </tr>
+    <tr>
+      <td>③ 官方基准第一次给四个量</td>
+      <td>09-11 ① SWE-Bench Pro Verified：某个广受引用的编程 Agent 基准，有模型 21.48 分是「读到了答案」</td>
+      <td>基准可信度这条线的两端：那期是发现分数里混进了答案泄漏，加反作弊后 78.80% 掉到 57.32%；今天是厂商主动把通过率、平均完成度、耗时、整轮成本一起摆出来。分数不再是唯一输出，是这十几期最实在的一处变化</td>
+    </tr>
+    <tr>
+      <td>④ ER 加 2.5 的双层分工</td>
+      <td>11-08 ④ 苹果研究团队把整套人形控制栈开源了：三层架构、宇树 G1 实机、六个没建过图的房间平均成功率 91%</td>
+      <td>同一种分层思路的工业版本：那边是编排、动作生成、跟踪控制三层，这边是 ER 跟流程、2.5 控手臂与手部。一个开源全栈、一个只给合作伙伴，但都把「模型外面那层」做成了能力的一部分</td>
+    </tr>
+    <tr>
+      <td>④ 96% 出现在在用产线</td>
+      <td>11-09 ④ 50 天、8000 多次物理操作、执行层面零失误：合碳智能的轮式双臂机器人 Talos 在药企真实实验室里跑完了分子纯化，第二单来自丹纳赫</td>
+      <td>从实验室到在用产线的一步，但两期缺的是同一类数字：那期样本量与零失误均为厂商自述、场景单一，这期是概念验证、未披露节拍与试验次数。真实作业现场这条线已经连起来，验收口径还没跟上</td>
+    </tr>
+    <tr>
+      <td>⑤ LingBot-Touch 与同系列开源</td>
+      <td>09-14 速览① 蚂蚁 LingBot-Map 开源：普通摄像头实时重建 3D 空间，入选 ECCV Oral，GitHub 16.9K Star</td>
+      <td>同一产品线的第二次「把物理模态做成可插拔基础设施」：那次是空间感知（视觉到三维），这次是接触感知（指尖到统一 Token）。取向一致 —— 便宜、开源、不绑定自家动作模型</td>
+    </tr>
+    <tr>
+      <td>⑤ 4983 小时触觉数据</td>
+      <td>11-10 ④ NVIDIA 在 CoRL 发布 GR00T 2：20 亿参数的世界-动作模型，用 40.27 万小时人类第一视角视频预训练</td>
+      <td>两条规模化路径：那边堆第一视角视频换跨本体泛化，这边把三类触觉信号对齐进一个隐空间换跨硬件复用。两个时长都是预训练录制规模，不是部署成效，量纲也不同，不可换算</td>
+    </tr>
+    <tr>
+      <td>速览① AlphaProof Code</td>
+      <td>11-10 速览③ 一个 2008 年的量子计算猜想被 3 天证明，用的是 Anthropic 未公开的模型：Lean 4 校验通过，但还没有同行评审</td>
+      <td>同一类 Lean 工具链的两种用法：那期攻的是一个悬置 18 年的数学猜想、形式化通过不等于同行评审通过；这期验证的是已经在跑的加密协议实现代码，性质由人定义、证明由 agent 构造。前者要专家签字，后者要能对得上机器码</td>
+    </tr>
+    <tr>
+      <td>速览③ Hi-WBC 的仿真到真实</td>
+      <td>11-10 ⑤ TI-0.1 技术报告：让 Opus 5.5 和 GPT-6 Astra 写仿真器、写奖励函数，再把策略蒸馏到真机 —— 最值钱的实验是一次失败：一个乐高策略在接触模型被修正后，成功率从 84.5% 掉到 2.6%</td>
+      <td>都瞄准同一个鸿沟：那期用一次失败证明仿真里成立的动作真机做不到，这期用本体感知估接触力、感知式控制重规划落脚点来正面补这一课。区别在于 Hi-WBC 目前只有定性描述，没有成功率与试验次数</td>
+    </tr>
+    <tr>
+      <td>速览④ 傅利叶的两条不同线</td>
+      <td>11-02 速览① Meta 联手上海傅利叶造出一台人形机器人原型 Max：3 个月、约 48 公斤、1.5 米，搭载英伟达 Jetson Thor 芯片</td>
+      <td>同主体、不同事件：11-02 与 11-03 ⑤ 讲的是本体合作与那笔生意的商业结构（第二版还原为 ODM 样机），这次是 CoRL 上的数据采集基础设施。别把「Meta 造机器人」和「卖采数套件」当成同一条产业信号</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-11 · 北京时间 11:39</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-10.html">← 2026-11-10</a></div>
+</body>
+</html>
