@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pinky：让 Agent 用上你的真手机，但关键一步必须你点头 · walker</title><meta name="description" content="DIYgod 开源的 MCP 网关（Apache-2.0，Go 编写），让 Claude Code / Codex / Cursor 等 Agent 操作真实 iPhone 与 Android；付款、发消息等高风险步骤由本地网关强制弹窗批准，银行 App 与验证码对 Agent 隐身。macOS / Windows / Linux 三端，原生轻量，开源 5 天 1.7k Star。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/pinky/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Pinky：让 Agent 用上你的真手机，但关键一步必须你点头 · walker"><meta property="og:description" content="DIYgod 开源的 MCP 网关（Apache-2.0，Go 编写），让 Claude Code / Codex / Cursor 等 Agent 操作真实 iPhone 与 Android；付款、发消息等高风险步骤由本地网关强制弹窗批准，银行 App 与验证码对 Agent 隐身。macOS / Windows / Linux 三端，原生轻量，开源 5 天 1.7k Star。"><meta property="og:url" content="https://blog.walkerhua.com/tools/pinky/"><meta property="og:image" content="https://blog.walkerhua.com/og/pinky.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Pinky：让 Agent 用上你的真手机，但关键一步必须你点头 · walker"><meta name="twitter:description" content="DIYgod 开源的 MCP 网关（Apache-2.0，Go 编写），让 Claude Code / Codex / Cursor 等 Agent 操作真实 iPhone 与 Android；付款、发消息等高风险步骤由本地网关强制弹窗批准，银行 App 与验证码对 Agent 隐身。macOS / Windows / Linux 三端，原生轻量，开源 5 天 1.7k Star。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/pinky.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>Pinky：让 Agent 用上你的真手机，但关键一步必须你点头</h1><p>前面十期推荐的工具都跑在电脑上，这是第一次让 Agent 伸手进你口袋——所以重点不是它能做什么，而是你怎么随时叫停。</p><div class="hero-meta"><span>第 11 期</span><span>发布于 2026-11-11</span><span>约 8 分钟</span><a class="tag" href="https://github.com/DIYgod/pinky" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/MCP/">MCP</a><a class="tag" href="/tags/手机自动化/">手机自动化</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/安全/">安全</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l3" href="#电脑端">电脑端</a><a class="toc-l3" href="#接-agent">接 Agent</a><a class="toc-l3" href="#连手机">连手机</a><a class="toc-l3" href="#一个本机踩到的坑">一个本机踩到的坑</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>MCP 把电脑端打通之后，手机成了最后一块缺口，也是最危险的一块：里面有支付、有聊天记录、有验证码。最近冒出来一堆「让 AI 玩手机」的项目，Pinky 容易被归到那一堆里，先划清边界：</p>
+<ul>
+<li><strong>它不是又一个手机自动化框架</strong>。Auto.js、Appium、scrcpy 走的是「我写脚本驱动手机」，Pinky 走的是「任何支持 MCP 的 Agent 通过网关驱动手机」——它自己不含模型、不写业务脚本，只是一层桥。</li>
+<li><strong>它不是自带视觉模型的 Phone Agent</strong>。Open-AutoGLM、Mika、andee 那类是端上或模型侧的自治智能体；Pinky 明确说自己不带模型，Agent 由你带（Claude Code、Claude Desktop、Codex、Cursor，或任意脚本）。内置那个 <code>Ask Pinky</code> 只是给没 Agent 的人跑单机简单任务，100 步 / 20 分钟 / 2 美元任一到顶就停。</li>
+<li><strong>它不是投屏 / 远控工具</strong>。投屏只是让你旁观的窗口，真正的动作经过网关的许可检查和逐步记录。</li>
+<li><strong>它不是「在提示词里叮嘱 Agent 别乱点」</strong>。这是最值得记的一条：审批规则跑在 Pinky 自己的网关里，属于基础设施约束，不是写给模型的自然语言。屏幕上的文字想诱导 Agent 自我批准，它手上根本没有可以拿来确认的东西。</li>
+</ul>
+<p>预期摆正：这是个 <strong>README 自己标着 <code>pre-alpha</code></strong> 的项目，2026-11-06 建库，写这篇时才第 5 天。它解决的是「信任边界」而不是「自动化成功率」，别拿它当稳定的 RPA 产线。</p>
+<blockquote>
+<p>写这篇时的一手数据（2026-11-11 13:48 从 GitHub API 拉）：<code>DIYgod/pinky</code>，<strong>1,732 star / 185 fork / 22 issue</strong>，主语言 Go（手机端 Companion 是 Kotlin），Apache-2.0，最新 <code>v2026.1111.13</code>。当天连发了十几个版本，网上流传的「4 天 1.6K star」已经过时；「第一个把 MCP + 真机 + 安全网关都做对」是媒体定性，不是项目自称。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>符合下面任意一条，就值得看它：</p>
+<ul>
+<li>你已经在用 Claude Code / Codex / Cursor 干活，想让同一套 Agent 顺手把手机上的事办了（回消息、下单前比价、发内容），而不是另开一个专用 App；</li>
+<li>你确实想让 AI 碰真机，但一想到它误点「付款」「发送」「删除」就后背发凉；</li>
+<li>你不接受把验证码、银行 App、密码管理器暴露给模型；</li>
+<li>你希望出事之后能回溯——不是一句「已完成」，而是每一步的截图、录屏和大白话记录。</li>
+</ul>
+<p>Pinky 的答案是把「能不能做」和「准不准做」拆开：Agent 负责前者，网关负责后者，人负责最后那一下点击。</p>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接入层</td>
+<td>任意支持 MCP 的客户端，stdio（<code>pinkyctl mcp</code>）或 HTTP（agent token）；设置里一键接 Claude Code / Claude Desktop / Codex / Cursor / VS Code / Copilot CLI / Windsurf / Gemini CLI</td>
+</tr>
+<tr>
+<td>审批门禁</td>
+<td>付款、交易、转账默认等你点「允许」；发送、下单、删除、拨号、装 App、跳出 App 的链接、改设置可逐个设为需审批，也可「每步都问」或「只读模式」。按钮按 10 种语言的标签识别</td>
+</tr>
+<tr>
+<td>审批流程</td>
+<td>命中即返回 <code>approval_pending</code>，手机侧不执行；60 秒无回答默认拒绝；放行前复核按钮是否还在原位，屏幕变过就回 <code>stale</code> 让 Agent 重看</td>
+</tr>
+<tr>
+<td>不确定状态</td>
+<td>手机中途掉线不硬报成功或失败，返回 <code>uncertain</code>，要求先观察、禁止盲目重试——发消息和付款重试一次代价是真金白银</td>
+</tr>
+<tr>
+<td>默认禁区</td>
+<td>银行 / 钱包 / 密码管理器对 Agent 不可见（通知栏也灰盒遮盖）；密码框、验证码框禁止输入；验证码在文本和截图里都变成 <code>••••••</code>。要用银行 App 得单独申请，且只在该次任务内放行</td>
+</tr>
+<tr>
+<td>第二屏隔离</td>
+<td>Android 13+ 在隐藏的第二屏干活，主屏归你、可以熄屏锁着；老 Android 和 iPhone 用主屏</td>
+</tr>
+<tr>
+<td>随时接管</td>
+<td>点一下投屏窗口 Agent 立即暂停，Android 上你亲手碰手机也会暂停；全局急停 <code>⌥⌘.</code>（Win/Linux <code>Ctrl+Alt+.</code>）</td>
+</tr>
+<tr>
+<td>解锁</td>
+<td>锁屏 PIN 只存本机钥匙串，每次解锁需 Touch ID / Windows Hello / keyring 密码确认，Agent 永远看不到 PIN</td>
+</tr>
+<tr>
+<td>审计</td>
+<td>每步大白话记录 + 截图 + 带标记的录屏，可导出 HTML 报告；录屏逐帧门控，锁屏、被屏蔽 App、你本人手动操作一帧不录；数据只留本机 30 天</td>
+</tr>
+<tr>
+<td>连接</td>
+<td>Android 10–17（USB，11+ 可 Wi-Fi 配对）；iPhone / iPad iOS 17.4+（USB 初始化后可切 Wi-Fi）；也支持 iOS Simulator / Android emulator</td>
+</tr>
+<tr>
+<td>体积</td>
+<td>Go 单二进制，MyGo 直接在 GPU 绘制窗口，无 Electron 无 webview；下载包 16–22 MB，Mac 空闲约 70 MB 内存、0% CPU</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>审批落在网关层</strong>（把安全从「模型自觉」挪到「基础设施强制」，这是范式级的差别）和 <strong><code>uncertain</code> 是一等状态</strong>（承认边界、诚实回报，比假装成功有价值得多）。验证码掩码和银行隐身则是把最小权限原则真的落到了像素级。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<h3 id="电脑端">电脑端</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>要求</th>
+<th>安装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS</td>
+<td>13+，Apple silicon / Intel</td>
+<td><code>brew install --cask diygod/tap/pinky</code>，或拖 <code>.dmg</code> 进「应用程序」</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>10/11 x64</td>
+<td><code>pinky-setup-*-amd64.exe</code>，免管理员权限；安装包未签名，SmartScreen 需「更多信息 → 仍要运行」</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>x86-64，glibc 2.29+，GTK 3</td>
+<td><code>.deb</code> 用 <code>apt install ./</code>，其他发行版解压 <code>.tar.gz</code> 跑 <code>pinky</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>本机实测（2026-11-11，macOS 26.6.2 / arm64）</strong>：装前先读了第三方 tap 的 cask 定义，确认只做「下载官方 release zip → 装 <code>Pinky.app</code> → 链 <code>pinkyctl</code>」三件事，没有 postflight 脚本、不装 launchd、不改 shell 配置，带 sha256 校验，才动手。结果：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> --cask</span><span style="color:#9ECBFF"> diygod/tap/pinky</span></span>
+<span class="line"><span style="color:#B392F0">pinkyctl</span><span style="color:#9ECBFF"> version</span><span style="color:#6A737D">          # pinky 2026.1111.13</span></span></code></pre>
+<p><code>/Applications/Pinky.app</code> 解压后 51 MB，Gatekeeper <code>accepted</code>、Notarized Developer ID（签名主体 NATURAL SELECTION LABS PTE. LTD.），CLI 在 <code>/opt/homebrew/bin/pinkyctl</code>。</p>
+<h3 id="接-agent">接 Agent</h3>
+<p>任意 MCP 客户端的手工配置（<code>pinkyctl</code> 不是 <code>pinky</code>——后者是 coreutils 里已有的同名命令）：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{ </span><span style="color:#79B8FF">"mcpServers"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"pinky"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"command"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"pinkyctl"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"args"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"mcp"</span><span style="color:#E1E4E8">] } } }</span></span></code></pre>
+<p>Claude Code 也可以用 <code>claude mcp add --scope user pinky -- pinkyctl mcp</code>。我在 WorkBuddy 里把 <code>command</code> 写成了绝对路径 <code>/opt/homebrew/bin/pinkyctl</code>——非登录 shell 的 PATH 不一定含 Homebrew，写绝对路径省一次「明明装了却找不到」的排查。</p>
+<h3 id="连手机">连手机</h3>
+<ul>
+<li><strong>Android</strong>：开发者选项 → USB 调试 → 插线授权；Android 11+ 可走无线调试 Wi-Fi 配对。Pinky 会提示装 Companion App，把读屏从约 2 秒降到约 70 毫秒。</li>
+<li><strong>iPhone</strong>：插线信任 → 开开发者模式 → 挂载 Apple 的 Developer Disk Image（随 Xcode 提供，Pinky 不自带）。iOS 27+ 手机端什么都不用装；17.4–26 要从 Xcode 装一次 WebDriverAgent helper。</li>
+</ul>
+<p><strong>零风险试跑</strong>：加 <code>--fake</code> 会用脚本假手机跑通全流程，不碰真机。建议先跑这个。</p>
+<h3 id="一个本机踩到的坑">一个本机踩到的坑</h3>
+<p><code>pinkyctl</code> 是<strong>单实例转发式</strong> CLI：只要已经有一个 Pinky 实例在后台，任何子命令（<code>mcp</code> / <code>devices</code>）都会被转成「Pinky is already open: showed its window」然后静默退出——MCP 握手那一侧表现为 stdout 全空、退出码 0，很容易误判成配置写错。<code>pgrep -fl Pinky</code> 清干净残留实例后再连就正常了。排查这类问题时用 <code>PINKY_HOME</code> 指到临时目录做隔离，别污染默认数据目录。</p>
+<p>干净环境下 <code>pinkyctl mcp</code> 的 <code>initialize</code> 握手返回完整 instructions 和 <code>tools.listChanged</code> 能力，进程保持长连接，实测通过。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>最要紧的一条：Agent 有 shell 权限就能绕过它。</strong> README 明确写了，能在你电脑上跑命令的 Agent 可以直接走 <code>adb</code> 碰手机、跳过全部规则。真要用，把它放进没有手机访问权限的沙箱，或者把手机插在另一台电脑上、让 Agent 通过 HTTP 连 Pinky。这层审批只对「老老实实走 MCP」的 Agent 成立。</li>
+<li><strong>pre-alpha，别上生产。</strong> 作者只端到端验证过 Claude Code 在真机上的几条路径，README 直说 <code>some of it still waits for a person to try it</code>；不少功能标注「只在模拟器上试过」。发版极快（一天十几个版本），也意味着随时可能踩到回归。</li>
+<li><strong>iOS 版本分裂是最复杂的部分</strong>：27+ 免装 App 但不能双指缩放；17.4–26 需 WebDriverAgent helper，免费 Apple ID 每 7 天重签一次；17.3 及以下不支持。没有 helper 时只能看屏、读屏和打开 App，点不了也打不了字。</li>
+<li><strong>按钮识别不是万能的</strong>。高风险按钮靠 10 种语言的标签词表匹配，冷门文案可能漏——官方自己建议开「每步都问」或「只读模式」兜底。</li>
+<li><strong>合规风险要自己扛</strong>。微信、抖音、小红书、部分银行能检测到无障碍服务、USB 调试和屏幕共享，让 Agent 操作可能违反其条款；部分银行 App 在屏幕共享时直接拒绝运行。</li>
+<li><strong>有遥测</strong>。默认上报匿名计数与崩溃报告（<code>DO_NOT_TRACK=1</code> 或设置里可关），但屏幕、输入文字、App 名、设备名、PIN、文件名明确不上报。</li>
+<li><strong>别把它当跨平台协同工具</strong>。文件传输只在 Android 的 <code>/sdcard/Pinky</code> 与电脑之间，iPhone 不支持。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>路线</th>
+<th>有没有网关级人工审批</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zai-org/Open-AutoGLM</code></td>
+<td>自带视觉模型的 Phone Agent 框架（26k+ star）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>mobile-next/mobile-mcp</code></td>
+<td>纯 MCP server，跨平台工具集（10k+ star）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>phone-harness/phone-harness</code></td>
+<td>iPhone 镜像 / adb / 云手机，手机端不装东西</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>kuafuai/andee</code>、<code>wangzan101/Mika</code></td>
+<td>装在 Android 上的自治 Agent APK</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong><code>DIYgod/pinky</code></strong></td>
+<td><strong>桌面 MCP 网关 + 真机操控</strong></td>
+<td><strong>有，且是核心</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>已经在用 Claude Code / Codex 的重度用户</strong>：想让同一套 Agent 顺手办手机上的事，又不想把审批交给提示词；</li>
+<li><strong>对隐私敏感、又想试 Agent 的人</strong>：验证码掩码、银行隐身、逐步录屏、随时接管这套组合，是当前开源方案里少见的完整设计；</li>
+<li><strong>做 Agent 安全 / 人机协同研究的人</strong>：<code>approval_pending</code> + <code>stale</code> + <code>uncertain</code> 这套状态机，比工具本身更值得读。</li>
+</ul>
+<p><strong>不适合谁</strong>：只想批量自动化刷任务、不需要人在环的（用 Auto.js / Appium 更直接）；想要一个自带模型、开箱即跑的手机 Agent（看 Open-AutoGLM / Mika）；以及<strong>打算给有完整 shell 权限的 Agent 开放真机、却不做沙箱隔离的</strong>——那种情况下 Pinky 给你的安全感是假的。</p>
+<p>一句话收尾：技术上 adb 和 Xcode 早就做到了「让电脑控制手机」，Pinky 真正补上的是「让它在可控前提下控制」。这个思路对所有高风险 Agent 场景（支付、写操作、删数据）都有参考价值，哪怕你最后不装它。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/weknora/"><span class="post-nav-label">上一期</span><span class="post-nav-title">WeKnora：腾讯把 ima 的知识库开源了，RAG + Agent + 自维护 Wiki</span></a><a class="post-nav-item post-nav-next" href="/tools/ego-lite/"><span class="post-nav-label">下一期</span><span class="post-nav-title">ego lite：把浏览器分一半给 AI Agent，标签页还是你的</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

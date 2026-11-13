@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ego lite：把浏览器分一半给 AI Agent，标签页还是你的 · walker</title><meta name="description" content="citrolabs 开源的「Agent 原生浏览器」（仓库 MIT，22k+ Star），让 Claude Code / Codex / Cursor 在各自隔离的 Space 里并行跑网页任务，复用你真实的登录态与 Cookie，你的标签页完全不被抢走。macOS / Windows 可用，Linux 在路线图。Zero cost, zero config。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/ego-lite/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="ego lite：把浏览器分一半给 AI Agent，标签页还是你的 · walker"><meta property="og:description" content="citrolabs 开源的「Agent 原生浏览器」（仓库 MIT，22k+ Star），让 Claude Code / Codex / Cursor 在各自隔离的 Space 里并行跑网页任务，复用你真实的登录态与 Cookie，你的标签页完全不被抢走。macOS / Windows 可用，Linux 在路线图。Zero cost, zero config。"><meta property="og:url" content="https://blog.walkerhua.com/tools/ego-lite/"><meta property="og:image" content="https://blog.walkerhua.com/og/ego-lite.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ego lite：把浏览器分一半给 AI Agent，标签页还是你的 · walker"><meta name="twitter:description" content="citrolabs 开源的「Agent 原生浏览器」（仓库 MIT，22k+ Star），让 Claude Code / Codex / Cursor 在各自隔离的 Space 里并行跑网页任务，复用你真实的登录态与 Cookie，你的标签页完全不被抢走。macOS / Windows 可用，Linux 在路线图。Zero cost, zero config。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/ego-lite.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>ego lite：把浏览器分一半给 AI Agent，标签页还是你的</h1><p>上一期 Pinky 让 Agent 碰真手机、关键一步必须你点头；这一期让 Agent 用你的浏览器。共同点是「别抢我的设备」，但刹车装的位置完全不同。</p><div class="hero-meta"><span>第 12 期</span><span>发布于 2026-11-11</span><span>约 7 分钟</span><a class="tag" href="https://github.com/citrolabs/ego-lite" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/浏览器/">浏览器</a><a class="tag" href="/tags/Agent Skill/">Agent Skill</a><a class="tag" href="/tags/自动化/">自动化</a><a class="tag" href="/tags/macOS/">macOS</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l3" href="#支持情况">支持情况</a><a class="toc-l3" href="#三条安装路径">三条安装路径</a><a class="toc-l3" href="#本机实测macos-2662--arm64已用约半个月">本机实测（macOS 26.6.2 / arm64，已用约半个月）</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>浏览器自动化这个赛道已经很挤，ego lite 容易被当成又一个 Playwright 封装，先把边界划清：</p>
+<ul>
+<li><strong>它不是自动化框架，它本身就是一个浏览器</strong>。browser-use、agent-browser、playwright-cli 是「桥接工具」——得另外找一个浏览器来驱动，登录态很难完整带过去，连接也不稳，最后你和 Agent 还得抢同一个窗口。ego lite 是从内核开始按「人和 Agent 共用一个浏览器」设计的 Chromium。</li>
+<li><strong>它不是浏览器扩展，也不是云浏览器</strong>。前者（Claude/Codex in Chrome）绑死自家 Agent，后者（Browserbase / Browser Use）把数据放在云端、拿不到你本机登录态。</li>
+<li><strong>它不是 Comet / Dia 那类 AI 浏览器</strong>。那类把 Agent 内置进产品，你只能用它的模型；ego lite 不带模型，谁都能来驱动它。</li>
+<li><strong>它不是 MCP server</strong>。这点对已经用惯 MCP 的人容易踩空：ego lite 走的是 <strong>Agent Skill + <code>ego-browser</code> CLI</strong>，仓库里放的是 skill、CLI 包、Claude/Codex/Cursor 插件清单和文档，没有 MCP 端点。</li>
+<li><strong>它不是「开源浏览器」</strong>——最容易误读的一条。仓库是 MIT 没错，但开源的是 skill / CLI / docs；<strong>浏览器本体是从 <code>cdn.ego.app</code> 下载的免费闭源二进制</strong>，Chromium 源码不在仓库里。想自己编译一个出来，做不到。</li>
+</ul>
+<p>预期摆正：它解决的是「Agent 该用哪个浏览器、能不能别抢我的」，不是「怎么把一个网站稳稳地爬完」。而且它是个热度很高但问题也不少的年轻项目（2026-04 建库，写这篇时 274 个 open issue）。</p>
+<blockquote>
+<p>一手数据（2026-11-11 14:03 从 GitHub API 拉）：<code>citrolabs/ego-lite</code>，<strong>22,475 star / 1,274 fork / 274 open issue</strong>，语言 JavaScript + TypeScript，MIT，最新 release <code>v2.2.0</code>（2026-11-05），官网 <code>lite.ego.app</code>。网上流传的 17.5k、21.9k 都是旧快照。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<p>用过 Agent 跑网页任务的，基本都吃过这三记闷棍：</p>
+<ol>
+<li><strong>登录态带不过去</strong>。新开一个干净的自动化浏览器，结果每个站点都要重新登录，CAPTCHA 一拦一个准；</li>
+<li><strong>浏览器被抢走</strong>。Agent 一开工，你的标签页、光标、焦点全乱了，只能干等；</li>
+<li><strong>工具调用绕圈</strong>。「调两条命令 → 看结果 → 再调两条」，多步任务在一来一回里把 token 烧光。</li>
+</ol>
+<p>ego lite 的答案是三条一起改：把浏览器数据留在本机并让 Agent 直接继承、给每个 Agent 一个隔离的 Space、把工具做成页内 JavaScript 函数让 Agent 一次写完整段脚本。</p>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Space</td>
+<td>每个 Agent / 每个任务一个完全隔离的工作区，Agent 在后台跑，你在自己的 Space 里照常浏览；随时能看到哪个 Space 在跑，可接管或停止</td>
+</tr>
+<tr>
+<td>并行多任务</td>
+<td>一个浏览器里多个 Space 同时工作——Claude Code 在 10 个 Space 补全 10 条线索、Codex 在另外 5 个抓竞品站，互不碰撞、不抢标签页</td>
+</tr>
+<tr>
+<td>共享登录态</td>
+<td>首次启动问一句「要不要迁移 Chrome 数据」，选是即继承登录态、Cookie、扩展、书签；官方口径因此「更少触发人机验证」</td>
+</tr>
+<tr>
+<td>Snapshot</td>
+<td>页面转成结构化文本给纯文本模型看；因内核级定制，官方称能稳定处理深层嵌套 iframe 这类其他方案常翻车的场景</td>
+</tr>
+<tr>
+<td>以代码为本</td>
+<td>能力封装成页内 JavaScript 工具：<code>snapshot</code> / <code>fill</code> / <code>click</code> / <code>wait</code> / <code>navigate</code> / <code>capture</code>。Agent 写一段脚本一次执行完，而不是逐条 CLI 往返</td>
+</tr>
+<tr>
+<td>连接层</td>
+<td><code>ego-browser</code> CLI，任意 Agent 可调用（Claude Code / Codex / Cursor / 自己写的）；仓库带各家插件清单</td>
+</tr>
+<tr>
+<td>数据与遥测</td>
+<td>浏览数据、Cookie 全留本机；官方称只收集「是否设为默认浏览器」这类简单产品信号</td>
+</tr>
+<tr>
+<td>经验积累 <em>（coming soon）</em></td>
+<td>把成功操作沉淀成可复用工具与工作流，宣称类似任务最高快 5 倍——<strong>尚未上线</strong>，别算进现有能力</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>Space 隔离</strong>（第一次把「人和 Agent 并行」做进浏览器结构里，而不是靠约定谁先别动鼠标）和<strong>以代码为本</strong>（让 Agent 干它最擅长的写码，把多步任务压成一次输出）。共享登录态是双刃剑，下一段专门讲。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<h3 id="支持情况">支持情况</h3>
+<p>macOS（Apple silicon / Intel）与 Windows x64 都已可用（Windows 是 2026-10-19 补上的），<strong>Linux 还在路线图</strong>。社区有第三方非官方的 Linux/WSL 桥接仓库，但都是个位到几十 star 的玩具级，别当官方支持。</p>
+<h3 id="三条安装路径">三条安装路径</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 只装 Skill，第一次跑浏览器任务时它会带你装 App</span></span>
+<span class="line"><span style="color:#B392F0">npx</span><span style="color:#9ECBFF"> skills</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> citrolabs/ego-lite</span></span></code></pre>
+<p>也可以直接下载 <code>.dmg</code> / <code>.exe</code> 安装，或者把仓库地址丢给 Agent、让它读 <code>skills/ego-browser/references/install.md</code> 自己装完。<strong>无论哪条路，安装都会把 <code>ego-browser</code> Skill 写进机器上各个 Agent 的 Skill 目录</strong>——这是它「Zero config」的代价，装之前值得知道。</p>
+<p>装好后首次启动只问一个问题：是否迁移 Chrome 数据。用起来是在 Agent CLI 里敲 <code>/ego-browser</code> 加一句大白话；更底层的方式是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ego-browser</span><span style="color:#9ECBFF"> skill</span><span style="color:#6A737D">        # 打印与当前版本匹配的完整用法指南（必读）</span></span>
+<span class="line"><span style="color:#B392F0">ego-browser</span><span style="color:#9ECBFF"> nodejs</span><span style="color:#F97583"> &lt;&lt;</span><span style="color:#9ECBFF">'EOF'</span></span>
+<span class="line"><span style="color:#9ECBFF">const task = await taskSpace("inspect example page");</span></span>
+<span class="line"><span style="color:#9ECBFF">const page = task.page("p1");</span></span>
+<span class="line"><span style="color:#9ECBFF">await page.goto("https://example.com");</span></span>
+<span class="line"><span style="color:#9ECBFF">console.log(await page.snapshot());</span></span>
+<span class="line"><span style="color:#9ECBFF">EOF</span></span></code></pre>
+<h3 id="本机实测macos-2662--arm64已用约半个月">本机实测（macOS 26.6.2 / arm64，已用约半个月）</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/ego lite.app</code>，<code>com.citrolabs.ego.lite</code>，<strong>857 MB</strong>，2026-10-26 安装</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体 CITRO LABS PTE. LIMITED</td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>~/.local/bin/ego-browser</code>，报 <code>ego-browser 0.6.2.9</code> / chromium <code>156.0.8078.74</code> / node <code>v24.22.1</code></td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>落在 <code>~/.agents/skills/</code>、<code>~/.claude/skills/</code>、<code>~/.workbuddy/skills/</code> 三处；<strong><code>~/.codex/skills/</code> 没有</strong></td>
+</tr>
+<tr>
+<td>用法指南</td>
+<td><code>ego-browser skill</code> 输出 338 行 / 22 KB，v2.2.0（macos），带完整 <code>end of guide</code> 结束标志</td>
+</tr>
+<tr>
+<td>内嵌 Node</td>
+<td><code>ego-browser nodejs -e</code> 实测返回 <code>v24.22.1</code>，可用</td>
+</tr>
+</tbody>
+</table>
+<p>两个值得记的观察：</p>
+<ul>
+<li><strong>版本号是双轨的</strong>。应用 bundle 是 <code>0.6.2.9</code>，而仓库 release 与 Skill 指南都是 <code>2.2.0</code>。查版本时别只看一处，也别拿 App 版本号去对 GitHub Releases。</li>
+<li><strong>「写进每个 Agent 的 Skill 目录」不完全成立</strong>。本机三家有、Codex 那家没有。按各宿主只扫自己 skill 目录的惯例，没覆盖到的宿主需要手工补一次链接或复制。</li>
+</ul>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>Space 隔离的是标签页，不是权限</strong>。这是最要紧的一条：Agent 继承的是你<strong>全部</strong>已登录站点的身份，它能以你的名义发消息、下单、改设置，而 ego lite 没有 Pinky 那种网关级人工审批——「不抢你浏览器」不等于「不乱点」。真要跑涉及资金/账号的任务，得自己在任务边界上把关。</li>
+<li><strong>对照上一期更清楚</strong>：Pinky 把审批、屏蔽、录屏放在中间层，代价是重流程；ego lite 把共享和并行做到极致，代价是信任面扩大。一个管「手机」，一个管「浏览器」，思路正好互补，安全模型却走了两个方向。</li>
+<li><strong>不是开源浏览器</strong>。仓库 MIT 只覆盖 skill/CLI/docs，本体闭源。对供应链有要求的团队，这一点直接决定能不能用。</li>
+<li><strong>857 MB</strong>。它是完整 Chromium，跟上一期 Pinky 那个 16–22 MB 下载、51 MB 落盘的 Go 原生应用不是一个量级；想装个「轻量工具」的要有心理准备。</li>
+<li><strong>benchmark 是官方自测</strong>。Real-World Bench 宣称 31 个真实网站任务、5 个工具，同一 Agent（pi）、同一模型（gpt-5.6-sol，thinking max）、同一评审，结论是快 47%–63%、成功率与成本全面领先。方法写得挺规范，但由项目方自己跑、自己发布，当作方向性参考就好，别当第三方结论。</li>
+<li><strong>「经验积累最高 5x」还没上线</strong>，README 明确标着 <em>coming soon</em>。</li>
+<li><strong>Linux 用户暂时没戏</strong>，路线图不等于可用。</li>
+<li><strong>年轻且迭代快</strong>。7 个月涨到 22k star，同时 274 个 open issue；接口和行为可能随版本变，Skill 指南也要求每次 <code>upgrade</code> 后重跑 <code>ego-browser skill</code>。生产依赖前先读 release notes。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>定位</th>
+<th>登录态</th>
+<th>抢不抢浏览器</th>
+<th>接入方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>browser-use / agent-browser</td>
+<td>自动化框架，需外挂浏览器</td>
+<td>难带过去</td>
+<td>抢</td>
+<td>Python / CLI</td>
+</tr>
+<tr>
+<td>playwright-cli / Browser Harness</td>
+<td>浏览器 CLI</td>
+<td>不带</td>
+<td>抢</td>
+<td>CLI</td>
+</tr>
+<tr>
+<td>Browserbase / 云浏览器</td>
+<td>云端托管浏览器</td>
+<td>不带</td>
+<td>不抢</td>
+<td>API</td>
+</tr>
+<tr>
+<td>Claude/Codex in Chrome</td>
+<td>浏览器扩展</td>
+<td>带</td>
+<td>部分</td>
+<td>锁自家 Agent</td>
+</tr>
+<tr>
+<td>Comet / Dia</td>
+<td>AI 浏览器</td>
+<td>带</td>
+<td>不抢</td>
+<td>锁自家模型</td>
+</tr>
+<tr>
+<td><strong>ego lite</strong></td>
+<td><strong>人和 Agent 共用的浏览器</strong></td>
+<td><strong>带</strong></td>
+<td><strong>不抢（Space 隔离）</strong></td>
+<td><strong>Skill + CLI，任意 Agent</strong></td>
+</tr>
+<tr>
+<td><em>（上一期）Pinky</em></td>
+<td><em>手机 MCP 网关</em></td>
+<td><em>—</em></td>
+<td><em>主屏归你</em></td>
+<td><em>MCP + 人工审批</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>已经在用 Claude Code / Codex 跑网页任务的人</strong>：省掉反复登录和 CAPTCHA，也不用再跟 Agent 抢窗口；</li>
+<li><strong>需要多 Agent 并行干活的人</strong>：批量补全线索、竞品页抓取、多站点 QA，Space 是目前最干净的隔离方案；</li>
+<li><strong>在意数据不出本机的人</strong>：Cookie、扩展、书签、浏览数据全在本地，比云浏览器方案合口径。</li>
+</ul>
+<p><strong>不适合谁</strong>：只用 Linux 的；要求浏览器本体开源可自建的；只想跑无状态、可重复的爬虫（Playwright 更直接、更可控）；以及<strong>打算把全部已登录账号交给一个没有审批层的 Agent、又不做任务边界约束的</strong>——这种情况下「不抢标签页」给你的安全感，跟 Pinky 那期提到的「有 shell 权限就能绕过 adb」是同一类错觉。</p>
+<p>一句话收尾：ego lite 真正回答的问题不是「怎么让 AI 点网页」，而是「当人和 Agent 要用同一个设备时，边界画在哪」。它把边界画在了<strong>标签页</strong>上；Pinky 把边界画在了<strong>操作权限</strong>上。两期连着看，比单独看任何一个都清楚。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/pinky/"><span class="post-nav-label">上一期</span><span class="post-nav-title">Pinky：让 Agent 用上你的真手机，但关键一步必须你点头</span></a><a class="post-nav-item post-nav-next" href="/tools/rustdesk/"><span class="post-nav-label">下一期</span><span class="post-nav-title">RustDesk：把远程桌面的服务器搬回自己家</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

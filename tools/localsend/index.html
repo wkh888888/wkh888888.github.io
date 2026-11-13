@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LocalSend：连账号都不用，把文件留在局域网里 · walker</title><meta name="description" content="9.8 万 Star 的开源 AirDrop 替代（Apache-2.0，Flutter/Dart），Windows / macOS / Linux / Android / iOS / Fire OS 全平台，设备间走 REST API + HTTPS 直连，不需要互联网、账号或第三方服务器。入站只需一个端口 53317，MIT 式的极简，边界是「必须在同一个局域网」。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/localsend/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="LocalSend：连账号都不用，把文件留在局域网里 · walker"><meta property="og:description" content="9.8 万 Star 的开源 AirDrop 替代（Apache-2.0，Flutter/Dart），Windows / macOS / Linux / Android / iOS / Fire OS 全平台，设备间走 REST API + HTTPS 直连，不需要互联网、账号或第三方服务器。入站只需一个端口 53317，MIT 式的极简，边界是「必须在同一个局域网」。"><meta property="og:url" content="https://blog.walkerhua.com/tools/localsend/"><meta property="og:image" content="https://blog.walkerhua.com/og/localsend.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="LocalSend：连账号都不用，把文件留在局域网里 · walker"><meta name="twitter:description" content="9.8 万 Star 的开源 AirDrop 替代（Apache-2.0，Flutter/Dart），Windows / macOS / Linux / Android / iOS / Fire OS 全平台，设备间走 REST API + HTTPS 直连，不需要互联网、账号或第三方服务器。入站只需一个端口 53317，MIT 式的极简，边界是「必须在同一个局域网」。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/localsend.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>LocalSend：连账号都不用，把文件留在局域网里</h1><p>前面五期都在讨论「中间那一层归谁」，这一期干脆把中间层删掉——没有账号、没有服务器、甚至不需要互联网。</p><div class="hero-meta"><span>第 17 期</span><span>发布于 2026-11-11</span><span>约 6 分钟</span><a class="tag" href="https://github.com/localsend/localsend" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/文件传输/">文件传输</a><a class="tag" href="/tags/局域网/">局域网</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/跨平台/">跨平台</a><a class="tag" href="/tags/隐私/">隐私</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>LocalSend 常被叫「跨平台 AirDrop」，这个比喻好懂，但会漏掉它真正的取舍：</p>
+<ul>
+<li><strong>它不是网盘或消息类应用</strong>。不上传、不同步、不留存历史；两台设备互相发现、传完就结束，没有一个「云端」存在。</li>
+<li><strong>它不是聊天工具的文件传输</strong>。虽然 README 里用「secure communication between devices」描述，实际交付的是本地 REST API + HTTPS 的文件收发，不是 IM。</li>
+<li><strong>它不是破网工具</strong>。跨网段、跨公网、异地互传都不在默认能力里；官方设定就是「同一个局域网」。想跨网络，得自己配 VPN / 组网，那是另一层的活。</li>
+<li><strong>它不是 AirDrop 的完整等价物</strong>。AirDrop 靠苹果生态的蓝牙 + Wi-Fi 直连与设备身份体系；LocalSend 靠局域网广播发现 + 每台设备即时生成的自签证书，没有账号体系，也就没有「这个设备是不是可信」的现成答案。</li>
+<li><strong>它不是装上就一劳永逸</strong>。README 明说<strong>没有自动更新</strong>，并建议从应用商店或包管理器安装以便升级。</li>
+<li><strong>它不是只给电脑用的</strong>。Windows / macOS / Linux / Android / iOS / Fire OS 六端都有官方分发渠道，这才是它相对 AirDrop 的核心价值。</li>
+</ul>
+<p>预期摆正：LocalSend 的价值不是「更快」，是<strong>把文件传输这件事从任何第三方手里拿回来</strong>。代价是你要接受局域网这个物理边界。</p>
+<blockquote>
+<p>一手数据（2026-11-11 15:04 从 GitHub API 拉）：<code>localsend/localsend</code>，<strong>98,334 star / 5,618 fork / 1,031 open issue</strong>，Dart/Flutter，<strong>Apache-2.0</strong>，建库 2022-12-16，最新 release <code>v1.18.2</code>（2026-08-21）。官网 <code>localsend.org</code>。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>生态混搭</strong>：Mac 传 Windows、Windows 传 Android、Android 传 Linux——AirDrop 只管苹果设备，互相之间的通路通常靠微信文件助手、QQ、网盘绕一圈。</li>
+<li><strong>「传个文件为什么要上云」</strong>：几十 MB 的截图、几百 MB 的安装包，从这台机器到一米外的另一台机器，却要先传到某个服务器再下载回来，既慢又留痕。</li>
+<li><strong>公司/内网环境的合规别扭</strong>：客户资料、日志文件不能过公网盘，但又没有专门的内网传输工具。</li>
+<li><strong>没网也要传</strong>：会议室、机房、飞机上、只有一台路由器的临时环境，互联网不通但局域网是通的。</li>
+</ul>
+<p>LocalSend 的答案是把协议压到最小：设备之间用 REST API 通信，全部数据走 HTTPS，TLS/SSL 证书<strong>在每台设备上即时生成</strong>；不需要账号、不需要注册、不需要外部服务器，也不需要互联网。</p>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传输协议</td>
+<td>设备间 REST API + HTTPS，TLS/SSL 证书每台设备即时生成；协议独立成仓库 <code>localsend/protocol</code>，当前 CLI 基于 Protocol v2</td>
+</tr>
+<tr>
+<td>发现机制</td>
+<td>局域网内广播发现同网段设备，靠设备别名互相认领</td>
+</tr>
+<tr>
+<td>端口</td>
+<td><strong>入站 TCP + UDP 53317</strong>，出站任意；Linux 上 <code>ufw allow 53317</code> / <code>firewalld</code> 放行，路由器需关闭 <strong>AP 隔离</strong></td>
+</tr>
+<tr>
+<td>平台</td>
+<td>Windows / macOS / Linux / Android / iOS / Fire OS；官方分发覆盖 App Store、Play Store、F-Droid、Flathub、Snap、AUR、Winget、Scoop、Chocolatey、Homebrew、DEB / TAR / AppImage</td>
+</tr>
+<tr>
+<td>最低版本</td>
+<td>Android 7.0、iOS 15、macOS 12 Monterey、Windows 10；Linux 需 <code>xdg-desktop-portal</code>（Gnome/KDE 各自的 portal）</td>
+</tr>
+<tr>
+<td>便携模式</td>
+<td>v1.13.0 起，可执行文件同目录放一个 <code>settings.json</code>（可为空）即改用该文件存设置</td>
+</tr>
+<tr>
+<td>后台启动</td>
+<td>v1.15.0 起用 <code>--hidden</code> 只驻留托盘</td>
+</tr>
+<tr>
+<td>命令行</td>
+<td>独立的 LocalSend CLI（Protocol v2 终端客户端），macOS / Linux 可经 Homebrew 安装</td>
+</tr>
+<tr>
+<td>构建</td>
+<td>Flutter + Rust；项目用 <code>fvm</code> 锁定较老的 Flutter 版本，README 提醒系统级 Flutter 版本不匹配会导致构建失败</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>「不需要账号」这件事本身</strong>（没有登录态、没有设备绑定、没有云端历史，是这五期里信任面最小的一个）和<strong>端口只有一个</strong>（53317，排查网络问题时的复杂度比一整套服务发现低一个量级）。全平台分发是让它真正能替代 AirDrop 的前提，不是加分项而是及格线。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>官方明确建议走<strong>应用商店或包管理器</strong>，原因很实在：应用本身没有自动更新，靠渠道跟版本才不会长期停在旧版。本机就是 <code>brew install --cask localsend</code>。</p>
+<p>装完通常开箱即用；连不上时按官方 Setup 表排查：入站 TCP/UDP 53317 放行、出站不限制、路由器关掉 AP 隔离（<strong>访客网络常默认开着 AP 隔离</strong>，这是最常见的「明明在同一 Wi-Fi 却发现不了对方」的原因）。</p>
+<p><strong>本机实测（macOS 26.6.2 / arm64）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/LocalSend.app</code>，<code>1.18.2</code>（build 64），<strong>147 MB</strong>，2026-08-21 21:49 安装——正好是 <code>v1.18.2</code> 发布当天</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体为个人开发者 <code>Tien Do Nam</code></td>
+</tr>
+<tr>
+<td>Bundle ID</td>
+<td><code>org.localsend.localsendApp</code></td>
+</tr>
+<tr>
+<td>进程</td>
+<td>实测当前无后台进程（用时才起，这点跟前几期的常驻 daemon 类工具形成对照）</td>
+</tr>
+<tr>
+<td>版本状态</td>
+<td>本机 1.18.2 = 仓库最新 release，隔了近三个月没落后（也说明这三个月没发新版）</td>
+</tr>
+</tbody>
+</table>
+<p>一个如实记录的观察：<strong>打开时没有常驻后台服务</strong>，跟 UU远程、ToDesk、magpie 那几款「开机就挂几个进程」的工具不一样。代价是每次要传文件都得先把两端的应用打开——这正是「没有中间层」的另一面。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>同一个局域网是硬前提</strong>。跨 VLAN、跨网段、访客 Wi-Fi 开了 AP 隔离、公司网络禁广播、两端各自挂在不同 VPN 里，都会直接发现不了。这不是 bug，是设计。</li>
+<li><strong>端口要能通</strong>。53317 的 TCP 和 UDP 入站都要放行；企业终端管控、防火墙默认策略常拦这一关。</li>
+<li><strong>设备身份靠你自己核对</strong>。每台设备即时生成自签证书，HTTPS 保证了链路上是加密的，但没有账号体系或可信设备列表来做身份验证——在公共 Wi-Fi、会议室这种环境里，收到文件前先看清楚对方设备别名，别闭眼点接受。这是「无账号」必然换来的责任，不是实现缺陷。</li>
+<li><strong>没有自动更新</strong>。安全相关的版本滞后要自己盯；这也是官方反复建议走包管理器/应用商店的原因。</li>
+<li><strong>官方挂了 CAUTION 的第三方构建</strong>：README 提醒存在一个非官方 MSIX 预览站，稳定性不保证；装包只认官方渠道与签名（Windows 二进制有签名，macOS 版本机实测已公证）。</li>
+<li><strong>速度取决于你的 Wi-Fi，不取决于软件</strong>。局域网直连没有云端限速，但路由器、2.4G 频段、AP 隔离下的中继都会把它打回原形；大文件别拿它跟有线拷贝比。</li>
+<li><strong>构建门槛不小</strong>：Flutter + Rust + <code>fvm</code> 锁版本，README 明说系统级 Flutter 版本不匹配会编译失败。想自己出包要按它的 <code>.fvmrc</code> 来。</li>
+<li><strong>1,031 个 open issue</strong>：项目成熟、star 近十万，但问题也不少；遇到平台特有的坑（尤其 Linux 桌面 portal、iOS 后台限制）先查 issue，别假设是自己的网络坏了。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>中间层</th>
+<th>要账号</th>
+<th>跨生态</th>
+<th>互联网</th>
+<th>数据落在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AirDrop</td>
+<td>苹果设备直连</td>
+<td>Apple ID</td>
+<td>✗ 仅苹果</td>
+<td>不需要</td>
+<td>两端</td>
+</tr>
+<tr>
+<td>微信 / QQ 文件助手</td>
+<td>厂商服务器</td>
+<td>要</td>
+<td>✓</td>
+<td>要</td>
+<td>厂商（有留存风险）</td>
+</tr>
+<tr>
+<td>网盘同步</td>
+<td>云端</td>
+<td>要</td>
+<td>✓</td>
+<td>要</td>
+<td>云</td>
+</tr>
+<tr>
+<td>远控软件的文件传输（13–15 期）</td>
+<td>厂商中继或 P2P</td>
+<td>要</td>
+<td>✓</td>
+<td>通常要</td>
+<td>两端 + 厂商链路</td>
+</tr>
+<tr>
+<td><strong>LocalSend</strong></td>
+<td><strong>无</strong></td>
+<td><strong>不要</strong></td>
+<td><strong>✓ 六端</strong></td>
+<td><strong>不需要</strong></td>
+<td><strong>只两端</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>苹果 + Windows + Android 混用的人</strong>：这是它最不可替代的场景，一条局域网把所有设备拉平；</li>
+<li><strong>对「为什么要上云」敏感的人</strong>：日志、客户资料、内部包在两台机器之间走完，不产生云端副本；</li>
+<li><strong>弱网 / 无网环境</strong>：机房、会议室、临时路由器下照样能传；</li>
+<li><strong>不想再多一个账号的人</strong>：没有注册、没有设备绑定、没有同步关系，装完就能用，卸了就干净。</li>
+</ul>
+<p><strong>不适合谁</strong>：需要异地、跨公网互传又不想自己组网的（那该看 VPN / Tailscale 或回远控工具）；企业网络里 UDP 广播和 53317 都被拦、又没有权限改防火墙的；以及需要传输审计、权限控制、留存记录的团队——LocalSend 刻意不提供这些，别把它当内网文件系统的替代品。</p>
+<p>一句话收尾：前面五期的选题其实都在问「中间那一层归谁管」——Pinky 归网关、ego lite 归浏览器、RustDesk 归你自己的服务器、UU远程归厂商条款、ToDesk 归价目表。LocalSend 给的是第六个答案：<strong>谁都不归，因为压根没有中间层</strong>。简单到近乎固执，也因此在隐私这件事上，比前面任何一个都干净。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/magpie/"><span class="post-nav-label">上一期</span><span class="post-nav-title">magpie：给所有 AI Agent 装一个「换模型总闸」</span></a><a class="post-nav-item post-nav-next" href="/tools/orbstack/"><span class="post-nav-label">下一期</span><span class="post-nav-title">OrbStack：换掉 Docker Desktop 之前，先读那行「个人非商用」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UU远程：装完就能用的 4K 远控，代价写在协议里 · walker</title><meta name="description" content="网易出品的闭源免费远程控制（原 GameViewer），4K/144 帧、手机平板远控电脑、不限大小文件传输、防窥屏与远程开机，Windows/macOS/iOS/Android/TV 全平台。代价是需要网易账号、常驻后台进程，以及软件协议里明确保留的「免费转收费」「投放广告」条款。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/uu-remote/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="UU远程：装完就能用的 4K 远控，代价写在协议里 · walker"><meta property="og:description" content="网易出品的闭源免费远程控制（原 GameViewer），4K/144 帧、手机平板远控电脑、不限大小文件传输、防窥屏与远程开机，Windows/macOS/iOS/Android/TV 全平台。代价是需要网易账号、常驻后台进程，以及软件协议里明确保留的「免费转收费」「投放广告」条款。"><meta property="og:url" content="https://blog.walkerhua.com/tools/uu-remote/"><meta property="og:image" content="https://blog.walkerhua.com/og/uu-remote.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="UU远程：装完就能用的 4K 远控，代价写在协议里 · walker"><meta name="twitter:description" content="网易出品的闭源免费远程控制（原 GameViewer），4K/144 帧、手机平板远控电脑、不限大小文件传输、防窥屏与远程开机，Windows/macOS/iOS/Android/TV 全平台。代价是需要网易账号、常驻后台进程，以及软件协议里明确保留的「免费转收费」「投放广告」条款。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/uu-remote.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>UU远程：装完就能用的 4K 远控，代价写在协议里</h1><p>上一期把远程桌面的服务器搬回自己家，这一期干脆把服务器交给网易——同一道题，两种信任模型，正好对着看。</p><div class="hero-meta"><span>第 14 期</span><span>发布于 2026-11-11</span><span>约 8 分钟</span><a class="tag" href="https://uuyc.163.com/" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/远程桌面/">远程桌面</a><a class="tag" href="/tags/游戏串流/">游戏串流</a><a class="tag" href="/tags/网易/">网易</a><a class="tag" href="/tags/免费/">免费</a><a class="tag" href="/tags/隐私/">隐私</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>写完 RustDesk 再写 UU远程，对照会特别清楚。它官网上那句「真 4K、真免费、真好用」很容易让人以为它是「更好用的 RustDesk」，其实两者的差别是路线级的：</p>
+<ul>
+<li><strong>它不是开源软件，也不能自建</strong>。没有公开仓库，官方《软件许可及服务协议》明确写着网易享有全部知识产权，用户不得复制、修改、挂接运行或创作衍生作品，甚至「不得使用非网易公司提供的插件、外挂或非经授权的第三方工具/服务接入」。上一期 RustDesk 那句「可以自己写一套 rendezvous/relay server」，在这里是完全相反的方向。</li>
+<li><strong>它不是一个纯工具，是一项账号服务</strong>。主流程要在各端装客户端、用同一个网易账号登录，设备列表、连接历史、云键位都挂在账号上；不是「发个 ID 就完事」的独立程序。</li>
+<li><strong>它的「免费」不是承诺，是现状</strong>。协议第 5 条明确保留把免费服务变更为收费、调整收费标准的权利，第 6 条保留在服务中投放广告的权利，4.2 条不保证旧版本继续可用，4.4 条保留修改功能、中断服务且无需担责的权利。这几条是这期最值得读的内容，下面单独展开。</li>
+<li><strong>它不只是办公远控</strong>。前身叫 GameViewer，从 UU 加速器的游戏网络里长出来的，游戏串流、键位映射、手柄回传才是差异化最大那块。</li>
+<li><strong>它不是「端到端加密 = 万事大吉」</strong>。被控端要拿系统权限、装常驻进程；加密解决传输，解决不了「谁有权连上这台机器」。</li>
+</ul>
+<p>预期摆正：它把远程桌面做到了「装完登录就能用」，代价是把中间那一层、账号、以及一部分设备信息，都交给了网易。这不是贬义，是选择。</p>
+<blockquote>
+<p><strong>数据来源说明</strong>：这一期没有 GitHub 仓库可查，一手材料是官网 <code>uuyc.163.com</code>、官方《软件许可及服务协议》与《隐私政策》、官方产品页，加上本机 App 实测。网上大量「1ms 延迟」「单文件 10GB」「300MB 传 55 秒」出自第三方推广稿，没有官方背书，本文不采用；官方自己给的规格也一律标成「官方口径」，不代表我跑过实测。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>免费版被功能阉割</strong>：向日葵、ToDesk 这类国内工具的免费额度常卡在画质、帧率、文件大小、多屏上；UU远程把这些标成免费开放，是它最直接的杀伤力。</li>
+<li><strong>公网串流门槛高</strong>：自己搭 frp / 打洞 / 端口映射对普通人是硬门槛；它用账号 + 专网把这些全部藏掉，异地即装即用。</li>
+<li><strong>国内跨网远控的延迟</strong>：官方产品页说依托 300 多个节点机房构建高速专网，这是它相对境外公共服务器的天然优势。</li>
+<li><strong>手机/平板想玩 PC 游戏、当副屏</strong>：大包体游戏不用在移动端重下，平板能当无线副屏，手柄和键位方案是现成的。</li>
+<li><strong>帮家人修电脑</strong>：ID + 验证码快速连接；官方还提供一个 Windows 精简版单文件 exe，对方不用安装登录、双击给码即可（这条来自网易自家内容号，不是官网功能页）。</li>
+</ul>
+<h2 id="核心能力">核心能力</h2>
+<p>以下均为<strong>官方口径</strong>（官网首页 + 官方产品页/博客），不是实测值：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>官方列出的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>画质</td>
+<td>最高 4K / 144 帧，真彩模式（4:4:4 色彩采样），自定义码率最高 500 Mbps，HDR</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>300+ 节点机房构建高速专网，官方称毫秒级响应、低延迟串流；文件传输走 P2P 直连链路</td>
+</tr>
+<tr>
+<td>操控</td>
+<td>键鼠 / 多点触控 / 手柄直连（官方称最多 4 个、支持震动回传）/ 沉浸式鼠标 / 数百款游戏云键位开箱即用</td>
+</tr>
+<tr>
+<td>办公</td>
+<td>文件传输不限数量、格式、大小，断点续传；多屏控多屏；独立远程终端（纯文本低流量）；端口映射；虚拟屏 / 无线副屏</td>
+</tr>
+<tr>
+<td>隐私与便利</td>
+<td>被控端防窥模式（一键黑屏）、被控端静音、远程开机（WOL）、一键禁止远程协助、最近连接历史</td>
+</tr>
+<tr>
+<td>平台</td>
+<td>Windows、macOS、iOS、Android、TV（官网 2026-11-09 资讯页列举；Mac 被控为后续版本补上）</td>
+</tr>
+<tr>
+<td>安全声明</td>
+<td>官网标「端到端加密」，并列信息安全管理体系认证、隐私信息管理体系认证、软件安全渗透测试通过、卓信大数据成员单位</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>把公网串流的配置成本压到零</strong>（这是绝大多数人真正卡住的地方）和<strong>防窥屏 / 被控端静音</strong>（在办公室、宿舍这种场景里，它比多 30 帧实用得多）。游戏键位方案是加分项，但只对该场景的人成立。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>官网 <code>uuyc.163.com</code> 下载各端客户端，同账号登录；被控端要放行系统权限（官方博客特别提示 macOS 的辅助功能权限）。办公/协助场景走「我的设备」列表点选，临时协助走 ID + 验证码。</p>
+<p><strong>本机实测（macOS 26.6.2 / arm64）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/UURemote.app</code>，<code>4.42.0</code>（build 625），<strong>185 MB</strong>，2026-10-08 安装</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体 <strong>Hangzhou Bobo Technology Co Ltd</strong>（网易关联主体，不是「网易」字样）</td>
+</tr>
+<tr>
+<td>Bundle ID</td>
+<td><code>com.netease.uuremote</code>，配置分散在 <code>com.netease.uuremote</code> / <code>.server</code> / <code>.helper</code> / <code>.updater</code> 多个域</td>
+</tr>
+<tr>
+<td>常驻进程</td>
+<td>实测<strong>当前有 5 个相关进程在跑</strong>：<code>UURemoteDaemon -daemon</code>（PID 617，开机级）、<code>UURemoteServer</code> 两个、<code>UURemoteService -agent</code>、主程序 <code>UURemote</code>——即使此刻没有远程会话</td>
+</tr>
+<tr>
+<td>数据目录</td>
+<td><code>~/Library/Application Support/com.netease.uuremote/</code> 下有 <code>Clipboard</code>、<code>Logs</code>、<code>MMKVRootDir</code>、<code>UploadLog</code>、<code>Download</code>、<code>Device_AppShortcut_Data</code> 等子目录，最早痕迹可追到 3 月</td>
+</tr>
+</tbody>
+</table>
+<p>两个观察：<strong>daemon + server 是开机常驻的</strong>，被控能力不是「用时才起」；以及客户端体积 185 MB，比上一期 RustDesk 的 69 MB 大近两倍——它是带完整串流与账号体系的产品，不是轻量工具。另外各端版本号并不同步（本机 Mac 版 4.42.0，Windows 端第三方站点已出现更新的版本号），查版本以官网下载页为准，别拿下载站数字当事实。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<p>这一节比功能表重要。<strong>《软件许可及服务协议》</strong>（<code>uuyc.163.com/contact/20240402/40294_1146065.html</code>）逐条看：</p>
+<ul>
+<li><strong>第 5 条</strong>：网易及关联方保留对增值服务收费、改变收费标准与方式的权利；免费变更为收费会通知，用户可选择接受或拒绝。<strong>「永久免费」是社区说法，不是协议条款。</strong></li>
+<li><strong>第 6 条</strong>：保留在服务中或通过服务投放广告和宣传信息的权利。</li>
+<li><strong>第 2.1 条</strong>：授权范围是「单一一台终端设备上安装、使用一份副本」，并禁止复制、修改、挂接运行、创作衍生作品、使用非授权第三方工具接入。企业批量部署、二次集成、想接自己的自动化脚本，先确认授权——这条跟开源方案是根本区别。</li>
+<li><strong>第 4.2 / 4.4 条</strong>：新版本发布后不保证旧版本继续可用；可经事先通知修改功能、中断或中止服务，且不承担由此产生的损失。工具链依赖它做长期无人值守，要留后手。</li>
+<li><strong>第 3.3 条</strong>：被控方「分享本机并发送验证信息」即视为把系统权限授权给控制方，权限范围由双方自行确定。别把验证码随手发人。</li>
+</ul>
+<p><strong>《UU远程隐私政策》</strong>（<code>.../40294_1146067.html</code>）里，收集范围比很多人预期宽：</p>
+<ul>
+<li>使用「游戏云电脑」或其他需实名服务前，需填<strong>姓名和有效身份证件信息</strong>做实名认证；也支持网易邮箱/手机账号或第三方平台账号登录并获取授权信息。</li>
+<li>为运营安全收集的日志包括登录日志、操作信息、账号 ID、搜索查询内容、IP、运营商、网页浏览记录、停留时长等。</li>
+<li>设备信息里列到了设备标识符（MAC / IMEI / Android ID / IDFA / OpenUDID / GUID / SIM 序列号 / IMSI / OAID / 设备序列号）、<strong>Wi-Fi SSID、路由器 MAC(BSSID)、路由器机型与名称、主板厂商</strong>、CPU/GPU/内存使用情况、IP 与子网掩码等。</li>
+</ul>
+<p>再叠上实测到的常驻 daemon 与剪贴板目录，结论很直接：<strong>「免费」的对价是账号、设备与网络侧的信息，以及一份可随时调整的服务条款</strong>。这不代表它不安全——官网列了端到端加密和三项认证——但它是闭源的，你没法像审 RustDesk 那样自己看代码、也没法把中继搬到自己机房验证。信任只能建立在厂商信誉和认证上。</p>
+<p>其他要注意的：</p>
+<ul>
+<li><strong>宣传数字看口径</strong>。「4K / 144 帧 / 500 Mbps」都是<strong>最高支持</strong>，实际取决于网络、被控端性能和编码；官方与第三方软文里的「18–30ms」「1ms 局域网」都没有可复核的测试条件，别当 SLA。</li>
+<li><strong>云电脑是另一项服务</strong>，涉及实名与可能的付费，和「远控你自己的电脑」不是一回事，别混着算「全免费」。</li>
+<li><strong>不用时关掉被控入口</strong>。官网提供「一键禁止远程协助」，长期不用的机器建议关掉，别让开机常驻的 daemon 白挂着。</li>
+<li><strong>macOS 权限要自己收</strong>。辅助功能、屏幕录制这类权限给了就是给了，卸载时顺手检查一遍系统设置。</li>
+<li><strong>企业/合规场景先读协议</strong>。客户机器、内网资产走第三方账号体系与专网，通常不是技术问题是合规问题。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RustDesk（自建）</th>
+<th>ToDesk / 向日葵免费版</th>
+<th>TeamViewer</th>
+<th><strong>UU远程</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源码与自建</td>
+<td>AGPL 开源，中间层自己跑</td>
+<td>闭源，厂商托管</td>
+<td>闭源，厂商托管</td>
+<td><strong>闭源，厂商托管，禁止第三方接入</strong></td>
+</tr>
+<tr>
+<td>账号</td>
+<td>不需要</td>
+<td>需要</td>
+<td>需要</td>
+<td><strong>需要网易账号，部分服务需实名</strong></td>
+</tr>
+<tr>
+<td>国内开箱体验</td>
+<td>公共服务器在境外，建议自建</td>
+<td>好</td>
+<td>一般</td>
+<td><strong>好，专网节点在国内</strong></td>
+</tr>
+<tr>
+<td>免费范围</td>
+<td>OSS 全功能</td>
+<td>画质/文件/多屏常设限</td>
+<td>商用检测严格</td>
+<td><strong>核心功能标为免费，协议保留转收费</strong></td>
+</tr>
+<tr>
+<td>数据主权</td>
+<td>在自己手里</td>
+<td>厂商</td>
+<td>厂商</td>
+<td><strong>厂商，且隐私政策收集面较宽</strong></td>
+</tr>
+<tr>
+<td>游戏串流</td>
+<td>无专门优化</td>
+<td>弱</td>
+<td>弱</td>
+<td><strong>强项：云键位、手柄、高帧率</strong></td>
+</tr>
+<tr>
+<td>运维责任</td>
+<td>自己</td>
+<td>厂商</td>
+<td>厂商</td>
+<td><strong>厂商</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>只想「装完就能用」的个人用户</strong>：异地远控家里/公司电脑、平板当副屏、偶尔传大文件，不想碰端口映射和服务器，这是目前省事程度最高的一档；</li>
+<li><strong>游戏玩家</strong>：手机/平板串流 PC 游戏、键位方案和手柄适配是它真正的护城河；</li>
+<li><strong>经常帮家人朋友修电脑的</strong>：ID + 验证码、免安装精简版，比教对方配网络现实得多；</li>
+<li><strong>被免费版功能阉割烦了的</strong>：把 4K/高帧率/不限大小文件传输一次性放开，确实解气。</li>
+</ul>
+<p><strong>不适合谁</strong>：数据必须不出自己基础设施的团队（直接看上一期 RustDesk，或 MeshCentral）；需要审计客户端行为、二次开发、接入自己自动化系统的（协议 2.1 明确禁止）；把「永久免费」写进长期方案、无法承受服务条款变更的；以及对设备信息收集范围敏感、不愿用实名账号绑定远程控制权限的。</p>
+<p>四期连起来看，其实是同一道选择题的四个答案：<strong>Pinky</strong> 把闸门装在审批网关，<strong>ego lite</strong> 装在标签页隔离，<strong>RustDesk</strong> 装在服务器归属，<strong>UU远程</strong> 装在厂商的服务条款里。前三个你都得自己动手，最后一个你几乎不用动手——<strong>它不是免费的午餐，是把运维成本和信任成本一起打包交了出去</strong>。想清楚自己更在意哪一头，选型就不纠结了。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/rustdesk/"><span class="post-nav-label">上一期</span><span class="post-nav-title">RustDesk：把远程桌面的服务器搬回自己家</span></a><a class="post-nav-item post-nav-next" href="/tools/todesk/"><span class="post-nav-label">下一期</span><span class="post-nav-title">ToDesk：免费版止步 1080P/30 帧，剩下的明码标价</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

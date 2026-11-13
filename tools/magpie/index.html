@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>magpie：给所有 AI Agent 装一个「换模型总闸」 · walker</title><meta name="description" content="34k Star 的 MIT 开源本地网关（Go），把 Claude Code / Codex / Gemini CLI / OpenCode / WorkBuddy 等各家 Agent 的模型、供应商、订阅账号收进一个菜单栏。配额耗尽自动 failover，密钥与用量本地可查，隐私掩码默认关闭。macOS / Windows / Linux / Docker / Termux 全平台。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/magpie/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="magpie：给所有 AI Agent 装一个「换模型总闸」 · walker"><meta property="og:description" content="34k Star 的 MIT 开源本地网关（Go），把 Claude Code / Codex / Gemini CLI / OpenCode / WorkBuddy 等各家 Agent 的模型、供应商、订阅账号收进一个菜单栏。配额耗尽自动 failover，密钥与用量本地可查，隐私掩码默认关闭。macOS / Windows / Linux / Docker / Termux 全平台。"><meta property="og:url" content="https://blog.walkerhua.com/tools/magpie/"><meta property="og:image" content="https://blog.walkerhua.com/og/magpie.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="magpie：给所有 AI Agent 装一个「换模型总闸」 · walker"><meta name="twitter:description" content="34k Star 的 MIT 开源本地网关（Go），把 Claude Code / Codex / Gemini CLI / OpenCode / WorkBuddy 等各家 Agent 的模型、供应商、订阅账号收进一个菜单栏。配额耗尽自动 failover，密钥与用量本地可查，隐私掩码默认关闭。macOS / Windows / Linux / Docker / Termux 全平台。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/magpie.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>magpie：给所有 AI Agent 装一个「换模型总闸」</h1><p>第 2 期 CC Switch 管的是「谁在登录」，这一期管的是「用哪个模型」——而且能把 CC Switch 的配置直接导进来。</p><div class="hero-meta"><span>第 16 期</span><span>发布于 2026-11-11</span><span>约 8 分钟</span><a class="tag" href="https://github.com/yetone/magpie" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/AI/">AI</a><a class="tag" href="/tags/Agent/">Agent</a><a class="tag" href="/tags/模型网关/">模型网关</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/macOS/">macOS</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>本机装了六个 vendor CLI，每个都有自己的配置文件、自己的格式、自己的 base URL 和 key。magpie 是冲着这个碎片化来的，但它容易被误解成另一样东西：</p>
+<ul>
+<li><strong>它不是一个新模型，也不是一个新的 AI 客户端</strong>。没有自己的模型、不写代码、不跟你对话；它只做一件事：把各 Agent 发出的请求接住，翻译协议，再转给你选的供应商。</li>
+<li><strong>它不是「又一个 API 中转服务」</strong>。网关跑在 <code>127.0.0.1:3425</code>，是本机进程；提示词、回复、密钥、账号只去你指定的供应商，不经过作者的服务器。</li>
+<li><strong>它不是 CC Switch 的重复造轮子</strong>。第 2 期那款管的是各家 CLI 的<strong>账号/配置切换</strong>（换号总闸）；magpie 管的是<strong>模型与供应商</strong>，而且 Providers 页明确支持从 CC Switch 导入配置——两者是接力关系，不是替代。</li>
+<li><strong>它不是「装上就自动更安全」</strong>。隐私掩码<strong>默认关闭</strong>，要自己去 Settings → Privacy 打开；订阅账号发现也默认开着，会读各家 CLI 的登录文件和系统钥匙串。</li>
+<li><strong>它不是一个成熟稳定的 1.0 产品</strong>。版本号还在 <code>0.1.x</code>，仓库 49 天，3,727 个 open issue。功能密度惊人，但也意味着随时可能踩坑。</li>
+</ul>
+<p>预期摆正：magpie 解决的是「多 Agent × 多供应商 × 多账号」的组合爆炸，代价是所有请求多了一层本地网关。只用一个 Agent、用厂商自带套餐就够的人，README 自己说了「你不需要它」。</p>
+<blockquote>
+<p>一手数据（2026-11-11 15:04 从 GitHub API 拉）：<code>yetone/magpie</code>，<strong>34,172 star / 3,038 fork / 3,727 open issue</strong>，Go，<strong>MIT</strong>，建库 2026-09-23，最新 release <code>v0.1.3711</code>（当天 07:06 发布）。官网 <code>usemagpie.ai</code>。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>每个 Agent 一套配置</strong>：Claude Code 写 <code>settings.json</code>、Codex 写 <code>config.toml</code>、Gemini CLI 又是另一套，格式各异、key 与 base URL 散落，改一次模型要翻三个文件。</li>
+<li><strong>一份套餐只在一个 Agent 里能用</strong>：买了 Claude / ChatGPT / Copilot / Gemini / Grok 订阅，却只能在自家客户端里用；想让 Codex 跑 ChatGPT 套餐的模型，原本没路。</li>
+<li><strong>配额一断就停</strong>：单账号额度耗尽，Agent 直接收到错误；多账号、多供应商之间没有自动切换。</li>
+<li><strong>用量与成本看不见</strong>：哪个 Agent 烧了多少 token、哪个 key 快到期、缓存命中率多少，各家统计口径还不一样。</li>
+</ul>
+<p>magpie 的答案是「一个本地网关 + 一个菜单栏」：它原子改写各 Agent 自己配置文件里的那一个关键值（注释、顺序、格式都保留），所有请求统一走 <code>127.0.0.1:3425</code>，由网关做协议互转和路由。</p>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本地网关</td>
+<td>监听 <code>127.0.0.1:3425</code>，同时说 OpenAI Chat / OpenAI Responses / Anthropic Messages / Gemini 四种协议并互转，含流式、工具调用与 reasoning</td>
+</tr>
+<tr>
+<td>模型切换</td>
+<td>一个可搜索列表里选 <code>provider/model</code>，从菜单栏给任意 Agent 换模型；<strong>Profiles</strong> 把整套配置存成一个名字（Budget / Focus），一键全切回来</td>
+</tr>
+<tr>
+<td>Agent 覆盖</td>
+<td>README 列了 80+ 个：Claude Code、Codex、Gemini CLI、OpenCode、Cursor CLI、Copilot CLI、Cline、Qoder、WorkBuddy、CodeBuddy、Hermes Agent、OpenClaw… 只显示本机装了的；任何能改 base URL 的工具也能直接接网关</td>
+</tr>
+<tr>
+<td>供应商</td>
+<td>Anthropic / OpenAI / Gemini / Vertex / Bedrock / DeepSeek / Kimi / GLM / MiniMax / Qwen / 硅基流动 / Ollama / LM Studio 等预设，以及任意 OpenAI / Anthropic 兼容 URL；模型清单从供应商拉取，用 models.dev 补全名称与推理档位</td>
+</tr>
+<tr>
+<td>订阅复用</td>
+<td>把已登录的 Claude / ChatGPT / Copilot / Gemini / Grok 套餐当作 provider 提供给<strong>别的</strong> Agent；同类型可加多个账号，配额耗尽自动切下一个</td>
+</tr>
+<tr>
+<td>路由组</td>
+<td>多个模型当一个用（<code>group/daily-coding</code>），按 smart 等模式在成员间分摊；一个账号且没配组时，错误照常回到 Agent</td>
+</tr>
+<tr>
+<td>用量与成本</td>
+<td>token / 缓存读写 / reasoning / 调用次数，按标价折算美元或人民币；配额余额与窗口、会话成本、上下文占用、按账号出账，支持 OTLP 导出</td>
+</tr>
+<tr>
+<td>隐私掩码</td>
+<td>开启后在本机把 API key、私钥、token、邮箱、卡号/证件号换成 <code>{{API_KEY_…}}</code> 占位符再发出，回复里还原（含流式与工具调用参数）；值只在内存，掩码跑不起来就返回 503 扣住请求；可选 1.6 GB 本地模型识别姓名/地址/密码</td>
+</tr>
+<tr>
+<td>共享</td>
+<td>局域网共享网关并给每个客户端配额、Docker / NAS 上跑 Web UI、远程 magpie 复用另一台机器的供应商、WebDAV / S3 / 加密 GitHub 仓库同步配置</td>
+</tr>
+<tr>
+<td>平台</td>
+<td>macOS / Windows / Linux，菜单栏 App、窗口、TUI、Web UI、CLI 五种形态，另有 Docker 与 Termux</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>协议互转的本地网关</strong>（让订阅和 API key 跨 Agent 复用，这是别处很难做到的）和 <strong>Insights → Masking 的可核查性</strong>（每个被改写的请求都列出「供应商实际收到了什么」，比一句「我们很重视隐私」实在得多）。路由组和用量统计是把这两件事变成日常可用功能的关键配套。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>官方给的是一行脚本，或者 <code>go install github.com/yetone/magpie@latest</code>，或 Docker 镜像。<strong>脚本安装前值得先看一遍</strong>：macOS 装的是签名公证过的构建、会自更新；Linux 上如果缺 WebKitGTK 4.1，脚本会用包管理器装依赖并要 <code>sudo</code> 密码；无桌面环境则改装终端版。按惯例，第三方 <code>curl | sh</code> 建议先下载下来读，别直接管道执行。</p>
+<p>卸载也有对应脚本，会把各 Agent 的配置<strong>还原成原样</strong>再移除脚本装的东西；<code>~/.config/magpie</code> 里的设置默认保留，加 <code>--purge</code> 才删。</p>
+<p><strong>本机实测（macOS 26.6.2 / arm64）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/magpie.app</code>，<code>0.1.3697</code>，<strong>73 MB</strong>，2026-11-11 13:33 装（今天刚装，比当天最新 release <code>v0.1.3711</code> 落后十几个构建号）</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体为个人开发者 <code>Xipeng Guan</code></td>
+</tr>
+<tr>
+<td>Bundle ID</td>
+<td><code>com.yetone.magpie</code></td>
+</tr>
+<tr>
+<td>进程</td>
+<td>主程序 <code>magpie</code> + 一个插件宿主 <code>~/.cache/magpie/bun/1.4.4/magpie-bun</code> 在跑；<code>~/.config/magpie/</code> 下还有 <code>mcp-npm/</code> 缓存（可见它把 MCP 类工具也纳入了管理）</td>
+</tr>
+<tr>
+<td>配置</td>
+<td><code>com.yetone.magpie.plist</code>，主配置在 <code>~/.config/magpie/</code></td>
+</tr>
+</tbody>
+</table>
+<p>一个值得记的观察：<strong>它自带 Bun 运行时和插件宿主</strong>，不是「一个菜单栏小程序」那么轻；73 MB 的 App 之外还有按需下载的缓存。另外本机版本与当天 release 已经差了十几个构建号，说明发版节奏是按小时走的。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>所有请求多了一层</strong>。网关挂了，全部 Agent 一起断；协议互转（尤其是工具调用、reasoning、流式）是复杂翻译层，边缘行为要靠实测确认。把它当单点故障来设计，别当成透明管道。</li>
+<li><strong>极早期</strong>：49 天、0.1.x、3,727 个 open issue。功能列表长得像 2.0，稳定性不该按 2.0 预期，公司主力工作流先别全押上去。</li>
+<li><strong>MIT 开源，但不接受 PR</strong>。README 明确写「This repository doesn’t take pull requests. Only maintainers can open them」，反馈只能走 Discord。想自己修 bug 要 fork 维护，这跟一般 MIT 项目的协作预期不一样。</li>
+<li><strong>会读你的登录态</strong>：默认通过读取 Claude Code / Codex 的登录文件和系统钥匙串来发现订阅账号。不放心就在 Settings → Privacy 关掉 <code>Subscription accounts</code>，或 <code>magpie accounts discovery off</code>；单次运行可用 <code>MAGPIE_NO_ACCOUNTS=1</code>。API-key 型供应商不受影响。</li>
+<li><strong>隐私掩码默认关闭</strong>，且开启有代价：模型看到的是占位符，凡是「为什么这个 token 被拒」这类针对值本身的任务就做不了，要把值放进 Never mask；规则也可能误判，Insights 页要去核对。</li>
+<li><strong>订阅复用的合规边界</strong>：把 ChatGPT / Claude 套餐的模型通过本地网关喂给第三方 Agent，是否合乎各家服务条款，README 没有替你回答。个人试验和生产使用是两回事。</li>
+<li><strong>有遥测，但写得相当细</strong>：每天一次上报随机 id、版本、系统、用到的 agent/provider/model 的 magpie 自有 id、插件安装计数、合作方展示/点击/添加次数；明确不含提示词、回复、账号、密钥、URL、用量。<code>DO_NOT_TRACK=1</code> 或设置里可关大部分，但<strong>合作方链接走 <code>usemagpie.ai/go/…</code> 的点击计数不受设置影响</strong>（官方说服务端不记 id 和地址）。README 顶部还列了一排赞助商，判断产品动机时值得一起看。</li>
+<li><strong>它会改写别人的配置文件</strong>。虽然原子写且保留注释和格式，但同时装了 CC Switch 这类也在改同一批文件的工具时，谁最后写谁生效，切换前要理清顺序。</li>
+<li><strong>自签/自建的 provider 和插件生态</strong>意味着供应链面变大；插件来自社区仓库，装之前看清楚来源。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>管什么</th>
+<th>形态</th>
+<th>和 magpie 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CC Switch</strong>（第 2 期）</td>
+<td>各家 CLI 的账号/配置切换</td>
+<td>桌面 App</td>
+<td>上游，配置可直接导入 magpie</td>
+</tr>
+<tr>
+<td>magpie</td>
+<td>模型、供应商、订阅账号、路由、用量</td>
+<td>本地网关 + 菜单栏</td>
+<td>本文</td>
+</tr>
+<tr>
+<td>各家 CLI 自带配置</td>
+<td>单 Agent 单供应商</td>
+<td>文本文件</td>
+<td>被 magpie 原子改写</td>
+</tr>
+<tr>
+<td>云端 API 网关 / 中转服务</td>
+<td>统一端点</td>
+<td>第三方服务器</td>
+<td>magpie 不把流量交给第三方</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>同时用三个以上 Agent 的人</strong>：Claude Code 写代码、Codex 跑任务、Gemini CLI 查资料，不想维护三套 key 和三套 base URL；</li>
+<li><strong>手里有多份订阅或多个账号的人</strong>：配额 failover 和路由组是它最不可替代的部分；</li>
+<li><strong>在意成本的</strong>：Usage 页把 token、缓存命中、会话成本和每个 key 的余额摆在一起，比各家自带的统计好对账；</li>
+<li><strong>对提示词里的密钥敏感的人</strong>：掩码可核查、失败即扣住请求的设计，比多数「本地优先」工具做得细。</li>
+</ul>
+<p><strong>不适合谁</strong>：只用一个 Agent、厂商套餐就够的（README 自己劝退）；把 Agent 用在生产链路、不能接受本地网关成为单点的；不愿让任何工具读钥匙串或改写 CLI 配置的；以及对「订阅跨 Agent 复用」的条款风险零容忍的。</p>
+<p>一句话收尾：第 2 期把八个 AI 编程工具的<strong>登录</strong>收进一个总闸，这一期把它们的<strong>模型</strong>也收进一个总闸。方向一致，代价也一致——省下的重复劳动，换来的是一个新的中心节点。值不值，取决于你手上到底有几个 Agent；只有一个的话，这层复杂度纯属负担。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/todesk/"><span class="post-nav-label">上一期</span><span class="post-nav-title">ToDesk：免费版止步 1080P/30 帧，剩下的明码标价</span></a><a class="post-nav-item post-nav-next" href="/tools/localsend/"><span class="post-nav-label">下一期</span><span class="post-nav-title">LocalSend：连账号都不用，把文件留在局域网里</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

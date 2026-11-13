@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ToDesk：免费版止步 1080P/30 帧，剩下的明码标价 · walker</title><meta name="description" content="海南有趣科技出品的国产商业远控，5 档个人订阅（免费 / 专业 / 游戏 / 设计 / 性能）+ 企业版。免费版是 1080P、30 帧、4Mbps、100 台设备且仅限个人非商用；付费档最高 8K/360 帧。企业版支持私有化部署、AD 域对接与云端加密录屏。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/todesk/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="ToDesk：免费版止步 1080P/30 帧，剩下的明码标价 · walker"><meta property="og:description" content="海南有趣科技出品的国产商业远控，5 档个人订阅（免费 / 专业 / 游戏 / 设计 / 性能）+ 企业版。免费版是 1080P、30 帧、4Mbps、100 台设备且仅限个人非商用；付费档最高 8K/360 帧。企业版支持私有化部署、AD 域对接与云端加密录屏。"><meta property="og:url" content="https://blog.walkerhua.com/tools/todesk/"><meta property="og:image" content="https://blog.walkerhua.com/og/todesk.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ToDesk：免费版止步 1080P/30 帧，剩下的明码标价 · walker"><meta name="twitter:description" content="海南有趣科技出品的国产商业远控，5 档个人订阅（免费 / 专业 / 游戏 / 设计 / 性能）+ 企业版。免费版是 1080P、30 帧、4Mbps、100 台设备且仅限个人非商用；付费档最高 8K/360 帧。企业版支持私有化部署、AD 域对接与云端加密录屏。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/todesk.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>ToDesk：免费版止步 1080P/30 帧，剩下的明码标价</h1><p>连着三期远控，RustDesk 把服务器交给你、UU远程把成本藏进协议、ToDesk 干脆给每一帧标上价——选型其实是在挑你愿意承担哪一种不确定性。</p><div class="hero-meta"><span>第 15 期</span><span>发布于 2026-11-11</span><span>约 9 分钟</span><a class="tag" href="https://www.todesk.com/" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/远程桌面/">远程桌面</a><a class="tag" href="/tags/商业授权/">商业授权</a><a class="tag" href="/tags/定价/">定价</a><a class="tag" href="/tags/国产/">国产</a><a class="tag" href="/tags/企业/">企业</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l3" href="#个人版价目表官方定价页2026-11-11">个人版价目表（官方定价页，2026-11-11）</a><a class="toc-l3" href="#企业侧与技术口径">企业侧与技术口径</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>写到第五期，远程桌面这条线正好凑齐了四种活法。ToDesk 是其中把商业规则写得最直白的那个，但也最容易被「免费下载」四个字误读：</p>
+<ul>
+<li><strong>它不是开源或可自建的中间层</strong>。闭源商业软件，没有公开服务端；账号、节点、设备列表都在厂商侧。（想要中间层自己跑，回第 13 期 RustDesk。）</li>
+<li><strong>它的「免费」不是全功能，是明确受限的一档</strong>。官方定价页写得清清楚楚：个人版最高 1080P、30 帧、<strong>4Mbps 带宽</strong>、3 个分组、1 个通道、同时控制 2 台。这不是藏起来的限制，是印在价目表第一行。</li>
+<li><strong>它不是「公司电脑也能随便装」</strong>。这是本期最该先说的一条：《ToDesk 用户协议》第 1 条明确，个人版（含主控端、被控端、精简版）<strong>仅供个人所有的设备、非商业用途使用</strong>；只要用于商业目的（对第三方收费、项目投标、后台管理系统、任何直接或间接获取收益），<strong>或装在法人/组织所有的设备上</strong>，就不在个人版合法授权内，须购买性能版 / 团队版 / 企业版。很多人是在公司电脑上装免费版的，这条建议先读完再决定。</li>
+<li><strong>它不是只有一个付费档</strong>。个人侧拆成专业 / 游戏 / 设计 / 性能四档，外加一堆按月加购的插件，还有企业版与私有化部署方案——它是一整个产品矩阵，不是「免费 + 会员」两级。</li>
+<li><strong>它不是只给办公用的</strong>。游戏键鼠手柄、4:4:4 真彩、数位板映射、8K/360 帧分别落在不同档位，设计、剪辑、游戏场景是分开定价的。</li>
+<li><strong>官网首页那些 8K / 360 帧 / 3ms 不是免费版能力</strong>，是性能版与企业版的宣传口径，且都标着「最高支持」。</li>
+</ul>
+<p>预期摆正：ToDesk 卖的是<strong>可预期的性能和一套企业管理能力</strong>。它不跟你谈数据主权，也不跟你谈「永久免费」。</p>
+<blockquote>
+<p><strong>数据来源说明</strong>：闭源产品，无 GitHub 仓库。一手材料是官方定价页 <code>todesk.com/pricing.html</code>、《ToDesk 用户协议》（生效日期 2026-05-13）、《ToDesk 隐私政策》、官网产品页，加上本机 App 实测，均为 2026-11-11 拉取。官网不同页面间数字略有出入（用户数有「2.8 亿+」与「3 亿+」两种写法、旧版对比页档位少一档），本文一律以当前定价页 <code>?pt=1</code> 为准；宣传性的延迟/画质数字一律标「官方口径」。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>国内跨网远控要稳</strong>：普通免费节点走 SD-WAN，付费档换 RTC + VIP 专属节点；对「异地连公司电脑、别掉线」这种刚需，节点质量是能花钱买到的。</li>
+<li><strong>设备多了要管</strong>：设备列表 100→300 台、分组数、通道数、同时控制会话数、屏幕墙，全是按档位解锁的管理能力，个人用户和代维团队的需求差得很远。</li>
+<li><strong>企业要批量部署和审计</strong>：命令行静默部署上万台、对接 AD 域 / 飞书 / 企微账号、云端加密录屏、安全日志、可控文件传输、私有化部署方案——这些是 UU远程那类个人免费工具不提供的。</li>
+<li><strong>专业场景要确定性</strong>：设计要 4:4:4 真彩和数位板映射，游戏要 240 帧和手柄，运维要远程终端和多开会话。分档虽然烦，但至少<strong>你要什么、花多少钱，是一张表能查清的</strong>。</li>
+</ul>
+<p>这一点我想多说一句：上一期 UU远程把核心功能全标免费，代价写在协议第 5 条「保留转收费」里；ToDesk 反过来，把每一档的分辨率、帧率、带宽、设备数、价格全部列出来。<strong>对企业选型，「明码标价」本身就是一种确定性</strong>——预算、合规、三年后的成本都能算，不用赌厂商哪天改策略。</p>
+<h2 id="核心能力">核心能力</h2>
+<h3 id="个人版价目表官方定价页2026-11-11">个人版价目表（官方定价页，2026-11-11）</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>个人版</th>
+<th>专业版</th>
+<th>游戏版</th>
+<th>设计版</th>
+<th>性能版</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>价格</td>
+<td>¥0</td>
+<td>¥158/年 · ¥24/月(连包) · ¥40/月</td>
+<td>¥298/年 · ¥42/月 · ¥68/月</td>
+<td>同游戏版</td>
+<td>¥638/年 · ¥95/月 · ¥148/月</td>
+</tr>
+<tr>
+<td>节点</td>
+<td>普通免费节点</td>
+<td>RTC + 专业版 VIP</td>
+<td>RTC + 游戏版 VIP</td>
+<td>RTC + 设计版 VIP</td>
+<td>RTC + 性能版专属</td>
+</tr>
+<tr>
+<td>画质</td>
+<td>最高 1080P</td>
+<td>最高 2K</td>
+<td>最高 4K</td>
+<td>最高 4K</td>
+<td>最高 8K</td>
+</tr>
+<tr>
+<td>PC 帧率</td>
+<td>30 FPS</td>
+<td>60 FPS</td>
+<td>240 FPS（4K60 或 2K240）</td>
+<td>240 FPS</td>
+<td>360 FPS（8K60 或 1080p360）</td>
+</tr>
+<tr>
+<td>移动端帧率</td>
+<td>30 FPS</td>
+<td>60 FPS</td>
+<td>144 FPS</td>
+<td>144 FPS</td>
+<td>144 FPS</td>
+</tr>
+<tr>
+<td><strong>带宽上限</strong></td>
+<td><strong>4 Mbps</strong></td>
+<td>20 Mbps</td>
+<td>40 Mbps</td>
+<td>40 Mbps</td>
+<td>60 Mbps</td>
+</tr>
+<tr>
+<td>设备列表</td>
+<td>100 台</td>
+<td>150 台</td>
+<td>200 台</td>
+<td>200 台</td>
+<td>300 台</td>
+</tr>
+<tr>
+<td>分组 / 通道</td>
+<td>3 个 / 1 个</td>
+<td>不限 / 1 个（可增购）</td>
+<td>不限 / 1 个</td>
+<td>不限 / 1 个</td>
+<td>不限 / 1 个</td>
+</tr>
+<tr>
+<td>同时控制</td>
+<td>2 个会话</td>
+<td>5 个</td>
+<td>8 个</td>
+<td>8 个</td>
+<td>10 个</td>
+</tr>
+<tr>
+<td>场景特色</td>
+<td>隐私屏、虚拟屏、远控安卓端</td>
+<td>自定义隐私屏、远程终端/摄像头/3D鼠标、网页连接</td>
+<td>游戏键鼠手柄、2 虚拟屏</td>
+<td>4:4:4 真彩、数位板映射、多屏控多屏</td>
+<td>HDR、极速刷新、强隐私模式、3 虚拟屏</td>
+</tr>
+</tbody>
+</table>
+<p><strong>按月加购的插件</strong>（容易漏算）：免 Root 控制安卓 ¥25/月、全球节点 ¥66/月、Windows XP 特别版 ¥10/月、多通道 ¥233/月、多控一 ¥29.9/月、屏幕墙 ¥99/月/5 台、AI 审计 ¥9.9/次。也就是说「专业版 + 全球节点 + 多通道」这类常见组合，实际月成本不是标价那 24 元。</p>
+<h3 id="企业侧与技术口径">企业侧与技术口径</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>官方列出的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>企业管理</td>
+<td>席位与设备统一管理、权益按需调配、命令行静默部署、对接 AD 域 / 飞书 / 企微账号批量导入、SOS 绿色被控端</td>
+</tr>
+<tr>
+<td>安全审计</td>
+<td>安全日志（5 大远控要素记录）、云端加密录屏、按用户控制双向文件传输权限、官方称「23 项安全措施」</td>
+</tr>
+<tr>
+<td>私有化</td>
+<td>企业版方案页列出「私有化部署 / 数据隔离 / 跨内外网络」</td>
+</tr>
+<tr>
+<td>传输技术</td>
+<td>官方口径：ZeroSync® 传输引擎、OTT SD-WAN、自研编解码器，端到端延迟 &lt;3ms，8K 无损原画 / 360 帧</td>
+</tr>
+<tr>
+<td>平台</td>
+<td>Windows / macOS / Linux / iOS / Android / 网页连接 / 瘦终端 / 信创终端；另有精简版与绿色被控端</td>
+</tr>
+<tr>
+<td>规模（官方口径）</td>
+<td>每月 50 亿+ 安全连接分钟、40 万+ 企业用户；设备数首页写「突破 3 亿」，另一页写「2.8 亿+ 用户支持数」</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>带宽和帧率被写进价目表</strong>（4Mbps/30 帧 vs 60Mbps/360 帧，差异是可预期的，不是「晚上卡不卡看运气」）和<strong>企业版的批量部署 + 审计闭环</strong>（这是个人免费工具与商业远控真正的分水岭）。反过来说，这张表也是它最劝退的地方——档位多、插件多，选错档就得再加钱。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<p>官网下载各端客户端，注册账号后设备列表云同步；临时协助可用精简版 / SOS 绿色被控端，对方不必完整安装。企业侧支持命令行静默部署与账号批量导入。</p>
+<p><strong>本机实测（macOS 26.6.2 / arm64）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/ToDesk.app</code>，<code>5.2.3.0</code>（build 2943），<strong>695 MB</strong>，2026-10-26 安装</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>；但 <code>spctl</code> 输出里<strong>没有</strong> <code>source=Notarized Developer ID</code> 一行（本机另外几款远控都有）——只如实记录差异，不据此推断公证状态</td>
+</tr>
+<tr>
+<td>Bundle ID</td>
+<td><code>com.youqu.todesk.mac</code>，配置在 <code>com.youqu.todesk.mac.plist</code></td>
+</tr>
+<tr>
+<td>常驻进程</td>
+<td>实测 4 个：<code>ToDesk_Service -Module service</code>、<code>ToDesk_Session_Proxy</code>、主程序 <code>ToDesk</code>，以及一个<strong>系统级音频驱动</strong> <code>Core Audio Driver (ToDeskOutputDriver.driver)</code></td>
+</tr>
+<tr>
+<td>数据目录</td>
+<td><code>~/Library/Application Support/ToDesk/</code> 下仅 <code>Logs</code> 与 <code>dumps</code>，最早痕迹 9 月</td>
+</tr>
+</tbody>
+</table>
+<p>两个值得记的观察：<strong>695 MB 是这几款里最重的</strong>（RustDesk 69 MB、UU远程 185 MB），而且它往系统里装了虚拟音频驱动——远程声音传输的代价，卸载时记得顺手检查音频设备与系统权限。另外本机版本 <code>5.2.3.0</code>，定价页注明「屏幕墙仅 ToDesk 5.0.0.0 及以上生效」，查功能前先对一下版本号。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>最硬的一条：免费个人版不得用于商业用途或公司设备</strong>。用户协议第 1 条把「项目投标、后台管理系统、任何直接或间接获取收益」和「法人/组织所有的设备」都排除在外，并要求购买性能版 / 团队版 / 企业版取得商用授权，否则保留追责与终止服务的权利。办公室里那台装了免费版的电脑，值得先确认一下授权。</li>
+<li><strong>免费档的 4Mbps / 30 帧是真实体感分界线</strong>。看文档、改文件够用；传大素材、多屏、高刷、看设计稿色差就会明显不够——这正是分档设计的目的，别把它理解成「限速惩罚」。</li>
+<li><strong>总成本要连插件一起算</strong>。通道数默认全是 1，多主控同时发起要加购「多通道」¥233/月；跨境要「全球节点」¥66/月；这些都不在档位标价里。</li>
+<li><strong>协议里的服务不确定性</strong>：第 5 条可因商业决策中止/中断/终止服务、公告通知但不承担损失；7.4 条责任上限不超过已支付费用；7.5 条可能实时更新软件，未更新不保证正常使用。跟上一期 UU远程的条款属于同一类商业软件常态，做长期无人值守要留备用通道。</li>
+<li><strong>账号与实名</strong>：隐私政策写明注册需手机号，部分服务/场景按法规要求需实名认证（身份证信息加密送权威机构核验，必要时可能涉及人脸图像/视频，官方称不保存）。企业账号体系要提前跟合规对齐。</li>
+<li><strong>凭证别当强认证</strong>。GitHub 上存在能从进程内存读取远控设备码 / 连接密码的公开工具（同类工具也针对其他远控软件），这说明<strong>固定密码与无人值守不应被视为强认证</strong>——前提是本机已经失陷，不是传输层被攻破。建议开新设备验证、动态口令 / 二次验证、一次性临时密码、「仅接受请求」，并让会话结束自动锁屏。</li>
+<li><strong>闭源不可审计</strong>。端到端加密是官方声明，可对照的只有官网列的安全措施与企业版审计功能；不能像 RustDesk 那样自己看代码或把中继搬回机房。</li>
+<li><strong>宣传数字看口径</strong>。8K / 360 帧 / &lt;3ms 都标「最高支持 / 官方口径」，且定价页自己注明「需主被控都支持最高分辨率」，还受带宽上限约束；官网不同页面的用户规模数字也不完全一致。</li>
+<li><strong>组件会驻留系统</strong>。服务进程 + 音频驱动 + 系统权限，长期不用的机器建议关掉「允许远程控制」，卸载后检查系统设置里的辅助功能、屏幕录制、音频设备。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RustDesk 自建</th>
+<th>UU远程</th>
+<th>向日葵 / 同类免费版</th>
+<th>TeamViewer</th>
+<th><strong>ToDesk</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中间层</td>
+<td>自己的服务器</td>
+<td>网易专网</td>
+<td>厂商</td>
+<td>厂商</td>
+<td><strong>厂商，企业版可私有化</strong></td>
+</tr>
+<tr>
+<td>免费档</td>
+<td>OSS 全功能</td>
+<td>核心功能免费</td>
+<td>画质/文件/时长设限</td>
+<td>商用检测严格</td>
+<td><strong>1080P/30帧/4Mbps，且仅限个人非商用</strong></td>
+</tr>
+<tr>
+<td>商用授权</td>
+<td>自用无忧（AGPL 二次开发需注意）</td>
+<td>个人向</td>
+<td>需企业版</td>
+<td>需商业订阅</td>
+<td><strong>必须付费档 / 企业版</strong></td>
+</tr>
+<tr>
+<td>企业管理</td>
+<td>自己补</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+<td><strong>强项：批量部署、域账号、录屏审计</strong></td>
+</tr>
+<tr>
+<td>成本确定性</td>
+<td>运维成本自己扛</td>
+<td>免费但协议保留转收费</td>
+<td>明码标价</td>
+<td>订阅制</td>
+<td><strong>明码标价（含插件）</strong></td>
+</tr>
+<tr>
+<td>数据主权</td>
+<td>自己手里</td>
+<td>厂商</td>
+<td>厂商</td>
+<td>厂商</td>
+<td><strong>厂商 / 私有化方案</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>要在公司环境里正经用远控的人</strong>：付费档换取商用授权，企业版换批量部署与审计，这是它比「免费工具」更合适的地方；</li>
+<li><strong>设计 / 剪辑 / 3D / 游戏玩家</strong>：4:4:4 真彩、数位板映射、240 帧、手柄这些能力有明确对应档位，掏钱之前就知道能拿到什么；</li>
+<li><strong>代维 / IT 运维</strong>：设备列表、分组、屏幕墙、多通道、远程终端，管理多台机器时比单点连接重要；</li>
+<li><strong>想要「可预期」而非「最便宜」的人</strong>：价目表把性能与权限对应到钱，做三年预算比赌免费策略稳。</li>
+</ul>
+<p><strong>不适合谁</strong>：只是个人偶尔连一次家里电脑的（免费档够用，但 4Mbps 别指望传大文件；更不在乎的话 UU远程更爽）；数据必须完全不出自己基础设施且拒绝商业授权的（回 RustDesk）；讨厌档位 + 插件叠加、只想一个价拿到全部的；以及<strong>正在公司电脑上用免费个人版却没读过协议第 1 条的</strong>——这条最该先处理。</p>
+<p>五期连起来看，其实是同一道选择题的五个答案：<strong>Pinky</strong> 把闸门装在审批网关、<strong>ego lite</strong> 装在标签页隔离、<strong>RustDesk</strong> 装在服务器归属、<strong>UU远程</strong> 装在厂商的服务条款、<strong>ToDesk</strong> 装在一份价目表与商用授权里。前三个要你动手，后两个要你付钱或交出信任。没有哪条路绝对更好——<strong>先想清楚你更怕的是麻烦、是失控，还是明年突然涨价</strong>，选型就不纠结了。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/uu-remote/"><span class="post-nav-label">上一期</span><span class="post-nav-title">UU远程：装完就能用的 4K 远控，代价写在协议里</span></a><a class="post-nav-item post-nav-next" href="/tools/magpie/"><span class="post-nav-label">下一期</span><span class="post-nav-title">magpie：给所有 AI Agent 装一个「换模型总闸」</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

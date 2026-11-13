@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-13 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 13 日（周五）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：五条都在同一个位置打折 —— 公布的那个数，和跑起来那个数</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 无人写也无人审</a>
+      <a href="#n2">② 翻倍只多 10%</a>
+      <a href="#n3">③ 一天 42.7 万个 PR</a>
+      <a href="#n4">④ 34% 对 77%</a>
+      <a href="#n5">⑤ 近 5000 台之后</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>AWS 把自家云 API 做成一份能在笔记本上跑的副本：438 个接口模型、200 多项服务，全部代码由 agent 写、agent 审，人一行没写也没看 —— 而它自己公布的保真率是 56.5%</h2>
+      <span class="tag t-code">AI Coding · 无人审的代工厂</span>
+    </div>
+    <div class="src">AWS 官方博客《All Things Distributed》客座文章（Swami Sivasubramanian，11 月 11 日）与 Matt Goldberg 的项目说明；GitHub <code>aws/aws-emulator</code> 的 README 与 v1.0.322 发布资产 <code>scores.json.gz</code>；i-Scoop、DevOps Daily、DEV Community 三家独立复核；腾讯新闻、网易科技的当日中文转述</div>
+    <div class="body">
+<p>11 月 11 日，AWS 发布 <strong>AWS Emulator</strong>：一个在本机跑起来、只认 AWS API 的模拟器。把 AWS CLI 或任意 SDK 指向 <code>127.0.0.1:9297</code>，你的代码就在内存里的假资源上跑，不要账号、不联网、不花钱。代码以 <strong>CC0</strong> 献入公有领域（只有 <code>vendor/</code> 目录是 Apache 2.0），用 Rust 写，<strong>每个 AWS 服务一个 crate</strong>。</p>
+      <ul>
+        <li><strong>它要解决的是 agent 自己制造的瓶颈。</strong>编程智能体写完代码要验证，而验证要真云：部署一套测试栈、验一个 SQS 可见性超时、跑一次 DynamoDB 条件写，<strong>每个循环要花 45 到 120 秒</strong>，agent 在轮询状态里烧掉上下文，账单一起涨。把这份副本放到本机，循环就从分钟级回到秒级。</li>
+        <li><strong>规格与参考，两样都有。</strong>高级首席工程师 Matt Goldberg 的原话是：模拟器<strong>完全由自主智能体编写，团队没有写、也没有审查过任何一行代码</strong>。他给 Kiro 的三步提示是：照 AWS CLI 写测试、跑到在真 AWS 上通过、再做一个能通过同一批测试的内存版。起步是周末实验，<strong>Amazon SQS 的初版 15 分钟就出来了</strong>；周一团队已经拿它测自家软件。</li>
+        <li><strong>三支队伍，各管一段。</strong>写测试的：把公开的 Smithy API 模型变成真实场景（建队列、发消息、收、删），每个场景先在真 AWS 上跑通才算数，验证完冻结成静态保真测试。找问题的：把保真测试回放到模拟器，失败就归组、开 issue。修问题的：一个 agent 认领一个 issue，改完走闸门。当前 <strong>6,544 个 issue 待修、12,708 个已修</strong>。</li>
+        <li><strong>四道闸门。</strong>补丁必须能编过、符合编码规范、过一轮由专门的安全 agent 做的对抗审、并且保真测试零回归，四项全过才进主线。Goldberg 的比喻是涂色本：小孩不是故意涂坏，是握不好笔，所以要给出清晰的填色边界。早期 agent 确实跑偏过 —— 它<strong>想从零写一个 Python 解释器</strong>来跑 Lambda，后来被引到现成库上。</li>
+        <li><strong>提交历史替官方做了背书，也留下了疑点。</strong>上线时主干 <strong>29,684 次提交</strong>，身份全是 agent：IssueFinderAgent 16,664、IssueFixerAgent 12,981、Scaffolder 29、TraceIdMigration 6、ReleaseManagerAgent 4，<strong>没有任何一条带人名</strong>。规模是 436 个服务 crate、437 个 Smithy 模型、40,130 个 operation 文件、14,099 个测试文件、<code>vendor/</code> 之外 1,614 万行 Rust（EC2 一个 crate 就 70 万行）。但 <code>.github/</code> 下<strong>没有 CI 工作流</strong>，提交也不带 review 标签 —— 那道安全对抗审「可能真的做了，但你在这里看不到」。</li>
+        <li><strong>成绩单是它自己发的。</strong>v1.0.322 的 <code>scores.json.gz</code> 里 <strong>42,937 个计分单元：24,243 过（56.5%）、18,614 不过、80 跳过</strong>；按步骤算 49,810 / 68,007（<strong>73.2%</strong>）；分服务看，KMS 93.9%、SQS 89.8%，<strong>CloudFormation 只有 15.8%</strong>（414 / 2,612）。这份文件覆盖 <strong>355 个服务</strong>，而官方口径是「200 多项」、InfoWorld 数出 426 项。</li>
+        <li><strong>有一个设计值得抄。</strong>没实现或没验证过的操作<strong>直接返回 HTTP 503，而不是假装成功</strong>。一个安静返回「看起来合理但错」的数据的模拟器，比没有模拟器更糟。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，agent 写代码早就不新鲜了，新鲜的是<strong>人退到了闸门这一侧</strong>：不写、不看，只负责定规格、建闸门、看保真率。这件事能成立的前提不是模型够强，而是这两样东西齐了 —— <strong>可机读的规格（Smithy 模型）和可查询的参考实现（真云）</strong>。少一样，同样的 agent 就只能停在周末实验。</p>
+      <p>第二，56.5% 这个自曝的数字，比任何宣传口径都有用。步骤级 73.2% 说明多数场景是走到最后一步才断；KMS 的 93.9% 与 CloudFormation 的 15.8% 差着一个数量级，说明「保真」不是一个数，而是<strong>按服务分层的一张分布表</strong>。任何「本地 AWS 替身」的选型，第一步都该是去查自己要用到的那几个服务在这一列上是多少。</p>
+      <p>第三，对国内团队最实际的是它把「云依赖的测试」从付费项变成了本地项，断网、无账号、可进 CI；代价是它<strong>不收 PR</strong>，只有 issue 与保真报告两个通道 —— 你改不了它，只能等下一个 release。而 11 月 7 日到 11 日<strong>五天发了 12 个 release</strong>，不钉版本就是在赌。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>56.5% 是<strong>厂商自己发布的成绩单</strong>，不是第三方评测。DevOps Daily 另外用 40 个常规工作流自查，<strong>40 项全过</strong>。两件事不矛盾：那套自评是奔着找洞去的，找问题的 agent 还会不断往模型失败的地方加题；<strong>常规路径能跑，边角还在动</strong>。这两组数字回答的是两个不同的问题，不能拿来互相否定。</p>
+      <p>保真不等于安全。README 明写<strong>不要用它跑生产负载，也不要用它测安全</strong>；IAM 策略的校验方式与真 AWS 不一致。凡是涉及权限、审计、加密行为的验证，仍然要回真云。</p>
+      <p>默认<strong>开遥测</strong>（可用 <code>--telemetry</code>、<code>EMULATOR_TELEMETRY=off</code> 或 <code>config.toml</code> 关掉）。源码构建要至少 <strong>100 GB</strong> 空闲磁盘，一般团队应该用预编译包。另外它处于早期：12 个 release 五天一发，任何「我们测过了」的结论都要连版本号一起记。</p>
+      <p><strong>与 11-05 ① 的分野</strong>：那期讲的是围住 agent 的那层自己破洞（Docker Sandboxes 逃逸、Pydantic AI 九条公告），讲的是围栏被绕过；这一期讲的是围栏<strong>存在但无法被审计</strong>。前者是安全问题，后者是证据问题。</p>
+    </div>
+    <div class="act">
+<p>如果手上有一套依赖 S3、SQS、DynamoDB 的测试：先拿这三个服务跑一遍现有端到端用例，再去发布页对一遍这三个服务的保真分，然后按结果分两堆 —— 能进 CI 的进 CI，涉及权限与配额语义的留真云。</p>
+      <p>上 CI 之前做三件事：锁死具体版本（别用 latest）、关掉遥测、给那条路径写一句断言「HTTP 503 表示未实现」。它返回 503 是设计，不是故障，别让重试逻辑把它拖成超时。</p>
+      <p>如果要把它当 agent 的自测台，注意 CI 里加个 <code>aws-emulator</code> skill 就够（需要 AWS CLI 2.35.0 以上），不必改业务代码。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>404 名工程师、5 周：同一个人的 token 花费翻倍，提交量只多约 10%；提交数相当的周与周之间，第 90 百分位的花费是第 10 百分位的 39 到 240 倍</h2>
+      <span class="tag t-code">AI Coding · 度量失效</span>
+    </div>
+    <div class="src">arXiv <strong>2611.13396</strong>《AI 时代的代码行数？一项关于工程师 token 花费究竟衡量什么的案例研究》（11 月 10 日提交；卡内基梅隆 + JetBrains Research + 加州大学欧文分校，七位作者）；StackChief、Bad Influence 等独立要点整理</div>
+    <div class="body">
+<p>论文要回答的问题很直接：公司现在拿工程师的 token 花费来监控采纳率、定预算、衡量生产力，<strong>这个数和工程产出到底是什么关系？</strong>做法是把 JetBrains 内部网关记录的 coding agent 调用日志，与 <strong>404 名工程师</strong>在一个主力 IDE 产品上的提交对齐，窗口是 5 周（2026 年 6 月 29 日到 8 月 2 日），另外配一份 <strong>412 人</strong>的内部问卷。</p>
+      <ul>
+        <li><strong>花费跟人走，不跟活走。</strong>五周里第 90 百分位的工程师，用了第 10 百分位的 <strong>71 倍</strong> token。</li>
+        <li><strong>把产出按住，差距不收敛。</strong>在提交数相近的每一档里，花费的第 90 百分位是第 10 百分位的 <strong>39 到 240 倍</strong>。即便进一步控制提交数、改动行数、与 bug 关联的提交、提交天数之后，第 90 百分位的人周仍然是第 10 百分位的 <strong>58 倍</strong>。</li>
+        <li><strong>同一个人内部的边际收益率很低。</strong>花费翻倍，对应提交<strong>多约 10%</strong>；反过来，提交翻倍的周，token 只多约 20%。</li>
+        <li><strong>现有工作指标解释不了什么。</strong>提交、行数、bug 修复合起来，只能解释工程师之间花费差异的 <strong>38%</strong>、同一个人周与周之间差异的 <strong>13%</strong>。而「是谁」这一个因素，解释了 <strong>79%</strong> 的偏差。研究者还试了用角色、是否带团队、所属团队去预测没见过的工程师的花费，<strong>结果都不如直接用周均值</strong>。</li>
+        <li><strong>没有产出的那部分有多大。</strong>一个<strong>没有任何提交的周，仍然要花掉这个工程师平均周的 77%</strong>；作者估计 <strong>39% 到 42%</strong> 的 token 与产出无关（实习生 59%、QA 工程师 50%）。</li>
+        <li><strong>钱主要花在重发上下文。</strong>一次调用的中位数是<strong>发出约 400 倍于收到的 token</strong>；两个 agent 吃掉了 69% 与 31% 的用量。研究期内上线的一个新模型，<strong>两周内就拿走了 45% 的花费</strong> —— 花费对「模型换代」极度敏感，对「干了多少活」不敏感。</li>
+        <li><strong>问卷解释了另一半。</strong>技术岗报告，在<strong>近九成</strong>的 agent 使用里，任务不止于写代码：数据分析 52%、头脑风暴 49%、调研与规划也都算在内。所以 token 花费量的是「这个人在多少种工作上用了 agent」，不是「他交付了什么」。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是 10 月 28 日那份 Amazon 内部备忘录的<strong>实证版</strong>。当时是一家公司说「token 数与代码行数是深度有缺陷的指标」，这期是把花费与产出按人和按周对齐之后的结果 —— 同一结论从判断升级成证据，还多给了一个更扎心的数：<strong>不提交的周也要花掉 77%</strong>。</p>
+      <p>第二，对团队最可用的结论是那条边际收益率。<strong>花费翻倍只换来 10% 的提交</strong>，意味着「给团队加预算」这件事的杠杆极低；而账单里最大的一块是重发上下文（发出是收到的 400 倍）。把预算投到减少无效上下文上，比投到提高额度上更可能见效 —— 这和 11-11 ② aiXcoder 把上下文压缩拆成专用小模型是同一件事的病因与药方。</p>
+      <p>第三，「是谁解释 79%」这句话的分量被低估了：它意味着花费是<strong>个人工作习惯的指纹</strong>，不是工作量的刻度。任何拿 token 排名、拿采纳率当 OKR 的做法，量到的其实是「这个人怎么用」，而不是「这个人做了多少」。而同一个指标一旦进入考核，最先变形的一定是使用方式。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>全部是<strong>关联，不是因果</strong>。作者自己写明「我们所有的估计都是关联」，因为用多少 agent 是工程师自己选的，不是随机分配的。</p>
+      <p>样本是一家公司（JetBrains，约 2,600 人）、一个主力产品、一个五周窗口。实习生与 QA 的「无关 token 占比」明显更高（59%、50%），说明岗位差异极大，<strong>不能外推成行业均值</strong>；也不必把「10%」当成所有团队都会有的数，它是这一家、这一段时间的斜率。</p>
+      <p>提交量本身也不是好指标，作者没有主张它是。所以「token 与提交的相关性弱」不能读成「token 没用」，只能读成「<strong>token 不是产出的代理</strong>」。这两句话对管理决策的影响完全不同。</p>
+      <p>同批检索里还会看到「多智能体架构多烧 1.4 到 4.7 倍 token」这类数字，那是另一篇多智能体架构对照论文的结论，<strong>不在本研究里</strong>，别混着引用。</p>
+    </div>
+    <div class="act">
+<p>如果团队已经在看 token 账单：把它留在成本科目，别升格成绩效科目。要看产出，落「任务 + 结果证据」，而不是花费排名。</p>
+      <p>做一次「无提交周」的账单占比自查。如果接近 77% 那个量级，说明大量花费在探索与试错上，先优化上下文复用与缓存，而不是先设额度上限 —— 限额只会把探索推到月底。</p>
+      <p>给 agent 会话加一句开场约束「这次要产出什么」，比事后看 token 曲线有用；这句约束同时也让「无提交周」变得可解释。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>一天 42.7 万个 PR 由 coding agent 开出，占当天公开 PR 的 31.9% —— 而 30 天 91% 的合并率里，63% 是仓库主人在合自己的活</h2>
+      <span class="tag t-code">AI Coding · 计数与归属</span>
+    </div>
+    <div class="src">MyClawn 的实时计数板与方法说明（DEV Community 原文，读数时间 11 月 12 日 14:00 CET）；ClawdBytes、Web Pulse 的独立转述；对应仓库 <code>openclaw/openclaw</code> 的 30 天数据来自同一份方法说明</div>
+    <div class="body">
+<p>有人不想再引用调查、也不想再引用厂商新闻稿，于是直接去问 GitHub 自己的搜索 API。做法是：四个主流 coding agent 默认会在 PR 上留标记（其中一个会在描述里自动附一行生成说明，四个都用固定前缀的分支名），对公开仓库打 <code>is:pr is:public</code> 加 24 小时窗口，取返回的 <code>total_count</code>，<strong>不抽样、不外推</strong>。</p>
+      <ul>
+        <li><strong>24 小时口径。</strong>11 月 11 日到 12 日之间，公开仓库上由 agent 开出的 PR 共 <strong>427,042 个</strong>，同期全站 <strong>1,339,893 个</strong>，占 <strong>31.9%</strong>。</li>
+        <li><strong>30 天口径。</strong>累计 <strong>10,862,952 个</strong>，其中合并 9,887,585（<strong>91.0%</strong>）、未合并直接关闭 376,440（3.5%）、仍然开着 598,927（5.5%）。分 agent 的合并率从 <strong>68.5% 到 92.6%</strong>。</li>
+        <li><strong>最值钱的一段是自己拆自己的台。</strong>抽最新 115 个 agent PR 看归属：<strong>63% 由仓库主人自己开、13% 由成员或协作者开、只有 24% 来自团队之外</strong>。也就是说那个 91% 主要反映的是「人们在自己的仓库里用 agent 推自己的活，几分钟后自己合掉」。</li>
+        <li><strong>换到真正收外部 PR 的项目，画风就变了。</strong><code>openclaw/openclaw</code> 30 天收到 <strong>806 个</strong> agent PR，占该项目 22,310 个的 4%；其中 492 个合并、<strong>125 个未合并直接关闭</strong>；最近 30 个里有 29 个来自团队之外。</li>
+        <li><strong>它自己列了四条算不到的地方。</strong>私仓看不见；不带标记的 agent 工作看不见（编辑器里用的、或者把 footer 删掉的）；多标记的 PR 在 30 天口径会被计两次（24 小时口径已剔除重复）；人可以手工起一个同名前缀的分支来刷数。所以这是「公开 GitHub 上带标记的 agent 工作」的<strong>下限</strong>，不是 AI 写代码的普查。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是 10 月 29 日 GitHub 官方年报那个「超过 40%」的第一次外部对照。官方按「首个 draft 是否来自可检测到的 agent」算，第三方按四个 agent 的标记算，分母、识别方式、重复计数规则全不同 —— 两个数不必打架，但它们放在一起说明：<strong>「agent 参与了多少 PR」这个指标已经不可比，除非连算法一起引用</strong>。</p>
+      <p>第二，那条方法学结论比数字重要：<strong>合并率不是质量指标</strong>。在自己的仓库里，一次合并等于一次提交，不构成任何评审。把它当质量证据，和把代码行数当生产力，是同一类错误 —— 而这条正好接上本期 ② 的那句「token 是花的指纹，不是产出的刻度」。</p>
+      <p>第三，对开源维护者这一侧，结论其实偏正面：真正收外部 PR 的项目仍在行使判断（806 里 125 个被直接关掉）。11 月 12 日 ③ 讲「审核瓶颈被移到了无偿维护的开源社区」，这一期第一次给出了具体比例 —— 瓶颈是真的，但闸门也还在守。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>这块计数板是 MyClawn 自家产品，原文也把话写在明处：<strong>计数板是我们的，这篇稿子由我们的一名 AI agent 写成</strong>。它是一个有立场的测量者，但方法公开、代码以 MIT 开源、查询条件可复现 —— 这三点让它仍然可用，不等于中立。</p>
+      <p>91.0% 是四个 agent 30 天求和后的口径，<strong>带两个标记的 PR 会被算两次</strong>；31.9% 那个数是另一套剔除重复后的 24 小时口径。两个数不能互相除，也不能拼成「91% 的 31.9%」。</p>
+      <p>「63% 由仓库主人开出」来自最新 115 个 PR 的抽样，样本小、且取的是「最新」而不是随机，只能当信号，不能当全量分布。</p>
+      <p>与 10 月 29 日 ② 的 40% <strong>不可直接比较</strong>：分母是否含私仓、如何识别 agent、按首个 draft 还是按最终标记、是否跨 agent 剔除重复，都不一致。凡是引用，必须把口径一起带上。</p>
+    </div>
+    <div class="act">
+<p>如果维护开源库：在 CI 里按「提交者是否有写权限」分两条路。自家人自合并走快车道；外部 agent PR 走完整评审。别用同一个合并率指标同时衡量这两件事，它会把快车道的好看数字摊到慢车道上。</p>
+      <p>如果看团队效率：把「agent 开出的 PR 数」从看板拿掉，换成「合并后 30 天内被回滚或被修复的比例」——后者才是 91% 想说明却说明不了的那件事。</p>
+      <p>想量自己：用 <code>is:pr is:public author:你</code> 加上 agent 标记跑一遍，先对自己的仓库有数，再决定信不信这个指标。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>编码智能体进物理世界的第一考：1,156 个任务、35 个套件、47 种机器人，最强的一个在标准设置下只解决 34%，而给它完整仿真状态与无限重置能做到 77%</h2>
+      <span class="tag t-emb">具身智能 · 评测框架</span>
+    </div>
+    <div class="src">arXiv <strong>2611.12177</strong>《Embodied First Exam》（11 月 9 日提交，预印本；30 位作者，含 Dawn Song、Pieter Abbeel、李飞飞、Jiajun Wu、Yuke Zhu、Manling Li）；CSDN DAMO 开发者矩阵的中文解读；Hugging Face 热榜与 Daily Papers 收录</div>
+    <div class="body">
+<p>前提是一个正在发生的转向：已经有人让 coding agent 去控制机器人，并且早期效果不错。但现有机器人基准都是围绕<strong>视觉运动策略学习</strong>建的，没法回答「编码智能体在物理约束下能不能可靠地开各种机器人」。EFE 就是为这个问题新建的考场。</p>
+      <ul>
+        <li><strong>规模。</strong>1,156 个任务、35 个套件、47 种机器人。其中 <strong>9 个新套件超出了抓取放置</strong>：空间谜题、灵巧操作、多机器人交互、动态全身控制、sim-to-sim 工程。</li>
+        <li><strong>三种设置，差别只有一样东西：真实世界给不给你上帝视角。</strong>标准设置只给传感器观测、<strong>默认不允许重置环境</strong>；实时设置让环境在模型推理时继续跑；特权设置给完整仿真状态与无限重置，用来搜 oracle 解，<strong>作为成绩上界</strong>。</li>
+        <li><strong>方法也交给 agent 自己选。</strong>框架原生支持三种控制方式：直接控制、写代码去控制、或者训一个策略来控制。也就是说，它测的不是某个 VLA 的分，而是「一个编码智能体会自己选什么办法」。</li>
+        <li><strong>成绩。</strong>456 个核心任务（901 个用例）上，八个 agent 里最强的是 <strong>GPT-6 Astra in Codex</strong>：标准设置 <strong>34%</strong>（约 155 个任务），特权设置 <strong>77%</strong>。</li>
+        <li><strong>失败在哪。</strong>作者给每次失败的尝试都标了出错阶段，再跨 agent、跨设置、跨阶段比较。中文解读给出的两条是：失败集中在<strong>任务的第一阶段</strong>，或涉及<strong>材料变化与本体移动</strong>的环节；较弱的 agent 更容易在建立必要接触之前就失败。强 agent 在实时设置下更倾向直接控制，在特权设置下更常选择训策略 —— <strong>换推理 harness 会显著改变成功率</strong>。</li>
+        <li><strong>一条反直觉的结论。</strong>「能重置」对成功率的提升，<strong>明显大于</strong>「给出精确的物体状态」；尤其是在需要高精度的阶段，重置能帮 agent 越过累积误差。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是第一次把「编码智能体能不能开机器人」当成独立命题来考，而不是沿用视觉运动策略的基准。它连「用什么方法」都交还给 agent，所以测出来的不是模型天花板，而是<strong>一个 agent 在物理世界里自己找办法的能力</strong> —— 这比任何一个 VLA 的分数都更接近真实部署时要面对的问题。</p>
+      <p>第二，<strong>34% 与 77% 之间那 43 个百分点，就是「特权」的价钱</strong>。真实世界不给完整状态，也不给无限重来。任何在仿真里用特权设置训出来的成绩，都要先减掉这一块再看。这与 11 月 10 日 ⑤ TI-0.1 那次「仿真 84.5%、真机 2.6%」是同一类折价，区别是这次折价被<strong>可控地量出来了</strong>，而不是在真机上突然塌掉。</p>
+      <p>第三，「重置比状态更值钱」如果站得住，投资方向就要改：提升具身 agent 性价比的路径可能是<strong>把失败恢复做便宜</strong>（快速复位、允许重试、人工接管要快），而不是继续堆感知精度。对做产线与仓储的团队，这是个和直觉相反的投入建议 —— 但也正好解释了本期 ⑤ 那个仓库场景为什么能先跑通。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>全部在<strong>仿真里</strong>，没有真机成绩；「47 种机器人」是仿真本体。特权设置的数字是上界，作者自己也是这么定位的，不能当能力报。</p>
+      <p>34% 与 77% 出自论文正文与中文解读，<strong>第三方尚未复现</strong>。另有两点数字口径要注意：与核心任务相关的数在不同摘要里表述不一（套件总数 35、本体 47、任务总数 1,156，而核心任务是 456 个、用例 901 个），引用时要把「套件总数」与「核心任务数」分开写；「换推理 harness 会显著改变成功率」是定性结论，论文摘要未给具体幅度。</p>
+      <p>预印本，未见同行评审。30 位作者来自多机构，本轮未逐一核实评测代码与 harness 是否全部公开 —— 若要复现，先确认代码仓库与版本。</p>
+      <p>与 9 月 23 日 ④ 的 22.48% <strong>不是同一张榜</strong>：那条是 RoboDojo / RoboProbe 口径、42 个任务跑 2,100 次；这里是 EFE 的 456 个核心任务。两个数不能相减，也不能说「涨了 11 个百分点」。</p>
+    </div>
+    <div class="act">
+<p>以后看到任何具身 agent 的成绩，先问三件事：<strong>用的哪种设置、能不能重置、harness 是什么</strong>。缺一项，分数就先打七折再读。</p>
+      <p>如果在做产线或仓储的具身方案：把「失败后多久能复位重试」列成一级指标去测。它可能比感知精度的边际收益更大，而且更容易被写进验收条款。</p>
+      <p>想自己跑：先取一个套件在标准设置下跑通，再切到实时设置 —— 从标准到实时那段掉幅，往往比绝对值更能说明工程成熟度。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>双十一的仓库里，双臂机器人做到每小时 1200 件、成功率 99%，公司拿到近 5000 台批量订单 —— 而这一切都发生在「允许失败」的场景里</h2>
+      <span class="tag t-emb">具身智能 · 规模化交付</span>
+    </div>
+    <div class="src">新浪财经 11 月 12 日报道、凤凰网转量子位、昆腾动力官方口径（创始人兼 CEO 李强）；同期星动纪元在邮政与顺丰的分拣数据来自网易智能 11 月 12 日报道，非昆腾数据</div>
+    <div class="body">
+<p>11 月 12 日，昆腾动力宣布：在<strong>称重量方、分拣供包、固定拣选</strong>三类场景完成产品与市场匹配（PMF）验证，已进入多家头部电商平台与物流企业的仓库，形成<strong>跨仓复制与客户复购</strong>，累计拿到<strong>近 5000 台</strong>机器人批量订单，开始进入规模化获客与交付阶段。它的具身机器人今年第一次进入<strong>菜鸟供应链</strong>的双十一真实作业现场。</p>
+      <ul>
+        <li><strong>节奏给得很完整。</strong>今年 7 月与一家头部跨境电商平台开始前期沟通与现场考察 → 9 月机器人进仓 → 10 月开始签批量采购合同。三个月从考察走到批量合同，这个速度本身就说明仓方要的不是演示。</li>
+        <li><strong>指标。</strong>通用双臂机器人在称重与供包岗位完成部署验证，<strong>供包效率每小时 1200 件以上、成功率 99%</strong>。</li>
+        <li><strong>技术侧的两处细节值得记。</strong>一是视觉感知与动作策略联合学习，<strong>不新增件型就不必逐一编程调试</strong>；二是采用<strong>异步输入模型</strong> —— 相机、触觉与本体状态按各自的时序与频率进模型，由模型自己学其中的关系，<strong>不强行对齐</strong>。现场的失败、人工介入与恢复过程全部进数据闭环，迭代以天计。</li>
+        <li><strong>为什么是物流仓</strong>（公司自己的解释，也是这条最值得读的部分）：这类环节单次动作失败<strong>不影响整条产线生产</strong>，还能快速拿到失败反馈，可以重试、核验或交人工接管；而仓方的验收是四项硬指标 —— <strong>成功率、节拍、异常恢复、持续运营</strong>。有难度、有反馈、有标准，三个条件同时成立的场景极少。</li>
+        <li><strong>下一步。</strong>12 月底计划发布一款全新构型，把现场积累的工位约束带进设计，重点提适用性、连续作业能力与经济性。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是<strong>订单口径</strong>而不是交付口径，但在具身这条线上，近 5000 台的批量订单本身就是一次口径变化：这个行业过去最缺的不是好看的 demo，而是愿意签批量合同、并且会复购的客户。跨仓复制与复购这两个词，比 5000 这个数字更能说明问题。</p>
+      <p>第二，它把「什么样的场景先跑通」讲清楚了：<strong>允许失败、反馈密集、指标可验收</strong>。这解释了为什么人形还在跳舞而双臂已经在称重 —— 差距不在技术水平，在<strong>场景的可验收性</strong>。而本期 ④ 那条「重置比精确状态更值钱」，恰好是同一件事在评测侧的版本。</p>
+      <p>第三，把它和本周另外三条连起来看：思灵拿了 5 亿美元扩产、泰国批了五家中国零部件厂建基地、北京把 20 万台每年的整机产能写进 2028 目标。<strong>订单、产能、零部件三条线在同一天往前推</strong>，说明这一轮押的是 2027 年前后的放量，不是今年的业绩。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>近 5000 台是<strong>订单，不是交付</strong>，交付与验收节奏未披露。1200 件每小时与 99% 都是<strong>厂商自述</strong>，报道未说明件型分布、连续作业时长、以及 99% 到底是单次抓取成功率还是工位级任务完成率 —— 这两个口径差别很大，不能被同一个百分号盖住。</p>
+      <p>「首次进入菜鸟供应链双十一现场」的具体<strong>工位数、机器台数、值守时长</strong>均未给出，无法判断是规模部署还是试点。所有数字均未经第三方审计。</p>
+      <p>真实工况的节拍通常会先掉下来。同期另一家（星动纪元）披露其分拣机器人在真实混包工况下的节拍<strong>先回落、再爬升</strong>，昆腾是否经历同样的回落，报道里没有写。<strong>这是二手转述的另一家公司数据，不能当昆腾的成绩或短板。</strong></p>
+      <p>与 9 月 14 日速览③ 那笔「特斯拉向 Optimus 供应链下约 5000 台订单」<strong>只是数字相同，两件事无关</strong>。</p>
+    </div>
+    <div class="act">
+<p>评估这类供应商，别问峰值节拍，问三件事：连续作业 8 小时的节拍衰减曲线、异常件的自动恢复率、卡住之后谁接手以及多久恢复。</p>
+      <p>把验收条款写成四项硬指标（成功率、节拍、异常恢复、持续运营），不要写一个总分 —— 这是本期最可以直接抄走的一条。</p>
+      <p>如果一个工位的单次失败会拖垮整线，先别上机器人。先把工位结构改成「允许失败、可快速复位」，再谈自动化；这条顺序反过来，项目大概率会拆设备。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>1026 名开发者里，76% 说 AI 生成代码的速度已经超过他们验证的速度，而只有 39% 能完全确认提交前一定检查过</h3>
+      <p>Sonar《2027 State of Code》11 月 12 日发布。AI 现在平均生成或显著辅助 <strong>65%</strong> 的提交代码；<strong>34%</strong> 预计一年内会建「agentic software factory」，而今天只有 5%；<strong>53%</strong> 说审查代码的时间已经超过写代码（引入 AI 之前是 18%）；<strong>94%</strong> 并不完全信任 AI 代码，42% 担心写得好的 AI 代码让 bug 更难发现，但只有 <strong>23%</strong> 有专门的 AI 代码规范或自动检查；77% 说强验证工具能提升信任，只有 36% 能真正量出 AI 的生产力影响、22% 完全说不清回报。<strong>口径</strong>：发布方是卖代码验证产品的 Sonar，样本 1,026 人、全部自报。</p>
+    </div>
+    <div class="m code">
+      <h3>同一批发布里的另一半：Kiro Crew 上线 Bots，让每个机器人负责流程里的一段，并靠「笔记」跨会话记住项目</h3>
+      <p>11 月 12 日。每个 Bot 可指定职责（issue 分类、构建监控、发布准备），配自己的名称、头像、指令、工具与权限；可并行起多个工作会话，监控进度、纠偏会话、汇总结果；需要人决策时<strong>可以挂起等批准，同时继续跑不依赖该决策的部分</strong>。跨会话连续性靠 Notes：记录开发者偏好、已做决策、项目要求与限制条件，可人工查看、编辑、删除。另加 Dashboards，用自然语言描述想看什么。与本期的 ① 是同一批发布 —— 一个给 agent 造本地测试台，一个给 agent 排班。</p>
+    </div>
+    <div class="m emb">
+      <h3>思灵机器人 F 轮 5 亿美元、投后 85 亿美元估值，软银领投、英伟达与日立跟投；慕尼黑基地年产能最高 1 万台</h3>
+      <p>11 月 12 日宣布，累计融资达 20 亿美元。慕尼黑附近的菲尔斯滕费尔德布鲁克基地 2026 年初启用，<strong>年产能最高 1 万台</strong>足式与轮式人形机器人；计划加强美国布局、继续扩德国产能。10 月 21 日柏林 GTC 上与英伟达联合发布科研用 <strong>Agile ONE SN</strong>，集成 Isaac GR00T 生态，原生支持 GR00T VLA 与全身控制器。<strong>口径</strong>：这是私募估值，与 11-05 速览④ 里 Agility 挂牌后的公开市场账本不是一把尺子，别混着读。</p>
+    </div>
+    <div class="m emb">
+      <h3>泰国批了五家中国企业建人形机器人零部件基地，初始投资合计超 100 亿泰铢，官方点名的下游包括特斯拉 Optimus</h3>
+      <p>泰国投资促进委员会（BOI）批准，落在东部经济走廊。杭州 Seenpin 机电传动 21.2 亿泰铢产行星滚柱丝杠与滚珠丝杠（春武里）；贝特科技 16.7 亿泰铢产行星滚柱丝杠，另有超 30 亿泰铢的追加申请在审；三花智能驱动 18 亿泰铢产执行器；拓普集团 9.3 亿泰铢产执行器（北柳）；旭升集团 27 亿泰铢产机身与结构件（罗勇）。BOI 称主要市场包括全球科技巨头与特斯拉 Optimus 这类项目，预计带来 1000 多个高技能岗位。<strong>口径</strong>：审批阶段，投产时间未定，投资额不等于已落地资本。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① 无人写、也无人审</td>
+      <td>09-23 ① HarnessTax：同一个模型换个壳子，成功率几乎不动，账单最多差 5 倍——而最省的那个只给了四个工具</td>
+      <td>那期把外层拆成成本项来量，这期外层直接顶替了作者与审阅者。两次都指向同一处：决定结果的是规格与闸门，不是模型本身</td>
+    </tr>
+    <tr>
+      <td>① 自曝 56.5%</td>
+      <td>11-12 ③ 七个月 37,966 条候选漏洞，公开台账里只有 217 条标记修复：VulnCheck 复核 Anthropic 玻璃翼计划，重复项是修复数的 7.5 倍</td>
+      <td>都是把厂商的大数字按口径打折：那条是第三方拿官方台账复核，这条是厂商自己发的成绩单。两种折扣都得自己算一遍再引用</td>
+    </tr>
+    <tr>
+      <td>① 闸门在仓库里看不见</td>
+      <td>11-05 ① 围住 agent 的那层今天自己破了两个洞：Docker Sandboxes 符号链接沙箱逃逸（CVSS 8.2）与 Pydantic AI 一次公开九条安全公告</td>
+      <td>都在说围栏本身缺证据：那期是围栏被绕过，这期是围栏在公开仓库里根本看不到（没有 CI 工作流、提交不带 review 标签）。前者是安全问题，后者是证据问题</td>
+    </tr>
+    <tr>
+      <td>② token 翻倍只多 10%</td>
+      <td>10-28 ③ 同一天三件事撞在一起：Amazon 公开内部备忘录说 token 数与代码行数是「深度有缺陷」的指标，Ramp 与 Replit 同时把「任何人提交 PR」推成产品</td>
+      <td>那期是一家公司的判断，这期是 404 人 5 周的对齐数据。同一结论从「觉得不准」升级成「量出来就不准」，还多给一条：不提交的周也要花掉 77%</td>
+    </tr>
+    <tr>
+      <td>② 花费跟人不跟活</td>
+      <td>09-14 ② InfoQ 实测：同一个模型，换不同编程工具，账单能差 70 倍——成本黑洞在「脚手架」不在模型</td>
+      <td>都在把「花了多少」和「干了什么」拆开：那期差在脚手架，这期差在人。两次都说明账单不能直接当产出读</td>
+    </tr>
+    <tr>
+      <td>② 一次调用发出 400 倍 token</td>
+      <td>11-11 ② aiXcoder 开源 aiXcompact-4B：把「上下文压缩」这项高频杂活从通用大模型手里拆出来，单次 API 调用 0.019 元 —— 但官方自己的对照表里，压缩质量的多数指标其实低于教师模型</td>
+      <td>一条说账单的大头是重发上下文，一条说这笔钱可以拆给专用小模型省掉九成以上。同一件事的病因与药方，只是药方自己也还没完全对症</td>
+    </tr>
+    <tr>
+      <td>③ 31.9% 的 PR</td>
+      <td>10-29 ② GitHub 官方年报给出第一个全站口径：超过 40% 的 pull request 由 agent 起头，而 GitHub 自己说这是下限</td>
+      <td>同一个现象两种数法：官方按首个 draft 是否来自可检测 agent 算，第三方按四个 agent 的标记算。分母与重复计数规则都不同，两个数不能相除，也不能互相否定</td>
+    </tr>
+    <tr>
+      <td>③ 63% 是自合并</td>
+      <td>10-28 ② 34.9 万个 IaC PR 的实证：披露身份的 agent 比沉默的 agent 少 8.4 个百分点合并率，而坏味道率与人类几乎一样</td>
+      <td>都在量「归属如何影响通过」：那条是披露与沉默，这条是自家人与外部人。两次的结论一致——合并率不是质量，差别不在质量在归属</td>
+    </tr>
+    <tr>
+      <td>③ 一天 42.7 万个</td>
+      <td>11-05 速览③ 三条互不相干的短讯，共同说明 coding agent 已经从「可选工具」变成「默认路径」</td>
+      <td>那期讲「变成默认路径」这件事本身，这期给了它的日产量。从「是不是默认」到「一天多少」，这条线第一次有了个明确的下限</td>
+    </tr>
+    <tr>
+      <td>④ 标准 34% 与特权 77%</td>
+      <td>11-07 ④ 同一个模型换个 harness，成功率从 0.83% 涨到 25.00%：外层第一次在具身域被量出 30 倍</td>
+      <td>都在量外层决定多少：那期换 harness 涨了 30 倍，这期换设置（标准对特权）掉了一半多。方向相反、结论一致——报分数必须连条件一起报</td>
+    </tr>
+    <tr>
+      <td>④ 让 agent 自选控制方式</td>
+      <td>09-23 ④ GPT-6 Astra 直接当机器人策略：42 个任务跑 2,100 次拿到 22.48%，压过 40 个公开 policy，但卡点不在「想」在「手」</td>
+      <td>同题不同代：那期是把模型直接当策略、42 个任务；这期连「直接控制、写代码还是训策略」都交给 agent，1,156 个任务。框架从测模型变成测方法</td>
+    </tr>
+    <tr>
+      <td>④ 34% 与 2.6% 同类折价</td>
+      <td>11-10 ⑤ TI-0.1 技术报告：一个乐高策略在接触模型被修正后，成功率从 84.5% 掉到 2.6%</td>
+      <td>两次都是条件一变数字塌方：那期塌在接触模型，这期塌在拿掉完整状态与无限重置。区别是这期的折价被可控地量出来了，不是到真机上才塌</td>
+    </tr>
+    <tr>
+      <td>⑤ 每小时 1200 件、99%</td>
+      <td>11-09 ④ 50 天、8000 多次物理操作、执行层面零失误：合碳智能的轮式双臂机器人 Talos 在药企真实实验室里跑完了分子纯化，第二单来自丹纳赫</td>
+      <td>都是厂商自述的真实作业成绩，也缺同一类数字：那期缺样本量与场景覆盖，这期缺件型分布、连续作业时长与失败定义</td>
+    </tr>
+    <tr>
+      <td>⑤ 四项硬指标</td>
+      <td>11-12 ⑤ 北京把「用得住」写成了硬指标：平均无故障 2000 小时、设计寿命 5 年、核心部件年故障率低于 10%，而厂商发布里最常缺的正是这几列</td>
+      <td>一条是采购侧用批量订单投票，一条是政策侧把「用得住」写成可验收参数。两边指向同一组指标，但一边还没有交付数据，一边还没有厂商实测值</td>
+    </tr>
+    <tr>
+      <td>速览① 76% 验证跟不上</td>
+      <td>11-09 速览① McKinsey：大公司里 AI 编程的收益高度分化，头部 20% 到 25% 拿到 2 倍，多数只有 10% 到 20%</td>
+      <td>都在解释同一件事的两面：那期说收益分化，这期说分化的一部分来自验收产能——审查时间占比从 18% 涨到 53%，而只有 39% 敢说提交前一定查过</td>
+    </tr>
+    <tr>
+      <td>速览② Bots 的「笔记」</td>
+      <td>11-08 ① 记忆不是越多越好，而是要选对：Anthropic 给出 agent 记忆的四层结构，以及一个叫「做梦」的整理过程</td>
+      <td>都在给 agent 配持久记忆：一家做分层与整理、把上下文压缩摘要排除在外；一家把记忆做成每个 Bot 可查可改的工程笔记，并允许人工删改</td>
+    </tr>
+    <tr>
+      <td>速览③ 私募估值 85 亿美元</td>
+      <td>11-05 速览④ Agility Robotics 今天以 AGLT 挂牌纳斯达克，公开市场第一次拿到了一份纯人形机器人公司的完整账本</td>
+      <td>同一行业两把尺子：一边是私募估值，一边是公开市场账本（年净销售额 178.2 万美元、毛利率负 151%、持续经营存疑）。混着读会误判整个赛道的健康度</td>
+    </tr>
+  </table>
+  <div class="foot">
+    <div>AI 日报 · 2026-11-13 · 北京时间 10:40</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-12.html">← 2026-11-12</a></div>
+</body>
+</html>

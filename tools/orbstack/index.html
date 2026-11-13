@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OrbStack：换掉 Docker Desktop 之前，先读那行「个人非商用」 · walker</title><meta name="description" content="macOS 上的 Docker Desktop 替代（闭源商业，原生 Swift），一个 App 同时跑容器、Kubernetes 与 16 种 Linux 机器，支持 Rosetta x86 模拟、VirtioFS、本地域名与双向 CLI。官方称后台 CPU <0.1%、初始磁盘 <10 MB。免费档仅限个人非商用，商用 Pro 为 $8/用户/月。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/orbstack/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="OrbStack：换掉 Docker Desktop 之前，先读那行「个人非商用」 · walker"><meta property="og:description" content="macOS 上的 Docker Desktop 替代（闭源商业，原生 Swift），一个 App 同时跑容器、Kubernetes 与 16 种 Linux 机器，支持 Rosetta x86 模拟、VirtioFS、本地域名与双向 CLI。官方称后台 CPU <0.1%、初始磁盘 <10 MB。免费档仅限个人非商用，商用 Pro 为 $8/用户/月。"><meta property="og:url" content="https://blog.walkerhua.com/tools/orbstack/"><meta property="og:image" content="https://blog.walkerhua.com/og/orbstack.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="OrbStack：换掉 Docker Desktop 之前，先读那行「个人非商用」 · walker"><meta name="twitter:description" content="macOS 上的 Docker Desktop 替代（闭源商业，原生 Swift），一个 App 同时跑容器、Kubernetes 与 16 种 Linux 机器，支持 Rosetta x86 模拟、VirtioFS、本地域名与双向 CLI。官方称后台 CPU <0.1%、初始磁盘 <10 MB。免费档仅限个人非商用，商用 Pro 为 $8/用户/月。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/orbstack.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>OrbStack：换掉 Docker Desktop 之前，先读那行「个人非商用」</h1><p>上一期 ToDesk 的免费版卡在「个人非商用」，这一期 OrbStack 的免费档也写着同一句话——免费的边界，有时比功能表更值得先看。</p><div class="hero-meta"><span>第 18 期</span><span>发布于 2026-11-11</span><span>约 7 分钟</span><a class="tag" href="https://orbstack.dev/" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/Docker/">Docker</a><a class="tag" href="/tags/macOS/">macOS</a><a class="tag" href="/tags/虚拟机/">虚拟机</a><a class="tag" href="/tags/开发环境/">开发环境</a><a class="tag" href="/tags/授权/">授权</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与授权">平台与授权</a><a class="toc-l3" href="#官方定价一手2026-11-11">官方定价（一手，2026-11-11）</a><a class="toc-l3" href="#本机实测macos-2662--arm64">本机实测（macOS 26.6.2 / arm64）</a><a class="toc-l3" href="#一个本机踩过的坑">一个本机踩过的坑</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>这期有点特别：它不是「我天天用的主力工具」，而是<strong>装在机器上、但尽量不去依赖它</strong>的那一类。先把边界摆正：</p>
+<ul>
+<li><strong>它不是开源软件</strong>。官网、App、CLI 都是闭源商业产品；想「看得见、改得动」的容器运行时，该看 Colima / Lima / Podman 那条线。</li>
+<li><strong>它不是普通的虚拟机软件</strong>。Parallels / UTM / VMware Fusion 卖的是「跑一个完整桌面系统」；OrbStack 的定位是 Docker Desktop 的 drop-in replacement，附带能一分钟起一台 Linux 机器，重心在开发环境而不是通用虚拟化。</li>
+<li><strong>它不是 Docker 本身</strong>。它是兼容 Docker CLI / Compose 的运行时与 Linux 机器管理器，「drop-in」是官方措辞，不等于行为逐字节一致——bind mount、网络模式、volume 权限这些边缘行为仍要实测。</li>
+<li><strong>它不是免费给公司用的</strong>。官方定价页把 Free 档写成 <strong>Personal, non-commercial use</strong>；Business &amp; commercial use 要 Pro，$8/用户/月（$96/年）。这条跟上一期 ToDesk 用户协议第 1 条是同一类限制，值得放在功能表之前读。</li>
+<li><strong>它不是跨平台工具</strong>。macOS only，且针对 Apple Silicon 做了大量优化；Windows / Linux 上不存在这个问题，也就不需要这个答案。</li>
+<li><strong>它不是「坚决不碰容器」的人需要装的东西</strong>。这点我得对自己诚实：本机的部署偏好是纯裸机进程 + OpenResty 反代，第 10 期写 WeKnora 时还把「Docker 是事实门槛」列为硬伤。OrbStack 在这里的角色是<strong>偶尔需要的兼容层</strong>，不是部署依赖。</li>
+</ul>
+<p>预期摆正：它卖的是「Mac 上跑容器别那么难受」，不是「让你重新喜欢容器」。</p>
+<blockquote>
+<p><strong>数据来源说明</strong>：闭源无 GitHub 仓库。一手材料是官网 <code>orbstack.dev</code> 首页、官方定价页 <code>orbstack.dev/pricing</code>，加本机 App 实测，均为 2026-11-11 15:04 拉取。官网的性能数字一律标「官方口径」，且注明其测试时间。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>Docker Desktop 太重</strong>：启动慢、后台常吃 CPU 与电量、磁盘占用随镜像涨，还有商业授权要求；对只是偶尔 <code>docker compose up</code> 的人，代价和收益不成比例。</li>
+<li><strong>Mac 上想要一台真 Linux</strong>：编译、跑 systemd、验证只在 Linux 复现的问题，SSH 进去比装一整套 VM 轻。</li>
+<li><strong>文件共享与网络别扭</strong>：bind mount 慢、容器与宿主互访、DNS / VPN / IPv6 冲突，是 Docker Desktop 长年被吐槽的地方。</li>
+<li><strong>Apple Silicon 上要跑 x86 镜像</strong>：Rosetta 模拟如果没有运行时配合，得自己折腾。</li>
+</ul>
+<p>OrbStack 的答案是把容器和 Linux 机器放进同一个轻量虚拟化层：原生 Swift App、VirtioFS 文件共享、动态磁盘、本地域名、双向 CLI 集成，官方称 Apple Silicon 上后台 CPU 占用 &lt;0.1%、开箱初始磁盘 &lt;10 MB。</p>
+<h2 id="核心能力">核心能力</h2>
+<p>以下为官网列出的功能与官方口径：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>容器</td>
+<td>Docker CLI / Compose 兼容，快速构建、bind mount 与端口转发、卷调试、Rosetta 跑 x86 容器</td>
+</tr>
+<tr>
+<td>Linux 机器</td>
+<td>16 种发行版、1 分钟起一台、SSH 与 SSH agent 转发、VS Code 远程编辑、可在 Apple Silicon 上跑 Intel 机器</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>官网列为内置能力，与容器、Linux 机器统一管理</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>本地域名、容器与机器互访、IPv6、VPN 友好、ICMP / ping / traceroute、host networking</td>
+</tr>
+<tr>
+<td>集成</td>
+<td>菜单栏 App + Activity Monitor、双向 CLI（Mac ↔ Linux 跑命令/拷文件）、通知与打开文件链接、USB 直通、声音</td>
+</tr>
+<tr>
+<td>效率</td>
+<td>原生 Swift、动态磁盘、低初始内存、低后台 CPU；官方口径 Apple Silicon 后台 &lt;0.1% CPU、初始磁盘 &lt;10 MB</td>
+</tr>
+<tr>
+<td>免管理员</td>
+<td>官网明确列「Works without admin」</td>
+</tr>
+<tr>
+<td>性能对比</td>
+<td>官网 benchmark 称 Open edX 开发环境准备 17 分钟 vs Docker Desktop 45 分钟，页面自己标注 <strong>as of August 2023</strong></td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>把容器和 Linux 机器收进同一个运行时</strong>（不用为了跑一条 Linux 命令再开一个 VM 软件）和<strong>双向 CLI 集成</strong>（Linux 里直接调用 Mac 侧命令、开文件链接，这种贴合度是通用 VM 给不了的）。至于 17 vs 45 分钟那张对比图，是 2023 年 8 月的官方自测，看方向就好，别当现时结论。</p>
+<h2 id="平台与授权">平台与授权</h2>
+<h3 id="官方定价一手2026-11-11">官方定价（一手，2026-11-11）</h3>
+<table>
+<thead>
+<tr>
+<th>档位</th>
+<th>适用范围</th>
+<th>价格</th>
+<th>包含</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Free</strong></td>
+<td><strong>Personal, non-commercial use</strong></td>
+<td>$0</td>
+<td>跑容器、跑 Linux 机器、社区支持</td>
+</tr>
+<tr>
+<td><strong>Pro</strong></td>
+<td><strong>Business &amp; commercial use</strong></td>
+<td><strong>$8 / 用户 / 月</strong>（年付 $96）</td>
+<td>商业使用、Debug Shell、优先支持、批量组织采购</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>高级需求</td>
+<td>联系销售</td>
+<td>SAML SSO、发票 / PO 付款</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最该先读的就是 Free 那行小字</strong>：个人非商用。公司笔记本上拿它跑项目容器，按官方口径属于 Pro 的范围。这跟第 15 期 ToDesk 免费个人版「仅限个人非商用、法人设备上使用需付费授权」是同一类条款，两期连着看特别清楚：国产商业远控和美国开发工具，在免费边界上用了几乎一样的措辞。</p>
+<h3 id="本机实测macos-2662--arm64">本机实测（macOS 26.6.2 / arm64）</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/OrbStack.app</code>，<code>2.2.1</code>（build 20628），<strong>679 MB</strong>，2026-06-08 安装</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体 <code>Orbital Labs, LLC (U.S.)</code></td>
+</tr>
+<tr>
+<td>Bundle ID</td>
+<td><code>dev.kdrag0n.MacVirt</code>（名字里还留着 MacVirt 的痕迹）</td>
+</tr>
+<tr>
+<td>PATH 注入</td>
+<td>本机多个进程的 PATH 末尾能看到 <code>~/.orbstack/bin</code>——安装会往 shell 环境注入自己的 CLI 目录</td>
+</tr>
+<tr>
+<td>同机其他方案</td>
+<td>Homebrew 里还同时装着 <code>docker-desktop</code>（cask）、<code>colima</code>、<code>lima</code>、<code>minikube</code>、<code>docker</code>、<code>docker-compose</code>——四套容器方案并存，本身就是这题复杂度的写照</td>
+</tr>
+</tbody>
+</table>
+<p>两个如实记录的观察：<strong>App 本体 679 MB</strong>，和官网「初始磁盘 &lt;10 MB」并不矛盾（后者说的是运行时/动态磁盘的初始占用，不是应用包体积），但查数据时别把两者混成一个数字；以及<strong>它会改 PATH</strong>，卸载或切换运行时时要检查 shell 配置里残留的路径。</p>
+<h3 id="一个本机踩过的坑">一个本机踩过的坑</h3>
+<p>第 10 期写 WeKnora 时记过一笔：本机 <strong>80 / 8080 被 OrbStack 和 homebrew nginx 占用</strong>，最后把 WeKnora 改成 Web 18000 / API 18080。容器运行时和裸机 nginx 抢同一批端口，是「本地同时跑两套服务栈」最常见的冲突——不是 OrbStack 的错，但值得在装之前就规划好端口表。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>授权边界</strong>：Free 仅限个人非商用。团队/公司使用按官方定价页应上 Pro（$8/用户/月）；这跟「开源替代品随便用」的预期不同，采购前先确认。</li>
+<li><strong>闭源不可审计</strong>：容器运行时是系统级组件，闭源意味着你只能靠厂商信誉与更新节奏。对供应链有要求的环境，Colima / Lima / Podman 更符合口径。</li>
+<li><strong>macOS only，且优化偏向 Apple Silicon</strong>：Intel Mac 与跨平台团队不适用；官方自己把「为 Apple Silicon 优化」列成卖点。</li>
+<li><strong>官方性能数字有保质期</strong>：17 vs 45 分钟是 2023 年 8 月的自测；&lt;0.1% CPU、&lt;10 MB 初始磁盘是官方口径，不是我在本机跑过的结果。本机这轮只做了安装状态取证，没有做性能实测。</li>
+<li><strong>端口与网络会互相抢</strong>：容器端口转发、本地域名、VPN-friendly 这些能力，在同时跑裸机 nginx / 反代 / 其他虚拟化的机器上要提前规划；上面的 80/8080 冲突就是实例。</li>
+<li><strong>会改环境</strong>：<code>~/.orbstack/bin</code> 注入 PATH，CLI 与 Docker 兼容层可能和已有 <code>docker</code> 命令指向不同实现，切换前用 <code>which docker</code> 确认一下当前生效的是谁。</li>
+<li><strong>不是部署方案</strong>：它能让本地开发舒服，但不该成为线上部署的前提。本机偏好「纯裸机进程 + OpenResty 反代」，容器在这里是兼容层；把开发环境当生产架构照搬，会多一层不必要的运行时依赖。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>开源</th>
+<th>商用授权</th>
+<th>范围</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker Desktop</td>
+<td>否</td>
+<td>商业使用需付费</td>
+<td>容器为主</td>
+<td>要官方标准栈、团队已采购</td>
+</tr>
+<tr>
+<td>Colima / Lima</td>
+<td>是</td>
+<td>无此限制</td>
+<td>容器 / VM，CLI 驱动</td>
+<td>不想装商业软件、愿意敲命令</td>
+</tr>
+<tr>
+<td>Podman</td>
+<td>是</td>
+<td>无此限制</td>
+<td>容器（无 daemon）</td>
+<td>要 rootless、贴近生产</td>
+</tr>
+<tr>
+<td>UTM / Parallels</td>
+<td>部分/否</td>
+<td>视产品</td>
+<td>通用虚拟机</td>
+<td>要跑完整桌面系统</td>
+</tr>
+<tr>
+<td><strong>OrbStack</strong></td>
+<td><strong>否</strong></td>
+<td><strong>Free 仅个人非商用，Pro $8/用户/月</strong></td>
+<td><strong>容器 + K8s + Linux 机器</strong></td>
+<td><strong>Mac 上要最省事的 Docker Desktop 替代</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Mac 上偶尔要跑容器、又受不了 Docker Desktop 的人</strong>：启动快、后台轻、菜单栏管理，个人非商用免费；</li>
+<li><strong>需要一台顺手 Linux 的开发</strong>：SSH、VS Code 远程、Rosetta 跑 x86，一分钟起机器；</li>
+<li><strong>Apple Silicon 用户</strong>：官方优化集中在这里，x86 镜像与 Intel Linux 机器都有路径。</li>
+</ul>
+<p><strong>不适合谁</strong>：公司环境里想免费用的（先买 Pro）；坚持开源/可审计运行时的（去 Colima / Podman）；Windows / Linux 用户（用不上）；纯裸机部署、根本不需要容器的（别为一个偶尔的 <code>docker run</code> 多养一层运行时）；以及<strong>把官网 2023 年 benchmark 当采购依据的</strong>——自己用真实 workload 跑一遍更实在。</p>
+<p>一句话收尾：这六期里，OrbStack 是唯一一个我装了却希望少用它的工具。它对「不碰容器」的偏好不是背叛，而是承认现实——有些项目（比如第 10 期那个 WeKnora）就是只给了 Compose 这一条路，与其跟工具链较劲，不如留一个轻的兼容层，然后记得两件事：<strong>别让它变成部署依赖，也别忽略免费档那行「个人非商用」</strong>。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/localsend/"><span class="post-nav-label">上一期</span><span class="post-nav-title">LocalSend：连账号都不用，把文件留在局域网里</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

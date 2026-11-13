@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-12 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 12 日（周四）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：发布只是起点 —— 保质期、验收、修复、任务之间与连续运行，才是今天五条共同的后半程</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① Qwen4 两周窗口</a>
+      <a href="#n2">② 万亿权重 MIT 全开</a>
+      <a href="#n3">③ 3.8 万对 217</a>
+      <a href="#n4">④ LIFE 跨任务在线</a>
+      <a href="#n5">⑤ 可靠性写进硬指标</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>阿里把 Qwen4-Max 做成两周试用：100 万上下文、只走 Token Plan 不按量、11 月 25 日 24 时下线，官方没给跑分、没给参数量、也没说是否开源</h2>
+      <span class="tag t-code">AI Coding · 旗舰发布形态</span>
+    </div>
+    <div class="src">阿里云百炼《模型上架与更新》11 月 11 日条目（qwen4-max-preview）、《Token Plan 个人版》与《选择模型》文档；千问官方 X 账号 11 月 11 日发帖；QwenCloud Token Plan 个人版说明；界面新闻、网易科技、腾讯新闻「昨夜今晨」多源交叉核对</div>
+    <div class="body">
+<p>11 月 11 日 10 时，阿里云百炼上架 <code>qwen4-max-preview</code>（别名 <code>qwen4.0-max-preview</code>，账单统一显示后者）。官方对完整版的表述是「全新一代千问大模型 Qwen4 即将发布」，这次上线的只是<strong>预览版</strong>。</p>
+      <ul>
+        <li><strong>规格给得很细。</strong>100 万 Token 上下文；思考过程与最终回答共用最大输出 <strong>393,216 Token</strong>；默认开启混合思考，可用 <code>enable_thinking</code> 按请求开关。多模态输入支持单张最高约 1600 万像素的图片（一次最多 2048 张）与视频（最多 64 段、单段最长 2 小时、不超过 2 GB）。能力清单含联网搜索、工具调用与结构化输出，<strong>兼容 OpenAI 与 Anthropic 接口格式</strong>，Claude Code、Cursor 这类工具改地址与密钥即可接入。</li>
+        <li><strong>入口只有一条，而且带终点。</strong>官方文档写明<strong>仅支持 Token Plan，不支持按量计费</strong>；预览期从 11 月 11 日 10:00 到 <strong>11 月 25 日 24:00</strong>（北京时间），期间不做变更，<strong>结束即下线</strong>。个人版目前只在华北 2（北京）地域提供。限时 Credits 消耗低至标准费率 2 折，每天 22 时至次日 8 时再按 4 折（相当于标准的 0.8 折）；国际版套餐 6 到 43 美元一个月，对应每月 2 万到 20 万 Credits；国内 Lite 与 Essential 档日常 39 元/月起，活动期新客 19.5 元。</li>
+        <li><strong>比价格更该读的是用途条款。</strong>Token Plan 个人版约定<strong>仅限在编程工具与智能体工具里交互式使用</strong>，不能拿来跑自动化脚本、给自有应用做后端，或做非交互式批量调用。也就是说这不是一张普通按量 API 密钥。千问办公、Qoder、千问 App 与 QwenStudio 已同步接入，Qwen Code 1.0 Preview 同期开源，11 月 11 日至 24 日用 Qoder 账号登录可领取 Qwen4 免费体验额度，30 天内有效。</li>
+        <li><strong>官方没给的三样：跑分、参数量、开源许可与权重时间表。</strong>早期用户反馈分裂：V2EX 有人说「试过了，很一般」，linux.do 有人提到偶尔拒绝正常编程任务，也有人说一个任务没跑完就扣了 100 Credits。这些是个人体验，任务与设置都不清楚，不能当评测结论，但正好指出该自己量什么。</li>
+        <li><strong>同期另有一条容易混的。</strong>11 月 11 日 23:19，Unsloth 发布 Qwen3.8-27B 的 Dynamic V3.1 GGUF 量化，自述在 Terminal Bench、DeepSWE 等基准上平均领先同尺寸其他量化版 <strong>5% 到 10%</strong>（文档总述又写 10% 到 15%，两处均为自测、无第三方复现）。<strong>这不是 Qwen4</strong>，且「12GB 内存能跑」对应的是一个 12GB 大小的量化文件，不是实测运行内存占用。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，旗舰模型第一次被明码标成<strong>一段有起止时间的窗口</strong>。11-11 ① 的 Gemini 4 Carbon 是正式开放、但介绍价 11 月 30 日结束、12 月 1 日翻倍；今天更彻底 —— 到期的是模型本体，还写明「期间不做变更」。任何在这两周里搭起来的工作流，都得把 11 月 25 日当作一次强制迁移排期，而不是等官方通知。</p>
+      <p>第二，「兼容 OpenAI 与 Anthropic 接口」把接入成本压到改一行地址，条款却把用途锁在交互式编程工具里。两件事放一起，说明厂商在测的不是跑分，而是<strong>付费意愿与真实任务里的工具调用可靠性</strong>：给足上下文与接口兼容，看开发者愿不愿意在一个会消失的预览版上押两周。09-11 ① 那期发现分数里混进了答案泄漏，今天干脆一份分数都不发 —— 两端都指向同一件事：跑分已经不能直接当选型依据。</p>
+      <p>第三，对国内团队最实际的是开源悬念。Qwen 系此前是国产开源主力，这次 Max 档只走云端付费预览，正式版是否开源、开到什么规模，官方没写。与本期②美团同周把 1.6 万亿参数以 MIT 全开放在一起，两条路线在同一周给出相反取舍，值得先按「要不要拿得到权重」这一条做分叉。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>规格、价格、条款均来自阿里云帮助文档与官方活动页，<strong>没有第三方实测</strong>，也没有官方跑分、参数量与开源时间表。「2 折」「0.8 折」是限时活动口径，Credits 标准扣费率本轮未取到，算不出每百万 Token 单价；国内各档月价为页面动态加载，以页面最新说明为准。</p>
+      <p>预览期结束会下线，上架说明<strong>没有承诺正式版以何种形式回归</strong>，也没说明预览期产生的会话与数据如何迁移。把它接进产品或批处理流程前，先逐条对照用途条款，别按「某个模型 ID 会一直在」来设计。</p>
+      <p>V2EX 与 linux.do 的早期反馈是个人体验，不能当评测结论。Unsloth 的 Qwen3.8-27B 量化是另一款模型、另一家团队，其自述领先幅度未经第三方复现，两处数字还不一致。</p>
+      <p><strong>与 11-11 ① 的边界</strong>：那条是 Gemini 4 Carbon 正式开放、介绍价 12 月 1 日翻倍，与 Qwen4 是不同厂商不同模型。本期取的是<strong>「预览版加下线日加用途条款」这一发布形态</strong>，不是把两家旗舰混成一条。</p>
+    </div>
+    <div class="act">
+<p>这两周挑三到五个你知道正确答案的真实任务（修过的 bug、写过的页面），用 Qwen4-Max 与现用模型各跑一遍，记三列：做对没有、跑了多久、扣了多少 Credits；预览期到 11 月 25 日，别把测试排到月末。</p>
+      <p>把 11 月 25 日写进项目排期当强制迁移点，对模型 ID 做配置化、不硬编码 <code>qwen4-max-preview</code>，并提前确认下线后会话与产物能否导出。</p>
+      <p>若打算接进自有产品或批量处理，先核对 Token Plan 的交互式限定；需要权重与私有化部署的，继续等开放权重版本，别用预览版顶。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>美团把 1.6 万亿参数模型以 MIT 全开：商用、修改、二次分发都不设门槛，Terminal Bench v2.1 报 88.4 —— 但同一张官方表上，换到 v4.0 只剩 38.5</h2>
+      <span class="tag t-code">AI Coding · 开源权重与基准口径</span>
+    </div>
+    <div class="src">Hugging Face 仓库 meituan-longcat/LongCat-2.5 模型卡与 LICENSE（11 月 9 日权重开放）；美团官方基准表；VentureBeat、AI Beat、Metir AI、亿邦动力、11 月 11 日中文 AI 日报多源交叉核对</div>
+    <div class="body">
+<p>11 月 9 日，美团把 LongCat-2.5 权重放上 Hugging Face，用的是 <strong>MIT 许可</strong>：可商用、可修改、可二次分发，只需保留版权声明，不含商标与专利授权。多数万亿级开放权重发布都带自定义许可（按营收分档、按地区排除、按用户数设限），MIT 在这个量级很少见。</p>
+      <ul>
+        <li><strong>规模，以及一处尚未澄清的差。</strong>官方宣布总参数约 <strong>1.6 万亿</strong>、每 Token 激活约 <strong>480 亿</strong>的 MoE，原生多模态（截图、视频、代码库可作输入），100 万上下文，四比特专家权重。<strong>但 Hugging Face 检查点元数据写的是 1.8 万亿</strong>，双方都没澄清；仓库体量各源报 1.8TB、3.2TB（16 比特权重）与 3.56TB（208 个 safetensors 分片）不等。技术报告尚未发布，规划基础设施时别拿任何一个数当定论。</li>
+        <li><strong>官方基准表（自测）。</strong>Terminal Bench v2.1 <strong>88.4</strong>（上一代 70.8）、DeepSWE v1.1 <strong>64.6</strong>（上一代 9.7）、SWE Atlas codebase QA 58.3（上一代 33.1）、BrowseComp 91.9、AutomationBench v1.0.6 51.8。从 9.7 到 64.6 这种六倍跳，很可能说明上一代连任务格式都跑不顺，不能读成能力追平。</li>
+        <li><strong>同一张表里最该读的是输掉的那几行。</strong>Terminal Bench v4.0 只有 <strong>38.5</strong>，Claude Opus 5 是 53.9；DeepSWE v1.1 落后 DeepSeek-V4.1-Flash（64.6 对 74.2）、GPT-5.6 Sol（72.7）与 Opus 5（68.8）；Vision2Web 78.6 对 Opus 5 的 80.2；3DCodeBench 55.4 对 54.3 只是微弱领先。<strong>v2.1 的 88.4 与 v4.0 的 38.5 差 49.9 分，是同一个模型、同一家厂商、同一份模型卡。</strong></li>
+        <li><strong>还有一层选择偏差。</strong>对照的专有模型是 GPT-5.6 Sol 与 Claude Opus 5 这些<strong>上一代</strong>，而 GPT-6.1 Sol（9 月 29 日）与 Claude Opus 5.5（9 月 22 日）在发布时已经可用；榜单上这些新模型的分数又用了最大 effort 配 Codex 与 Claude Code，不是干净的同条件对比。较稳妥的读法是：它在多项编程测试上接近<strong>上一代</strong>专有模型，不等于追平当前前沿。</li>
+        <li><strong>成本与部署。</strong>托管 API 限时价输入 0.3 美元、输出 1.2 美元每百万 Token；按 20 万输入加 10 万输出单次约 0.18 美元。官方测试的服务路径面向 <strong>NPU 而非 GPU</strong>，自托管前要自己量吞吐。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，许可比跑分更值得先读。MIT 把法务问题整类删掉，对想微调、私有化、二次分发的团队，这是可以直接改变选型顺序的一行；对采购来说，「能不能拿得到权重、能不能改」比「v2.1 多少分」更早决定能不能上。</p>
+      <p>第二，v2.1 与 v4.0 差 49.9 分，是 11-08 ②「改 17 行说明让平局裂开 23 分」之后又一次更极端的独立佐证，而且证据就印在厂商自己的模型卡上。<strong>旧版本基准上的接近前沿，不等于新版本基准上的接近</strong>。引用这类分数不写清版本号，和 11-11 ① 里不写 harness 与档位一样，属于不合格引用。</p>
+      <p>第三，与本期①放一起，同一周国产第一梯队给出两个相反答案：一个把旗舰做成两周、只订阅、不给权重的付费预览，一个把万亿参数以 MIT 全开、还把输掉的项目留在表里。这比任何跑分都更能说明两家的商业取向，也把 11-11 ① 那句「谁掌握基准与口径，谁掌握发布叙事」补上了另一半 —— 有人选择不参与这场叙事。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>全部基准为美团自测或模型卡标注 indicative only，<strong>技术报告未发布、无第三方独立复现</strong>；比较对象由厂商选择且偏旧，新模型分数所用 effort 与 harness 不同，不构成同条件对比。</p>
+      <p>1.6 万亿（官方）与 1.8 万亿（仓库元数据）的口径差、1.8TB / 3.2TB / 3.56TB 三种仓库体量，均未澄清；208 个分片、每个约 17.2GB，自托管前先确认磁盘与服务栈。</p>
+      <p>MIT 不含商标与专利授权；美国政府采购对中国公司模型的审查收紧，MIT 也不自动豁免特定联邦场景。托管 API 的 0.3 与 1.2 美元是限时价，不等于长期定价。88.4 是 v2.1 口径、38.5 是 v4.0 口径，两者不可互换，也不可与本期①的 CursorBench 或 WANDR 横向比较。</p>
+      <p><strong>推送辨析</strong>：本专栏 <strong>11-03 速览①</strong> 已推过 LongCat-2.5，当时取的是模型发布与训练效率（1.6 万亿参数、每 Token 激活约 480 亿、训练全程国产算力、长上下文单卡训练吞吐较基线提升 86%）。本期取的是 <strong>11 月 9 日权重以 MIT 开放，以及同一份官方模型卡里 v2.1 与 v4.0 相差 49.9 分这一口径问题</strong>，是同一模型的两个不同阶段，不是把一次发布再推一遍。另与 10-29 ① / 11-11 ① 的 Gemini 4 Carbon 登顶与开放无关。</p>
+    </div>
+    <div class="act">
+<p>引用 LongCat-2.5 成绩时强制带上基准版本号：v2.1 的 88.4 与 v4.0 的 38.5 分开记，别取大数当模型能力；同时记下所用 harness 与 effort。</p>
+      <p>法务与基础设施先过一遍：确认 MIT 的版权声明要求、不含商标专利授权，按 208 分片与 3.56TB 量级核对磁盘与服务栈，再决定租 API 还是自托管。</p>
+      <p>自托管前用自己的长程编程任务复测，尤其覆盖 v4.0 那类新基准；官方测试路径面向 NPU，GPU 环境的吞吐要自己量。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>七个月 37,966 条候选漏洞，公开台账里只有 217 条标记修复：VulnCheck 复核 Anthropic 玻璃翼计划，重复项是修复数的 7.5 倍，而审核瓶颈被移到了开源维护者身上</h2>
+      <span class="tag t-code">AI Coding · 安全产能与验收</span>
+    </div>
+    <div class="src">VulnCheck 研究员 Patrick Garrity 11 月 9 日博客《Anthropic Glasswing November Update》与开源仓库 Anthropic Credited CVEs；Anthropic 协调披露台账（11 月 2 日更新）与 10 月 8 日 OSS Scanner 公告；curl 维护者 Daniel Stenberg 11 月初博客；量子位、Tech News Reel、Undercode News、Glonce 多源交叉核对</div>
+    <div class="body">
+<p>玻璃翼计划 4 月 7 日启动，Anthropic 当时称已发现「数千个高危与严重漏洞」，配套 1 亿美元模型额度与 400 万美元开源安全捐款，苹果、谷歌、微软、AWS、英伟达加入。七个月后，VulnCheck 用 CVE 记录、GHSA、Linux 内核提交、官方台账与人工审计 advisory 逐条核对，给出第一份第三方账本。</p>
+      <ul>
+        <li><strong>四层数字要一层层拆。</strong><strong>37,966 条候选发现</strong>，公开台账只列 <strong>7,349 条（19.4%）</strong>；其中 5,276 条经核验为唯一有效，1,654 条重复、419 条撤回；4,866 条已报给维护者、193 条仍在预披露。最终<strong>标记已修复的 217 条，不到候选总数的 0.5%</strong>，重复项是修复数的 7.5 倍。</li>
+        <li><strong>差距在加速扩大。</strong>9 月 8 日到 11 月 2 日，候选从 26,153 涨到 37,966（新增 11,813），台账公开项新增 4,613，<strong>修复只新增 15 条</strong>，重复项从 2 条涨到 1,670 条。VulnCheck 追踪到归因于 Anthropic 的 442 个 CVE，约占今年全球公开 CVE 的 0.5%；比对其 KEV 库，<strong>只有 2 个（0.45%）被在野利用</strong>。</li>
+        <li><strong>台账同时报 94.2% 真阳性率</strong>，与 1,654 条重复、419 条撤回并列时显得可疑。更有说服力的是接收端：curl 维护者 Daniel Stenberg 收到一批 45 份报告，已公开的 34 份里 <strong>19 份判定不构成安全漏洞、6 份确认低危</strong>，假阳性率 55.9%；他为此改了 curl 的漏洞处理规则，把低危与中危改到 GitHub 公开讨论，并写下「我们的目标是别被淹死」。</li>
+        <li><strong>Anthropic 自己承认卡在人工验证。</strong>10 月 8 日推出 OSS Scanner，让项目自助报名扫描，报告「完全由模型生成、未经人工审核或分类」「可能不正确或无效」，并已把近 5,000 份未经验证的报告批量发给维护者。官方口径是 37,966 条里 6,376 条经外部安全专家审核、6,009 条有效、5,087 条报给维护者、629 条获上游补丁 —— <strong>与 VulnCheck 的 217 条不是同一口径</strong>（前者是「已获补丁」，后者是台账「标记修复」），但双方都指向同一个瓶颈。</li>
+        <li><strong>顺带一提，这份报告也有立场。</strong>VulnCheck 本身是漏洞情报与优先级管理服务商，它批评的问题恰好与自家业务契合；但数据来自公开台账、CVE 与内核提交，可逐条复核。9 月 Claude 曾给 curl 找出一个 Use-After-Free 内存错误，被 Stenberg 称为该项目多年来最严重的漏洞之一 —— 这不是「AI 找洞没用」，而是「找到之后那段路没修好」。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这是 11-11 速览② 那份 Vercel 数字缺的东西。上期 Vercel 自报「不到一周 57,897 个问题、agent 修补 14,665 个」，当时点明没有第三方基线、未说明误报率与重复项归并口径；今天第三方直接拿官方台账复核，把「发现数」「唯一有效数」「已报维护者数」「修复数」拆成四层。<strong>AI 把发现端成本压到近零之后，真正稀缺的是验证与修复的人力。</strong></p>
+      <p>第二，<strong>瓶颈没有消失，只是换了承担者</strong>。Anthropic 用 OSS Scanner 把分类工作交给开源维护者，curl 的 55.9% 假阳性率就是账单。这与 09-14 ②「成本黑洞在脚手架不在模型」是同一种位移：那次从单价转到工具链，这次从 AI 厂商转到无偿维护的社区。11-09 ① 凭据泄漏与 11-09 ② 币安 63.4 亿美元损失讲的是编码侧安全的代价，这一条讲的是安全产能的账，两面合起来才是完整画面。</p>
+      <p>第三，「让模型顺手把补丁也写了」在公开讨论里被反复提出，但审核一份 AI 补丁的工作量有时接近重写一份，维护者对未经人工审核的 PR 信任度也不足。37,966 对 217 这个比例，本质上不是模型能力问题，是<strong>验收链路的吞吐量问题</strong> —— 与本期④补「任务之间」、⑤补「连续运行」指向同一件事：能力发布之后，下游没人接的那一段才是瓶颈。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>217 与 629 两组数字口径不同：VulnCheck 统计的是 Anthropic 协调披露台账中「标记修复」的条目，Anthropic 官方口径的 629 是「已获上游补丁」，另有 733 条 advisory 与 3,635 条获维护者确认，不可互相替代，也不能相除得出修复率。</p>
+      <p>curl 的 34 份样本量小、来自单一项目，55.9% 假阳性率不可外推到全部 37,966 条。台账被指存在一个会把「已披露」数量算高的显示问题，VulnCheck 建议读者用 disclosed 过滤条件自行核对；94.2% 真阳性率是厂商自报，计算方法未公开。</p>
+      <p>「442 个 CVE 中仅 2 个被在野利用」用的是 VulnCheck 自家的 KEV 库，属于「已知被利用」的口径，不等于其余漏洞没有价值，也不能读成漏洞危害等级。</p>
+      <p>报告发布于 <strong>11 月 9 日</strong>，中文媒体 11 月 11 日至 12 日集中转载，<strong>不是当日首发</strong>；玻璃翼计划本体 4 月启动，本期取的是七个月后的第三方复核，不是计划发布。</p>
+    </div>
+    <div class="act">
+<p>内部接 AI 生成的漏洞报告时先建一道验证闸门：重复项归并、复现、严重度复核，再进修复流程；把「收到多少条」与「修好多少条」分成两张报表，别用发现数汇报安全收益。</p>
+      <p>若上游给你批量推送未经验证的报告（类似 OSS Scanner），在 SLA 里写清分类责任归属与可退回机制，别默认由维护方免费承接。</p>
+      <p>引用玻璃翼成绩时带上口径与日期：候选 37,966、台账公开 7,349、唯一有效 5,276、标记修复 217，四个数不能互换；11 月 2 日之后的增量单独标注。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>智元开源 LIFE：让机器人在「没有任务的那些时间」里也保持在线，24 小时真机录像上把跨任务记忆做成可复用的工具，FindingDory 查询成功率从 37.5% 到 65.8%</h2>
+      <span class="tag t-emb">具身智能 · 跨任务记忆</span>
+    </div>
+    <div class="src">智元 AGIBOT 11 月 11 日发布；界面新闻、上海证券报·中国证券网、上观新闻当日报道；项目主页 agibotgeneral.github.io/life-site、GitHub 仓库 AgibotTech/LIFE、RoboBeats-0.8B / 2B / 4B 模型卡与 SSS-Bench 评测资源</div>
+    <div class="body">
+<p>传统具身系统以单任务为中心，任务一结束状态就重置。LIFE（Learning to Live: A Step Toward Lifelong Embodied Intelligence）把调度单位从「一次任务」扩到<strong>跨任务</strong>，让机器人在任务执行期间与间隔期都保持环境在线，把历史观察留给后续决策。</p>
+      <ul>
+        <li><strong>三部分协同。</strong>轻量决策模型 <strong>RoboBeats</strong> 做条件跟踪与事件发现；可塑性记忆模块 <strong>PlasticMemory</strong> 保存原始画面与结构化记录；能力复用机制 <strong>EDM</strong> 把求解方法固化成可验证的工具与技能。三者合起来解决的是「任务与任务之间那段时间里，机器人还在不在」。</li>
+        <li><strong>RoboBeats 不生成文本。</strong>它读取 true / false 标签的得分，判断一句自然语言描述的条件是否成立；多个条件共享视觉输入与历史计算缓存，各自维护预测状态。三种规模 0.8B / 2B / 4B。<strong>RoboBeats-2B 在单张 RTX 5090 上处理一帧新画面约 75 毫秒，同时检测 16 个条件约 77 毫秒</strong> —— 共享缓存让并发条件几乎不额外收费，这才让「一直看着」在端侧算力上成立。</li>
+        <li><strong>基准与消融。</strong>RoboBeats-4B 在 StreamingBench 主动输出任务准确率从 21.2% 到 64.0%、SSS-Bench 问答准确率从 40.9% 到 60.5%；<strong>挂载 EDM 后，FindingDory 的 597 个未参与能力构建的测试查询，成功率从 37.5% 到 65.8%</strong>，写入端输入 Token 减少约 45%。</li>
+        <li><strong>更像样的一次验证是 24 小时真机录像。</strong>远征 A3 Ultra 连续采集一天第一视角视频构建记忆，6 个历史信息问答里 LIFE 得 <strong>29.5 / 30 分、平均用时 80.6 秒</strong>，对照组 Codex 得 28.5 / 30 分、平均 554.7 秒 —— 分差只有 1 分，差的是快约 6.9 倍的检索。论文、项目主页、GitHub 代码、RoboBeats 三种权重与 SSS-Bench 评测资源已同步开源。</li>
+        <li><strong>团队自己划了界。</strong>下一步是结合长期目标与自主行动，放进多日在线部署与动态仿真，检验持续变化环境里更新记忆与自主决策的可靠性 —— 也就是<strong>目前验证到的还是「一天」，不是「长期」</strong>。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，编码侧这两周一直在处理「记忆」：11-08 ① Anthropic 把 agent 记忆拆成四层并明确排除上下文压缩摘要，11-11 ② aiXcoder 把压缩做成 4B 专用模型。今天具身侧补的是另一半 —— <strong>任务与任务之间那段没人管的时间</strong>。单任务成功率再高，机器人一停机就失忆，产线与家庭场景都用不了；LIFE 把「在线」本身变成调度单位。</p>
+      <p>第二，RoboBeats 是「把高频、边界明确的一环交给小模型」的又一个实例，但做法比 11-10 速览① 的 Muse Ember 更极端：不生成任何文本，只输出条件成立的得分。75 毫秒处理一帧、16 个条件几乎不增加延迟。与 11-11 ⑤ LingBot-Touch 用 530 万参数补指尖感知是同一种工程取向：<strong>把持续运行的成本压到可以忽略</strong>。</p>
+      <p>第三，37.5% 到 65.8% 这一组，价值不在分数而在「597 个未参与能力构建的测试查询」这个设定：增益来自复用已有工具与技能，不是针对测试集重训。它和 11-09 ④ Talos 的 50 天 8000 多次操作、11-11 ④ 奔驰产线 96% 一起，把具身侧的验收从「一次演示」推向「一段时间里的稳定表现」 —— 只是三者都还缺同一类数字（见口径提醒）。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>全部数字来自厂商自测与论文，未见第三方复现。FindingDory 的 597 个查询是基准查询，不等于真实作业任务；37.5% 到 65.8% 是<strong>「挂载 EDM 后」的增益</strong>，不是 LIFE 整体相对其他方案的横评。</p>
+      <p>24 小时真机案例只有 <strong>6 个历史信息问答</strong>，且对照组是 Codex 这类编码智能体而非具身记忆系统，分差 1 分、差距主要体现在检索用时，不能读成「LIFE 比通用 agent 更懂机器人」。写入端 Token 减少约 45% 是写入口径，不是整轮任务总开销。</p>
+      <p>「终身」目前只验证到一天；多日在线部署、动态仿真与长期目标下的自主行动，团队自己列为后续工作。75 毫秒是单张 RTX 5090 上的厂商口径，换端侧算力要自己重测。</p>
+      <p><strong>主体辨析</strong>：智元在 10-29 ④（Worken 指标与累计下线 2 万台）、11-07 ⑤（灵犀 X2 焕新版）、11-09 速览③（便利店六台成绩）已多次出现，本次是同一公司的<strong>研究框架开源</strong>，不是新主体、也不是整机发布。</p>
+    </div>
+    <div class="act">
+<p>评估具身系统时，除了单任务成功率，补三列：任务间隔期是否仍在线、跨任务记忆可不可检索、历史技能能否复用；缺这三列的演示不进验收表。</p>
+      <p>复现时先跑 597 查询那组设定，确认增益确实来自「未参与能力构建」的查询；再拿自己的多日录像替换官方的 24 小时样本，看记忆检索用时是否随天数劣化。</p>
+      <p>端侧部署先用 0.8B 或 2B 版，把「同时检测 16 个条件约 77 毫秒」当基线重测；给条件描述写明确的 true / false 判据，别让模糊条件悄悄占满共享缓存。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>北京把「用得住」写成了硬指标：平均无故障 2000 小时、设计寿命 5 年、核心部件年故障率低于 10%，而厂商发布里最常缺的正是这几列</h2>
+      <span class="tag t-emb">具身智能 · 政策与可靠性</span>
+    </div>
+    <div class="src">北京市经济和信息化局《北京市具身智能机器人产业高质量发展行动方案（2026—2028 年）》（京经信发〔2026〕54 号，11 月 11 日印发，市政府官网原文）；新华社 11 月 11 日电、中国青年报、新京报评论、北京经信「一图读懂」交叉核对</div>
+    <div class="body">
+<p>目标到 2028 年：培育不少于 <strong>5 家国际一流、10 家国内领先</strong>的人形整机企业；京津冀区域整机产能占全国 <strong>25%</strong>、关键零部件配套率超 <strong>60%</strong>；北京本地形成 <strong>20 万台/年</strong>整机生产能力。背景数字：北京已聚集超 30 家整机企业（占全国超 20%），2025 年机器人产业营收 518 亿元；工信部预计今年全国人形整机产量突破 10 万台。</p>
+      <ul>
+        <li><strong>最值得逐字读的是整机那组硬指标。</strong>额定负载达到自重的 <strong>40% 以上</strong>、平均无故障工作时间（MTBF）超过 <strong>2000 小时</strong>、核心运动部件与末端执行器年故障率低于 <strong>10%</strong>、整机设计使用寿命超过 <strong>5 年</strong>、连续作业工况下电池续航 <strong>4 小时以上</strong>；配套打造 3 到 5 种系列化、模块化、可软件定义的国际一流整机平台。</li>
+        <li><strong>支撑指标的是中试与数据。</strong>建设不少于 <strong>5 个</strong>具身智能机器人制造服务平台，形成覆盖软硬件功能、性能、可靠性、安全性、环境适应性的中试验证能力，零部件设计变更后的样品交付缩短到 <strong>1 到 2 天</strong>；建成国家级具身数据基础设施，在不少于 <strong>100 个真实场景</strong>采集超过 <strong>100 万小时</strong>高质量数据；新增超 <strong>50000 PFLOPS</strong> 具身专用算力集群。</li>
+        <li><strong>应用与生态。</strong>不少于 <strong>20 个工业、20 个服务、10 个特种</strong>标杆场景，凝练不少于 15 个可规模推广方案；培育不少于 200 家创新企业、100 个高校研发团队，牵头或参与不少于 8 项国际标准与 30 项国家标准；攻关高端柔性触觉传感器、微型精密减速器、微型空心杯电机，以及基于 RISC-V 的系统级智算芯片、高动态负载 N 沟道 MOSFET。</li>
+        <li><strong>六大工程里还有一项「安全治理先行」</strong>：聚焦人机协同作业，做整机本质安全、模型安全与治理技术研究，探索覆盖检测、认证与全生命周期的安全治理机制。文件同时保留了运动会与半程马拉松这类演示性安排，但把「赛事」与「场景」分成两条线写 —— 跑马拉松证明的是极限能力，干活要的是连续稳定。</li>
+      </ul>
+    </div>
+    <div class="why">
+<p><b>为什么值得关注：</b>第一，这组数字精确补在厂商发布的缺口上。11-11 ④ 的 Gemini Robotics 2.5 在奔驰在用产线报 96%，但官方没给任务时长、试验次数与产线节拍；11-09 ④ Talos 的「零失误」是厂商自述、场景单一。现在政策先写出 MTBF、寿命、故障率、续航，<strong>把「能不能一直用」从营销话术变成可验收的参数</strong>。</p>
+      <p>第二，与 11-09 ⑤ 工信部「机器人身份证」是两条不同的监管线：那条管「这台机器是谁」（一机一码、终身不可篡改、存量备案、全品类适用），这条管「这台机器能不能长期干活」。标识解决追溯，可靠性指标解决采购 —— 合起来才是产品进入产线之前要过的两道门。</p>
+      <p>第三，最容易被忽略的是「中试验证服务能力」与「样品交付 1 到 2 天」。2000 小时 MTBF 不是靠宣称达成的，得有平台持续测；文件明确写了「耐用不是喊出来的，是试出来的」。这也给本期④ LIFE 那类研究框架提了个实际要求：多日在线部署的可靠性，最终要在这种中试环境里被量出来，而不是只在一篇论文的 24 小时录像里。</p>
+    </div>
+    <div class="caveat">
+<p><b>口径提醒与边界：</b>这是<strong>到 2028 年的产业目标与攻关方向，不是已达成的产品参数</strong>，也不等同于强制标准；「力争」「不少于」「超过」都是目标措辞。文件为行动计划，具体专项政策、检测认证规则与验收方法尚待配套出台。</p>
+      <p>2000 小时 MTBF、5 年设计寿命、10% 年故障率、4 小时续航是整机平台的<strong>目标值</strong>，未说明测试工况、负载谱与统计方法，不能直接拿来与某款在售机型对比，也不能换算成年度运维成本。</p>
+      <p>100 万小时数据、50000 PFLOPS 算力、20 万台年产能、20 / 20 / 10 个场景均为规划量；与 11-10 ④ GR00T 2 的预训练时长、11-11 ⑤ LingBot-Touch 的 4983 小时触觉录制时长不是同一量纲，不可换算或相加。</p>
+      <p>政策文本与同期评论里引用的「今年全国人形整机产量突破 10 万台」「智元第 1 万台到第 2 万台用时不到六个月」均为预测与企业口径，未见第三方统计核对。</p>
+    </div>
+    <div class="act">
+<p>采购或做 TCO 时，把 MTBF、设计寿命、核心部件年故障率、连续作业续航四列直接抄进需求表，并要求供应商写明测试工况与样本量；缺工况的百分比不进 TCO。</p>
+      <p>关注后续配套的检测认证规则与中试平台名单，把「样品交付 1 到 2 天」这类能力纳入供应商评估；在规则落地前，别把行动方案的目标值写进合同验收条款。</p>
+      <p>把「演示线」与「作业线」分开管理：运动会、马拉松成绩用于展示极限能力，产线选型只看连续运行时长、节拍与故障率，两套指标不混用。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>同一个 Opus 5.5，官方裸跑 39.4%，套一层 Harness 到 68.87%：乾章智能 Q0-Preview 用上一代模型在 RoboDojo Sim 反超 Fable 5.2</h3>
+      <p>11 月 10 日 Anthropic 发布 Fable 5.2，在 RoboDojo Sim 双臂仿真报 <strong>64.9%</strong>。截至 11 月 11 日，该榜 Agent 分榜第一是 10 月 30 日登榜的 <strong>Q0-Preview</strong>：任务成功率 <strong>68.87%</strong>、综合得分 <strong>74.2</strong>，是开榜以来首个破 70 的方案；底座却不是 GPT-6 Astra，而是<strong>上一代 Claude Opus 5.5</strong>，Anthropic 官方报该模型正确率仅 39.4%。乾章智能（Qoo Tech）不走 VLA 也不走 WAM，走纯 Agent 路线：用单目或多目观测定位目标像素，结合相机内外参与像素到三维的工具做空间计算；对平行夹爪用三个空间参考点（两有序点中点定接触位置、连线定夹持方向、第三点补接近方向）把位置、姿态与接触统一成可解的坐标问题，下游 cuRobo 等规划器转成连续动作，形成「观察—计算—执行—反馈」闭环。外层 Harness 规范观测、机器人状态、思考与工具调用预算、控制指令格式，并带仿真试错经验库与上下文记忆管理，支持双臂同步。官测代码已在 GitHub 的 XPolicyLab 仓库 policy/Q0_Preview 目录开源。<strong>边界</strong>：仿真榜单、厂商自测，单次任务 Token 消耗量级高、推理延迟限制动态环境实时响应，且<strong>缺力觉与触觉闭环</strong>；RoboDojo 由 18 家以上实验室共建、含 42 项仿真与 18 项真机任务，但 74.2 是 Agent 分榜的仿真综合分，不是真机成功率。<strong>与 11-07 ④ 的关系</strong>：那期第一次在具身域量出换 harness 差 30 倍，这次量级收敛到不足 2 倍，却是同模型、同基准、只差外层，证据更干净；与 11-10 ① Fable 5.2 同榜对照也说明旗舰模型不是唯一变量。</p>
+    </div>
+
+    <div class="m code">
+      <h3>Tether QVAC 开源 BotPsy：0.8B 模型放在手机上调工具，多步任务 50.3 分是基座的两倍多，官方明确写「不适合安全关键与高风险自动决策」</h3>
+      <p>11 月 11 日发布，Apache 2.0，权重在 Hugging Face（BF16 与 8-bit，含 GGUF），从 Qwen3.5-0.8B 经四阶段训练，专做工具调用：应用给出函数列表，模型选函数、填参数、读返回、继续到任务完成。单步请求在六类应用上 69 到 79 分；<strong>多步任务七组平均 50.3，基座 22.1，2.5 倍大的 Qwen3.5-2B 是 42.5</strong>；BFCL v4 多轮从 7.5 到 46.1（Qwen3.5-2B 23.8），长程客服对话基准 82.5 对 69.3，IFEval 90.8 对 59.7；无合适工具时「不硬编一个」得 86.1，为所测模型最高。失败恢复给了具体例子：ACEBench 里发提醒先遇 Wi-Fi 关闭、再遇收件箱满，基座反复重试同一个发送直到放弃，BotPsy 打开 Wi-Fi、删一条消息腾空间再发。六类危害的自动攻击测试里不安全回答率 21%（基座 36%），提示注入下从 46% 降到 31%。推理 Token 在 GPQA Diamond 上每道正确答案 3,690 对基座 11,563，少 68%；IFBench 陷入重复推理的比例从 22.9% 降到 1.4%。<strong>边界</strong>：全部为 Tether 自测；英文最优，中法西意葡 72 到 80 分，俄语更弱、印地语明显更弱；定位低到中等难度，连续多次网页搜索仍难；官方明确「会犯错，不用于安全关键或高风险自动决策、涉及金钱、个人信息与健康等敏感场景」，并建议对严格安全需求另加输入输出过滤。<strong>与 11-11 ② 的关系</strong>：那边把上下文压缩拆成 4B 云端专用模型，这边把工具调用压到 0.8B 端侧，同一条「专用小模型」线下沉到了手机；也延续 09-12 ① Devin Fusion「前沿模型规划、便宜模型干活」的分工，只是这次连规划带执行都在本机。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>优必选拿到 400 台 U1 Pro 订单、按单价估算约 6792 万元，买方是汽车经销集团；同日沐曦与优必选合组的芯片公司拿了 5 亿元天使轮</h3>
+      <p>11 月 11 日优必选与永达汽车签战略合作，永达首批采购 <strong>400 台</strong>超仿生人形机器人 U1 Pro，计划 2026 年内交付；按每台 16.98 万元估算约 <strong>6792 万元</strong>，是优必选首次披露的超仿生人形大额订单。U1 Pro 于 2026 年 6 月 30 日发布，1:1 真人比例、88 个自由度、33 轴面部肌腱网络（19 个主动自由度）、300 余种复合微表情，定位成人情感陪伴，官方称全渠道预售累计 13,361 台。值得注意的是买方身份：永达是豪华汽车经销服务集团，合作不只是让机器人进店导购，还包括<strong>把机器人本身作为商品</strong>在门店展示、推广与销售，并在上海共建全系列体验展示中心，探索店中店与联合展厅。<strong>400 台不等于 400 台已上岗</strong>，具体承担哪些接待与服务工作还要按门店需求落地。同日（11 月 12 日报道）沐曦股份与优必选共同发起的<strong>曦选创智</strong>完成 5 亿元天使轮，纪源资本、经纬创投联合领投，首颗自研芯片定位面向机器人的「大小脑一体」SoC，对标英伟达 Thor；双方 6 月已在无锡合资布局端侧芯片，当时计划 2027 年下半年流片、2028 年量产。<strong>边界</strong>：订单金额按单价估算、非合同披露；预售 13,361 台为官方口径；芯片仍处融资与研发阶段，从流片到进真实工作负载还隔着产品验证、软件迁移与量产交付。优必选在 09-13、09-15、11-08 ⑤ 等多期出现过，本次是消费端渠道与芯片两笔新交易，不是本体或模型迭代。</p>
+    </div>
+
+    <div class="m emb">
+      <h3>GR00T 2 的预训练时长出现两套口径：本专栏 11-10 ④ 写 40.27 万小时，今天多家来源报 10 万小时；同期 CoRL 还放出两份开源</h3>
+      <p>11 月 10 日本专栏④按 NVIDIA 官方博客与项目材料写的是「<strong>40.27 万小时</strong>人类第一视角视频预训练」。11 月 11 日至 12 日的第二批报道里，相关英文报道、国内券商解读与多家日报分别用了「<strong>10 万小时</strong>人类第一视角视频」与「40.3 万小时人类第一视角视频等多源数据」两种写法，另有 11-10 期正文提到的 10,184 小时 UMI 数据。较合理的解释是<strong>两个量不是同一层</strong>：10 万小时可能只数人类第一视角视频，40 万小时出头是多源训练数据总量；但官方技术报告与完整数据构成尚未公开，<strong>在澄清前不宜把任何一个数单独当「GR00T 2 用了多少小时视频」的定论</strong>。本条同时作为对 11-10 ④ 该处表述的核对记录：当时把总量写成「人类第一视角视频」不够严谨。同一届 CoRL 2026（11 月 9 日至 12 日，美国得州奥斯汀）还有两项相关开源：<strong>RPL</strong>（作者含 Pieter Abbeel、Karen Liu、Rocky Duan、Guanya Shi）放出完整代码，一套统一策略处理斜坡、台阶、踏脚石、多行走方向与负载扰动，甚至不同相机看到不同地形；仿真训练、长程真机验证，覆盖专家训练、多深度蒸馏与 sim2sim，可在 Mujoco 里用手柄驱动。<strong>VoLo</strong>（NVIDIA 与密歇根大学）把开放词汇长程操作写成「物理编排」：带记忆的 VLM 智能体负责规划、监控、失败检测与恢复，把 VLA、WAM、SAM3、抓取放置原语当作可中断的工具调用，且不暂停物理世界；配套 RoboVoLo 仿真基准含 126 项任务与失败模式诊断，论文、项目页与代码公开。<strong>边界</strong>：RPL 与 VoLo 都是学术论文与代码开源，不是产品或量产数据，官方未给跨场景衰减与工业节拍，也未见第三方复现；别把仿真基准成绩读成产线可用性。</p>
+    </div>
+
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① Qwen4-Max 的两周窗口</td>
+      <td>11-11 ① Gemini 4 Carbon 正式交给开发者：三项编程与智能体基准登顶、单任务成本自称比次优低一半，但同一个模型在 ARC-AGI-3 上同时报出 99.1% 与 65.1% 两个分数 —— 而介绍价 12 月 1 日就要翻倍</td>
+      <td>连续两期把「带截止日的可用性」摆上台面：那期到期的是促销价，这期到期的是模型本体，且写明期间不做变更、结束下线。排期得按强制迁移算</td>
+    </tr>
+    <tr>
+      <td>① 官方一份跑分都不给</td>
+      <td>09-11 ① SWE-Bench Pro Verified：某个广受引用的编程 Agent 基准，有模型 21.48 分是「读到了答案」</td>
+      <td>基准可信度这条线的两端：那期发现分数里混进了答案泄漏，加反作弊后 78.80% 掉到 57.32%；这期干脆不发分数，让两周真实任务去做评测。两端都指向「跑分不能直接进选型表」</td>
+    </tr>
+    <tr>
+      <td>② v2.1 的 88.4 与 v4.0 的 38.5</td>
+      <td>11-08 ② 把 89 道题的说明改掉 17 行，一批模型从并列变成相差 23 分：MaxxBench 证明榜单上的平局是假平局</td>
+      <td>那期改的是题目说明、差 23 分，这期换的是基准版本、差 49.9 分，而且证据就印在厂商自己的模型卡上。引用不写版本号，和不写 harness 一样不合格</td>
+    </tr>
+    <tr>
+      <td>② 把输掉的项目留在表里</td>
+      <td>11-11 ② aiXcoder 开源 aiXcompact-4B：把「上下文压缩」这项高频杂活从通用大模型手里拆出来，单次 API 调用 0.019 元 —— 但官方自己的对照表里，压缩质量的多数指标其实低于教师模型</td>
+      <td>连续两天两家把不利数据放进自家材料：那期是压缩质量五项几乎全线低于教师模型，这期是新版基准落后 15.4 分、对照模型还偏旧。愿意放出反证，比只报一个漂亮数更值得读</td>
+    </tr>
+    <tr>
+      <td>② MIT 许可的万亿权重</td>
+      <td>11-08 速览① Inkling 2 Small：594B 总参数的 MoE，智能指数 31，但开放权重还要再等一周</td>
+      <td>同一周开放权重的两种节奏：那边还在等一周、且规模 594B，这边 1.6 万亿参数直接 MIT 全开、商用与二次分发零门槛。许可证已经先于跑分决定能不能用</td>
+    </tr>
+    <tr>
+      <td>② 与 11-03 速览① 的阶段差</td>
+      <td>11-03 速览① 美团发布 LongCat-2.5：1.6 万亿参数、每 token 激活约 480 亿，训练全程国产算力，长上下文单卡训练吞吐较基线提升 86%</td>
+      <td>同主体、不同阶段：那次是模型发布与训练效率，这次是权重以 MIT 开放与自家基准表的版本口径差。别把「开源了」当成又一次发版，也别把 11-03 的吞吐提升读成部署成效</td>
+    </tr>
+    <tr>
+      <td>③ 37,966 对 217</td>
+      <td>11-11 速览② Vercel 说 Security Review 不到一周扫出 57,897 个问题、由 agent 修补 14,665 个；同日三家都在把编码智能体的工作面开放给团队</td>
+      <td>上期点明那份数字是产品自报、没有第三方基线、未说明误报率与重复项归并口径；这期第三方拿官方台账复核，把发现、唯一有效、已报维护者、已修复拆成四层。同类叙事第一次有了外部账本</td>
+    </tr>
+    <tr>
+      <td>③ 数量级叙事被拆开</td>
+      <td>11-07 ③ GPT-6 Cyber：948 个可用漏洞背后的专用化账，以及那 20 次靠另一个 zero-day 的「成功」</td>
+      <td>都在拆「报出一个大数就等于有效」：那期是 948 个可用漏洞里藏着 20 次借另一个洞才成的成功，这期是 3.8 万候选里 217 条标记修复、1,654 条重复。AI 挖洞这条线，产能已经不是瓶颈</td>
+    </tr>
+    <tr>
+      <td>③ 瓶颈转移给维护者</td>
+      <td>09-14 ② InfoQ 实测：同一个模型，换不同编程工具，账单能差 70 倍——成本黑洞在「脚手架」不在模型</td>
+      <td>同一种成本位移：那期从单价转到脚手架，这期从 AI 厂商转到无偿维护的开源社区。curl 的 55.9% 假阳性率与「我们的目标是别被淹死」，就是被转移过去的那张账单</td>
+    </tr>
+    <tr>
+      <td>④ 任务间隔期保持在线</td>
+      <td>11-08 ① 记忆不是越多越好，而是要选对：Anthropic 给出 agent 记忆的四层结构，以及一个叫「做梦」的整理过程</td>
+      <td>编码侧给记忆分层、把上下文压缩摘要排除在外；具身侧让机器人在没有指令时仍保持环境在线、把历史观察留给下一轮。两边都在把状态从单次会话里拿出来，只是载体不同</td>
+    </tr>
+    <tr>
+      <td>④ RoboBeats 只读 true / false</td>
+      <td>11-10 速览① Meta Muse Ember：Meta 迄今最小的模型，36 分追平 Claude Haiku 5.5，单任务成本 0.14 美元约为其三分之一 —— 但在 FrontierCode 2.0 上反而低于 Haiku 5.5</td>
+      <td>都是把高频、边界明确的一环交给小模型：那边是轻量执行、仍在 FrontierCode 上吃亏，这边更极端 —— 不生成文本、只输出条件得分，才让 75 毫秒一帧的「一直看着」成立</td>
+    </tr>
+    <tr>
+      <td>④ 24 小时真机录像</td>
+      <td>11-09 ④ 50 天、8000 多次物理操作、执行层面零失误：合碳智能的轮式双臂机器人 Talos 在药企真实实验室里跑完了分子纯化，第二单来自丹纳赫</td>
+      <td>都把「连续时间」写进验证，也缺同一类数字：那期样本量与零失误为厂商自述、场景单一，这期只有 6 个问答、且「终身」目前只验证到一天。真实作业这条线连起来了，验收口径还没跟上</td>
+    </tr>
+    <tr>
+      <td>⑤ 2000 小时 MTBF</td>
+      <td>11-11 ④ DeepMind 发布 Gemini Robotics 2.5：200 多项真实任务、部分任务成功率最高翻倍，Apollo 2 在奔驰在用产线上做到 96% 分拣成功率 —— 但这个 96% 是两个模型合起来的成绩，且官方没给产线节拍</td>
+      <td>厂商发布里最常缺的「任务时长、试验次数、节拍、寿命」，政策文件先写成了可验收的五项参数。96% 是概念验证的一次成绩，2000 小时是要靠中试平台持续测出来的目标</td>
+    </tr>
+    <tr>
+      <td>⑤ 两条不同的监管线</td>
+      <td>11-09 ⑤ 工信部要给每台机器人发身份证：一机一码、终身不可篡改、存量也要备案，适用范围从人形扩到全品类</td>
+      <td>那条管「这台机器是谁」、解决追溯，这条管「这台机器能不能长期干活」、解决采购与验收。两份都还是征求意见稿或行动方案阶段的制度文本，别当成已生效的强制标准</td>
+    </tr>
+    <tr>
+      <td>速览① 39.4% 到 68.87%</td>
+      <td>11-07 ④ 同一个模型换个 harness，成功率从 0.83% 涨到 25.00%：外层第一次在具身域被量出 30 倍</td>
+      <td>同一结论的第二次独立测量：量级从 30 倍收敛到不足 2 倍，但这次是同一个模型、同一张榜、只差外层，且底座是上一代 Opus 5.5 反超新旗舰 Fable 5.2。分辨率变低了，证据反而更硬</td>
+    </tr>
+    <tr>
+      <td>速览① 与 Fable 5.2 同榜</td>
+      <td>11-10 ① Anthropic 发布 Fable 5.2 与 Mythos 5.2：跑分登顶、价格下调 20%，同时主动把「加速器内核优化」和「大模型架构改进」两项能力按在 Opus 5.5 水平</td>
+      <td>那期讲的是 Anthropic 主动给能力加锁，同一批模型在 RoboDojo Sim 上报 64.9%；这期一个上一代模型加 Harness 报 68.87% 反超。旗舰代际不是唯一变量，外层设计可以盖过一次版本更新</td>
+    </tr>
+    <tr>
+      <td>速览② 0.8B 端侧调工具</td>
+      <td>09-12 ① Cognition 的 Devin Fusion：前沿模型做规划、便宜模型干活，第三方实测每任务省 36%–43%</td>
+      <td>同一套分工从云端下沉到手机：那期是任务级两档模型、省的是钱，这期是 0.8B 在本机独立完成整串工具调用、省的是数据出不出本机。官方同时写明不适合高风险自动决策，边界也一起下沉了</td>
+    </tr>
+    <tr>
+      <td>速览④ GR00T 2 两套时长</td>
+      <td>11-10 ④ NVIDIA 在 CoRL 发布 GR00T 2：20 亿参数的世界-动作模型，用 40.27 万小时人类第一视角视频预训练，50 项没见过的任务上零样本 40%、给 1 条示范 71%、给 5 条示范 95% —— 而权重和代码要到 12 月才开放</td>
+      <td>本专栏那期写 40.27 万小时，今天多家来源报 10 万小时。较可能是「多源训练数据总量」与「纯人类第一视角视频」两种口径，技术报告未出前都不宜当定论；那期把总量写成「人类第一视角视频」不够严谨，在此核对</td>
+    </tr>
+  </table>
+  <div class="foot">
+    <div>AI 日报 · 2026-11-12 · 北京时间 10:28</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-11.html">← 2026-11-11</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-13.html">2026-11-13 →</a></div>
+</body>
+</html>

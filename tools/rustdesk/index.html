@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RustDesk：把远程桌面的服务器搬回自己家 · walker</title><meta name="description" content="12.9 万 Star 的开源远程桌面（AGPL-3.0，Rust + Flutter），TeamViewer 的自托管替代：hbbs 负责 ID 注册与打洞、hbbr 负责中继兜底，会话端到端加密，中继只见密文。Windows / macOS / Linux / iOS / Android / Web 全平台，官方主推 Docker，也可裸机跑两个二进制。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/tools/rustdesk/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="RustDesk：把远程桌面的服务器搬回自己家 · walker"><meta property="og:description" content="12.9 万 Star 的开源远程桌面（AGPL-3.0，Rust + Flutter），TeamViewer 的自托管替代：hbbs 负责 ID 注册与打洞、hbbr 负责中继兜底，会话端到端加密，中继只见密文。Windows / macOS / Linux / iOS / Android / Web 全平台，官方主推 Docker，也可裸机跑两个二进制。"><meta property="og:url" content="https://blog.walkerhua.com/tools/rustdesk/"><meta property="og:image" content="https://blog.walkerhua.com/og/rustdesk.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="RustDesk：把远程桌面的服务器搬回自己家 · walker"><meta name="twitter:description" content="12.9 万 Star 的开源远程桌面（AGPL-3.0，Rust + Flutter），TeamViewer 的自托管替代：hbbs 负责 ID 注册与打洞、hbbr 负责中继兜底，会话端到端加密，中继只见密文。Windows / macOS / Linux / iOS / Android / Web 全平台，官方主推 Docker，也可裸机跑两个二进制。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/rustdesk.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/tools/">← 工具推荐</a><h1>RustDesk：把远程桌面的服务器搬回自己家</h1><p>三期连着看，边界画的位置各不相同——Pinky 画在审批网关，ego lite 画在标签页，RustDesk 画在你自己那台服务器上。</p><div class="hero-meta"><span>第 13 期</span><span>发布于 2026-11-11</span><span>约 8 分钟</span><a class="tag" href="https://github.com/rustdesk/rustdesk" target="_blank" rel="noopener noreferrer">官网 / 仓库 ↗</a><a class="tag" href="/tags/远程桌面/">远程桌面</a><a class="tag" href="/tags/自建/">自建</a><a class="tag" href="/tags/开源/">开源</a><a class="tag" href="/tags/Rust/">Rust</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#先说清楚它不是什么">先说清楚它不是什么</a><a class="toc-l2" href="#它解决什么痛点">它解决什么痛点</a><a class="toc-l2" href="#核心能力">核心能力</a><a class="toc-l2" href="#平台与安装">平台与安装</a><a class="toc-l3" href="#客户端">客户端</a><a class="toc-l3" href="#服务端官方主推-docker也能裸机跑">服务端：官方主推 Docker，也能裸机跑</a><a class="toc-l2" href="#边界与注意">边界与注意</a><a class="toc-l2" href="#适合谁">适合谁</a></aside><article class="card prose"><h2 id="先说清楚它不是什么">先说清楚它不是什么</h2>
+<p>远程桌面是个老赛道，RustDesk 常被一句话概括成「免费开源版 TeamViewer」，这个说法漏掉了它真正值钱的部分：</p>
+<ul>
+<li><strong>它不是又一个 VNC / RDP 客户端</strong>。VNC、RDP 是协议，你得自己解决「对方在哪、怎么穿 NAT」；RustDesk 是完整方案，自带 ID 注册、打洞协调和中继兜底，开箱就能连，也允许把这套中间层整个换成自己的。</li>
+<li><strong>它不是「厂商云服务的免费替身」</strong>。TeamViewer / AnyDesk 的 ID 与中继永远在厂商手里，商业模式是订阅；RustDesk 的差别是<strong>那两个服务你可以自己跑</strong>，信任链因此从厂商挪回自己的机器。这才是「self-hosting」写在仓库 description 里的原因。</li>
+<li><strong>它不是纯 P2P</strong>。打洞成功时两端直连，失败时（对称 NAT、CGNAT、企业防火墙）流量会走 <code>hbbr</code> 中继——中继要部署、要暴露端口、要有带宽，别以为自建服务器可以省掉。</li>
+<li><strong>它不是「装了就零依赖」</strong>。默认用的是官方公共服务器，部署在境外；中文社区里关于延迟高、晚高峰断连的反馈相当一致，这也是几乎所有中文自建教程的出发点。想稳，就得自建。</li>
+<li><strong>它不是 MIT / Apache，是 AGPL-3.0</strong>。客户端和 Server OSS 都是。自用无所谓，一旦二次开发、改代码、集成进自己的产品对外提供服务，传染性条款是要认真读的。</li>
+<li><strong>它不是只有一个版本</strong>。Server OSS 免费，商业版 Server Pro 才带 Web 控制台、集中地址簿、LDAP/SSO、2FA 这些管理能力；把 Pro 的功能算进「免费自建」会踩空。</li>
+<li><strong>它不是「自建了就自动安全」</strong>。密钥分发、无人值守密码、端口暴露、版本补丁，全变成你的责任。</li>
+</ul>
+<p>预期摆正：这是个 2020 年建库、已经相当成熟的项目，但它的价值不在「免费」，而在<strong>你能把中间那一层拿回来自己管</strong>——以及随之而来的运维账单。</p>
+<blockquote>
+<p>一手数据（2026-11-11 14:06 从 GitHub API 拉）：<code>rustdesk/rustdesk</code>，<strong>128,965 star / 20,537 fork / 214 open issue</strong>，主语言 Rust，AGPL-3.0，最新 release <code>1.5.1</code>（2026-11-01）；服务端 <code>rustdesk/rustdesk-server</code> 10,728 star，同样 AGPL-3.0，最新 <code>1.1.16</code>（2026-07-20）。网上流传的 125k star / 1.5.0 是 10 月快照。</p>
+</blockquote>
+<h2 id="它解决什么痛点">它解决什么痛点</h2>
+<ul>
+<li><strong>商业远控的成本与不确定性</strong>：订阅按用户/设备涨，商用检测误判、连接时长限制都见过；ID 和中继在对方手上，涨价时没有议价空间。</li>
+<li><strong>数据经第三方中转的合规问题</strong>：远程维护时鼠标、键盘、剪贴板、文件传输全在链路上，公司客户数据、财务系统不该过别人的中继。</li>
+<li><strong>国内连公共服务器的体验</strong>：延迟飘、偶发连不上，中继带宽也有限。</li>
+<li><strong>要跨一堆平台</strong>：Windows、macOS、Linux、iOS、Android、Web 都要能连，还要无人值守访问、文件传输、TCP 隧道。</li>
+</ul>
+<p>官网引用的一份 1000 多名自建用户在线调查里，用途分布是 37% IT 支持、25% IT 管理与维护、29% 远程办公、9% 工业及其他——<strong>自建的人绝大多数是拿它干运维的</strong>，不是拿它偶尔帮朋友看一眼屏幕。</p>
+<h2 id="核心能力">核心能力</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>架构</td>
+<td>只有两个服务：<code>hbbs</code>（ID / rendezvous，注册设备、协调打洞）+ <code>hbbr</code>（relay，直连失败时转发）。服务端刻意保持「笨」：只协调和转发</td>
+</tr>
+<tr>
+<td>连接路径</td>
+<td>客户端持续向 <code>hbbs</code> 心跳上报地址 → A 问「B 在哪」→ <code>hbbs</code> 尝试 TCP/UDP hole punching → 成功则两端直连（不耗中继），失败走 <code>hbbr</code></td>
+</tr>
+<tr>
+<td>加密</td>
+<td>P2P + 端到端加密；会话密钥在两端协商，即便走中继，服务端也只看到密文、解不开内容</td>
+</tr>
+<tr>
+<td>密钥绑定</td>
+<td><code>hbbs</code> 首次启动在数据目录生成 <code>id_ed25519</code> / <code>id_ed25519.pub</code>；客户端填入公钥后只认你这台服务器，防止陌生 broker 插进来</td>
+</tr>
+<tr>
+<td>音视频</td>
+<td>VP8 / VP9 / AV1 软编解码，H264 / H265 硬编解码</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>远程控制、文件传输、剪贴板同步、TCP 隧道、无人值守访问；Windows 上可不装、非管理员运行，按需提权</td>
+</tr>
+<tr>
+<td>平台</td>
+<td>Windows / macOS / Linux / iOS / Android / Web；另有 Flatpak、F-Droid 分发</td>
+</tr>
+<tr>
+<td>开放性</td>
+<td>官方仓库明说可以「自己写一套 rendezvous/relay server」，并给了 <code>rustdesk-server-demo</code>；协议不是黑盒</td>
+</tr>
+<tr>
+<td>版本分界</td>
+<td>OSS：客户端 + <code>hbbs</code>/<code>hbbr</code> 全免费；Pro：Web 控制台、集中地址簿、LDAP/SSO、2FA、按设备授权</td>
+</tr>
+</tbody>
+</table>
+<p>我认为最值钱的两个：<strong>「服务器是笨的」这个架构决定</strong>（中继不解密，自建的风险面天然比“厂商能看见一切”小）和<strong>公钥 pinning</strong>（把信任锚定在自己生成的密钥上，而不是“连上一个看起来像我服务器的地址”）。相比之下，全平台支持只是顺理成章的配套。</p>
+<h2 id="平台与安装">平台与安装</h2>
+<h3 id="客户端">客户端</h3>
+<p>官方 release 按架构给了 EXE / MSI / DEB / DMG / APK / Flatpak / AppImage / RPM 等。macOS 直接拖 <code>.dmg</code> 即可。</p>
+<p><strong>本机实测（macOS 26.6.2 / arm64）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用</td>
+<td><code>/Applications/RustDesk.app</code>，<code>1.5.1</code>，<strong>69 MB</strong>，2026-10-30 安装</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>Gatekeeper <code>accepted</code>、Notarized Developer ID，主体是个人开发者 <code>zhou huabing</code>（不是公司主体——开源项目常见形态，值得留意但不等于风险）</td>
+</tr>
+<tr>
+<td>配置目录</td>
+<td><code>~/Library/Preferences/com.carriez.RustDesk/</code>，含 <code>RustDesk.toml</code>、<code>RustDesk2.toml</code>、<code>peers.toml</code> 等</td>
+</tr>
+<tr>
+<td>自建相关键位</td>
+<td>配置结构里预留了 <code>custom-rendezvous-server</code> / <code>relay-server</code> / <code>key</code> / <code>rendezvous_server</code> 等项</td>
+</tr>
+<tr>
+<td>服务端</td>
+<td><strong>本机没有 <code>hbbs</code> / <code>hbbr</code> 进程</strong>，21116/21117 也无监听——这台机器只是客户端</td>
+</tr>
+</tbody>
+</table>
+<h3 id="服务端官方主推-docker也能裸机跑">服务端：官方主推 Docker，也能裸机跑</h3>
+<p>两条路都可以。<strong>官方主推 Compose</strong>（<code>rustdesk/rustdesk-server</code> 镜像 + <code>network_mode: host</code>，两个容器分别 <code>hbbs</code> / <code>hbbr</code>，挂同一个持久数据卷）。但对「不碰容器、纯裸机进程 + 反代」的环境，其实更简单：从 Server OSS release 下载 <code>rustdesk-server-linux-amd64.zip</code>，解压出 <code>hbbs</code>、<code>hbbr</code> 两个二进制，各写一个 systemd unit 托管，数据目录持久化即可——整套东西就两个进程，不需要数据库、不需要消息队列。</p>
+<p><strong>端口表（官方文档，最容易配错的地方）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>端口</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hbbs</td>
+<td>TCP 21115</td>
+<td>NAT 类型测试</td>
+</tr>
+<tr>
+<td>hbbs</td>
+<td><strong>TCP + UDP 21116</strong></td>
+<td>UDP：ID 注册与心跳；TCP：打洞与连接服务（<strong>两个协议都要开</strong>）</td>
+</tr>
+<tr>
+<td>hbbs</td>
+<td>TCP 21114</td>
+<td>Web 控制台，<strong>仅 Pro 版</strong></td>
+</tr>
+<tr>
+<td>hbbs</td>
+<td>TCP 21118</td>
+<td>Web 客户端支持，不需要就关掉</td>
+</tr>
+<tr>
+<td>hbbr</td>
+<td>TCP 21117</td>
+<td>中继服务</td>
+</tr>
+<tr>
+<td>hbbr</td>
+<td>TCP 21119</td>
+<td>Web 客户端支持，不需要就关掉</td>
+</tr>
+</tbody>
+</table>
+<p>最小可用集合就是 <strong>21115 / 21116(TCP+UDP) / 21117</strong>；21118、21119 不用 Web 客户端就别开。</p>
+<p><strong>客户端配置</strong>：设置里填 ID Server（你的 <code>hbbs</code> 地址）、Relay Server（可选）、以及 <code>id_ed25519.pub</code> 的内容。 fleet 场景可以在分发客户端时把配置预置进去。</p>
+<p><strong>裸机 + OpenResty 反代的两个要点</strong>（如果你要用反代暴露 Web 客户端）：一是 <code>X-Real-IP</code> 必须由反代自己设置；二是用防火墙把 21118/21119 限制成只有反代能连。原因在下一段。</p>
+<h2 id="边界与注意">边界与注意</h2>
+<ul>
+<li><strong>官方明写的 WebSocket 头伪造风险</strong>：启用 21118/21119 时，<code>hbbs</code>/<code>hbbr</code> 会信任 WebSocket 连接的 <code>X-Real-IP</code> / <code>X-Forwarded-For</code> 来判断真实客户端 IP，<strong>且这两个头不做校验</strong>。任何能直连这两个端口的人都能伪造任意 IP，绕过基于 IP 的限速与封禁、并污染日志。所以：要么关掉这两个端口，要么只通过会自己设置 <code>X-Real-IP</code> 的反代暴露，并由防火墙挡住直连。这是官方文档 Caution 原文，不是社区猜测。</li>
+<li><strong>AGPL-3.0 的传染性</strong>。自用、内部运维没问题；改代码对外提供服务，先搞清义务。</li>
+<li><strong>无人值守密码是最大攻击面</strong>。一旦设了永久密码，拿到 ID + 密码就等于拿到这台机器的完整控制权。强密码、限定设备、别开自助注册；2FA / 集中权限在 Pro 版才有。</li>
+<li><strong>公共服务器在境外</strong>。社区反馈集中在延迟与偶发断连；这是自建的主要动因，但「官方停止中国服务」这类绝对说法我没有找到官方声明，不写进结论。</li>
+<li><strong>自建 = 自己运维</strong>：<code>id_ed25519</code> 私钥要备份（丢了所有客户端都得重新分发公钥）、服务端要跟版本、防火墙要最小化暴露。<code>1.5.1</code> 的 changelog 里已经有了「校验签名更新元数据」「可信设备 V2」这类安全向改动，说明这条线还在动。</li>
+<li><strong>编译门槛不低</strong>：从源码构建要 Rust + C++ 环境、vcpkg（<code>libvpx</code> / <code>libyuv</code> / <code>opus</code> / <code>aom</code>）、Flutter（旧 Sciter UI 已 deprecated）。想自己出包，先预留半天。</li>
+<li><strong>README 顶部有 Misuse Disclaimer</strong>：作者明确不支持未授权访问、控制或侵犯隐私的用途。企业里推广前，把使用规范和审计先立好。</li>
+<li><strong>Pro 的钱要算清</strong>：Web 控制台、地址簿、LDAP/SSO、2FA 都不在 OSS 里；团队集中管理的需求若强，要么上 Pro，要么自己在外层补一套访问管理与审计。</li>
+</ul>
+<h2 id="适合谁">适合谁</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>中间层在谁手上</th>
+<th>开源</th>
+<th>成本</th>
+<th>运维责任</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TeamViewer / AnyDesk</td>
+<td>厂商云</td>
+<td>否</td>
+<td>按用户/设备订阅</td>
+<td>厂商</td>
+</tr>
+<tr>
+<td>VNC / RDP + 自己组网</td>
+<td>无独立中间层，靠 VPN/端口映射</td>
+<td>视实现</td>
+<td>低</td>
+<td>自己</td>
+</tr>
+<tr>
+<td>MeshCentral / Guacamole</td>
+<td>自建</td>
+<td>是</td>
+<td>免费</td>
+<td>自己（较重）</td>
+</tr>
+<tr>
+<td><strong>RustDesk + 自建 hbbs/hbbr</strong></td>
+<td><strong>自己的服务器</strong></td>
+<td><strong>是（AGPL-3.0）</strong></td>
+<td><strong>OSS 免费 / Pro 按设备</strong></td>
+<td><strong>自己（只需两个进程）</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>有公网 VPS、要长期远程维护多台机器的人</strong>：两个二进制就能把 ID 和中继全搬回自己手上，规格要求极低（打洞成功时中继几乎不吃流量）；</li>
+<li><strong>对数据主权有合规要求的团队</strong>：中继只见密文、日志与 ID 留在自己机房，这条比“端到端加密”四个字更能过审；</li>
+<li><strong>国内用户嫌公共服务器慢的</strong>：自建节点选离自己近的机房，延迟可预期得多；</li>
+<li><strong>不想碰容器的</strong>：裸机 systemd 托管两个进程完全够用，Docker 只是官方给的最省事路径，不是前提。</li>
+</ul>
+<p><strong>不适合谁</strong>：只是偶尔帮朋友远程一次的人（默认公共服务器就够，别为一次连接运维一台 VPS）；没有公网入口、也不愿配组网/端口映射的；需要开箱即用的账号体系、SSO、2FA 和集中审计却不想付 Pro 的；以及<strong>打算把无人值守密码长期开着、又不做 IP 限制和访问审计的</strong>——那等于给全网留了一扇门。</p>
+<p>一句话收尾：把三期的「边界」摆在一起看很有意思——Pinky 把边界画在<strong>网关审批</strong>上，ego lite 画在<strong>标签页隔离</strong>上，RustDesk 画在<strong>服务器归属</strong>上。三者都在回答同一个问题：当能力交出去之后，最后那道能由你说了算的闸门，到底装在哪。RustDesk 给出的答案最朴素也最硬——<strong>装在你自己的机器上</strong>。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/tools/ego-lite/"><span class="post-nav-label">上一期</span><span class="post-nav-title">ego lite：把浏览器分一半给 AI Agent，标签页还是你的</span></a><a class="post-nav-item post-nav-next" href="/tools/uu-remote/"><span class="post-nav-label">下一期</span><span class="post-nav-title">UU远程：装完就能用的 4K 远控，代价写在协议里</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
