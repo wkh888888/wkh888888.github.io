@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口 · walker</title><meta name="description" content="日期：2026-11-13。场景：WorkBuddy 代发消息给 Qoder 桌面版，随后用户叫停；关联 ~/docs/Agent协作/ 交接任务 20261113-Qoder交接WorkBuddy-一念系列进度。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p031-%E6%A1%8C%E9%9D%A2agent%E4%BA%A4%E6%8E%A5cua%E6%8E%88%E6%9D%83%E8%A2%AB%E6%8B%92%E4%B8%8E%E5%89%8D%E5%8F%B0%E6%8A%A2%E5%8D%A0/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口 · walker"><meta property="og:description" content="日期：2026-11-13。场景：WorkBuddy 代发消息给 Qoder 桌面版，随后用户叫停；关联 ~/docs/Agent协作/ 交接任务 20261113-Qoder交接WorkBuddy-一念系列进度。"><meta property="og:url" content="https://blog.walkerhua.com/pits/p031-%E6%A1%8C%E9%9D%A2agent%E4%BA%A4%E6%8E%A5cua%E6%8E%88%E6%9D%83%E8%A2%AB%E6%8B%92%E4%B8%8E%E5%89%8D%E5%8F%B0%E6%8A%A2%E5%8D%A0/"><meta property="og:image" content="https://blog.walkerhua.com/og/p031-%E6%A1%8C%E9%9D%A2agent%E4%BA%A4%E6%8E%A5cua%E6%8E%88%E6%9D%83%E8%A2%AB%E6%8B%92%E4%B8%8E%E5%89%8D%E5%8F%B0%E6%8A%A2%E5%8D%A0.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口 · walker"><meta name="twitter:description" content="日期：2026-11-13。场景：WorkBuddy 代发消息给 Qoder 桌面版，随后用户叫停；关联 ~/docs/Agent协作/ 交接任务 20261113-Qoder交接WorkBuddy-一念系列进度。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p031-%E6%A1%8C%E9%9D%A2agent%E4%BA%A4%E6%8E%A5cua%E6%8E%88%E6%9D%83%E8%A2%AB%E6%8B%92%E4%B8%8E%E5%89%8D%E5%8F%B0%E6%8A%A2%E5%8D%A0.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口</h1><p>日期：2026-11-13。场景：WorkBuddy 代发消息给 Qoder 桌面版，随后用户叫停；关联 ~/docs/Agent协作/ 交接任务 20261113-Qoder交接WorkBuddy-一念系列进度。</p><div class="hero-meta"><span>踩坑于 2026-11-13</span><span>约 8 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#一句话现象">一句话现象</a><a class="toc-l2" href="#具体表现">具体表现</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#决策树--检查项">决策树 / 检查项</a><a class="toc-l2" href="#关联">关联</a><a class="toc-l2" href="#验证2026-11-13-实测">验证（2026-11-13 实测）</a><a class="toc-l2" href="#机制补充1752-查证纠正常见误解">机制补充（17:52 查证，纠正常见误解）</a><a class="toc-l2" href="#1758-只读协议实测把上面的推断坐实">17:58 只读协议实测（把上面的「推断」坐实）</a><a class="toc-l2" href="#1804-原生-gui-自动化的定位更正擦边球措辞">18:04 原生 GUI 自动化的定位（更正「擦边球」措辞）</a><a class="toc-l2" href="#1820-补充宿主侧另有一套-computer-use-审批后台全量扫描回执">18:20 补充：宿主侧另有一套 Computer Use 审批（后台全量扫描回执）</a></aside><article class="card prose"><p>日期：2026-11-13。场景：WorkBuddy 代发消息给 Qoder 桌面版，随后用户叫停；关联 <code>~/docs/Agent协作/</code> 交接任务 <code>20261113-Qoder交接WorkBuddy-一念系列进度</code>。</p>
+<h2 id="一句话现象">一句话现象</h2>
+<p><code>computer-use-bridge</code> 后端健康却连续被宿主拒绝；改用 AppleScript 操作桌面后，前台被别的 Electron 应用抢回，按键落在错误窗口；严格判断进程名还会让清理动作静默跳过。</p>
+<h2 id="具体表现">具体表现</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>现象</th>
+<th>实际输出／证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CUA 工具不可用</td>
+<td><code>get_app_state("Qoder")</code> 连续 2 次返回 <code>Computer Use approval denied via MCP elicitation</code>；但 <code>ccteam</code>-无关的共享 app-server daemon <code>status: running</code>、<code>~/.workbuddy/mcp.json</code> 配置正常 → <strong>不是后端故障</strong>，是宿主未完成应用使用确认</td>
+</tr>
+<tr>
+<td>2</td>
+<td>前台抢占</td>
+<td><code>osascript activate Qoder</code> 后成功粘贴；下一轮工具调用时 <code>frontmost</code> 变成 WorkBuddy／OrcaTerm，<code>Cmd+A</code> 落在错误窗口（当次未执行删除，未造成破坏）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>进程名不等于应用名</td>
+<td><code>name of first process whose frontmost is true</code> 返回过 <code>Qoder</code>、<code>OrcaTerm</code>、<code>Electron</code>；用 <code>if f is "Qoder"</code> 严格判断会让整段清理静默跳过</td>
+</tr>
+<tr>
+<td>4</td>
+<td>长文本清不干净</td>
+<td>Electron contenteditable 里 <code>Cmd+A</code> 可能只选当前块，一次 Delete 后仍残留后半段文字</td>
+</tr>
+<tr>
+<td>5</td>
+<td>代理编排工具不覆盖桌面</td>
+<td><code>ccteam doctor</code> 只列 codex／opencode／pi 等 CLI vendor，<code>session ls</code> 无活跃会话 → 不能拿它给 Qoder 桌面派单</td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<ul>
+<li><strong>桌面 Agent 之间没有会话级直连</strong>：Qoder 桌面与 WorkBuddy 各有自己的会话，MCP elicitation 是宿主级安全门，宿主不支持或用户未批准就必然拒绝，不能靠改配置绕过。</li>
+<li><strong>macOS 前台是全局可变状态</strong>：多个 Electron 应用 + 终端会互相抢焦点，跨工具调用之间不保证焦点不变；“先 activate、下一步再按键”是错误拆法。</li>
+</ul>
+<h2 id="决策树--检查项">决策树 / 检查项</h2>
+<ol>
+<li>先试专用 MCP／CUA；<strong>连续 2 次 elicitation 拒绝即判通路不可用</strong>——不绕过授权、不改 auto-accept、不擅自开启远程控制、不换工具冒充成功。</li>
+<li>H5 内部接口需要浏览器同源登录态 + 桌面远程控制开关；开关未开时须先记录原值并取得明确授权，不能为派单自动打开。</li>
+<li>桌面按键：<code>activate</code>、前台校验、<code>click at</code>、<code>keystroke</code> <strong>写在同一条 osascript 内</strong>；前台名用包含匹配而非严格等于。</li>
+<li><strong>发送前必回读截图</strong>：确认对话区无新用户消息、右下是发送箭头（不是停止方块），才允许按发送。<strong>粘贴 ≠ 发送</strong>。</li>
+<li>粘贴前 <code>pbpaste</code> 备份剪贴板；覆盖后如实记录。</li>
+<li>用户叫停后<strong>立即停止一切 UI 操作</strong>，残留草稿如实报告，不反复抢焦点“收拾干净”。</li>
+<li><strong>交接优先走共享目录</strong> <code>tasks/status/results</code>（同一 ID、状态枚举、回执文件），文件回执比 GUI 消息可靠、可追溯、可并发隔离。</li>
+</ol>
+<h2 id="关联">关联</h2>
+<ul>
+<li><code>my-agent-team</code> v1.1.0 的「交接与执行」「不扩大授权」；<code>references/qoder-desktop.md</code> 的 CUA／H5 边界；<code>~/docs/Agent协作/README.md</code>。</li>
+<li><code>computer-use-bridge</code> 使用说明：应用使用确认经 MCP 转发给宿主，不支持或超时即拒绝，不自动放行。</li>
+<li>P030（假信号：429 仍落盘、校验池静默落空）——同属“工具回执不等于业务完成”。</li>
+</ul>
+<h2 id="验证2026-11-13-实测">验证（2026-11-13 实测）</h2>
+<ul>
+<li>CUA 2 次拒绝 → 判通路不可用，未绕过。</li>
+<li>GUI 仅粘贴、<strong>全程未发送</strong>：回读截图确认对话区最后一条仍是对方已完成的交接确认，右下为发送箭头。</li>
+<li>共享目录回执 17:25 落盘（15,174 字节），17:35 被读回并回填；状态 <code>running</code> → <code>review</code>。</li>
+<li>结果：未误发、未误删、未误触对方在途任务；唯一遗留是输入框半段草稿需人工清。</li>
+</ul>
+<h2 id="机制补充1752-查证纠正常见误解">机制补充（17:52 查证，纠正常见误解）</h2>
+<p>“宿主的应用使用确认挡住”里的<strong>宿主是 WorkBuddy（MCP 客户端）</strong>，不是 Qoder，也不是 macOS 权限。完整链路：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>get_app_state("Qoder")</span></span>
+<span class="line"><span>  → 桥接 (mcp-server.js)</span></span>
+<span class="line"><span>  → Codex App Server 发 mcpServer/elicitation/request（"允许 ChatGPT 使用 Qoder?"）</span></span>
+<span class="line"><span>  → 桥接转成宿主 elicitation/create (mode=form)，等宿主弹表单由用户批准</span></span>
+<span class="line"><span>  → 闭环没完成 → 桥接回 decline / cancel</span></span>
+<span class="line"><span>  → App Server 报 "Computer Use approval denied via MCP elicitation"</span></span></code></pre>
+<p>源码依据（<code>~/projects/agent-tools/codex-computer-use-bridge/src/mcp-server.js</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>26</td>
+<td><code>let clientCanElicit = false</code>（默认拒绝）</td>
+</tr>
+<tr>
+<td>91</td>
+<td><code>clientCanElicit = Boolean(elicit &amp;&amp; (Object.keys(elicit).length===0 || elicit.form))</code>，由 <code>initialize</code> 时宿主声明的 <code>capabilities.elicitation</code> 决定</td>
+</tr>
+<tr>
+<td>54</td>
+<td><code>if (!clientCanElicit) return {action:"decline"}</code>；55s 无响应 → <code>cancel</code>；异常 → <code>decline</code></td>
+</tr>
+<tr>
+<td>52</td>
+<td>唯一放行例外＝<code>calculator-acceptance.json</code> 临时许可，精确匹配 <code>purpose</code>／<code>serverName=computer-use</code>／<code>mode=form</code>／<code>message="Allow ChatGPT to use Calculator?"</code>／<code>requestedSchema</code> 空对象／≤1h／同 UID／非软链</td>
+</tr>
+</tbody>
+</table>
+<p><code>app-server-client.js:290</code> 负责把 <code>mcpServer/elicitation/request</code> 交给 <code>onElicitation</code>，任何异常都 fallback 到 <code>decline</code>。<strong>报错串不在桥接源码里，是 App Server 后端发的</strong>——即“已收到拒绝”而非“桥接连不上”。</p>
+<p><strong>为什么 11-05 验收能跑通、今天不行</strong>：说明文档 §共享后端限制明载「部分宿主的应用确认未能通过 native form elicitation 闭环」，当时 WorkBuddy 跑 7×8=56 是靠上述<strong>临时计算器许可</strong>替代表单确认；验收后许可删除，文档明确写「以后任务仍须宿主完成应用确认；不支持 form 确认的宿主可能继续拒绝，当前没有配置永久自动授权」。今日 <code>~/.agents/runtime/codex-computer-use-bridge/</code> 只剩 <code>app-server.log</code>，许可确已撤销；且本次目标是 Qoder，那个许可本来也不匹配。</p>
+<p><strong>排除项</strong>：不是 macOS TCC 权限（<code>osascript</code>／<code>screencapture</code> 都能用）；不是 Qoder 拒绝（它是被操作目标，不参与确认）；不是 MCP 未连接（17:22 宿主日志 <code>codex-computer-use-bridge:connected</code>，9/9）；不是后端没起（daemon running 0.169.0）；也不是“用户点了拒绝”——日志未见表单交互，更可能是宿主未声明 form 能力或表单闭环未完成，桥接按设计直接 decline（此点为推断，未取到 initialize 原始 capabilities）。</p>
+<p>结论：这是<strong>刻意的默认拒绝安全设计</strong>，不是故障；要启用须宿主支持 form elicitation 并弹出确认由用户批准，或由用户明确批准一个限定应用、限时的临时许可（不得自动创建），或从已跑通的 Codex 侧发起。</p>
+<h2 id="1758-只读协议实测把上面的推断坐实">17:58 只读协议实测（把上面的「推断」坐实）</h2>
+<p>手工起一个 MCP stdio 客户端，在 <code>initialize</code> 里声明 <code>capabilities:{elicitation:{form:{}}}</code>，再发 <code>tools/call get_app_state("Qoder")</code>，<strong>不回复确认、不批准、不操作桌面</strong>，14s 后 kill：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>initialize 响应: {'name': 'codex-computer-use-bridge', 'version': '0.2.0'}</span></span>
+<span class="line"><span>&gt;&gt;&gt; 收到 elicitation/create: {"mode":"form","message":"Allow ChatGPT to use Qoder?",</span></span>
+<span class="line"><span>                              "requestedSchema":{"type":"object","properties":{}}}</span></span></code></pre>
+<p>即：<strong>链路本身完全通</strong>，只要客户端声明 form 能力，桥接立刻转发确认请求。今天失败的原因确定是 WorkBuddy 主进程的 stdio MCP 客户端在 initialize 时<strong>没有声明 form 能力</strong>，桥接走 <code>if(!clientCanElicit) decline</code>，因此<strong>弹窗根本没出现</strong>，不是用户没点允许。</p>
+<p>宿主源码佐证（<code>app.asar</code>）：</p>
+<ul>
+<li><code>buildClientCapabilities(){return{...this.options.clientCapabilities,...Pn,...elicitationCapability(this.options.onElicitationRequest),...}}</code></li>
+<li><code>function elicitationCapability(e){return e??Ln?{elicitation:{form:{}}}:void 0}</code> —— <strong>只有传了 <code>onElicitationRequest</code> 回调才声明 form 能力</strong></li>
+<li><code>async function answerElicitation(e,t){let n=t.override??Ln;if(!n)return {action:"cancel"}}</code> —— 无回调直接 cancel</li>
+<li>SessionManager 里 <code>onElicitationRequest</code> 会 emit <code>session:event</code> 给 UI；terminal turn / <code>readIsBackgroundAutomation</code> 分支会 auto-cancel</li>
+</ul>
+<p>⚠ 日志里 <code>instantiateServer stdio env: ... envFallback=elicitation.form,weixinpay.interception</code> 容易误读成「宿主已支持」：那是 <code>CODEBUDDY_HOST_CAPABILITIES</code> 环境变量（给 CLI/ACP 后端用的），<strong>桥接不读 env，只读 initialize 的 capabilities</strong>。两层不是一回事。</p>
+<p>⇒ 这不是设置里能打开的开关，需要宿主给该 stdio MCP 客户端接上 <code>onElicitationRequest</code> + UI 弹窗（宿主实现级改动，不改 <code>app.asar</code>）。确认动作必须由用户本人在界面点；桥接明确「不自动接受」，由 Agent 代批等于拆掉这道安全门。</p>
+<h2 id="1804-原生-gui-自动化的定位更正擦边球措辞">18:04 原生 GUI 自动化的定位（更正「擦边球」措辞）</h2>
+<p><strong>技术结论</strong>：macOS 原生 GUI 自动化是本次唯一真正跑通的桌面控制通路——<code>osascript activate</code> → <code>screencapture</code> → Pillow 裁图 → 视觉定位 → <code>cliclick</code> 点击 → <code>pbcopy</code> + <code>Cmd+V</code>，全部成功，只差发送（用户叫停）。不需要 MCP 确认、不需要远程控制、不装组件、不提权。</p>
+<p><strong>权限模型澄清（重要）</strong>：<code>codex-computer-use-bridge</code> 的 elicitation 确认的是「Codex App Server / ChatGPT 能否使用某应用」；原生 AppleScript 走的是 <strong>macOS TCC</strong>（辅助功能／自动化／屏幕录制，用户早已授予终端与宿主），<strong>不经过 App Server，那道确认根本不适用，因此不是“绕过”</strong>。前面记的「打擦边球」应更正为<strong>流程问题</strong>：一条通路被拒后，没有先告知用户并取得选择就自行换路继续同一目标；技术权限没有越界，但流程上该先问。</p>
+<p><strong>代价与对策</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>限制</th>
+<th>表现</th>
+<th>对策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前台抢占</td>
+<td>多个 Electron 应用／终端互相抢焦点，跨工具调用不保证</td>
+<td><code>activate</code>＋前台校验＋点击＋按键写在<strong>同一条 osascript</strong>；前台名用包含匹配（可能是 <code>Electron</code>）</td>
+</tr>
+<tr>
+<td>AX 不暴露</td>
+<td>Electron 只到 <code>AXGroup</code>，定位不到输入框</td>
+<td>截图＋Retina 坐标换算：物理 px ÷2 ＝ 逻辑点，与 <code>cliclick</code>／AX 同系</td>
+</tr>
+<tr>
+<td>contenteditable</td>
+<td><code>Cmd+A</code> 只选一段，一次 Delete 清不干净</td>
+<td>循环 <code>Cmd+A</code>+Delete，每次回读截图</td>
+</tr>
+<tr>
+<td>无原子回执</td>
+<td>点击／按键无回执，界面一变坐标即失效</td>
+<td>坐标每次现取不复用；发送前后各回读一次截图</td>
+</tr>
+<tr>
+<td>不能并发</td>
+<td>用户或其他窗口在用电脑就互相干扰</td>
+<td>一次只做一组动作；用户叫停立即全停</td>
+</tr>
+<tr>
+<td>权限粗粒度</td>
+<td>一次 TCC 授权＝长期可操作全桌面，没有每次确认</td>
+<td>只作为<strong>显式授权的一次性任务动作</strong>，不常驻、不自动调度、留痕</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SOP</strong>（跨项目复用）：① 先试专用接口，连续 2 次被拒判通路不可用并<strong>如实报告</strong>，换路前先取得用户选择；② 一条 osascript 内完成置前＋校验＋操作；③ 前台名包含匹配；④ 粘贴前 <code>pbpaste</code> 备份；⑤ 发送前回读截图（对话区无新用户消息＋右下是发送箭头）；⑥ 发送后再回读一次；⑦ 用户叫停立即停止所有 UI 操作，残留草稿如实报告，不反复抢焦点「收拾干净」。</p>
+<p>⇒ 原生 GUI 自动化可作为<strong>显式授权的一次性任务动作</strong>；若要变成常规能力，须用户明确认可「粗粒度 TCC 权限、无每次确认」这一模型，并沉淀成带上述 SOP 的脚本／Skill。</p>
+<h2 id="1820-补充宿主侧另有一套-computer-use-审批后台全量扫描回执">18:20 补充：宿主侧另有一套 Computer Use 审批（后台全量扫描回执）</h2>
+<p><code>grep -a</code> 全量扫 <code>app.asar</code> 的后台任务完成，除已引用的 <code>buildClientCapabilities</code>／<code>elicitationCapability</code>／<code>answerElicitation</code> 外，另见：</p>
+<ul>
+<li><code>requestComputerUseApproval(e){return this.options.autoApprove?Promise.resolve('once'):this.handleRequestPermission(...)}</code>，常量 <code>computer_use_allow_once</code>／<code>ComputerUseVlmApproval</code>／<code>computerusevlmapproval</code> → 宿主<strong>确有 Computer Use 专用的一次性审批</strong>，但属于 CodeBuddy 原生 CUA／ACP 链路。</li>
+<li><code>requestElicitation(e){return this.pending.handleRequest('elicitation/create',e)??Promise.resolve({action:'cancel'})}</code> → 无 pending 处理器默认 cancel，与 <code>answerElicitation</code> 无 override 返回 cancel 一致。</li>
+<li>MCP SDK 守卫：<code>if(!this._clientCapabilities?.elicitation?.form) throw 'Client does not support form elicitation.'</code></li>
+<li><code>CODEBUDDY_HOST_CAPABILITIES='elicitation.form,weixinpay.interception'</code> 由 <code>buildCliEnv</code> 注入 CLI 后端，<code>isClawWorkspaceCwd</code> 时不注入。</li>
+</ul>
+<p>⇒ 强化原判断：宿主<strong>有</strong> form elicitation 与 CUA 审批实现，但绑在 ACP／CLI 后端及特定场景（微信支付、原生 Computer Use 审批）；<code>codex-computer-use-bridge</code> 这个直连 stdio MCP 未接 <code>onElicitationRequest</code>，因此走 decline。<strong>不能据「宿主有审批代码」推断该 MCP 会弹窗</strong>，两条链路不可混为一谈。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p030-并行子代理429落盘与校验池假绿/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>

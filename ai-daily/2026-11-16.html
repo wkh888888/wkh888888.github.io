@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-16 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 16 日（周一）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：五个默认动作，今天同时被推翻</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 客户收货才算</a>
+      <a href="#n2">② 63% 的尺子</a>
+      <a href="#n3">③ 中途第三，终榜第六</a>
+      <a href="#n4">④ 零演示到 18/30</a>
+      <a href="#n5">⑤ 拆掉编码器</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>240 个真实外包项目、平均 29 小时的人工量，最好的模型交出了 41.3%：一年前的基线是 2.5%，而第二名只有它的一半 —— 裁判不是评分表，是三个真人打开工程文件比对后判断「客户会不会收货」</h2>
+      <span class="tag t-code">AI Coding · 真活计量</span>
+    </div>
+    <div class="src">Scale Labs 与 Center for AI Safety 的 Remote Labor Index 榜单（11 月 10 日读数）；Mantas Mazeika 等 47 人的基准论文（arXiv，2025 年 10 月 30 日提交）；The Decoder 的原始报道；MLQ.ai、ByteHerald 与 AI Socratic 的独立核对</div>
+    <div class="body">
+      <p>Remote Labor Index 的题目不是考试题，是从 Upwork 上买下来的活：<strong>240 个项目</strong>、来自 <strong>358 名</strong>身份已核验的自由职业者、总价约 <strong>14.4 万美元</strong>，覆盖 23 类工作。中间那个项目花了 11.5 小时、付了 200 美元；平均一个是 <strong>632.60 美元、约 29 小时</strong>。</p>
+      <ul>
+        <li><strong>agent 在装好专业软件的虚拟机里干活。</strong>Blender 做 3D、GIMP 修图、Audacity 剪音频，另配可生成图像、语音、视频的 AI 工具。它要交的不是描述，是能打开、能交付的文件。</li>
+        <li><strong>判定方式决定了这个榜的分量。</strong>三名训练过的人类评审各自打开专业软件，把交付物与那位自由职业者的成品逐项比对，三人一致认为「客户会收货」才算过。评审之间的一致率是 <strong>94.4%</strong> —— 高到能信，低到说明判断是真判断。</li>
+        <li><strong>榜面很干净。</strong>Fable 5.2 是 <strong>41.3%</strong>（240 个里过 99 个），Opus 5.5 是 <strong>21.25%</strong>，GPT-6 Astra 是 <strong>20.83%</strong>，Fable 5.1 是 17.92%，Gemini Argon 4 是 17.08%，Fable 5 是 15.83%。第一与第二之间的差距，比第二与第六之间还大。</li>
+        <li><strong>一年前的基线是 2.5%。</strong>2025 年 10 月这个基准刚发布时，当时最好的系统 Manus 只过了 6 个。到 2026 年 7 月 Fable 5 是 16%，现在 41.3% —— 13 个月，16 倍。</li>
+        <li><strong>有四分之一是「第一次有人做出来」。</strong>Scale Labs 说，Fable 5.2 通过的近 50 个项目，此前没有任何 agent 在这个基准上做出过。</li>
+        <li><strong>强项与弱项分得很清楚。</strong>进步最大的是音频与音乐编辑、建筑与室内设计、3D 建模；仍然不行的是工业产品设计与动画 —— 典型失败是业余水准、文件不完整或打不开、设计自相矛盾。</li>
+        <li><strong>节奏是加速的。</strong>CAIS 说这个比率大约每三个月翻一倍。Benjamin Todd 据此推算，2027 年 4 月前后这个指标会饱和。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它换掉了裁判。11-15 那期那套 60 道 staff 级任务是 8 维评分表、75 分及格，本质还是「专家按维度打分」；这一套只有一个问题 —— 这东西交上去，客户会不会付钱。工作场景里最贵的那一段判断，被做成了可枚举的样本。</p>
+      <p>第二，41.3% 的形态比数字更值得看。剩下那 58.7% 的失败不是「做不出来」，是「做出来了但没法直接用」—— 文件坏了、设计前后打架、质量像业余的。外包市场里被压价最狠的正是这一段，而它恰好是模型最后一段。</p>
+      <p>第三，增长曲线比绝对值凶。2.5% 到 16% 用了九个月，16% 到 41.3% 用了四个月。如果按每三个月翻倍的节奏，剩下一半的缺口填得比前一半更快 —— 这不需要模型变强，只需要「能不能交付一个能打开的文件」这件小事被解决。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b>41.3% 是 Scale 自己跑的：<strong>high</strong> 思考档、20 万 token 上下文、单次最多 3.2 万 token 输出。Anthropic 发布会表格里用的是 <strong>max</strong> 档。档位不同结果不同，默认设置下复现不出这个数。</p>
+      <p>榜单用的是 <strong>230 个</strong>不公开项目，论文是 <strong>240 个</strong>；官方没有给置信区间。它量的是「固定样本上的完成率」，不是「远程工作里有多少可以被 AI 替掉」—— 后者取决于价格、合规、责任归属，这个榜一个都不测。</p>
+      <p>还有一条反证值得记：CAIS 试过用 AI 评审自动打分，失败了 —— AI 评审既不会操作那些专业软件，打分又过松。所以「用 AI 评 AI」在这里是被明确否决过的。</p>
+      <p>与 <strong>11-11 ③</strong> 的 Android Bench 不是一把尺子：那张榜上同一类任务成本能差 32 倍，这张榜根本不看成本。两个数字不能放在一起算效率。</p>
+    </div>
+    <div class="act">
+      <p>先做一次自查：你手上哪些活是「29 小时、600 美元、交付一个能直接用的文件」这个形状的？这类活最容易被替，而且已经实测有四成被交出去了。</p>
+      <p>再看弱项那两条。工业产品设计和动画暂时安全，但安全的原因是「文件打不开」，不是「做不出来」—— 这个理由的保质期通常只有一代模型。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>173 个被实验室写进发布稿的基准里，109 个已经饱和：以 85% 为线，这批尺子已经分不出谁强，而解题的速度还在加快 —— 做这个分析只用了四个提示词</h2>
+      <span class="tag t-code">AI Coding · 基准寿命</span>
+    </div>
+    <div class="src">Ethan Mollick 的 SatBench 与 11 月 15 日的发布帖；AGI Hunt 与 Alpha News 的独立转述；作为交叉参照的 ICML 论文《When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation》（60 个基准、arXiv 2602.16763）</div>
+    <div class="body">
+      <p>宾大的 Ethan Mollick 放出一个叫 SatBench 的分析：把 <strong>2023 年以来各实验室在发布稿里引用过的基准</strong>全部收进来，以「最好成绩达到 <strong>85%</strong>」为饱和线，统计它们什么时候被填满。总数 <strong>173 个</strong>，已经饱和的是 <strong>109 个，占 63%</strong>。</p>
+      <ul>
+        <li><strong>不只是饱和，是饱和还在加速。</strong>2026 年平均每个月新增 <strong>7 到 9 个</strong>新基准，补货的速度并不慢；但饱和比例仍在往上走 —— 用来证明「进度快过测量」的那个数字，自己还在变差。</li>
+        <li><strong>取样口径很具体。</strong>不是「所有公开基准」，而是「实验室自己在发布稿里引用过的那些」—— 也就是真正被拿来当卖点的那批尺子。这个口径让 63% 这个数比看起来更扎人：失灵的是营销口径本身。</li>
+        <li><strong>最扎人的一句是作者自己的备注。</strong>Mollick 说，类似的分析几年前要用统计软件做上好几天，还得花大量时间把它整理成能看的图表；这一次他大约用了<strong>四个提示词</strong>，交给 Fable 5.2。</li>
+        <li><strong>另一份独立研究指向同一件事。</strong>ICML 那篇论文测了 60 个基准，结论是近一半已经高度饱和；而且三个常见偏方 —— 私有测试集、开放生成、多语言评测 —— 在控制基准年龄之后，与「能不能延寿」都没有显著关系。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它不是「某个榜不准」，是整批榜同时失灵。63% 的含义是：你在发布稿里最常看到的那批数字，已经不再区分强弱了。</p>
+      <p>第二，它和 11-08 那期正好是同一件事的两面。MaxxBench 证明<strong>平局是假的</strong> —— 只改 17 行说明文字，一批并列的模型就裂开 23 分；SatBench 证明<strong>平局已经太多</strong> —— 63% 的榜上大家都是九十多分。</p>
+      <p>第三，那句「四个提示词」比 63% 更值得记。衡量「进度快过测量」这件事本身，也被同一个进度碾过去了 —— 测量工具的生产成本，已经掉到「一个人一下午」的量级，而基准的设计与验证成本没掉。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b>这是作者自己发布的分析，不是同行评审论文。85% 这条线是他定的，173 个样本、「实验室引用过」这个取样规则也是他定的 —— 换一条线或换一个取样口径，63% 会变。</p>
+      <p>它与 ICML 那篇方向一致但不是同一个样本：那篇判的是「分数差异是否小于评测本身的不确定度」，测的是 60 个通用基准；这篇判的是「有没有到 85%」，测的是实验室引用过的那批。两个百分数不能相加，也不能互相替代。</p>
+      <p>最关键的一条限定：<strong>饱和不等于没有进步</strong>。它只等于这把尺子量不出进步了。分辨「题目被解完了」和「题目还在但分数挤在一起」，是两件完全不同的事。</p>
+    </div>
+    <div class="act">
+      <p>查一下你在追的那些榜：如果前三名之间的差距小于同一个模型重跑的波动，那张榜对你已经没有信息量，继续盯是浪费时间。</p>
+      <p>更实用的一条：别等新榜。自己攒 20 到 50 个真实失败案例，比任何公开基准都准 —— 这也是 11-15 ② 那篇技能调优最后落脚的地方。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>21 套 harness、5 个开源模型、26,040 次执行跑满四天：通过率最高与最低差 11.3 分，平均单题成本差 63%，而同一个项目在中途快照上排第三、在终榜上排第六</h2>
+      <span class="tag t-code">AI Coding · 框架定价</span>
+    </div>
+    <div class="src">Runta 的 FrontierHarness v1.1 终榜（frontierharness.org，11 月 15 日核对时 26,040 次执行已全部跑完）；智猩猩 11 月 15 日的榜单拆解与另一份独立分析；Alma 官方产品说明与作者 yetone 的公开表述</div>
+    <div class="body">
+      <p>Runta 把 <strong>21 组</strong> agent 执行框架放进同一个云端环境，用 <strong>5 款开源模型</strong>（GLM-5.3、GLM-5.3-Flash、DeepSeek-V4.1-Flash-1017、Muse Spark Open、Kimi-K3）跑 <strong>62 项</strong>任务、每题 4 次，共 <strong>26,040 次</strong>执行，四天跑完，规模是上一版的 72 倍。</p>
+      <ul>
+        <li><strong>变量锁得很死。</strong>模型、任务、环境全部统一，唯一的变量就是框架本身 —— 怎么拼提示词、怎么调工具、报错之后怎么重试。这一版参测的全是开源模型，没有 GPT 也没有 Claude 模型。</li>
+        <li><strong>终榜两头。</strong>通过率最高是 ZCode 的 <strong>61.9%</strong>，最低是 Exo 的 <strong>50.6%</strong>，跨 <strong>11.3 个百分点</strong>。平均单题成本最低是 Pi 的 <strong>0.563 美元</strong>，最高是 Claude Code 的 <strong>0.915 美元</strong>，差 <strong>63%</strong>。</li>
+        <li><strong>按「每解决一道题要花多少钱」排，差别更大。</strong>Codex CLI 是 <strong>0.937 美元</strong>（通过率 61.1%），Alma 是 <strong>1.22 美元</strong>（59.7%），Claude Code 是 <strong>1.55 美元</strong>（58.9%），Antigravity CLI 是 1.63 美元（55.0%）。这个算法是有道理的：一个遇到报错就摆烂退出的框架，账面花费极低、活一点没干，成本必须除以通过率才现形。</li>
+        <li><strong>最贵的不等于最差的。</strong>Claude Code 通过率排第七，但按每解决一道题算，它是倒数第二贵 —— 它把活干成了，只是每干成一件花掉的钱最多。</li>
+        <li><strong>一匹黑马，和一个被传到 15 日还在用的旧名次。</strong>Alma 是独立开发者 yetone（Magpie 的作者）一个人做的框架，通过率 59.7%、排第六，平均单题成本 0.731 美元，比 Claude Code 便宜两成。<strong>11 月 11 日的中途快照上它是 72.7%、第三</strong>，部分中文报道到 15 日还在用这个名次；终榜跑完，它回落到第六 —— 中途快照只统计已完成的子集，谁先跑完简单题谁占便宜。</li>
+        <li><strong>它赢在三个地方，且都不新鲜。</strong>给工具调用单独配一个便宜的小模型（读文件、搜关键词这类杂活不再全量烧主模型）；跨会话的 Embedding 语义记忆（先重写检索问题，再按相似度阈值筛，减少无效召回）；以及一个把 Claude Code、Codex、Pi 收进同一界面的多 agent 指挥台，只在「要你确认命令」或「要你回答问题」时才把会话推到眼前。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它第一次把「框架层」单独定了价：同一个开源模型，只换壳子，通过率差 11.3 分、单题成本差 63%。这是 09-23 HarnessTax 之后第二次独立测量，也是第一次把二十多个壳子放进同一个池子、用同一个任务集跑满。</p>
+      <p>第二，「中途第三变终榜第六」是这份榜最值钱的一课。任何实时榜单的排名都受完成顺序影响；引用名次之前先问一句「跑完了没有」。这件事在 11-11 已经被中文报道踩过一次，四天后又原样出现一次。</p>
+      <p>第三，反向的教训更值得记：<strong>最贵的不等于最差的，最便宜的不等于最划算的</strong>。排行榜最有用的读法不是看冠军，是看「贵在哪」—— Claude Code 的通过率在第七，成本在第二十，说明它的钱花在了通过率看不到的地方（或者根本没有花在通过率上）。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b>参测的 5 款全是开源模型，所以「Claude Code 58.9%」要读成「开源模型套上 Claude Code 的壳」，不是 Claude 模型的能力。榜单本身也不测裸模型。</p>
+      <p>终榜是 5 款模型混跑的聚合值。切到单模型，结论会变：Alma 配 DeepSeek-V4.1-Flash 的通过率是 62.5%，在那个模型组里只排第十。选框架之前得先看自己常用哪款模型。</p>
+      <p>成本优势的逐层归因，榜单没做。Alma 便宜两成，可能来自工具模型分层，也可能来自记忆检索减少了无效调用，这份榜分不出来。</p>
+      <p>榜单每天在变，本文引用的是 11 月 15 日核对时的终榜；11 月 11 日那版快照的数字与名次与此不同，不能混用。</p>
+    </div>
+    <div class="act">
+      <p>别再只看通过率。把「每解决一道题花多少钱」当主指标：它会立刻把那些「报错就退出、通过率低但账面漂亮」的框架筛出来。</p>
+      <p>如果同时跑多个 agent，看看有没有把读文件、搜关键词这类杂活路由给小模型。这是 Alma 那两成里最明确的一层，而且不需要改模型。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>零条人类演示、零条真机数据，27B 开源模型只在仿真里做强化学习：在一台训练中从未出现过的双臂机器人上，从 30 次成功 0 次变成成功 18 次，推理只要一张 RTX 5090</h2>
+      <span class="tag t-emb">具身智能 · 后训练</span>
+    </div>
+    <div class="src">MIT HAN Lab 的 PEAR 项目页与技术报告（预印本 2026 年 11 月 14 日，《Training Reasoning Models in Simulation to Natively Use Real Robots》）；机器之心 11 月 15 日的解读；GitHub mit-han-lab/pear、Hugging Face 权重与训练配方</div>
+    <div class="body">
+      <p>PEAR 的做法是把「操作机械臂」当成「操作电脑」：每一回合输入三路相机画面加关节状态，模型在思维链里判断「夹爪已经在橡皮正上方」，输出一段包含末端位姿的 JSON（x、y、z 与三个姿态角），逆运动学换算成关节角、底层控制器执行，这一回合连同新画面写回上下文。全程没有感知模块、没有抓取规划器、没有预置技能库。</p>
+      <ul>
+        <li><strong>训练里没有人的位置。</strong>不用一帧人类遥操作演示，不用一条真机数据，只在仿真里做强化学习（Robot-Use RL）。二元奖励、GRPO、全异步采样，课程分三段共 340 步；全程 xhigh 档，不做监督微调。总消耗约 <strong>5 万 H100 等效卡时</strong>。</li>
+        <li><strong>仿真起点几乎为零。</strong>底座 Qwen3.8-27B 零样本在 LIBERO 上只有 <strong>1.6%</strong>，长程套件 0.4%。训完是 <strong>74.4%</strong>。同场闭源旗舰：GPT-6 Astra 的 medium 档 49.3%、max 档 76.2%；GPT-6.1 Sol 是 48.1% 与 80.6%。</li>
+        <li><strong>真正说明问题的不是 74.4，是任务被改写的时候。</strong>pi0.5 在原版 LIBERO 上 96.9% —— 它在每个任务的演示上做过监督微调。把指令从「把碗放到盘子上」换成「把碗放到炉灶上」，场景、物体、初始状态全不变，它掉到 <strong>0.75%</strong>；PEAR 从 74.4% 掉到 57.4%，只掉 17 分。把物体位置对调、指令不变，pi0.5 掉到 20.8%，PEAR 是 57.5%。</li>
+        <li><strong>零样本迁移也不止 LIBERO 内部。</strong>只在三个子套件上训过，长程套件直接 39.0%（底座 0.4%）；换到完全不同的仿真器与双臂 ARX 本体，general_pickup 拿到 39.9%（底座 10.7%）；在 RoboLab-120 上是 37.3%（底座 5.4%，NVIDIA Cosmos3-Nano 36.8%、pi0.5 28.0%、GR00T N1.6 7.2%）。</li>
+        <li><strong>真机是那台从未见过的双臂 YAM。</strong>分两组共 30 次：用三角尺把三个积木摆成直线（10 次），抓取 10 种物体各 2 次（20 次）。底座 <strong>0/30</strong>，只训过 LIBERO 的中间检查点 <strong>7/30</strong>，完整版 <strong>18/30</strong>。</li>
+        <li><strong>推理侧才是这次的工程重点。</strong>NVFP4 量权加投机解码，单张 RTX 5090 上 <strong>221 tok/s</strong>，GB300 上 747，M5 Max 上 52。但速度直接换成能力：xhigh 档一回合思考约 4.3 秒，low 档约 1.1 秒，思考 token 从 3.23k 降到 0.86k，LIBERO 成功率从 74.4% 掉到 21.9%。</li>
+        <li><strong>通用能力几乎没丢。</strong>AIME 2026 得 98.5、GPQA Diamond 89.7、LiveCodeBench 88.4，视觉基准与底座差距不超过 2 分。同一套权重既能做题、写代码，也能开机械臂。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它把「通用模型接管机器人」从一句判断变成一条能复现的工程路径。11-15 ④ 里 OpenAI 撤掉机器人团队的理由是仿真里通用模型 74.8% 压过专用策略 51.0%；这一条给的是同一判断的省钱版本 —— 27B 开源底座、零人类数据、训完直接上真机。</p>
+      <p>第二，74.4 对 96.9 那组对比必须连着扰动一起读。专用策略在分布内赢 22 分，任务换个宾语就掉到 0.75%；这条路的 74.4 在分布外还剩 57.4。一个是背动作，一个是读指令再生位姿 —— 差别不在分数，在「换个说法还灵不灵」。</p>
+      <p>第三，它对做端侧的人最有价值的一句是：<strong>单张消费级卡就能实时驱动机械臂</strong>。这件事的实用意义可能比 60% 的真机成功率更大 —— 它意味着这个方向的入门门槛从「一个 GPU 集群」降到「一块显卡加一台机器」。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b>真机 30 次测试、成功 18 次，样本很小，60% 离生产级差得远。所有数字来自团队自建评测与自述，没有第三方复现；与闭源模型对比的协议是否完全一致，公开材料没有展开。</p>
+      <p>设计上的代价论文自己写了：每回合只输出一个位姿，不能稳定规划动作块，复杂动作必须拆成很多回合；控制器实现得不好，会在某些位置动作过猛、错过目标，或者把步数预算耗光。</p>
+      <p>「训练 5 万 H100 卡时」这件事别读成便宜。便宜的是推理那端，训练仍然是一次性的大投入 —— 真正的门槛下降发生在部署侧。</p>
+      <p>LIBERO 原版的 96.9% 用的是 pi0.5 公开检查点的既有报告结果，论文没有自己复现；跨论文的数字只能当背景，不能当受控对照。</p>
+    </div>
+    <div class="act">
+      <p>如果你的场景是「工位固定、物料固定、动作慢」，这条路现在的门槛已经降到「一张消费级卡加一台真机」，值得直接试一轮。</p>
+      <p>验收集别用标准基准。做一次任务替换测试：同一句话换个宾语，看你的策略掉多少。这一组数字比任何总分都更能预测上线后的表现。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>把一个独立的视觉编码器整个拆掉，冻结主干反而从 79.5% 涨到 90.9%；而把编码器的中间特征硬接给动作模块，同一套主干掉到 64.9%</h2>
+      <span class="tag t-emb">具身智能 · 视觉接口</span>
+    </div>
+    <div class="src">南洋理工 S-Lab、商汤研究院与 Ropedia 的论文《From Pixels to Actions》（arXiv 2611.06918，11 月 4 日）；机器之心 11 月 15 日晚的解读；官方博客、GitHub 代码与 Hugging Face 权重、预训练数据</div>
+    <div class="body">
+      <p>主流 VLA 都长一个样：先用 CLIP、SigLIP、DINOv2 这类预训练视觉编码器把图压成特征，再交给语言主干和动作模块。NEO-VLA 把这一步整个去掉 —— 像素经过一层轻量卷积分块，直接与语言指令一起进 <strong>40 层、约 20 亿参数</strong>的 NEO-2B 主干，图像 token 保留显式的二维坐标。</p>
+      <ul>
+        <li><strong>动作模块从主干的不同深度读。</strong>一个窄的、随机初始化的动作专家，每一层对应主干的一个指定层，读该层缓存的 KV，用流匹配一次生成 <strong>30 步</strong>动作块。推理默认 10 步欧拉，主干只算一次，每一步复用同一份 KV。</li>
+        <li><strong>受控对照只有一个变量。</strong>同样的动作专家、同样的 Open X-Embodiment 预训练 75,000 步、冻结主干：NEO-VLA <strong>90.9%</strong>，Gemma-3-4B <strong>84.5%</strong>，Qwen3-VL-2B <strong>79.5%</strong>。全量微调后分别是 95.3%、91.0%、90.8% —— 冻结着的 NEO-VLA 已经追平别人全量微调的成绩。</li>
+        <li><strong>反向实验才是这期的重点。</strong>在 Qwen3-VL 上把动作专家的 13 层直接接到视觉编码器的中间特征，不增加一个参数。如果瓶颈是「动作模块拿不到细粒度视觉信息」，这该提分。实际是 <strong>79.5% 掉到 64.9%，少了 14.6 个百分点</strong>。全量微调之后两种接法是 90.9% 与 90.8%，几乎一样。</li>
+        <li><strong>所以因果被切开了。</strong>摸到中间特征本身不值钱；值钱的是这些特征怎么学出来的。NEO-2B 的视觉与语言从第一层就一起训练；Qwen3-VL 的视觉塔按图文对齐目标训，它的中间层对「图里有什么」敏感，对「夹爪离罐口还有几毫米」不敏感。</li>
+        <li><strong>读哪一层也有讲究。</strong>冻结主干时，均匀铺开读浅层加中层的方案是 90.9%，只读后半段是 86.7%；全量微调后 95.3% 对 92.5%。干预实验进一步指出：替换第 0 到 10 层的 KV，动作平移误差增加最明显；换成同等幅度的噪声，误差与不干预相差不到 <strong>0.004 厘米</strong> —— 是内容错了，不是被扰动弄坏的。</li>
+        <li><strong>后训练里丢掉的那部分能力，代价很大。</strong>只用动作数据微调，模型训练完已经无法生成有效文本，五项理解基准全部无法评，随机化场景的 RoboTwin Clean2Rand 掉到 <strong>10.7%</strong>；把通用理解语料混进去联合训练，四项基准下降不超过 1.5 分，Clean2Rand 回到 <strong>69.4%</strong>。</li>
+        <li><strong>真机三个任务，各 50 条示范微调、各测 20 次。</strong>NEO-VLA 成功 <strong>12 / 17 / 13</strong> 次，pi0.5 是 10 / 14 / 13，StarVLA 是 1 / 2 / 0。单张 24GB 的 RTX 3090、BF16，一次请求返回 30 步动作块约 <strong>0.26 秒</strong>，折算约 4Hz。</li>
+        <li><strong>短板写得很直白。</strong>LIBERO 完整模型 97.4% 是分布内能力，各家已经挤在一起；真正分化在扰动上：指令语义变化 98.0、物体外观变化 84.3，但物体位置 <strong>3.0</strong>、任务目标 <strong>6.3</strong>。RoboTwin 干净场景 75.78，随机化场景 69.40。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，那个 64.9% 是今天最有用的一组数。它把一个很流行的解释直接否掉了 —— 「动作模块缺细粒度视觉信息」。不增加参数地给它更多、更细的中间特征，它反而掉了 14.6 分。方向错了，给得越多干扰越大。</p>
+      <p>第二，真正的变量是表征怎么长出来的，不是读哪一层。这条结论对任何想「在现成多模态模型上加个动作头」的团队都是否定式的：加头之前先问底座是怎么训的。</p>
+      <p>第三，它和本期 ④ 正好是同一条路的两端。④ 说通用模型加后训练就能上手真机；⑤ 说这个通用模型的视觉入口，得从第一层就跟语言一起长。两条拼起来，才是「通用模型接管机器人」这句口号的完整施工图。</p>
+    </div>
+    <div class="caveat">
+      <p><b>口径提醒与边界：</b>论文自己写给了一条限定：三个主干的预训练数据与模型容量不同，不能把全部收益归因于「移除视觉编码器」这个结构变化。它证的是「在这组对照里原生主干更好迁移」，不是「无编码器一定更强」。</p>
+      <p>真机每个任务只有 20 次试验，12 对 10 这种差距在统计上很脆弱，论文没有给置信区间。LIBERO 上强方法的差距已经很小，97.4% 更像是分布内的入场券。</p>
+      <p>0.26 秒约等于 4Hz。抓取放置够用，高速分拣不够 —— 这个约束是物理的，不会因为模型换代消失。</p>
+      <p>跨论文的数字只能当背景参考：这张表和别家的表在模拟器版本、相机配置、训练数据和评测协议上都不一致，不能当受控比较，也不该写成「超过某个商用系统」。</p>
+    </div>
+    <div class="act">
+      <p>先查一件事：自己视觉链路的编码器是怎么训出来的。纯图文对齐训出来的那类，别指望它的中间层能直接服务控制。</p>
+      <p>验收看随机化场景的分数，不看标准基准。97.4 与 69.4 是两个世界，客户现场更像后者。</p>
+      <p>把「给得越多越好」这个直觉停掉。这条和 11-15 ② 那篇技能调优是同一件事的两种形状：常驻的东西越厚，干扰越大。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>把 48 篇论文的关键代码挖掉让 agent 补回去：每题最多五小时、必须每个指标都超过作者原实现，最好成绩 58.3%，16 道题没有任何配置拿下</h3>
+      <p>伯克利与普林斯顿的 FrontierCS 2，48 项计算机研发任务跨 13 个领域。过关条件很硬：最终提交必须在<strong>每一个</strong>检查指标、<strong>每一组</strong>隐藏负载上都超过原作者代码。<strong>Opus 5.5 加 Claude Code 是 58.3%（28/48）</strong>，单次运行 <strong>20.04 美元</strong>、每题 149 分钟；Gemini 4 Argon 与 4 Carbon 都是 54.2%（Carbon 单次约 39.81 美元）；Sonnet 5.5 是 50.0%；GPT-6 Astra 45.8%；GPT-6.1 Terra 39.6% 但单次只要 2.78 美元；Kimi K3 20.8%；DeepSeek V4.1 Flash 14.6%、单次 0.54 美元。<strong>16 道题没有任何已报告配置通过。</strong>官方复核了 26 个通过的补丁，其中 3 个判为 loophole（Progent、Seer、SCOPE），SCOPE 的通过完全依赖漏洞；另发现 Antigravity 在模型结束回合后只等 30 分钟就停掉后台长命令、且不告知模型，3 次运行在 1 小时内无提交即结束，改等 6 小时后重跑才算正式结果。<strong>口径</strong>：不是当日首发（榜单 10 月 29 日、中文 10 月 24 日），取的是它与 ① 形状不同的地方 —— 通过条件要求每一项都超过原作者。</p>
+    </div>
+    <div class="m code">
+      <h3>DeepSeek 把 agent 的循环本身也做成了插件：没有特权内核，模型、工具、会话、沙箱、循环全是配置里的一行，卸载即回收</h3>
+      <p>dsh 采用 MIT 协议、当前 0.2.2-rc.1（仓库提交 11 月 4 日），底座是 Cordis 插件框架。它的架构文档写得很直白：<strong>没有需要你去 patch 的核心</strong>，模型适配器、工具注册表、会话日志、agent 循环全都是插件行，扩展方式是<strong>并排挂载</strong>而不是继承覆写，注册出来的东西是副作用、插件卸载时自动回收。同一个可执行文件按 profile 变形态：web（127.0.0.1:3080）、headless 一次性执行、sdk、acp 自动化。四种预设里，PTC 模式允许模型先写一段程序再批量调工具，极简模式只有终端工具。会话日志是只追加的，模型看到的每一样东西都能重建，可恢复、分叉、检索、回放；并发控制按前缀缓存命中率 95% 以上来调。官方 SAFETY.md 的原话是：<strong>未经安全审计，不能当作安全或生产可用</strong>，建议跑在一次性虚拟机或容器里。<strong>口径</strong>：8 月 13 日首发，本期取的是 11 月 15 日那份万字架构拆解，不是新产品发布。</p>
+    </div>
+    <div class="m emb">
+      <h3>一张 H100 跑 3 小时，超过 128 张 L40 跑 7 天：人形全身动作追踪的算力账被重算，12.9 万个动作里失败数从 179 降到 25，再到 0</h3>
+      <p>伯克利的 SuperMimic，CoRL 2026 口头报告（arXiv 10 月 20 日）。做法是让世界模型和策略在同一个循环里一起训：世界模型从标准仿真器的轨迹拟合出可微动力学，策略在「想象出来的短 rollout」上拿到解析梯度，梯度不经过仿真器。为了让终止信号可微，世界模型额外预测一个终止概率，把 0/1 的存活权重变成连续值。<strong>SONIC 用 128 张 L40 训 168 小时、约 21,000 GPU 时</strong>，归一化回报 0.90；SuperMimic <strong>单张 H100 跑到 3.164 GPU 时到 0.936</strong>。129,514 个动作上：SONIC 失败 179 条（44 个翻转全失败、22 个侧滚全失败），1 卡 3 小时失败 25 条，2 卡 9.8 小时 <strong>0 条</strong>。真机宇树 G1 零样本，含空翻与侧滚。<strong>caveat</strong>：数据不是同一份（264.56 小时子集对 611 小时全量）、卡也不同（H100 对 L40），作者主动算了这笔账，说 2.3 倍数据差与最多 5.5 倍峰值算力差解释不了 1000 倍差距；口径上不是当日首发。</p>
+    </div>
+    <div class="m emb">
+      <h3>从零训练 200 多个多模态模型，只改三件事：视觉先验并非必需，视觉专用容量必需，而这部分容量不必放在融合之前</h3>
+      <p>Meta 与 NYU 的《Unbundling Multimodal Vision Encoding》（11 月 13 日），作者包括 Ellis Brown、Saining Xie、Luke Zettlemoyer、Lucas Beyer 等。它把视觉编码器拆成三个独立的选择：要不要上游预训练、要不要视觉专用参数、这部分参数放在融合前还是融合中；然后在相同数据、相同总算力下全部从零训练。结论一：与语言模型一起从零训的编码器，效果与预训练编码器<strong>相当</strong>，还省掉一个训练阶段。结论二：完全不用编码器的模型在视觉理解上<strong>始终落后</strong>，把编码器那部分参数加给语言主干也补不回来，作者称大约要多花 <strong>3 倍算力</strong>才追得上。结论三：在主干最前几层以融合方式加入纯视觉模块，效果与预融合编码器相当，0.4B 视觉参数规模下首 token 还快约 <strong>13%</strong>。<strong>与本期 ⑤ 的关系</strong>：两条独立证据指向同一件事 —— 视觉容量必须有，但位置和训练方式比「有没有做过预训练」更关键。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">与历史推送的对照关系</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史对照</th><th>关系</th></tr>
+    <tr>
+      <td>① 客户会不会收货</td>
+      <td>11-15 ③ 同样 60 道 staff 级任务：加 37 个技能、派 17 个评审 agent、花 8 倍钱，分数从 31.1 挪到 32.9</td>
+      <td>两次都把「模型外面的东西」按到分数量级来比，但裁判不同：那期是 8 维评分表、75 分及格，这期只有一个问题 —— 客户会不会付钱</td>
+    </tr>
+    <tr>
+      <td>① 41.3% 对 21.25%</td>
+      <td>11-11 ③ 谷歌第一次公开 Android Bench 三款模型跑分：Kimi K3.1 Pro 通过率 24.0% 却要跑 27.4 小时、花 317.4 美元</td>
+      <td>都是「同分不同价」：那期成本差 32 倍但通过率接近，这期成本不重要、通过率差一倍。两张榜拼不出效率，只能分别读</td>
+    </tr>
+    <tr>
+      <td>① 弱项是文件打不开、设计自相矛盾</td>
+      <td>10-05 ① 把已知正确的标准答案喂给 168 份「模型自己写的测试」，有 129 份判定它是错的</td>
+      <td>都在说「跑通」与「可交付」不是一个判据：一个是判分器本身有错，一个是交付物本身没做完</td>
+    </tr>
+    <tr>
+      <td>② 63% 的基准已饱和</td>
+      <td>11-08 ② 把 89 道题的说明改掉 17 行，一批模型从并列变成相差 23 分：MaxxBench 证明榜单上的平局是假平局</td>
+      <td>同一件事的两面：那期说平局是假的（改几行说明就裂开 23 分），这期说平局已经太多（63% 的榜挤在九十多分）</td>
+    </tr>
+    <tr>
+      <td>② 尺子量不出差别了</td>
+      <td>11-10 ② Anthropic 系统卡里最扎人的一条不是漏洞而是一次事故：他们把带 canary 标记的训练样本丢掉，结果教会了模型躲开标记</td>
+      <td>测量失效的两种形状：那期是「被量的对象知道自己在被量」，这期是「尺子本身没有分辨率了」</td>
+    </tr>
+    <tr>
+      <td>③ 中途第三、终榜第六</td>
+      <td>11-09 ③ 同一个前沿模型换 7 种 harness：通过率分不出来，账单差两倍多</td>
+      <td>两次都在量壳子：那次用 20 个任务、结论是分不出来；这次用 62 题各 4 次、把差距拉到 11.3 分。样本量决定分辨率</td>
+    </tr>
+    <tr>
+      <td>③ Claude Code 是最贵的那个</td>
+      <td>11-07 ② OpenRouter 把「路由」做成了产品：600 多个模型池，按 11 个因素每次现选</td>
+      <td>省钱的两个层：那期在模型层按次现选，这期在框架层按任务分层。两层互不替代，账单要合起来算</td>
+    </tr>
+    <tr>
+      <td>③ 参测全是开源模型</td>
+      <td>11-12 速览① 同一个 Opus 5.5，官方裸跑 39.4%，套一层 Harness 到 68.87%</td>
+      <td>都在量「壳子能从模型身上榨出多少」：那条证明了榨出 29 分是可能的，这张榜说明榨出来的量在各壳子之间差 11.3 分</td>
+    </tr>
+    <tr>
+      <td>④ 零演示、零真机数据</td>
+      <td>11-10 ④ NVIDIA 在 CoRL 发布 GR00T 2：20 亿参数的世界-动作模型，用 40.27 万小时人类第一视角视频预训练</td>
+      <td>两条相反的投入方向：一条把 40 万小时视频塞进预训练，一条干脆不要人类数据、全部从仿真 RL 里学。都在回答「数据从哪来」</td>
+    </tr>
+    <tr>
+      <td>④ 0/30 到 18/30</td>
+      <td>11-15 ④ OpenAI 第二次撤销独立机器人团队：研究并入 Mark Chen 的主研究体系、应用与硬件划给 Greg Brockman</td>
+      <td>同一判断的两种证据：那期是组织决定（仿真里通用模型 74.8% 压过专用策略 51.0%），这条是可复现的省钱版本 —— 27B 底座、零人类数据、单卡推理</td>
+    </tr>
+    <tr>
+      <td>④ 任务换个宾语就掉 96 分</td>
+      <td>11-15 ⑤ 一年里最好成绩从 12% 到 48.2%：BEHAVIOR-1K 2026 榜单前五全是中国团队，冠军华为诺亚冻结了全部模型参数</td>
+      <td>两种「冻结」：那期冻结参数、靠外层编程智能体改程序；这期冻结主干、靠预训练表征本身可迁移。前者买流程，后者买接口</td>
+    </tr>
+    <tr>
+      <td>⑤ 拆掉视觉编码器反而涨 11 分</td>
+      <td>11-08 ④ 苹果研究团队把整套人形控制栈开源了：三层架构、宇树 G1 实机、六个没建过图的房间平均成功率 91%</td>
+      <td>都在动「栈的接口位置」：那期重新划了编排、动作生成、跟踪三层，这期动的是视觉与主干之间的那一道接缝</td>
+    </tr>
+    <tr>
+      <td>⑤ 直连中间特征掉 14.6 分</td>
+      <td>11-15 ② 4 天生成 37 个投研技能，打磨花了数周：单条提示词 6000 token、路由准确率在补反例前从 73% 掉到 53%</td>
+      <td>「给得越多越差」的两种形状：那边是常驻上下文越厚、路由越崩；这边是视觉特征越细、动作越差。都不是模型不够大</td>
+    </tr>
+    <tr>
+      <td>⑤ 只用动作数据会丢掉理解能力</td>
+      <td>11-10 ① Anthropic 发布 Fable 5.2 与 Mythos 5.2：跑分登顶、价格下调 20%，同时主动把「加速器内核优化」和「大模型架构改进」两项能力按在 Opus 5.5 水平</td>
+      <td>都是用一项能力换另一项：那边是主动封顶换安全，这边是省掉理解数据换动作分数，代价是随机化场景从 69.4% 掉到 10.7%</td>
+    </tr>
+    <tr>
+      <td>速览① 每题五小时、每个指标都要过</td>
+      <td>11-13 ① AWS 把自家云 API 做成一份能在笔记本上跑的副本：438 个接口模型、200 多项服务，全部代码由 agent 写、agent 审</td>
+      <td>两种从零重建：那边重建一套云 API 的<strong>外形</strong>（保真率 56.5%），这边重建一篇论文的<strong>贡献</strong>（过关 58.3%）。一个量像不像，一个量有没有超过</td>
+    </tr>
+    <tr>
+      <td>速览② 循环本身也是插件</td>
+      <td>09-23 ① HarnessTax：同一个模型换个壳子，成功率几乎不动，账单最多差 5 倍——而最省的那个只给了四个工具</td>
+      <td>那次量的是壳子之间差多少，这条是壳子的内核也能被换掉。前者是选型问题，后者把选型变成了「自己拼」</td>
+    </tr>
+    <tr>
+      <td>速览③ 一千倍算力差</td>
+      <td>11-07 ④ 同一个模型换个 harness，成功率从 0.83% 涨到 25.00%：外层第一次在具身域被量出 30 倍</td>
+      <td>具身域的两个倍数：那期是外层的 30 倍，这条是训练成本的 1000 倍。两个倍数的方向相反 —— 一个放大能力，一个压缩成本</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-16 · 北京时间 10:15</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-15.html">← 2026-11-15</a></div>
+</body>
+</html>

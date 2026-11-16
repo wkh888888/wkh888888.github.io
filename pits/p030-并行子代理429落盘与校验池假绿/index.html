@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加 · walker</title><meta name="description" content="长篇项目里派 4 个并行子代理各写一篇稿，统一返回："><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p030-%E5%B9%B6%E8%A1%8C%E5%AD%90%E4%BB%A3%E7%90%86429%E8%90%BD%E7%9B%98%E4%B8%8E%E6%A0%A1%E9%AA%8C%E6%B1%A0%E5%81%87%E7%BB%BF/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加 · walker"><meta property="og:description" content="长篇项目里派 4 个并行子代理各写一篇稿，统一返回："><meta property="og:url" content="https://blog.walkerhua.com/pits/p030-%E5%B9%B6%E8%A1%8C%E5%AD%90%E4%BB%A3%E7%90%86429%E8%90%BD%E7%9B%98%E4%B8%8E%E6%A0%A1%E9%AA%8C%E6%B1%A0%E5%81%87%E7%BB%BF/"><meta property="og:image" content="https://blog.walkerhua.com/og/p030-%E5%B9%B6%E8%A1%8C%E5%AD%90%E4%BB%A3%E7%90%86429%E8%90%BD%E7%9B%98%E4%B8%8E%E6%A0%A1%E9%AA%8C%E6%B1%A0%E5%81%87%E7%BB%BF.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加 · walker"><meta name="twitter:description" content="长篇项目里派 4 个并行子代理各写一篇稿，统一返回："><meta name="twitter:image" content="https://blog.walkerhua.com/og/p030-%E5%B9%B6%E8%A1%8C%E5%AD%90%E4%BB%A3%E7%90%86429%E8%90%BD%E7%9B%98%E4%B8%8E%E6%A0%A1%E9%AA%8C%E6%B1%A0%E5%81%87%E7%BB%BF.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加</h1><p>长篇项目里派 4 个并行子代理各写一篇稿，统一返回：</p><div class="hero-meta"><span>踩坑于 2026-11-13</span><span>约 4 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/Skill 管理/">Skill 管理</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法与铁律">解法与铁律</a><a class="toc-l2" href="#检查项收工前">检查项（收工前）</a><a class="toc-l2" href="#关联">关联</a><a class="toc-l2" href="#补记同日第三类验证盲区文件不自撞">补记（同日）：第三类验证盲区——「文件不自撞」</a></aside><article class="card prose"><blockquote>
+<p>子代理报错 ≠ 没产出；校验脚本报「命中 0」≠ 真的查了。两者叠加时，最容易做出的错误决策是「重写一遍」，而真正该做的是「先验收、再修验证逻辑」。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-11-13</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / Skill 管理</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（差点重写 1.1 万字成稿，并放过硬闸违规）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>429、subagent、落盘验收、相对路径、glob 静默落空、假绿、撞句池、并行互撞、补字后重跑、修到根</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<p>长篇项目里派 4 个并行子代理各写一篇稿，统一返回：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Error: Failed to execute task "…" after subagent was created:</span></span>
+<span class="line"><span>429 您的使用量已超出频率限制，将在 … 重置</span></span></code></pre>
+<p>按报错判断「4 篇都没启动」，准备重写。实际 <code>ls</code> 一看，<strong>4 个文件都在</strong>，时间戳集中在报错前 2 分钟，大小 39—64 KB，内容完整。429 挂的是<strong>汇总/回传阶段</strong>，写入阶段早已完成。</p>
+<p>紧接着做质量校验，碰上第二个坑。校验脚本用法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd &lt;项目&gt;/正传/连载版 &amp;&amp; shingle.py &lt;目标&gt; \</span></span>
+<span class="line"><span>  -p '第*.md,../正传.典藏版/.../ch-0*.md,../番外/已完成篇.md'</span></span></code></pre>
+<p>输出 <code>命中 0 条</code>，看起来全绿。但 <code>../</code> 从 <code>正传/连载版</code> 出发指向 <code>正传/</code>，而典藏版与番外都在<strong>项目根</strong>，正确应为 <code>../../</code>。也就是说池 ①（典藏版）和池 ③（跨篇）<strong>一个文件都没进来</strong>，只查了池 ②（连载版 529 章）。脚本不报错，因为 <code>第*.md</code> 命中 529 个文件，整个 pool 非空。</p>
+<h2 id="根因">根因</h2>
+<p>三个设计/习惯叠在一起：</p>
+<ol>
+<li><strong>子代理的「创建后失败」不等价于「未执行」</strong>。写入是早期动作，回传是末期动作；限流常打在末期。报错文案里的 <code>after subagent was created</code> 其实已经暗示了这一点。</li>
+<li><strong>校验脚本只在「整个 pool 为空」时 <code>sys.exit</code>，不检查每个 glob 各自的命中数</strong>。多 glob 逗号拼接时，部分落空被静默吞掉 → 结果覆盖不全却报全绿（<strong>假绿</strong>）。这与 P008 的 <code>exit 0</code> 假成功、P016 的末尾验证失败是同一类「观测信号骗人」。</li>
+<li><strong>并行成员之间天然不互查</strong>。每个子代理只把「已完成篇 + 外部池」当池，同批其他 3 篇当时还不存在，无法互相校验。验收时一次性检出 5 组跨篇互撞 + 一篇内部 45 条骨架复刻。</li>
+</ol>
+<h2 id="解法与铁律">解法与铁律</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>铁律</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>后台/子代理任务报错后，先 <code>ls -la</code> + 看时间戳 + 抽查内容，再决定要不要重跑。</strong> 不要凭报错文案判断产出状态。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>验证报「全绿」时，先验证验证逻辑本身</strong>：打印池的实际命中文件数，对多 glob 逐个 <code>assert len(hits) &gt; 0</code>；池为空或某个 glob 落空都要硬失败。修到根，不要只在报告里写「请手动检查」。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>并行批次完成后必须做一次全量两两互撞总扫</strong>（所有新成员 + 所有旧成员一起进池），逐篇单独过闸不算完。</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>补字/修订后必重跑全部闸</strong>，不是只跑改动段。补写最容易带进禁用词、英文词、重复段和撞句。</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>限流打断的稿子要单独查「骨架复刻」</strong>：被打断后模型常反复复刻同一段拼凑长度。识别信号是篇内互撞条数骤增（本例 45 条，含 149/151 字整段复刻）。解法是<strong>放弃骨架重写</strong>，不是逐句同义替换。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="检查项收工前">检查项（收工前）</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 池命中数打印出来了吗？每个 glob 都 &gt; 0 吗？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 相对路径是相对<strong>执行时的 cwd</strong>，还是我以为的目录？<code>../</code> 与 <code>../../</code> 差一层就会静默落空。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 并行成员的产出文件都验收过了吗？有没有被 429 打断的残稿？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 全量互撞总扫跑了吗（不是逐篇自扫）？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 最后一轮补字之后，所有闸重跑了吗？</li>
+</ul>
+<h2 id="关联">关联</h2>
+<ul>
+<li>P008 <code>exit 0</code> 假成功 ／ P009 多安装源假成功 ／ P012 同文件并行编辑改动被吞 ／ P016 末尾验证失败吞掉收尾动作 —— 同属「观测信号骗人」家族。</li>
+<li>与 SOUL.md「修到根：看到验证失败先查验证逻辑本身」一致；本例是反过来：<strong>验证通过</strong>也要查验证逻辑。</li>
+</ul>
+<hr>
+<h2 id="补记同日第三类验证盲区文件不自撞">补记（同日）：第三类验证盲区——「文件不自撞」</h2>
+<p><code>shingle.py</code> 的设计是<strong>同一文件永不与自身比对</strong>（docstring 明写），所以它只能查「文件之间」；把一篇按节拆成多个临时文件后跑 <code>-p</code>，也只能查<strong>节与节</strong>之间。<strong>同一节内部、或同篇不同段落之间的整句复刻，它一律查不到。</strong></p>
+<p>本轮据此补扫「段落两两最长公共子串 ≥12 字」，在 8 篇成稿里检出 <strong>22 组</strong>复刻（最长 31 字），而此前「四池撞句 0／篇内互撞 0／重复段 0」全绿。高发点正是限流打断后的残稿：同一收束写两遍、同一段叙述换个说法再写一遍。</p>
+<table>
+<thead>
+<tr>
+<th>铁律</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td><strong>验证工具要读它的 docstring，搞清它「不查什么」</strong>。「撞句 0」只覆盖工具设计过的比较维度。凡工具明确跳过自比较的，必须另写一个「段落两两最长公共子串」扫描补上。</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>残稿的典型指纹是「节内复刻条数骤增」</strong>，不是跨文件撞句。发现后删掉重复收束 + 补异构段落，别逐词同义替换。</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>按段落插入补文时先定位章节索引</strong>，只用句子 <code>next()</code> 找锚点会把内容插进别的节（同名句子常在多节出现）。</td>
+</tr>
+</tbody>
+</table>
+<p>检查项补充：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 节内段落复刻扫了吗（不是只扫节间）？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 插入位置是用「节索引 + 节内锚点」双重定位的吗？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 删段补段后，各节字数重算了吗？</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p029-新写的坑文会在下一轮发布中止流水线/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P029 · 新写的坑文会在下一轮发布突然中止整条流水线：门禁在「已推 GitLab」之后</span></a><a class="post-nav-item post-nav-next" href="/pits/p031-桌面agent交接cua授权被拒与前台抢占/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
