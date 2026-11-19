@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>让 Terra 做主力：Codex 的 Sol、Terra、Luna 三档分工实践 · walker</title><meta name="description" content="整理日期：2026-10-27 · 本机配置实践"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/blog/%E8%AE%A9-terra-%E5%81%9A%E4%B8%BB%E5%8A%9Bcodex-%E7%9A%84-solterraluna-%E4%B8%89%E6%A1%A3%E5%88%86%E5%B7%A5%E5%AE%9E%E8%B7%B5/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="让 Terra 做主力：Codex 的 Sol、Terra、Luna 三档分工实践 · walker"><meta property="og:description" content="整理日期：2026-10-27 · 本机配置实践"><meta property="og:url" content="https://blog.walkerhua.com/blog/%E8%AE%A9-terra-%E5%81%9A%E4%B8%BB%E5%8A%9Bcodex-%E7%9A%84-solterraluna-%E4%B8%89%E6%A1%A3%E5%88%86%E5%B7%A5%E5%AE%9E%E8%B7%B5/"><meta property="og:image" content="https://blog.walkerhua.com/og/%E8%AE%A9-terra-%E5%81%9A%E4%B8%BB%E5%8A%9Bcodex-%E7%9A%84-solterraluna-%E4%B8%89%E6%A1%A3%E5%88%86%E5%B7%A5%E5%AE%9E%E8%B7%B5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="让 Terra 做主力：Codex 的 Sol、Terra、Luna 三档分工实践 · walker"><meta name="twitter:description" content="整理日期：2026-10-27 · 本机配置实践"><meta name="twitter:image" content="https://blog.walkerhua.com/og/%E8%AE%A9-terra-%E5%81%9A%E4%B8%BB%E5%8A%9Bcodex-%E7%9A%84-solterraluna-%E4%B8%89%E6%A1%A3%E5%88%86%E5%B7%A5%E5%AE%9E%E8%B7%B5.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/archives/">← 文章</a><h1>让 Terra 做主力：Codex 的 Sol、Terra、Luna 三档分工实践</h1><p>整理日期：2026-10-27 · 本机配置实践</p><div class="hero-meta"><span>发表于 2026-10-27</span><span>约 6 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#为什么把默认主模型改成-terra">为什么把默认主模型改成 Terra</a><a class="toc-l2" href="#三个角色各自负责什么">三个角色，各自负责什么</a><a class="toc-l2" href="#分配任务要看需要作多少判断">分配任务，要看需要作多少判断</a><a class="toc-l2" href="#简单任务直接做委派要算交接成本">简单任务直接做，委派要算交接成本</a><a class="toc-l2" href="#遇到什么情况应交回主代理">遇到什么情况，应交回主代理</a><a class="toc-l2" href="#这次具体改了哪些配置">这次具体改了哪些配置</a><a class="toc-l2" href="#验证完成到哪一步">验证完成到哪一步</a><a class="toc-l2" href="#为什么不写死任务比例和节省幅度">为什么不写死任务比例和节省幅度</a><a class="toc-l2" href="#参考资料">参考资料</a></aside><article class="card prose"><p>之前，我的 Codex 默认使用 GPT-6.1 Sol，另配一个 GPT-6 Luna 子代理。Sol 负责沟通、方案、实现和把关，遇到边界明确的工作，再交给 Luna。</p>
+<p>这套分工容易理解，却留下了一个问题：常规开发仍然经常由 Sol 承担，而“边界明确就交给 Luna”的规则，又把业务实现和机械修改混在了一起。</p>
+<p>加入 GPT-6.1 Terra 后，我决定调整默认入口：<strong>Terra 负责日常工作，Sol 处理复杂问题，Luna 承接轻量执行。</strong></p>
+<p>这篇记录的是分工思路和已经落地的配置调整。三种模型的任务边界属于当前的工作策略，需要继续根据真实项目表现修正。</p>
+<h2 id="为什么把默认主模型改成-terra">为什么把默认主模型改成 Terra</h2>
+<p>最初考虑过保留 Sol 当主代理，只增加一个 Terra Worker，让它承接常规开发。</p>
+<p>但如果每个日常任务都先由 Sol 理解、拆分，再交给 Terra，做完还要由 Sol 复核，那么 Sol 仍然参与了完整流程。对于一个局部修复或常规功能，这种交接未必划算。</p>
+<p>因此，这次把日常协调也交给 Terra：它直接与用户沟通，理解常规需求，完成实现、整合和验收。只有出现复杂架构取舍、疑难故障或高风险改动时，再调用 Sol。</p>
+<p>官方模型选择指南将 Terra 列为范围明确的代码修复、目标明确的电脑操作和基于材料的写作的适用选择，同时将 Sol 列为复杂项目的候选。这为分工提供了参考；是否适合自己的项目，仍要看实际完成情况。</p>
+<h2 id="三个角色各自负责什么">三个角色，各自负责什么</h2>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>模型</th>
+<th>当前职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Terra：日常主力</td>
+<td><code>gpt-6.1-terra</code></td>
+<td>常规需求澄清、任务拆分、功能开发、局部重构、缺陷修复、测试实现、浏览器与 GUI 操作、整合和常规验收</td>
+</tr>
+<tr>
+<td>Sol：复杂任务专家</td>
+<td><code>gpt-6.1-sol</code></td>
+<td>架构取舍、疑难故障根因分析、复杂跨模块改动、高风险审查、重大变更验收</td>
+</tr>
+<tr>
+<td>Luna：轻量执行</td>
+<td><code>gpt-6-luna</code></td>
+<td>修改方式明确、复杂度低且容易验证的简单修复、机械修改、格式整理、统一批量替换、简单测试补充、文档和数据整理</td>
+</tr>
+</tbody>
+</table>
+<p>Terra 作为主代理时，可以按需要调用 Sol 和 Luna。作为受托子代理时，三个 Worker 都只完成当前范围，不继续委派，以免交接层级不断增加。</p>
+<p>Sol 也保留在用户明确指定时承担主代理的能力。遇到复杂项目，可以从一开始就选择 Sol，无须先让 Terra 尝试一轮。</p>
+<h2 id="分配任务要看需要作多少判断">分配任务，要看需要作多少判断</h2>
+<p>“改几个文件”“是不是写测试”“是否批量处理”，都不足以单独决定用哪个模型。</p>
+<p>例如，同样是补测试：已有明确输入、输出和测试样例，只需补几个相近分支，可以交给 Luna；如果需要梳理业务状态、识别并发边界，或设计故障恢复测试，就应由 Terra 或 Sol 处理。</p>
+<p>批量修改也是如此。统一替换一个确定的配置键，通常容易验证；修改多个模块中的同名字段，却可能牵涉不同业务语义和兼容性，不能因为重复次数多就交给 Luna。</p>
+<p>这次采用三个判断维度：</p>
+<ul>
+<li><strong>复杂度</strong>：需要多少业务理解、推理和方案取舍？</li>
+<li><strong>风险</strong>：出错后会影响多大范围，是否涉及关键契约、权限或数据？</li>
+<li><strong>验证难度</strong>：有没有清楚的完成标准，能否通过相关测试或实际操作确认结果？</li>
+</ul>
+<p>范围清楚、需要一定业务理解的常规开发，由 Terra 执行。修改路径明确、低风险且验证直接的工作，才适合委派给 Luna。复杂判断和高风险问题交给 Sol。</p>
+<h2 id="简单任务直接做委派要算交接成本">简单任务直接做，委派要算交接成本</h2>
+<p>有三个模型可用，并不意味着每次都要启动三个代理。</p>
+<p>主代理已经读过相关代码，只需做一个小改动时，直接完成通常更省事。另开子代理需要重新说明背景、划定范围、等待结果，再复核改动，这些工作也会消耗时间和 Token。</p>
+<p>因此，配置里加入了一条原则：<strong>只有委派收益超过上下文交接和复核成本时，才启动子代理。</strong></p>
+<p>需要委派时，交接内容必须包含目标、允许修改的范围、禁止项、依赖关系，以及验收标准或验证命令。同时明确要求保留他人改动，避免不同任务相互覆盖。</p>
+<h2 id="遇到什么情况应交回主代理">遇到什么情况，应交回主代理</h2>
+<p>任务执行过程中发现需求有歧义、修改即将超出范围、根因不清或验证持续失败时，子代理应返回证据和最小下一步，由主代理判断。</p>
+<p>这里需要区分两类问题：用户究竟想要什么，需要向用户澄清；复杂技术方案怎样取舍，可以请 Sol 分析。不能指望换一个模型就自动补齐缺失的用户意图。</p>
+<p>常规任务由 Terra 验收即可。复杂决策、高风险审查和重大变更验收，再交给 Sol 专项处理。这样能让审查精力与风险相匹配。</p>
+<h2 id="这次具体改了哪些配置">这次具体改了哪些配置</h2>
+<p>本机调整涉及五个文件：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>调整内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/.codex/config.toml</code></td>
+<td>将默认 <code>model</code> 从 <code>gpt-6.1-sol</code> 改为 <code>gpt-6.1-terra</code></td>
+</tr>
+<tr>
+<td><code>~/.codex/AGENTS.md</code></td>
+<td>将 Sol + Luna 两档规则改为 Terra、Sol、Luna 三档分工，并加入委派成本和升级条件</td>
+</tr>
+<tr>
+<td><code>~/.codex/agents/terra-worker.toml</code></td>
+<td>新增 Terra Worker，定义主代理职责及受托执行边界</td>
+</tr>
+<tr>
+<td><code>~/.codex/agents/sol-worker.toml</code></td>
+<td>将 Sol 调整为复杂任务专家，保留用户指定时承担主代理的能力</td>
+</tr>
+<tr>
+<td><code>~/.codex/agents/luna-worker.toml</code></td>
+<td>将 Luna 的范围收紧到低复杂度、修改方式明确且容易验证的任务</td>
+</tr>
+</tbody>
+</table>
+<p>默认模型的关键配置是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="toml"><code><span class="line"><span style="color:#E1E4E8">model = </span><span style="color:#9ECBFF">"gpt-6.1-terra"</span></span></code></pre>
+<p><code>terra-worker.toml</code> 定义的是一个可调用的自定义代理。<strong>仅新增该文件，不会改变默认主模型；默认入口仍由 <code>config.toml</code> 的模型设置控制。</strong></p>
+<p>模型分工段落属于 Codex 自有内容，本次没有改动由跨宿主策略源维护的标记块，也没有修改其他宿主配置。</p>
+<h2 id="验证完成到哪一步">验证完成到哪一步</h2>
+<p>修改前已经备份原文件。修改后完成了以下检查：</p>
+<ul>
+<li>主配置及三个 Worker 文件均能通过 TOML 解析，必要字段存在。</li>
+<li>默认模型为 Terra，三个 Worker 的名称与模型映射一致。</li>
+<li><code>config.toml</code> 除默认模型外，其余配置与备份一致。</li>
+<li><code>AGENTS.md</code> 的前导内容和全部同步块与备份一致，变更仅在模型分工段落。</li>
+</ul>
+<p>这些检查证明配置文件已按预期更新。<strong>尚未完成新会话中的三个模型实际调用，也没有进行同题质量、耗时和用量对比。</strong> 当前会话的模型不会因为配置文件被修改，就自动切换成 Terra。</p>
+<h2 id="为什么不写死任务比例和节省幅度">为什么不写死任务比例和节省幅度</h2>
+<p>50% Luna、35% Terra、15% Sol，可以作为讨论分工的例子，但我没有把它写进规则。</p>
+<p>任务数量占比不等于 Token 占比。一个架构问题可能比十次简单替换消耗更多上下文；较轻模型如果反复返工，也可能增加总体成本。主代理的拆分、交接和审查同样需要计入。</p>
+<p>API 单价也不能直接换算成 Codex 套餐的额度消耗，更不能据此承诺实际节省多少。</p>
+<p>后续更有用的观察是：每类任务能否一次完成，返工几次，主代理需要补做多少，最终花了多少时间和用量。先让 Terra 承担日常工作，再用这些记录调整边界，比追求固定比例更适合长期使用。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://developers.openai.com/api/docs/guides/model-selection">OpenAI 官方模型选择指南</a></li>
+<li><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra 官方模型说明</a></li>
+<li><a href="https://learn.chatgpt.com/docs/agent-configuration/subagents">Codex 自定义子代理配置说明</a></li>
+</ul>
+<p>模型定位和产品配置可能更新；本文记录的是 2026 年 10 月 27 日的本机调整，不将职责划分视为官方能力排名。</p>
+<nav class="post-nav"><span></span><a class="post-nav-item post-nav-next" href="/blog/不用再盯着聊天框让-codex-直接给-qoder-桌面版派活/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">不用再盯着聊天框：让 Codex 直接给 Qoder 桌面版派活</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
