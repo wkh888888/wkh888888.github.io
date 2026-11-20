@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-19 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 19 日（周四）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：起作用的那一层，和你盯着看的那一层不是同一层</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 换壳涨三倍</a>
+      <a href="#n2">② 买下工具链</a>
+      <a href="#n3">③ agent 当经理</a>
+      <a href="#n4">④ 数据流水线</a>
+      <a href="#n5">⑤ 世界模型不及格</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>同一个模型换个外壳，编程 Agent 榜从一分到第一：谷歌 Neon 在自家环境里把成绩从 12.8% 抬到 39.0%，而榜单第一和「好不好用」仍是两件事</h2>
+      <span class="tag t-code">AI Coding · harness 决定成绩</span>
+    </div>
+    <div class="src">谷歌官方博客（11 月 18 日）· 腾讯新闻 · ZAKER · The New Stack · 新智元交叉整理；榜单、跑分与成本均为厂商口径，Antigravity 为谷歌自有环境</div>
+    <div class="body">
+      <p>11 月 18 日，谷歌把 Gemini 4 家族的第四位成员 <strong>Neon</strong> 交给开发者和企业。它主打复杂编程、科研长程任务和企业工作流，支持 100 万 token 上下文，提供 Low、medium、high、xhigh 四档推理。哈萨比斯亲自发帖，称其为「炼金术的巅峰之作」。</p>
+      <ul>
+        <li><strong>榜单是真的第一，但要看是哪把尺。</strong>Neon 在 Artificial Analysis 编程 Agent 指数拿到 <strong>58.6 分排名第一</strong>，Terminal-Bench 4.1 为 65.2%，FrontierCode 2.0 默认 high 档 46.2%；AA 智能指数 61 分全球第三，比自家旗舰 Carbon 还高 1 分。19 组对比里谷歌称拿下 16 组最高。</li>
+        <li><strong>最该看的是同一个模型的三倍差距。</strong>在 SWE-sweep 上，Neon 用开源 mini-SWE harness 只解决 <strong>12.8%</strong>，换到谷歌自研的 Antigravity 环境升到 <strong>39.0%</strong>，模型一个权重没动。The New Stack 直接把它读成：harness 这个外壳与模型本身同等重要。</li>
+        <li><strong>价格和速度都在压 Carbon 的空间。</strong>API 每百万 token 输入 3 美元、输出 15 美元、缓存命中 0.15 美元，比 Carbon 标准价低 25%（Carbon 的 2 美元限时优惠 11 月 30 日结束）；默认 high 档单任务成本比 Carbon 低 32%，与头部前沿模型比低 50% 到 80%。输出速度每秒约 110 token，Carbon 为 57。xhigh 档给出最高智能分，成本仍比对手最高档低 36% 以上。</li>
+        <li><strong>网安版单独成线。</strong>AutoBaxBench 困难档 76%、WebExploitBench v1.2 为 51.26%、SEC-bench Pro 漏洞发现 90.5%、CWE-bench v2 根因修复 70.7%（比 Carbon 高 3.4 个百分点），未来数日通过 Fairwind 计划向筛选过的防御者开放。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，12.8% 到 39.0% 这条差距把「模型能力」和「系统表现」正式拆成两件事。11-09 那期同一模型换 7 种 harness，通过率分不出来、账单差两倍多；11-16 那期 21 套 harness、5 个开源模型跑满四天，通过率最高最低差 11.3 分。今天这条更直接：同一个模型，只换外壳，通过率翻了三倍。三次结果拼起来，harness 早已不是配角。</p>
+      <p>第二，价格战换了计量单位。Neon 的输入价高于 Carbon 的限时优惠价，却低于标准价；它卖的不是「最便宜」，而是单任务成本和速度。这与 11-17 两家旗舰把价目表单位从 token 换成「一个任务」是同一条线——选型第一问正在变成「我的负载跑一次多少钱」。</p>
+      <p>第三，把网安版做成单独 SKU 值得记一笔。别的厂商把网络安全当风险标注（11-18 那期 GPT-6.2 触及网络安全关键阈值），谷歌把它做成卖给防御方的产品，发现、验证、修复全流程都给分。能力标签正在变成可标价的商品。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>所有榜单名次、三倍差距、成本降幅和「编造率创新低」均来自谷歌自报，且 39.0% 那一档跑在谷歌自己的 Antigravity 里，与 12.8% 的开源环境不是同一套工具链，不能直接读成「白赚 26 个百分点」。第三方独立复现尚未出现。Neon 的 3 美元输入价高于 Carbon 当前 2 美元的限时优惠，11 月 30 日优惠结束后口径会再变；「16 组第一」也是自家构建的对比集。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把 harness 当成和模型同等权重的选型变量：先锁定自己的高频任务集，用同一套题分别跑开源 harness 和厂商自带环境，把「模型分」和「系统分」分开记，再看差出来的那截是不是你能控制的。若正用 Carbon 的限时价做预算，11 月 30 日前按标准价重算一遍。要上网安能力的，等 Fairwind 名额和独立测评，别只看榜单。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>AI 实验室第一次买下编程语言的地基：OpenAI 收走 Python 工具链公司 Astral，竞争从「谁更会写代码」下沉到「谁掌握开发者每天用的工具」</h2>
+      <span class="tag t-code">AI Coding · 工具链归属</span>
+    </div>
+    <div class="src">Astral 官方博客与 Charlie Marsh 声明 · The Agent Times · 源码技术网 · CSDN AI 日报 · TechReaderDaily 交叉整理；财务条款未披露，下载量与性能倍数为厂商自报</div>
+    <div class="body">
+      <p>Python 工具链公司 <strong>Astral</strong> 宣布并入 OpenAI 的 Codex 团队。这是 AI 实验室首次收购编程语言的基础设施公司，团队整体加入，创始人 Charlie Marsh 承诺交易后继续开源维护，财务条款未披露。</p>
+      <ul>
+        <li><strong>三件主力工具都是 Rust 重写的。</strong>包管理器 uv 月下载约 <strong>1.26 亿次</strong>，比 pip 快 10 到 100 倍；linter 与 formatter Ruff 月下载约 <strong>1.79 亿次</strong>，扫 25 万行代码约 0.4 秒；类型检查器 ty 月下载约 1900 万次，增量场景自称比 Pyright 快 80 倍。Ruff 累计超过 4.5 万星。</li>
+        <li><strong>买的是 Codex 缺的那一半。</strong>Codex 已经会写代码，却不会装正确的 Python 版本、解依赖冲突、检查自己写的代码、强制类型安全，而这些往往比写更耗时。买下工具链等于把 agent 交付闭环里最确定的那一层直接收进自己手里，形成从模型到工具再到平台的垂直整合。</li>
+        <li><strong>社区反应比技术更响。</strong>Hacker News 上相关帖积累到 777 分、485 条评论，最高赞的批评是 OpenAI 与 Anthropic 正在试图掌控软件领域的「生产资料」。Simon Willison 提醒 OpenAI 缺乏开源收购的良好记录。Anthropic 的 Claude 本就是 Astral 项目的重要代码贡献者，这次收购也被读成对对手的精准打击。</li>
+        <li><strong>增长数据解释了出手时机。</strong>OpenAI 披露 2026 年初以来 Codex 用户数增长 3 倍、用量增长 5 倍、每周活跃用户超过 200 万。工具链的可靠性开始直接决定 Codex 的交付上限。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，被买走的是「生产资料」而不是模型。Ruff 和 uv 已是 FastAPI、Airflow、Pydantic 等项目的默认依赖，也嵌在大量 CI/CD 与 agent 工具链里。一旦授权或功能策略向 OpenAI 优先倾斜，冲击会顺着整条链传导——这比某个模型跑分下降严重得多。</p>
+      <p>第二，这是同一条「外包验证」主线的另一半。11-01 那期 Anthropic 把 Messages API 从 Python 整体重写成 Rust，用的是影子流量逐请求比对这种十年前的老办法验收；今天 OpenAI 干脆把写过 fastest toolchain 的团队买下来。两条路都在解决「生成之后怎么验、怎么装、怎么判类型」这个瓶颈，一条自己造，一条直接买。</p>
+      <p>第三，开源承诺目前只有声誉背书、没有结构约束。uv 正替代 pip 成为新项目默认包管理器，Ruff 是性能靠前的 lint 与 format 工具；当工具作者成为 AI 巨头的员工，独立性还能不能保持，是整个 Python 生态接下来要盯的事。OpenAI 目前每赚 1 美元要花 2.5 美元，也让长期维护资金这个问题不那么容易被安慰掉。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>「继续开源」是承诺而非约束，治理结构、许可证延续和长期维护资金一概未披露；月下载量与性能倍数均为 Astral 自报。收购消息在不同来源里被标成 11 月上旬至 11 月 18 日多个时点，本条取 11 月 18 日集中传播节点，不把它当成当日官宣。Claude 在 Astral 项目提交中自动添加共同作者等说法来自社区观察，无一手确认。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把 uv、Ruff、ty 当成「供应商可能被单一 AI 公司控制」的关键依赖来管理：现在就盘一遍 CI 与 agent 工具链里这三样的位置，估一次替换成本，在锁文件里固定版本。凡写进平台默认配置的地方，准备一份回滚方案。别在采购评估里假设「永远免费开源」，把授权变更写进风险清单。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>编程 agent 从「干活的」变成「管人的」：一个 Bot 独自管 Android 项目 44 天合并 1134 个 PR，人类只发了 183 条消息；另一家工作室靠约 20 个 Bot 把周产量从 50 个拉到 1900 个</h2>
+      <span class="tag t-code">AI Coding · 组织形态</span>
+    </div>
+    <div class="src">Cognition 官方博客与 Fortune 独家（11 月 17 日）· 机器之心 · geekiki · realalpha 交叉核实；产量与增长均为公司自报，无独立评测</div>
+    <div class="body">
+      <p>11 月 17 日，Cognition 发布 <strong>Devin Bots</strong>：给一个 Bot 一个「目标」而不是「任务清单」，它自带记忆和工具，能把大目标拆开、派给多个 Devin 会话并行做、评估结果、决定下一步，只把需要人拍板的事送进一个叫 Needs You 的收件箱。可以在 Slack、iMessage 或 Devin 应用里跟它对话。</p>
+      <ul>
+        <li><strong>Android Bot：44 天，人类只发 183 条消息。</strong>目标是「Android 版与 iOS 版保持一致」。它合并了 <strong>1134 个 PR</strong>、写了 34.4 万行 Kotlin、跑了 2841 次截图测试、关掉 1217 张工单，人类平均约每 6 个 PR 才发一条消息，44 天里有 22 天完全没发。应用已进入 Google Play 公开测试。</li>
+        <li><strong>Layout Bot：每 3 小时自查一次。</strong>它构建生产版、模拟首访与延迟加载，抓到侧栏某行晚出现 0.9 秒导致列表跳动的回归，回溯到引入它的 PR 并开修复。三周合并 159 个 PR，页面卡顿降低 70%。</li>
+        <li><strong>一家工作室只剩一名人类。</strong>移动游戏开发者 Jenny Xu 的工作室约 20 个 Bot 各管一摊（开发、Unity、发布、界面、真机测试），上面一个「Super Jenny Bot」每天 4 次把决策汇总到一条 Slack 帖，她用表情回复就算拍板。周产出从约 50 个 PR 涨到 <strong>1900 个</strong>，每周发一个版本。</li>
+        <li><strong>安全设计是「不指望模型自觉」。</strong>每个 Bot 跑在独立云电脑里，碰不到工程师笔记本上的密码密钥；管理员限定可访问的仓库与工具；网络层防恶意指令外传数据；Bot 写的代码走与人类完全相同的测试，只有改按钮颜色这类低风险改动才自动合并。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，人的角色被正式上移一层。过去人给 agent 派单、盯进度、记上下文；现在这些交给 Bot，人退到只剩「需要判断的决策」这一窄条。Walden Yan 把它说得很直白：工程师要从 individual contributor 转成 manager。这与 11-13 那期一天 42.7 万个 agent PR 占全站 31.9% 是同一件事的两面——PR 产量已经不是瓶颈，谁来管这些 PR 才是。</p>
+      <p>第二，它给「agent 自治」提供了第三个样本。11-15 速览里那个全 agent 工程组织一周合并上千 PR 后自建官僚制又自我解散；11-17 的 LoopForge 把交接做成写码者不审自己代码的 SOP 图；今天 Cognition 把「经理」直接做成商品，配一个 Needs You 收件箱。三次都在回答同一个问题：agent 多了以后，协调层长什么样。</p>
+      <p>第三，它是三线混战的一环。OpenAI 的 Dots（9 月底）、Anthropic 的 Duet（10 月下旬）都是常驻 agent，Cognition 赌的是「专门为编码造的协调 agent」赢过「通用 agent 顺带写代码」。Scott Wu 的说法是模型越强、产品层越重要，不存在模型赢者通吃。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>30 多倍产量、10 倍用量、每条消息多合并 4.5 个 PR 全是公司自报，缺陷率、返工率、被回滚的改动比例都没披露，PR 数本身也不等于交付价值。「每 6 个 PR 一条消息」里的消息多是「这个 PR 要不要安全审查」这类判断，不能读成完全无人值守。定价与全面开放时间未公布，目前仅早期访问；Cognition 自称内部 89% 提交由 Devin 完成，这个比例同样无第三方核验。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>别把 PR 数当 KPI。先定质量闸门：Bot 的改动必须走和人类相同的 CI、安全审查与测试覆盖率门槛，低风险自动合并的清单要人工写明并定期复审。要试点就选一个边界清晰、验收能自动化的「目标」（比如某服务与另一服务的接口保持一致），而不是让它管整个仓库。把 Needs You 里真正出现的决策类型记下来，那才是人该保留的岗位。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>把互联网上的擦门、跳舞、举哑铃视频变成机器人能执行的数据：浙大与宇树开源 500 万条经仿真验证的动作，具身最贵的那一层被做成了流水线</h2>
+      <span class="tag t-emb">具身智能 · 数据供给</span>
+    </div>
+    <div class="src">浙江大学与宇树科技具身智能联合实验室等（11 月 18 日）· 机器之心 · 腾讯新闻 · BestHub 交叉整理；数据集、模型与代码已在项目页与模型库开放</div>
+    <div class="body">
+      <p>浙江大学与宇树科技具身智能联合实验室等团队开源预训练数据集 <strong>Movens-5M</strong>：从互联网人类视频构建，收录 <strong>500 万条经仿真执行验证的机器人动作</strong>、1500 万条人体动作，总时长超 1 万小时，覆盖行走、深蹲、拖地、拳击等 297 种细分动作、16 类场景。此前最大的同类数据集约 79.8 万条，规模约 6.3 倍。</p>
+      <ul>
+        <li><strong>值钱的是那条五阶段流水线。</strong>片段生成（按镜头切分并保留来源）到质量筛选（画面、人体可见度、动作信息量），再到语义标注（分时段、分身体部位的动作说明，配文字与语音、音乐）、动作恢复（从视频估三维人体姿态）、物理精修（修抖动失稳、按 G1 的身体比例与关节限位重定向，最后在仿真里验证能否稳定执行）。每条数据都要在仿真里跑过才算数。</li>
+        <li><strong>一个模型响应四种输入。</strong>基于配对数据训练的 Movens-Zero 用理解模块处理文字、视频示范、语音、音乐，再由同一个「动作专家」结合机器人当前状态规划全身动作。现场交互时每次只生成一小段，机器人执行前半段、把末尾留作下一段开头，形成实时闭环。G1 真机演示包括听语音「用左手敬礼」、看视频示范做动作、随音乐节奏踏步。</li>
+        <li><strong>Scaling 曲线给了两条明确收益。</strong>固定 9.1 亿参数 XL 动作专家、数据从 1% 增到 100%（剔除重复后 122 到 1.22 万小时）：文字与动作匹配从 12.72% 升到 <strong>62.57%</strong>，视频动作误差从 132.82 毫米降到 40.90 毫米，语音匹配从 13.98% 升到 74.30%。固定全量数据、动作专家从 6420 万增到 9.105 亿参数：验证集流匹配损失从 0.487 降到 0.159，跟踪得分从 0.18 升到 0.72。</li>
+        <li><strong>数据和容量会互相放大。</strong>同样把数据从 10% 增到 100%，小模块的文字匹配分只从 6.34% 升到 10.30%（相对提升 62.5%），XL 模块从 24.92% 升到 62.57%（相对提升 151.1%）。数据集、模型、代码与配套测试集 Movens-Intent 均已开放。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，真机数据贵、少、慢，是具身最硬的瓶颈。这条管线把「互联网视频到仿真验证再到真机落地」接起来，数据成本被压到接近零。对照 11-17 蚂蚁灵波挑战赛里「补采数据收益可能大于换模型」的窘境，两条线索指向同一个判断：谁把数据供给规模化，谁拿到下一阶段入场券。</p>
+      <p>第二，Scaling 曲线是这篇工作真正的证据。它不只说「我们有很多数据」，而是给出数据量和动作专家容量两个维度各自涨多少、以及两者相乘的收益——这正是 11-16 那期 PEAR 那种零真机数据路线缺的规模侧验证，也把 11-02 起的数据集质量讨论往前推了一步。</p>
+      <p>第三，四模态对齐有产品意义。同一个模型接文字、语音、音乐、视频示范，意味着采集端不必为每种输入单独造一套数据，这对做交互产品的团队比多几百种动作更值钱。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>数据经仿真验证不等于真机可行，互联网视频转机器人动作存在域差；复杂家庭场景的泛化、长程任务稳定性与安全都没有给出数字。视频的版权与隐私合规是团队自己列出的风险。「具身的 GPT 时刻」是宣传措辞，不是可验证结论。所有匹配分与误差均为论文自报，采用前请核对许可、下载可用性与训练数据的来源授权。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>先拿配套测试集跑一遍自己的动作模型，看它在文字、语音、音乐、视频四种输入上各差在哪。更重要的是把那条五阶段流水线当模板搬过来，尤其是「物理精修后必须在仿真里验证稳定执行」这一步，这是把噪声视频变成可用数据的关键闸门。真机部署前务必留一轮小规模实机验证，不要直接信任仿真通过率。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>把箱子往桌沿挪几毫米，未来就该翻转——11 个视频世界模型集体答不过随机猜：它们学会了「未来长什么样」，没学会「什么决定未来」</h2>
+      <span class="tag t-emb">具身智能 · 世界模型评测</span>
+    </div>
+    <div class="src">arXiv:2611.19822（11 月 15 日提交、11 月 17 日公示）· Google DeepMind 与 UT Austin、UC Berkeley · 新浪财经与拓实科技中文解读；预印本未经同行评议，代码与数据标注预计 12 月放出</div>
+    <div class="body">
+      <p><strong>FlipTest</strong> 把「世界模型懂不懂物理」变成一道二选一题。论文由 Google DeepMind（13 位作者中 11 位）、UT Austin 与 UC Berkeley 合作完成，造了 1680 个初始帧、覆盖 10 个仿真任务与 15 个真实场景，每个场景配一对「视觉最小对」：箱子停在桌沿前几毫米还是后几毫米，两者画面几乎一样，但一个留在桌上、一个掉落。若模型真读出了世界状态，预测必须跟着翻转。</p>
+      <ul>
+        <li><strong>11 个模型全部没通过。</strong>最好的配对准确率只有 <strong>18.3%</strong>，低于二选一 25% 的随机水平；真实场景上最好为 31.3%，仿真场景没有一个超过 5.3%。模型在不改变未来的等幅度扰动上翻转的频率，与在真正决定结果的临界变化上几乎一样——翻转像噪声，不像对状态的响应。</li>
+        <li><strong>规模没用。</strong>物理 AI 专用模型 Cosmos3-Super 得 13.7%，和通用模型 Wan2.2 的 14.0% 基本同级。把模型做大、把视频做真，都没有解决这道题。</li>
+        <li><strong>失败被精确定位到「读状态」。</strong>让同一个视觉语言模型先用代码量一量图像里的像素位置、而不是靠目测，边界跨越步骤的准确率从 <strong>31.3% 跳到 93.3%</strong>。这说明信息本身没丢，失败就卡在状态读取这一步。作者据此主张把下一帧预测升级为「因果状态识别」。</li>
+        <li><strong>方法本身比数字更值钱。</strong>现有基准几乎都把每条生成的视频单独打分，问「这段视频物理上是否合理」；FlipTest 改成「只改一个物理量、结果应当反转」的对照样本，把模糊判断变成可打分的客观题。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它解释了为什么世界模型的演示视频和落地表现差那么远。当渲染器，这些模型很好；当机器人或自动驾驶的推演引擎，它们会对临界点两侧给出同一段「看起来很合理」的未来。这类偏差不是精度问题，加长上下文、提高分辨率都消不掉，只能改训练目标和数据分布。</p>
+      <p>第二，这是「尺子」这条长线的又一次翻转。11-16 那期 173 个被写进发布稿的基准里 109 个已饱和，尺子被刷到分不出强弱；11-04 那期百度 Apollo World 提出因果性与交互性两道门槛，是厂商自己出题。FlipTest 把门槛做成任何人都能复用的最小对对照，一上来全场不及格——比饱和更狠的结局。</p>
+      <p>第三，31.3% 到 93.3% 那条对照给出了一个可以立刻用的判据：凡是进规划回路的世界模型，先过一遍反事实对照样本，过不了就别让它做安全边界判断。这与今天第 1 条 Neon 的教训是同一个形状——看起来对，不等于真的对。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>预印本、未经同行评议，评分依赖裁判模型，具体数字属阶段性结论；项目页的代码与数据一栏标注「预计 2026 年 12 月」，截至写作时尚未放出，独立复现还做不了。论文结论是「这 11 个模型在这些任务上失败」，不覆盖所有世界模型路线（空间重建类、具身动作类另算）。中文解读里把「真实场景 31.3%」与「配对准确率 18.3%」混用的情况存在，两者口径不同，不要相减。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>评估要进规划回路的世界模型时，别看 demo 的流畅度。自己造 20 到 30 组「只跨一个临界点」的最小对（桌沿、孔径、摩擦面），看预测是否随之一致翻转；再加一组「不该翻转的等幅扰动」当对照，统计误翻率。两个条件都满足才进入下一步。若模型带视觉语言接口，试试让它用工具读数而不是目测，能救回多少直接反映它的状态读取能力。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>Anthropic 今日以 ANT 登陆纳斯达克：定价抬到 83 美元，认购需求近 5000 亿美元</h3>
+      <p>发行价 83 美元较招股书 70 至 78 美元的上限高约 6%，机构认购约 4000 亿、散户近 1000 亿，有望超过 SpaceX 的 857 亿美元成史上最大 IPO。前九个月营收 332.4 亿美元、同比增长约 1200%，主要由 Claude Code 驱动；但已签算力合同约 9010 亿美元，约为年化营收的 11 倍。增速能否跑赢账单，是首份财报要回答的事。</p>
+    </div>
+    <div class="m emb">
+      <h3>工信部发布 5 项人形机器人行业标准，智能化能力分出 L0 至 L5 六级</h3>
+      <p>11 月 18 日第 30 号公告发布，覆盖智能化能力分级、灵巧手、电驱动一体化关节、训练场构建与训练数据管理五大方向，同批共批准 274 项行业标准。继数据集质量标准 11 月 1 日实施、一机一码身份证之后，研发、检测与应用选型第一次有了统一的评价语言。</p>
+    </div>
+    <div class="m emb">
+      <h3>谷歌发布 Antigravity 机器人插件：MuJoCo 仿真练习，自然语言直接指挥机械臂</h3>
+      <p>配合 Gemini 4 Hydrogen，先在仿真里练习再执行现实任务，官方称日常控制任务上以更低成本比肩更大的 Argon 模型，3D 空间判断胜过 Gemini Robotics ER 2，从白板草图到传送带分拣装置约需一小时。仿真训练与对话执行被压进同一工具链，机器人部署的边际成本被继续摊薄。</p>
+    </div>
+    <div class="m code">
+      <h3>微软开源 Aion 1.0 Instruct：约 2.3B 参数的 Windows 系统级端侧小模型</h3>
+      <p>32K 上下文、MIT 许可，支持多语言与工具调用，优化版计划在 2027 年 1 月底前成为 Windows 内置小模型。同期 Underdog 发布仅 32MB 的语音生成模型 Woof，可离线运行。小模型正从演示品变成操作系统和终端的默认组件——「起作用的那一层」被直接写进系统默认值。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>① 换壳涨三倍</td>
+      <td>11-09 ③ 同一个前沿模型换 7 种 harness：通过率分不出来，账单差两倍多</td>
+      <td>反向镜像：那次换壳<strong>只差在账单</strong>，这次换壳<strong>连通过率都拉开三倍</strong></td>
+    </tr>
+    <tr>
+      <td>① harness 是主战场</td>
+      <td>11-16 ③ 21 套 harness、5 个开源模型、26,040 次执行跑满四天：通过率最高与最低差 11.3 分</td>
+      <td>同题不同层：那次比<strong>不同 harness 之间</strong>，这次比<strong>同一模型在不同 harness 里</strong></td>
+    </tr>
+    <tr>
+      <td>① 榜单第一自报</td>
+      <td>11-18 ③ OpenAI 新旗舰自称在「AI 自我提升」上首次达到 High，编程指数却与上代持平</td>
+      <td>同一收敛的下一幕：又是<strong>厂商自报登顶</strong>，仍等独立口径坐实</td>
+    </tr>
+    <tr>
+      <td>② 买下工具链</td>
+      <td>11-01 ① Anthropic 把 Claude 的 Messages API 从 Python 整体重写成 Rust：CPU 降四到五成</td>
+      <td>同题不同解：Rust 重写的两种拿法，那边<strong>自己重写</strong>，这次<strong>买下重写的人</strong></td>
+    </tr>
+    <tr>
+      <td>② 生产资料归属</td>
+      <td>11-13 ① AWS 把自家云 API 做成一份能在笔记本上跑的副本：438 个接口模型、200 多项服务，全部代码由 agent 写、agent 审</td>
+      <td>同层不同面：那边<strong>agent 写工具</strong>，这边<strong>agent 的东家买工具公司</strong></td>
+    </tr>
+    <tr>
+      <td>③ 产量 30 倍</td>
+      <td>11-13 ③ 一天 42.7 万个 PR 由 coding agent 开出，占当天公开 PR 的 31.9%</td>
+      <td>同单位不同主体：全站占比对<strong>单个工作室 30 倍</strong>，且都是自报口径</td>
+    </tr>
+    <tr>
+      <td>③ agent 当经理</td>
+      <td>11-15 速览② 一个全由 agent 组成的工程组织，一周合并上千个 PR，然后自己长出了官僚制</td>
+      <td>反向镜像：那边<strong>自建官僚制又自我解散</strong>，这边<strong>把经理做成商品</strong></td>
+    </tr>
+    <tr>
+      <td>③ 交接做成产品</td>
+      <td>11-17 ③ 腾讯把 coding agent 的交接流程开源成 SOP 图：写代码的不审自己的代码</td>
+      <td>同题不同解：那边给<strong>开源流程图</strong>，这次给<strong>常驻 Bot 加收件箱</strong></td>
+    </tr>
+    <tr>
+      <td>④ 数据规模</td>
+      <td>11-10 ④ NVIDIA 在 CoRL 发布 GR00T 2：20 亿参数的世界-动作模型，用 40.27 万小时人类第一视角视频预训练</td>
+      <td>同源不同料：那边<strong>第一视角视频</strong>，这次<strong>互联网视频蒸馏加仿真验证</strong></td>
+    </tr>
+    <tr>
+      <td>④ 零真机数据</td>
+      <td>11-16 ④ 零条人类演示、零条真机数据，27B 开源模型只在仿真里做强化学习</td>
+      <td>同题不同进：那次靠<strong>纯仿真强化学习</strong>，这次靠<strong>视频蒸馏加仿真验证</strong></td>
+    </tr>
+    <tr>
+      <td>④ 数据瓶颈</td>
+      <td>11-17 ⑤ 15 支队伍、48 小时、同一个开源模型同一台机器人：蚂蚁灵波挑战赛冠军 82.5 分</td>
+      <td>同一缺口两面：那次暴露<strong>数据少时的微调窘境</strong>，这次给<strong>规模化输入</strong></td>
+    </tr>
+    <tr>
+      <td>④ 数据与标准</td>
+      <td>11-02 速览④ 具身智能数据集质量标准 11 月 1 日起正式实施：信通院联合 40 余家单位起草</td>
+      <td>同线不同环：那次立<strong>质量标准</strong>，这次给<strong>可规模复制的生产线</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 读不出状态</td>
+      <td>11-04 ④ 百度首次披露 Apollo World 世界模型：世界模型不当「画师」而当「考官」，提出因果性与交互性两道门槛</td>
+      <td>同一主线两步：那次<strong>厂商自设门槛</strong>，这次用<strong>反事实最小对量出不及格</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 尺子两端</td>
+      <td>11-16 ② 173 个被实验室写进发布稿的基准里，109 个已经饱和：以 85% 为线，这批尺子已经分不出谁强</td>
+      <td>反向结局：那批尺子<strong>被刷到饱和</strong>，这把新尺子<strong>一上来全不及格</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 供给与验收</td>
+      <td>11-17 ④ 华为云把具身世界模型连同训练链一起开源：6B 到 7B 的模型在两项仿真榜拿到第一</td>
+      <td>供给与验收两面：那边<strong>开放训练链</strong>，这次证明<strong>榜单第一也读不出桌沿几毫米</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 视觉接口</td>
+      <td>11-16 ⑤ 把一个独立的视觉编码器整个拆掉，冻结主干反而从 79.5% 涨到 90.9%</td>
+      <td>同层不同问：那次问<strong>要不要编码器</strong>，这次问<strong>读没读出状态</strong></td>
+    </tr>
+    <tr>
+      <td>速览① 公开市场定价</td>
+      <td>09-15 速览① Anthropic 选定纳斯达克上市，英伟达洽谈 100 亿美元锚定</td>
+      <td>同一场上市的两个时点：那时是<strong>选址与锚定</strong>，今天是<strong>挂牌定价 83 美元</strong></td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-19 · 北京时间 10:57</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-18.html">← 2026-11-18</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-20.html">2026-11-20 →</a></div>
+</body>
+</html>

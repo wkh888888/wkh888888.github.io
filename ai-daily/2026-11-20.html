@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-20 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 20 日（周五）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：模型留着不动，能力全押在它外面那一层</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 让模型改硅</a>
+      <a href="#n2">② agent 进桌面</a>
+      <a href="#n3">③ 换一把尺</a>
+      <a href="#n4">④ 模型冻结加层</a>
+      <a href="#n5">⑤ 交出货账本</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>AI 第一次动手改承载自己的那块硅：OpenAI 用模型重写 AMD 旗舰 GPU 的电路，5 个月做完工程师约一年的优化，关键 IP 的 PPA 最高提升 14%</h2>
+      <span class="tag t-code">AI Coding · 模型下沉到电路</span>
+    </div>
+    <div class="src">OpenAI 技术报告《Advancing chip design with OpenAI models》（11 月 19 日）· OpenAI 官方帖 · 凤凰网科技 · 环球网 · 智东西 · 钛媒体交叉整理；14% 为高基线局部最高值，厂商口径</div>
+    <div class="body">
+      <p>11 月 19 日，OpenAI 发布技术报告，把「模型写代码」往下一层推到了「模型写电路」：用自研模型重写芯片的 SystemVerilog RTL 描述，在 AMD 已经反复打磨过多年的旗舰 GPU IP 上，仍挖出最高 <strong>14% 的 PPA（功耗、性能、面积）综合提升</strong>，并把原本约一年的设计优化压缩到 <strong>不到 5 个月</strong>。AMD 已把部分改动送进近期流片的设计，其余存入产品库供后续版本使用。</p>
+      <ul>
+        <li><strong>自研芯片上先验证过一遍。</strong>从 2025 年初起，GPT-4o 就参与自研推理芯片 Jalapeno 的设计：一款乘法器重写后标准单元面积缩减约 <strong>15%</strong>、延迟从两个时钟周期压到一个；另一款加法器面积同样减约 15% 且延迟不变。整体向量单元标准单元面积最多减少 <strong>13%</strong>、矩阵单元约 <strong>10%</strong>，均已在硅片调试阶段确认。</li>
+        <li><strong>评测给了 9,881 次计分，还埋了一个诚实的坑。</strong>团队用 PicoRV32、Ibex 两款开源 32 位 RISC-V 核做两类任务（优化现有设计、按规格从零设计），约 11.2 万 token 预算下 GPT-6.2 Astra 平均分最高，优化 PicoRV32 时约为 GPT-6 Astra 的两倍。反直觉的是五款模型「从零设计」得分普遍高于「优化现有」——报告自己点破：模型会顺手砍掉性能计数器等对测试负载无益的功能来冲分。</li>
+        <li><strong>下一站是把 EDA 工具也交给模型。</strong>OpenAI 宣布与新思科技（Synopsys）合作训练专用模型，目标是让模型熟练使用工程师手里的商用 EDA 设计验证工具，覆盖从设计到验证的完整流程。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是 AI Coding 的边界第一次越过软件/硬件那条线。此前模型改的是 Python、Rust、汇编（11-03 ③ 改神经网络权重、11-17 ② 微软用 agent 扫内核漏洞都还在比特世界），这次改的是流片后无法回滚的物理电路。能改写承载自己的硅，是「AI 自我改进」在基础设施层的一次实证。</p>
+      <p>第二，真正值钱的不是 14% 这个数，而是「在高基线上仍有增益」。AMD 工程师已优化多年，模型还能在局部模块的 PPA 上再挤出一截，这与 11-19 ② OpenAI 买下 Python 工具链公司 Astral 是同一个方向的两种拿法：一个买下地基，一个直接改地基。</p>
+      <p>第三，报告把评测的软肋自己写出来了——从零设计得分更高，靠的是删功能。这让「模型达到资深微架构师水准」的说法需要打折看，但也说明这条赛道的瓶颈已不是模型能不能写 RTL，而是有没有一套不许抄近路的验证闭环。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>14% 是 AMD 旗舰 GPU 关键 IP 模块的局部最高 PPA 改善，不是整颗 GPU 性能提升 14%；下一代 CPU 只有个位数百分比增益。全部结果来自 OpenAI 与 AMD 的联合披露，尚无独立第三方复现，且 RISC-V 评测的默认设定允许删减功能、未强制做物理综合后的时序检查。5 个月 vs 一年是工作量换算，不是同一团队的可控对照。用「已流片」「已纳入设计文件」来推断最终量产良率和收益，中间还隔着制造验证。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>做芯片或 EDA 的团队，现在就该把「模型生成 RTL + 形式化验证」当成一条正式候选流程来评估，而不是玩具 demo——重点投在验证环节（新思这条线），因为那才是决定敢不敢用的闸门。做 AI Coding 的团队，把这条当成能力外溢的路标：当软件侧优化空间被吃紧，下一个增量战场在编译链、指令集和电路描述层。引用 14% 时务必连「关键 IP 局部最高」一起说，别写成整芯片提速。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>编程 agent 从对话框走进你的桌面：谷歌给 macOS 版 Gemini 上线「电脑操控」，跨应用、读本地文件、填表单，在独立后台窗口里干活，关键动作要你点头</h2>
+      <span class="tag t-code">AI Coding · Computer Use 落地</span>
+    </div>
+    <div class="src">The Verge · 凤凰网科技 · 星岛环球网 · Unite.AI（11 月 19 日谷歌宣布）；功能面向美国英语用户逐步开放，硬件与订阅门槛见正文</div>
+    <div class="body">
+      <p>11 月 19 日，谷歌为 macOS 版 Gemini 应用推出 <strong>Computer Use（电脑操控）</strong>：用自然语言描述任务后，Gemini 自行在多个桌面应用间切换，执行点击、输入、填表单、操作菜单，把本地文件、桌面应用和网页串进同一条任务链。官方举例包括批量处理照片、从本地 PDF 提取信息填在线表单、汇总各区域仪表盘做演示文稿、整理商品信息上架二手平台。</p>
+      <ul>
+        <li><strong>关键设计是「不打扰」加「可随时叫停」。</strong>任务在独立的后台窗口执行，不占用主屏幕和鼠标光标；聊天界面内给实时操作预览，用户可随时查看、暂停或停止；关键操作前 Gemini 会请求批准。用户自己挑选允许访问的应用，而不是一次性开放整机权限。</li>
+        <li><strong>权限被刻意收窄，备份窗口只有 24 小时。</strong>Gemini 只能看到被主动加进「已连接文件夹」的目录，对文件做的改动默认留临时备份，但新任务一开始或满 24 小时即删除。谷歌明确提示它可能误删文件或把内容分享给第三方。 Google AI Plus、Pro、Ultra 订阅、18 岁以上个人账号、Apple Silicon 芯片、macOS Sequoia 15.0 以上，门槛一样不少。</li>
+        <li><strong>撞上苹果同周收紧权限。</strong>苹果 11 月 16 日的开发者公告显示，macOS 27.3 测试版把设备控制、数据访问、完全磁盘访问权限拆细，可指定应用能控制哪些程序、访问哪些文件夹，并在菜单栏给出「某应用正在控制另一应用」的提示。The Verge 将这次收紧直接与 AI agent 的安全风险挂钩。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是「电脑操控」从实验室能力变成消费级订阅功能的分水岭。09-28 速览④ 记过一批方案「都指向用你的真实凭证」，那时还是要自己搭的 agent；今天它进了 Gemini 的 Mac 客户端，4.99 美元/月起。编程 agent 的战场从 IDE 里的补全，扩展到「替你操作整台电脑完成工作流」。</p>
+      <p>第二，产品形态值得抄：后台窗口 + 实时预览 + 关键操作确认 + 按应用授权。这不是安全洁癖，而是 agent 能不能被日常信任的前提——与 11-18 主线「验收权归谁」一脉相承，只是这次验收权落回到每一次具体的点击上。</p>
+      <p>第三，最容易被忽略的是苹果和谷歌的时间差。权限收紧的公告早于功能发布三天，但明显是同一股力量：当 agent 开始动真电脑，操作系统这一层必然要从「默认放行」改成「逐次授权」。谁掌握这层开关，谁就掌握 agent 的落地节奏。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>功能目前只面向美国地区英语用户逐步开放，欧洲经济区、英国、瑞士、尼日利亚暂不可用，国内团队短期内无法直接体验。所有「不打扰、可叫停、按应用授权」的描述均来自谷歌官方，尚无第三方对失败率、误删率的实测。24 小时备份窗口是硬约束：跨天的长任务一旦出错，回滚余地有限。把它当成「能跑通流程」而非「能无人值守」——09-28 主榜② 那组数据（1,228 次人工干预里仅 9% 是真决策）说明收尾环节仍高度依赖人。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>想评估桌面 agent 的团队，先用自己的一套高频工作流（如「从 PDF 提字段填表单」）跑一遍，重点记录两次数据：关键操作确认弹了几次、任务做错后备份还在不在。把「按应用授权 + 24 小时备份」写进内部使用的安全基线，别图省事一次开全盘。做企业软件的，注意苹果 macOS 27.3 的权限细分会改变你现有应用的授权路径，提前适配菜单栏提示，免得被用户当成异常行为。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>判卷方式换人：Ramp 用 500 个真实上线任务做新基准，让大模型裁判读代码差异而不是跑测试，两个裁判「吵完」一致率从 54.2% 升到 93.6%，四款模型挤在几分之内</h2>
+      <span class="tag t-code">AI Coding · 评测口径</span>
+    </div>
+    <div class="src">Ramp Labs 官方（11 月 18 日发布）· Ramp 工程博客 · sulat 报道交叉整理；榜单为 Ramp 自建基准与自报成绩</div>
+    <div class="body">
+      <p>11 月 18 日，支付公司 Ramp 的研究部门发布 <strong>SWE-Bench v2</strong>：从 200 多名工程师真实提交并上线的改动里取出 <strong>500 个任务</strong>（v1 只有 80 个，六倍规模），每家实验室用自己的 agent harness 跑模型，每题只给一次高算力尝试。最受关注的改动是判卷方式——不再跑测试，而是让大模型裁判读任务描述、仓库上下文、工程师的黄金补丁和候选补丁，判断两者是不是在做同一件事。</p>
+      <ul>
+        <li><strong>换裁判的理由很实在。</strong>v1 用随补丁合并的测试判分，常把正确但写法不同的答案判错；把这类题剔掉后，剩下的测试又漏掉真实需求。v2 让裁判先看差异、再逐条判断差异是否影响任务，在 72 道旧题上用 7 个裁判模型交叉验证，多数投票与测试判分相关性达 <strong>0.85</strong>，且七个裁判都比测试更严。</li>
+        <li><strong>一致率是靠「商议」救回来的。</strong>裁判之间起初分歧极大——一个放行近 60%，另一些只有约 25%，两两一致率仅 <strong>54.2%</strong>。改成「先列差异、再判影响」的两段式流程并让两个裁判商议后，一致率升到 <strong>76.4% → 93.6%</strong>；再请原 PR 的工程师复核，任务级判断近 <strong>90%</strong> 一致。</li>
+        <li><strong>榜单挤成一团，成本拉得很开。</strong>谷歌 Gemini 4 Carbon 在 OpenCode 里解出 <strong>75.4%</strong>、每题 4.25 美元；Claude Fable 5.2 在 Claude Code 里 <strong>73.4%</strong>、3.79 美元；Opus 5.5 为 67.8%／1.53 美元，Sonnet 5.5 为 63.2%／0.47 美元，DeepSeek V4.1 Flash 为 60.8%／0.22 美元。Ramp 称原生 harness 通常同时抬高解题率和成本。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这是「基准饱和」之后的一种正面回应。11-16 ② 记录过 173 个基准里 109 个已饱和、尺子分不出高低；Ramp 的解法不是继续堆题，而是换判卷口径，把「和工程师意图是否一致」当成打分对象。11-15 ③ 的 Surge 实测发现功能正确率约 80% 但工程判断维度掉到三四成，那次靠加评审 agent，这次靠换裁判。</p>
+      <p>第二，93.6% 这个数本身比榜单名次更有价值：它说明「让模型判模型」不是拍脑袋，而是可以通过任务拆解和商议流程把一致性做上去的。这给所有在做 agent 自动验收的团队提供了一条可复制的方法——把模糊的整体判断拆成可核对的差异清单。</p>
+      <p>第三，前四名挤在几分之内、成本却差一个数量级，把选型问题从「谁最强」彻底改成「哪个性价比点位适合我的负载」。这与 11-17 两家旗舰把价目表单位换成「一个任务」、11-19 ① 按单任务成本比较，是同一条线的最新证据。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>基准、裁判、黄金补丁、harness 全部出自 Ramp 一家，裁判模型与公司自有模型是否存在同源偏好虽被专门查过（未发现同源加分），仍缺独立复现。LLM 裁判判的是「和黄金补丁是否等价」，不是「代码质量」或「可维护性」，93.6% 是两个裁判彼此的一致率、不是对人类判断的准确率（后者是近 90%）。每题只给一次尝试、且为 high effort，与真实开发中反复交互的情形不同。Ramp 是支付公司而非评测机构，样本集中于自家工程场景，泛化到别的仓库需自行验证。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>想给自己的 coding agent 做验收的，直接照搬「先列差异、再判影响、两个裁判商议」的三步流程，比单一模型一次性打分稳得多；把工程师复核的一致率当门槛指标，而不是只看裁判之间的一致率。做选型的，别盯着 75.4% 与 73.4% 这两分，重点看 Fable 5.2 与 Opus 5.5 之间那三个百分点和两倍多的单价差——那才是能落进预算表的差别。评估自家基准时，先检查测试是不是在「认写法而非认结果」。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>把编程 agent 那套「外面加一层」搬进机器人：清华团队开源 Harness VLA，底层模型一个权重不动，靠一个规划层把 LIBERO-Pro 扰动成功率从 50% 拉到 82.4%</h2>
+      <span class="tag t-emb">具身智能 · harness 上机</span>
+    </div>
+    <div class="src">清华大学于超团队 × 正行创新 × 无问芯穹（11 月 19 日发布并开源）· arXiv:2607.08448 · 项目页 harnessvla.github.io · GitHub RLinf/RPent；数字来自论文与项目方</div>
+    <div class="body">
+      <p>11 月 19 日，清华大学于超教授团队联合正行创新、无问芯穹发布并开源 <strong>Harness VLA</strong>，第一次把数字智能里已被验证的 <strong>Harness Layer</strong> 引入具身智能：底层 VLA 模型全程冻结、权重不变，由一个 Agentic Planner 统一组织「什么时候调模型、调哪一段、失败了怎么办」。这是 RPent 开源生态的首个核心项目；团队此前的 RLinf 是面向具身强化学习的开源训练底座。</p>
+      <ul>
+        <li><strong>问题定位得很准：「动作没错，但服务对象错了」。</strong>在标准 LIBERO 的 130 个任务上训练的模型成功率高达 96%，换到有目标重绑定、位置交换扰动的 LIBERO-Pro 就掉到 50%。机器人抓取动作依然流畅，但目标认错、空间关系判断错、任务阶段判断错，整条任务判失败。Harness VLA 提升的不是单次动作能力，而是把已有能力用在正确的目标和状态上。</li>
+        <li><strong>三套评测都拿到第一。</strong>LIBERO-Pro 上用 RLinf 开源的 pi0.5 底座，成功率从 <strong>50.0% 提到 82.4%</strong>，显著超过 Code as Policy 方案 Cap-X 的 18.2% 和 Berkeley RATS 的 43.8%；家庭厨房长程任务 RoboCasa365 上把三项基线 60%／21.3%／5% 提到 <strong>91.6%／56.3%／15%</strong>；双臂跨场景迁移 RoboTwin C2R 达 <strong>58.4%</strong>，优于 pi0.5 的 47.9%、GR00T-N1.7 的 20.7%。零样本设定下同样优于 Cap-X，说明优势不完全靠检索记忆。</li>
+        <li><strong>规划器直接借用了编程 agent。</strong>论文分别用 Codex 和 Claude Code 作为规划器实例（记作 Harness VLA (Codex) 与 (CC)），同一套 Harness 换规划器即可跑；整个系统靠探索阶段沉淀的 Task-Specific Memory 与跨任务复用的 Global Memory 决策，部署阶段不新增原语。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它把「模型冻结、能力靠外层」这条已经在编程域跑通的路线，第一次系统性地做进了机器人。11-19 ① 同一个 Gemini 模型换 harness 从 12.8% 到 39.0%，11-16 ③ 21 套 harness 差 11.3 分，讲的都是数字智能里外壳的价值；11-07 ④ 曾在具身域量出 0.83% 到 25.00% 的 30 倍，但那次换的是外层 scaffold。这次更进一步：明确冻结模型，把「组织调用」本身做成可复用基础设施。</p>
+      <p>第二，82.4% 与 Cap-X 18.2% 的差距，指向一个被低估的事实——端到端 VLA 的瓶颈可能不在模型不够大，而在没人替它决定「此刻该不该由它出手」。把非接触的移动、运输、释放交给解析式原语，让 VLA 只做最擅长的接触密集段，等于给昂贵模型做了分层调度，这与编程域里「让便宜模型先侦察、贵模型只干难活」的路由思路同构。</p>
+      <p>第三，用 Codex 和 Claude Code 当规划器这件事本身是信号：编程 agent 积累的规划、工具调用、失败恢复经验，正在被直接搬到物理世界当「大脑外壳」。数字智能与具身智能的工程方法开始收敛到同一套 harness 语言上。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>论文编号为 2607.08448，说明预印本早在 7 月已挂出，本次是 11 月 19 日的正式发布与开源推广，不是当日首次公开。全部成绩来自论文与项目方，尚无第三方在真机上的独立复现；评测以仿真基准为主（LIBERO-Pro、RoboCasa365、RoboTwin C2R），RoboCasa365 的长程任务虽然更接近真实厨房，仍是仿真。82.4% 对应的是少样本设定（每个任务先在 Seed 0 探索出一条成功轨迹），零样本下 LIBERO-Pro 位置交换只有 31.0%，与 few-shot 差距很大——「靠记忆」的成分不轻。项目方未给出置信区间和统计检验细节。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>机器人团队若手上有冻结的 VLA 模型却卡在泛化，优先试「加一层规划器 + 解析式原语分工」，而不是急着重训更大的模型——这条路径不碰权重、改动可控。评估时务必区分 few-shot 与 zero-shot 两个口径，拿 82.4% 去做无人化预算会严重高估。做 agent 基础设施的，可以关注 RPent 这个仓：它把模型、机器人、技能、记忆、环境统一成「服务化、标准化、组合化」的底座，是与编程域 MCP/ Skills 同源的思路在物理侧的落地。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>具身行业开始交出货账本：灵巧手全行业出货量一年从约 2 万台冲到预计 6 到 7 万台，101 家产业链公司前三季营收 3531 亿元、77 家盈利，叙事从「跑得快跳得高」转向「能不能稳定交付」</h2>
+      <span class="tag t-emb">具身智能 · 量产与供应链</span>
+    </div>
+    <div class="src">中国证券报 11 月 19 日深度调查 · 新浪财经转载 · 证券时报（摩根士丹利预测）；出货与营收为高工统计、企业投资者关系记录与券商预测口径</div>
+    <div class="body">
+      <p>11 月 19 日，中国证券报发布具身智能「量产拐点」专题调查，第一次把一组可核查的供给侧数字摆上台面：<strong>灵巧手全行业出货量从去年约 2 万台，预计增至今年 6 到 7 万台</strong>，一年翻约三倍；仙工智能上半年控制器出货超 <strong>8000 台</strong>，均胜机器人控制器累计交付突破 2000 套；101 家产业链上市公司前三季度累计营收 <strong>3531 亿元</strong>、其中 77 家盈利。</p>
+      <ul>
+        <li><strong>整机和零部件两条曲线同时抬升。</strong>优必选柳州万台级工厂投产、智元累计下线 2 万台、宇树募资建设年产 7.5 万人形加 11.5 万四足的产能基地。零部件放量更陡——灵巧手从稀缺件变成标品，瓶颈随之后移到「作业关」：真实场景里的可用性仍是最后一道坎。</li>
+        <li><strong>券商把预测也往上调。</strong>证券时报梳理，摩根士丹利把中国 2026 年人形机器人出货预测从 2.8 万台上调到约 <strong>5 万台</strong>，高盛给出 5 万台以上判断；Wind 物理 AI 指数近一个月逆势上行 25.73%。机构分歧不在方向而在节奏，并提示技术路线未收敛、需警惕纯题材炒作。</li>
+        <li><strong>同日的行业表态也在降温。</strong>APEC 工商领导人峰会上，雷军称「AI 投入非常大但落地场景有限」、判断具身想象力超过汽车；李彦宏把「找不到合适应用」称为泡沫风险；王兴兴说物理 AI 的「ChatGPT 时刻」最快 2027 年到来，当前最大挑战是泛化能力。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这补上了具身叙事里最缺的一环——不是发布、不是演示，而是出货和营收。10-26 速览② 记过工信部「上半年产量超 4 万台、全年破 10 万台」的官方口径，11-12 主榜⑤ 记过北京「无故障 2000 小时、设计寿命 5 年」的硬指标；这次给的是零部件出货与上市公司财报，是可被第三方核对的经营数据，口径比发布会数字扎实。</p>
+      <p>第二，「灵巧手翻三倍」这个单点比整机产量更值得造价与供应链侧关注。价格的下降往往先从标准化零部件发生，上游放量意味着整机 BOM 成本曲线正在下移——这比任何单机演示更能判断行业离量产还有多远。11-13 ⑤ 昆腾近 5000 台批量订单、11-19 ④ 数据流水线，和今天这条拼起来，是「数据、单机、供应链」三层同时进入交付期。</p>
+      <p>第三，机构上调预测与企业家集体泼冷水出现在同一天，本身就是信息：钱和产能认的是趋势，落地的人盯的是泛化。两方都不假——出货账本能证明产业在动，但「换场景要重训」（11-18 ④ 王兴兴）才是能不能持续放量真正的门槛。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>「6 到 7 万台」是全年预计值而非已实现出货，去年 2 万台基线来自高工统计，与整机产量口径不可直接相加或相减。3531 亿元是 101 家上市公司营收总和，包含大量传统零部件业务，不能读成「具身智能收入」。摩根士丹利 5 万台是机构预测、不是已发生的交付，且已明确提示题材炒作风险。APEC 上的表态是观点而非新事实，「泡沫」与「超过汽车」都是判断，不构成对产业规模的计量。此前 09-14、09-20 等期多次出现过灵巧手相关数据，本期取的是「出货翻三倍 + 财报口径」这个新切面，不是同一数字重发。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>做具身选型或投资的，把「零部件出货量 + 上市公司盈利家数」纳入季度跟踪表，它们比发布会更能反映行业是否真在放量，且可按季核对。造价侧重点盯灵巧手价格曲线，它是 BOM 下降最快的环节，成本模型应随季度更新。读机构预测时把「方向」和「节奏」分开：5 万台量级可作规划参考，但落地节奏要回到「换场景是否要重训」这个真指标上，别拿预测数当订单。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>阿里一晚交三份作业：AI 云单季 609.73 亿元增速 64% 创六年新高，Qwen4-Max 落地，下一代 Qwen 已在平头哥自研芯片上训练</h3>
+      <p>11 月 19 日晚阿里发布 2027 财年二季度业绩：AI 云与算力收入 609.73 亿元、同比增 53%，外部客户收入增 64%，AI 产品收入连续第 13 个季度三位数增长。CEO 吴泳铭称真武 V900 明年一季度量产、单集群可扩至 50 万卡，下一代 Qwen 正在自研芯片上训练。模型、云、芯片被塞进同一晚，是 11-17 ①「单任务成本」之外把垂直整合摊开的又一层。</p>
+    </div>
+    <div class="m code">
+      <h3>扩散语言模型逐鹿编程 agent：Clover-35B 发布技术报告，SWE-bench Verified 73.6、七项 agent 指标居首，速度称快 5 到 10 倍</h3>
+      <p>11 月 19 日扩散智能（DiffuSpace）发布 Clover-35B-A3B-Preview 技术报告（arXiv:2611.24636）并开放 SFT 代码：350 亿总参、约 30 亿激活，采用分块扩散并行生成、块内双向交互。报告所列对比模型里七项 agent 指标均最高，SWE-bench Verified 73.6、Terminal-Bench 2.1 为 51.7。10-29 速览④ 已记过其开源预览，这次是首份完整技术报告；「从生成提速到整任务提效」团队自己仍在验证。</p>
+    </div>
+    <div class="m emb">
+      <h3>黑芝麻智能在深圳成立具身智能总部，已锁人形、四足、轮式多品类量产订单</h3>
+      <p>11 月 19 日，黑芝麻智能在深圳前海成立具身智能总部，聚焦具身计算平台；已与美的、遨博、中远海运、均胜电子达成合作，量产订单覆盖轮式、人形、四足机器狗、工业机械臂与割草机等品类。与主榜⑤ 的零部件放量同向——芯片与计算平台厂商正把车规级供应链能力平移到机器人，订单品类比单台演示更能说明渗透广度。</p>
+    </div>
+    <div class="m code">
+      <h3>华尔街承诺给英伟达的 5000 亿美元融资，一年过去一分未投；H200 对华出口确认停止</h3>
+      <p>据华尔街日报 11 月 19 日报道，英伟达今年 8 月联合 Apollo、黑石、贝莱德等机构宣布动员 5000 亿美元为客户融资，至今未实际投放：备忘录仅数页、不具约束力，卡点在风险分担——英伟达愿担上限约项目成本 25%，华尔街要更高。同日临时 CEO 确认停止对华出口 H200、四季度相关收入指引归零。与主榜⑤ 的产业放量形成对照：应用侧的真实消耗，才是算力叙事能否兑现的最终 check。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>① 改地基</td>
+      <td>11-19 ② AI 实验室第一次买下编程语言的地基：OpenAI 收走 Python 工具链公司 Astral</td>
+      <td>同一方向两种拿法：那边<strong>买下地基</strong>，这次<strong>直接改地基</strong></td>
+    </tr>
+    <tr>
+      <td>① 模型动真东西</td>
+      <td>11-03 ③ 模型开始直接改另一个模型的权重：MIT CSAIL 让 LLM 读懂并修改神经网络参数</td>
+      <td>同题不同层：那次改的是<strong>比特世界的权重</strong>，这次下沉到<strong>物理电路</strong></td>
+    </tr>
+    <tr>
+      <td>① Verification 瓶颈</td>
+      <td>11-17 ② 两周扫出 26502 条内核疑点，变成 59 份公开报告只剩 9.5%</td>
+      <td>同一个瓶颈两面：那边<strong>发现便宜验证稀缺</strong>，这边的评测自曝<strong>可抄近路</strong></td>
+    </tr>
+    <tr>
+      <td>② 电脑操控</td>
+      <td>09-28 速览④ 无人值守浏览器这条线今天同时出现三个方案，都指向「用你的真实凭证」</td>
+      <td>从方案到产品：那时<strong>要自己搭</strong>，现在<strong>进消费级订阅</strong></td>
+    </tr>
+    <tr>
+      <td>② 人在收尾</td>
+      <td>09-28 ② 1,228 次人工干预，只有 9% 是真决策：59% 的任务是 agent 说「做完了」之后人手工收的尾</td>
+      <td>同一现实的两面：那次量出<strong>人躲不掉</strong>，这次把<strong>确认做成产品按钮</strong></td>
+    </tr>
+    <tr>
+      <td>③ 基准饱和后的解</td>
+      <td>11-16 ② 173 个被实验室写进发布稿的基准里，109 个已经饱和：以 85% 为线</td>
+      <td>问题与解法：那次指出<strong>尺子失效</strong>，这次<strong>换判卷口径</strong></td>
+    </tr>
+    <tr>
+      <td>③ 评审换层</td>
+      <td>11-15 ③ 同样 60 道 staff 级任务：加 37 个技能、派 17 个评审 agent、花 8 倍钱</td>
+      <td>同题不同解：那次靠<strong>堆评审 agent</strong>，这次靠<strong>换裁判机制</strong></td>
+    </tr>
+    <tr>
+      <td>③ 评测权</td>
+      <td>11-18 ② GitHub 把评测权交回给配工具的人：改一次技能、换一次模型就重跑同一套题</td>
+      <td>同主线不同落点：那边把尺子交给<strong>配工具的人</strong>，这次交给<strong>大模型裁判</strong></td>
+    </tr>
+    <tr>
+      <td>④ 具身域换壳</td>
+      <td>11-07 ④ 同一个模型换个 harness，成功率从 0.83% 涨到 25.00%：外层第一次在具身域被量出 30 倍</td>
+      <td>同题递进：那次换<strong>外层 scaffold</strong>，这次把<strong>模型整个冻结</strong></td>
+    </tr>
+    <tr>
+      <td>④ 数字域换壳</td>
+      <td>11-19 ① 同一个模型换个外壳，编程 Agent 榜从一分到第一：谷歌 Neon 在自家环境里把成绩从 12.8% 抬到 39.0%</td>
+      <td>跨域同构：那边在<strong>数字世界</strong>换壳，这次把同一套搬到<strong>机器人</strong></td>
+    </tr>
+    <tr>
+      <td>④ harness 定价</td>
+      <td>11-16 ③ 21 套 harness、5 个开源模型、26,040 次执行跑满四天：通过率最高与最低差 11.3 分</td>
+      <td>从量化到建制：那次把 harness<strong>量出价差</strong>，这次把它做成<strong>开源基础设施</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 产量口径</td>
+      <td>10-26 速览② 量产拐点拿到两个口径的确认：工信部称上半年国内人形产量超 4 万台，全年预计破 10 万台</td>
+      <td>口径不同可互补：那边是<strong>整机产量预测</strong>，这次是<strong>零部件出货与财报</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 用得住</td>
+      <td>11-12 ⑤ 北京把「用得住」写成了硬指标：平均无故障 2000 小时、设计寿命 5 年</td>
+      <td>同主线两端：那边立<strong>可靠性标准</strong>，这次交<strong>出货与盈利账本</strong></td>
+    </tr>
+    <tr>
+      <td>⑤ 交付期</td>
+      <td>11-13 ⑤ 双十一的仓库里，双臂机器人做到每小时 1200 件、成功率 99%，公司拿到近 5000 台批量订单</td>
+      <td>同向不同层：那次是<strong>单机工位验收</strong>，这次是<strong>行业供应链放量</strong></td>
+    </tr>
+    <tr>
+      <td>速览① 垂直整合</td>
+      <td>11-17 ① 同一天两家旗舰把价目表的单位从 token 换成「一个任务」</td>
+      <td>同主线不同动作：那次换<strong>计价单位</strong>，这次把<strong>模型云芯片一起交</strong></td>
+    </tr>
+    <tr>
+      <td>速览② 同一模型线</td>
+      <td>10-29 速览④ 扩散智能开源 Clover-35B-A3B-Preview 主打 5–10 倍生成速度</td>
+      <td>同一产品的两阶段：那次是<strong>开源预览</strong>，这次补上<strong>完整技术报告</strong></td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-20 · 北京时间 10:12</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-19.html">← 2026-11-19</a></div>
+</body>
+</html>

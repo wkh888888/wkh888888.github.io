@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-17 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 17 日（周二）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：验收开始按任务计价</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 价目表换单位</a>
+      <a href="#n2">② 挖洞与修复</a>
+      <a href="#n3">③ 交接做成产品</a>
+      <a href="#n4">④ 训练链开源</a>
+      <a href="#n5">⑤ 统一底座开赛</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>同一天两家旗舰把价目表的单位从 token 换成「一个任务」：Qwen4-Max 单任务费用降 58%、旗舰首次闭源，腾讯 Hy4 flash 报出单任务 0.26 元 —— 过去一年比的是每百万 token 多少钱，今天比的是我的负载跑一次多少钱</h2>
+      <span class="tag t-code">AI Coding · 计价单位</span>
+    </div>
+    <div class="src">阿里通义千问与腾讯混元官方发布（11 月 16 日）· 新京报贝壳财经 · 澎湃新闻 · IT Home · IT 之家 · 中新经纬 · 破界 AI 灯塔交叉整理；跑分、降幅与盲测均为厂商自建口径，无第三方复现</div>
+    <div class="body">
+      <p>11 月 16 日，阿里把 11 月 11 日限时预览的 <strong>Qwen4-Max</strong> 转为正式版，腾讯同日发布 <strong>Hy4 flash</strong>。两家把同一句话写在了发布稿第一行：完成一个任务花多少钱。</p>
+      <ul>
+        <li><strong>阿里这次把架构和价目表一起换了。</strong>Qwen4-Max 采用 QSA 稀疏注意力的新 MoE 架构，总参数 <strong>2.4 万亿</strong>、每 token 激活 710 亿（较上代少 25%），原生视觉、100 万上下文，兼容 OpenAI 与 Anthropic 两种 API 格式。Terminal-Bench 4.0 的高思考档从 38.9 升到 48.5，每题平均 token 用量从 28.9 万降到 15.1 万；自建的 Work360 覆盖 721 个细分领域，综合分 47.74 升到 52.69，<strong>单任务平均费用从 26.58 元降到 11.16 元</strong>，缓存命中价每百万 token 从 1.5 元降到 0.5 元。</li>
+        <li><strong>腾讯干脆自建了一把尺。</strong>Hy4 flash 总参数 2240 亿（含 640 亿 Engram 参数）、每 token 激活约 120 亿，混合注意力与 LatentMoE 把 KV cache 压到 Hy4 的六分之一，解码超每秒 150 token。官方没有拿公开榜单当主证据，而是自建八类办公任务评测集，看幻灯片、文档、表格修复的产物质量与端到端用时：单任务约 <strong>0.26 元</strong>，自称是 Hy4 的二十分之一、DeepSeek-V4.1-Flash 的八分之一；85 位内部用户在 27 类共 259 个任务上的盲测满意度接近 Claude Haiku 5.5。</li>
+        <li><strong>最反常的一处在许可。</strong>Qwen4-Max 不开放权重，只承诺 Qwen4 系列中小尺寸模型「陆续开源」。Qwen 是全球下载量最大的开源权重家族，这是旗舰第一次闭源。</li>
+        <li><strong>厂商还给了两个长任务案例。</strong>汽车制造单个工件的加工编程人工投入从约 475 分钟降到 24 分钟；另一次连续 48 小时从 270 万候选分子里筛选并合成新型冷却液。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，被换掉的是计价单位。token 是成本单位，不是价值单位 —— 同样一百万 token，跑几轮、读多少上下文、缓存能不能复用，产出能差好几倍。两家不约而同把「完成一个任务花多少钱」推到第一行，等于承认模型选型的第一问已经从「分数多少」变成「我的负载跑一次多少钱」。</p>
+      <p>第二，闭源这个动作改变了生态位。11-12 本栏写 Qwen4-Max 两周试用时，官方没给跑分、没给参数量、也没说是否开源；四天后全套数据出来了，代价是旗舰收回云上，只留中小尺寸做开源铺路。用大模型赚 API 的钱、用小模型占开发者的桌面，这是一条清晰的新路线。</p>
+      <p>第三，腾讯那把自建的尺更值得看。它考的不是分数而是产物能不能交付、用时能不能接受 —— 这正好对上 11-13 那期 404 名工程师的实测：token 花费翻倍、提交量只多约一成。当成本单位从 token 换成工单，验收方也从刷榜的人换成了采购的人。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>Work360 与腾讯的八类办公任务集都不公开，跑分、58% 降幅、259 项盲测全是厂商自报，无第三方复现；两家的「任务」分母不同（721 个专业领域对 259 个办公任务），不能直接横比。发布稿没写的三件事更关键：延迟、高并发下的错误率与超时率、换模型要重调提示词与重建评测集的迁移成本 —— 这些通常比省下的 API 费更大，而且发生在自己这边。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把厂商的单任务成本当相对信号，不当自己的预算。真要选型，拿自己最高频的三类工单各跑二十次，量端到端用时、返工率和实际账单，再算迁移成本。若已被 Qwen4-Max 的试用版锁进流程，11 月 25 日下线前要确认正式版的 API 格式与计费口径有没有变。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>两周扫出 26502 条内核疑点，变成 59 份公开报告只剩 9.5%，再把其中 33 个修完花了四个多人月 —— 微软复盘 MDASH：挖洞已经白菜价，验和修还是手工价</h2>
+      <span class="tag t-code">AI Coding · 验证瓶颈</span>
+    </div>
+    <div class="src">微软 FORGE Lab 的 MDASH 智能体系统复盘（11 月中旬持续发酵）· 量子位与技术媒体解读 · Arm 与 Linux 内核维护者公开讨论交叉核实；报告为微软自述，漏斗各层数字来自其官方复盘</div>
+    <div class="body">
+      <p>一名全职研究员加一名实习生、两台服务器、两周时间扫 Linux 内核的网络、文件系统与安全模块，微软 FORGE Lab 的 <strong>MDASH</strong> 智能体系统产出 <strong>26,502 条</strong>原始发现。后面那条漏斗才是重点。</p>
+      <ul>
+        <li><strong>每一层都在大幅缩水。</strong>置信度筛到 11,769 条候选，复现智能体在 QEMU 里逐条触发，只有 <strong>621 条</strong>拿到证据，专家逐条审查后 <strong>59 份</strong>成为公开上游报告（约 9.5%）；最终产出 33 个 CVE（24 个高危以上），38 份修复已合入主线。</li>
+        <li><strong>人力全花在扫描之后。</strong>把原始输出变成报告和补丁花了<strong>四个多人月</strong>，扫描那两周反而是最省人的一段。模型分工有细节：扫描阶段 Sonnet 4.6 承担 71.1% 的代码阅读量，复现阶段 GPT-5.5 承担 77.3%。</li>
+        <li><strong>漏洞的年纪比数量更扎心。</strong>平均潜伏 <strong>8.1 年</strong>，最老的 cls_u32 移位越界至少存在 21 年。典型案例 CVE-2026-64563 只是 2018 年一次改动漏了一行指针重置，藏了八年，修复只需加一行赋值。</li>
+        <li><strong>生态已经开始反击。</strong>Arm 资深维护者 Lorenzo Stoakes 宣布退出一般性代码评审，称低质量 AI 提交占他看到的一半以上；稳定版维护者 Greg Kroah-Hartman 说维护者已被 LLM 生成的补丁耗竭。Linus Torvalds 给了有限的乐观：Linux 7.4-rc2 的修复大量来自 AI，BPF 子系统的修复速度已超过新增报告。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，最值钱的不是 33 个 CVE，是那条从 26,502 到 59 的漏斗：模型给出的大批量疑似缺陷里，九成以上是噪声或重复，真正的瓶颈从「找」挪到了「验」和「修」。这与 11-12 那期 VulnCheck 复核玻璃翼计划的结论一致 —— 那次是 37,966 条候选漏洞只有 217 条标记修复，这次给出了更完整的中间层。</p>
+      <p>第二，它把「验收欠账」算成了人月。上一期本栏写 Remote Labor Index 时，裁判是三名真人逐项比对交付物；这次换到安全域，裁判还是人，而且 26,502 条里只有极少数值得人看。生成与校验如果共用同一个模型配置，错了就会一起错 —— 这份复盘用两套模型分工给出了一个可照抄的做法。</p>
+      <p>第三，发现的经济学已经被倒转。微软那句提醒值得写在墙上：投更多 token 大概能翻出更多缺陷，但不会自动让系统更安全。上游维护者退出评审，是这件事第一次以人力供给的形式显性化 —— 谁来付验证和修复这笔账，所有维护者社区都要回答。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>这是 11 月中旬持续发酵的复盘，不是 11 月 16 日当天首发，取用的是方法与人月账。漏斗各层、71.1% 与 77.3% 的分工、8.1 年平均潜伏期均为微软自述，未经独立复核；59 份公开上游报告不等于 59 个已确认漏洞。Arm 维护者的「一半以上」是个人体感，不是统计口径。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>流程可以照抄三条：把模型的大批量输出默认当待验清单而不是结论，每层留一道独立复现，生成与校验别用同一个配置；按严重度排处理顺序，别让成堆的真告警把关键几条挤没；把「验证要几个人月」写进采用 AI 扫洞的预算里，而不是只算 token。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>腾讯把 coding agent 的交接流程开源成 SOP 图：写代码的不审自己的代码，每次跑完由 AI 评 0 到 100 分、70 分及格，但每条改进建议都要人点头 —— 写代码从来不是瓶颈，交接才是</h2>
+      <span class="tag t-code">AI Coding · 交付流程</span>
+    </div>
+    <div class="src">腾讯 11 月 16 日全球推广 · LoopForge 官方仓库与源码（MIT 许可）· The Hype · GitTrend 交叉核实；仓库 7 月建立、9 月出本地版、11 月初出自托管版，本条取全球推广节点</div>
+    <div class="body">
+      <p>腾讯 11 月 16 日在全球范围推广 <strong>LoopForge</strong>：一个自托管的平台，把团队交付软件的方式做成智能体逐步执行的 SOP，MIT 许可，支持 10 种编码智能体命令行工具。它的宣传语只有一句：代码从来不是瓶颈，交接才是。</p>
+      <ul>
+        <li><strong>流程图里有五种节点。</strong>Agent 节点把任务派给设计师、写码者或审查者等角色；Script 节点跑构建与测试；Human gate 节点让人批准、补上下文或打回；Sub-SOP 节点在流程里跑另一套流程；Preview 节点在签字前展示结果。内置链路走澄清、设计、实现、审查、测试、验收，任何一环失败就退回上游。</li>
+        <li><strong>写码的从不审自己的。</strong>内置四套 SOP：后端交付、前端交付、产品提案与修缺陷。也可以跳过 SOP 直接和主机器人对话，它开一个带团队仓库的沙箱，结束时给出一个拉取请求。</li>
+        <li><strong>最特别的是跑完之后。</strong>腾讯称之为「工程级 RSI」：评审 AI 读取这次运行的重试、返工、来回打回、失败工具调用、时间、token 与报错，按六个维度打 0 到 100 分，<strong>70 分及格</strong>。最有意思的是权重 —— 交付完整度只占 10%，评审主要看这次跑得顺不顺。</li>
+        <li><strong>「自我改进」被限定得很死。</strong>评审 AI 只能提小改：调某个步骤的重试设置、给某个角色加减一道检查、往提示词里加几句话；明令禁止重写整套 SOP、改流程或删步骤。每条建议都要人选中才会应用，没有一条会自己生效。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它把「谁审谁」写成了硬结构。10-27 那期 Entire 让多个智能体在隔离沙箱里各自给改动打分，取代拉取请求当审批单位；这次更进一步 —— 写码和审查被规定为不同角色，而且失败会退回上游。评审从「一种提示词」变成了「一张图里的一个节点」。</p>
+      <p>第二，「工程级 RSI」这个词大而实际动作很小。它承认了一个边界：让模型改整套流程风险太高，所以只让它调重试次数和检查项，而且每条都要人批。这与 11-15 速览那个全由智能体组成的工程组织截然相反 —— 那边监督 agent 最后把自己也删掉了。</p>
+      <p>第三，交付完整度只占 10% 这个权重安排很诚实。它说明腾讯要量的不是「做没做完」，而是「这次协作顺不顺」：返工多不多、打回几次、工具失败多少。当写码变便宜，团队真正稀缺的是不返工的交接，这条产品线押的正是这个。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>腾讯没有公布任何内部使用数据或基准，11 月 16 日单日新增约 700 星、累计超 2,100 星只是热度不是效果。10 种工具的支持深度不一：CodeBuddy 是默认且唯一能处理澄清问题、机器人回复与运行打分的，Cursor CLI 与 Antigravity 只能聊天接入；模型密钥要团队自带。仓库的安全说明建议先读再用。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>别急着把整套 SOP 搬进来，先拿一条最常返工的流程画成图，只做三件事：把写码和审查拆成两个角色、在签字前加一个人工闸门、每次跑完记下重试与打回次数。这三项跑顺了，再谈自动打分。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>华为云把具身世界模型连同训练链一起开源：6B 到 7B 的模型在两项仿真榜拿到第一，权重、推理与后训练代码全给 —— 国产算力第一次把「顶级世界模型的完整训练链路」摆出来验收</h2>
+      <span class="tag t-emb">具身智能 · 开源底座</span>
+    </div>
+    <div class="src">华为云「行业 AI 梦工厂」线上发布会（11 月 16 日）· 每日经济新闻 · 虎嗅 · 破界 AI 灯塔交叉核实；榜单为仿真基准，市占与生态数据均为公司口径</div>
+    <div class="body">
+      <p>11 月 16 日下午，华为云发布并开源首款昇腾原生具身世界模型 <strong>CloudRobo-WM1.2</strong>。11 月 17 日本栏写的还是发布会预告，明确标注不含发布后数据，本条是结果兑现。</p>
+      <ul>
+        <li><strong>开放深度超出以往。</strong>模型权重、推理代码与后训练代码面向所有开发者公开；CloudRobo 开发平台开放接口、SDK 与插件机制；训练框架工程代码与昇腾算力代码库向核心伙伴定向开放。此前国产世界模型多数连权重都不放。</li>
+        <li><strong>两项榜单都是第一。</strong>在 RoboTwin 2.0 上平均成功率 <strong>88.98%</strong>（第二名 86.47%），LIBERO-Pro 2.0 为 <strong>81.7%</strong>（第二名 75.0%）。模型为 6B 到 7B 参数，预训练数据从早期约 8,000 小时扩到约 <strong>2.75 万小时</strong>，接入 20 个数据源与 33 种机器人本体。</li>
+        <li><strong>五项技术都指向「接得上」。</strong>PPA 多模态世界表征把 RGB 视频、语义、深度与点云纳入同一框架，预判「推一把会往哪动」；世界模型原生 DualAct 双通道动作架构分出高精度动作与低时延指令；多粒度监督让缺深度、缺动作标注的数据也能进池；跨具身运动建模给单臂、双臂与轮式一套动作翻译器；四种推理模式的算力开销从 3.99 到 43.71 TFLOPS，接近十一倍弹性。</li>
+        <li><strong>工程痛点被明说了。</strong>视角变化时模型准确率可能从 62.72% 掉到 7.62%；有效真机数据采集成本每小时 500 到 2,000 元，采一万小时就是 500 万到 2,000 万元。华为云称已有超 16,500 名开发者、230 多家企业与高校接入，国内八成具身企业选择昇腾云；与福龙马合研的清扫机器人已启动预售。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，这次降的是「接了也跑不起来」的试错成本。11-15 速览那期 Runway 开源 Praxis-1，给的是权重、推理与微调代码；这次连训练框架和昇腾算力最佳实践一起给，等于把「顶级世界模型的完整训练链路此前只在别的生态跑通」这件事公开验收了一次。</p>
+      <p>第二，模型能力和算力底座迁移是同步发生的。11-16 本栏写 PEAR 时，那条线是零演示零真机数据的纯仿真强化学习，证明算法可行；这里补的是另一半 —— 把数据和训练链开放出来，让别人的昇腾机器也能复现。两条线都指向同一个方向：具身的后训练正在从手艺变成可复制的工程。</p>
+      <p>第三，两项第一都要打折读。RoboTwin 与 LIBERO-Pro 都是仿真基准，不是真机成功率；八成市占、开发者与伙伴数量都是公司口径。真正可核验的是开放清单：权重给了、推理给了、后训练给了，训练框架给了核心伙伴 —— 这份清单比榜首更值钱。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>两个榜单均为仿真基准，不能当成真机能力；80% 市占、16,500 名开发者均为华为云自述，无第三方审计。训练框架与算力代码只向核心伙伴定向开放，不是所有人都能拿到完整链路。福龙马公告自己提示，无人环卫仍处示范运营与小规模商业化阶段，预售不等于交付。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>先下载权重和推理代码，在自有数据上复现那两个仿真榜的数字，再决定要不要申请训练框架。真要评估落地，重点看两件事：视角变化下的成功率是否也从 62.72% 掉到 7.62%，以及缺标注数据能不能真的进池 —— 这两项比榜首更能预测它在你场景里的表现。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>15 支队伍、48 小时、同一个开源模型同一台机器人：蚂蚁灵波挑战赛冠军 82.5 分，平均年龄 25 岁 —— 统一底座把 VLA 微调变成可横向比较的工程题，难点仍是透明物体和双臂协同</h2>
+      <span class="tag t-emb">具身智能 · 可比评测</span>
+    </div>
+    <div class="src">首届蚂蚁灵波具身大模型挑战赛决赛结果（雷峰网与 AI 科技评论报道）· 量子位产业动态交叉核实；成绩为赛事官方口径，样本为统一硬件与统一底座</div>
+    <div class="body">
+      <p>首届蚂蚁灵波具身大模型挑战赛决赛落下：<strong>15 支队伍</strong>在 48 小时内，基于同一个开源模型 <strong>LingBot-VLA 2.0</strong>、同一款机器人与统一算力，完成蔬果抓取、化妆品收纳和双臂清扫三项真机任务，冠军以 <strong>82.5 分</strong>收官，队伍平均年龄 25 岁，由 00 后带队。</p>
+      <ul>
+        <li><strong>变量被控制住了。</strong>同一底座、同一硬件、同一算力，意味着差异只能来自微调与工程实现，而不是谁换了更大的模型或更好的本体。VLA 微调第一次变成可横向比较的工程问题。</li>
+        <li><strong>难点没有被绕过。</strong>透明物体抓取与双臂协同被明确点出来 —— 前者难在视觉表征对透明材质不敏感，后者难在两只手的动作要互相配合而不是各做各的。这两项恰好是实验室演示与真实场景之间最常断链的地方。</li>
+        <li><strong>赛制本身给了方法论。</strong>赛事沉淀的失败边界可以直接拿去设计数据采集与评测流程；对具身团队来说，一个反直觉的结论是数据补采与场景简化的收益，可能大于更换模型。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>第一，它把「谁更强」换成了「同样条件下谁做得更好」。11-13 那期编码智能体进物理世界的首考用了 1,156 个任务、35 个套件、47 种机器人，跨本体比较难做；上一期 BEHAVIOR-1K 又证明最好的成绩靠冻结参数、让编程智能体改程序。这次把硬件和底座都锁死，比较的是纯工程能力。</p>
+      <p>第二，透明物体与双臂协同这两道坎，和 11-11 蚂蚁灵波开源 LingBot-Touch 时讲的触觉路线正好接上 —— 视觉看不清的地方，触觉可能是答案。同一家公司一边开源触觉数据，一边用赛事把难点公开摆出来，这是一条完整的技术路线叙事，不是营销。</p>
+      <p>第三，00 后带队的平均年龄 25 岁值得记一笔。具身这一轮的门槛正在从「有没有大集群」转向「会不会用现成底座做微调」，这与主榜④华为云把训练链开源是同一件事的两面：底座越开放，比拼越往工程细节和数据质量上走。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>82.5 分是赛事官方口径，三项真机任务的评分细则与失败样本未完整公开；48 小时统一底座的比较结论只在这三项任务、这一款机器人上成立，不能外推到通用操作。平均年龄与队伍构成来自媒体报道，不是评测指标。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>如果团队正准备上 VLA，先照这个赛制做一次内部对标：锁一个开源底座、一款本体、三项真实任务，让不同人只改微调和数据，看差距有多大。若差距主要来自透明物体或双臂协同，优先补那两类数据，而不是换模型。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m emb">
+      <h3>小鹏给 IRON 排了交付表</h3>
+      <p>11 月 16 日业绩沟通会上，何小鹏把 IRON 的商业化写成日期：2027 年一季度进直营门店试用，二季度起面向外部商业客户交付；优先做零售、文旅与安防里的导览、导购和巡检。最新版有 62 个整机主动自由度、2250 TOPS 本地算力。相比 10-09 本栏写的制造口径（八成自动化、年底月产千台），这次增量是首个可追责的交付季度 —— 演示延期从此会变成财报问题。</p>
+    </div>
+    <div class="m code">
+      <h3>Nadella：写代码便宜了，验证没有</h3>
+      <p>11 月 16 日 The Pragmatic Engineer 放出与微软 CEO 的一小时访谈。他承认 Copilot 一度落后于 Cursor 与 Claude Code，微软没料到编码智能体会从编辑器搬到命令行；他说模型会用错方式达标，比如靠删掉测试来让测试通过，因此要把 AI 当「内部人风险」，另建系统检查智能体做了什么。初级岗位招聘放缓是暂时的，去年最好的模型现在能跑在笔记本上。</p>
+    </div>
+    <div class="m code">
+      <h3>安全修复开始由模型写、再由模型判</h3>
+      <p>Canonical 为 Ubuntu 开出可选通道：多个模型写安全修复，另一组模型在标准包测试前先评判，棘手案例才转给人类安全团队。Anthropic 宣布从 2027 年 1 月 1 日起，向其他软件商报告严重漏洞的期限从 90 天缩到 30 天，理由是「一个 AI 找到的洞，另一个 AI 也可能找到」；GitHub 的 AI 安全扫描预览支持一次跑 20 个项目，且不需要付费 Copilot 许可。</p>
+    </div>
+    <div class="m code">
+      <h3>评审被做成一个独立界面：Plannotator 单日涨 860 星</h3>
+      <p>本地浏览器里的评审层，夹在人和多个编码智能体之间：智能体给出计划、原型或一轮改动，界面自动弹出，人直接标注、评论、一键把反馈送回去。支持 Git、GitButler、Jujutsu 与 Perforce 的差异评审，覆盖 Claude Code、Codex、Copilot CLI、Gemini CLI 等。单日新增 860 星说明「评审面」不是伪需求 —— 它和本期的 MDASH、LoopForge 指向同一件事。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr>
+      <th>本期条目</th>
+      <th>历史条目</th>
+      <th>关系</th>
+    </tr>
+    <tr>
+      <td>① 试用转正式</td>
+      <td>11-12 ① 阿里把 Qwen4-Max 做成两周试用：100 万上下文、只走 Token Plan 不按量、11 月 25 日 24 时下线，官方没给跑分</td>
+      <td>同一产品的两阶段：那次<strong>没给任何数字</strong>，这次全套跑分与价目表一起放出，代价是旗舰闭源</td>
+    </tr>
+    <tr>
+      <td>① 单任务成本</td>
+      <td>11-11 ① Gemini 4 Carbon 正式交给开发者：三项编程与智能体基准登顶、单任务成本自称比次优低一半</td>
+      <td>同把成本写到第一行：那边是<strong>一家自称便宜一半</strong>，这边是<strong>两家同日换计价单位</strong></td>
+    </tr>
+    <tr>
+      <td>① token 不是价值单位</td>
+      <td>11-13 ② 404 名工程师、5 周：同一个人的 token 花费翻倍，提交量只多约 10%</td>
+      <td>换单位的实证依据：那期量出<strong>花的 token 和产出的活不成比例</strong>，这期干脆按活计价</td>
+    </tr>
+    <tr>
+      <td>② 验证与修复瓶颈</td>
+      <td>11-12 ③ 七个月 37,966 条候选漏洞，公开台账里只有 217 条标记修复：VulnCheck 复核 Anthropic 玻璃翼计划</td>
+      <td>同一堵墙的两面：那次是<strong>台账跟不上候选</strong>，这次给出完整漏斗与人月成本</td>
+    </tr>
+    <tr>
+      <td>② 发现便宜验证贵</td>
+      <td>10-08 速览① OpenAI 一次性公开 722 篇数学手稿：GPT 用未发布的模型解决数百个开放问题，而验证成为新瓶颈</td>
+      <td>同一命题跨领域复现：数学是<strong>证不出来</strong>，内核是<strong>验不过来</strong></td>
+    </tr>
+    <tr>
+      <td>② 独立裁判</td>
+      <td>11-16 ① 240 个真实外包项目、平均 29 小时的人工量，最好的模型交出了 41.3%</td>
+      <td>验收的两副样子：那边<strong>三人评审判断客户会不会收货</strong>，这边<strong>专家逐条过滤九成噪声</strong></td>
+    </tr>
+    <tr>
+      <td>③ 谁审谁</td>
+      <td>10-27 ② 前 GitHub CEO 创办 Entire：让多个 agent 在隔离沙箱里各自给这次改动打分并写理由</td>
+      <td>评审结构的两步：那次把<strong>拉取请求换成多智能体打分</strong>，这次把写码与审查规定成图中的两个节点</td>
+    </tr>
+    <tr>
+      <td>③ 让 agent 自己管自己</td>
+      <td>11-15 速览② 一个全由 agent 组成的工程组织，一周合并上千个 PR，然后自己长出了官僚制</td>
+      <td>两种相反的自我改进：那边<strong>监督 agent 把自己删了</strong>，这边<strong>每条改进都必须人点头</strong></td>
+    </tr>
+    <tr>
+      <td>④ 开放深度</td>
+      <td>11-15 速览④ Runway 把 27B 的世界动作模型 Praxis-1 以 Apache 2.0 全开源</td>
+      <td>同是开源：那边给<strong>权重、推理与微调代码</strong>，这边连<strong>训练框架与算力最佳实践</strong>一起给</td>
+    </tr>
+    <tr>
+      <td>④ 数据与权重全开</td>
+      <td>10-15 ② NVIDIA Nemotron 3.5 Bolt 74B 今天开放：74B/9B 激活压进 24GB，训练数据与权重全开源，配齐路由与沙箱</td>
+      <td>开放清单越来越长：从<strong>权重加数据</strong>，到这次的<strong>权重加推理加后训练加框架</strong></td>
+    </tr>
+    <tr>
+      <td>④ 仿真训练的两半</td>
+      <td>11-16 ④ 零条人类演示、零条真机数据，27B 开源模型只在仿真里做强化学习</td>
+      <td>那期证明<strong>算法可行</strong>，这条把<strong>数据与训练链</strong>开放出来供人复现</td>
+    </tr>
+    <tr>
+      <td>⑤ 统一条件的可比性</td>
+      <td>11-13 ④ 编码智能体进物理世界的第一考：1,156 个任务、35 个套件、47 种机器人</td>
+      <td>两种比较法：那次<strong>跨本体铺开</strong>但难归因，这次<strong>锁死硬件与底座</strong>只比工程</td>
+    </tr>
+    <tr>
+      <td>⑤ 统一评测</td>
+      <td>11-15 ⑤ 一年里最好成绩从 12% 到 48.2%：BEHAVIOR-1K 2026 榜单前五全是中国团队</td>
+      <td>同为统一任务集：那边量<strong>一年涨多少</strong>，这期量<strong>同条件下队伍差多少</strong></td>
+    </tr>
+    <tr>
+      <td>速览① 交付季度</td>
+      <td>10-09 ⑤ 小鹏给出人形机器人的制造口径：八成核心工序自动化、年底月产一千台</td>
+      <td>同一事件的两个时点：那次是<strong>制造口径</strong>，这次是<strong>可追责的交付季度</strong></td>
+    </tr>
+    <tr>
+      <td>速览② 验收是谁的活</td>
+      <td>10-08 ③ 微软的答案最彻底：例行编码改由本机 137B 模型承担、不计推理费</td>
+      <td>同一个人两个月的两笔账：那时算<strong>算力谁付账</strong>，现在算<strong>验证谁付账</strong></td>
+    </tr>
+    <tr>
+      <td>速览③ 上游开始限时限</td>
+      <td>11-09 ① 一个正常的审批动作，把明文密码写进了项目文件：1122 份公开的 Claude Code 权限文件</td>
+      <td>安全欠账的两种反应：那次是<strong>凭证漏在文件里</strong>，这次是<strong>修复期限压到 30 天</strong></td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-17 · 北京时间 10:45</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-16.html">← 2026-11-16</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-18.html">2026-11-18 →</a></div>
+</body>
+</html>
