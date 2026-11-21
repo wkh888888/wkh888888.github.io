@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-21 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 21 日（周六）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：agent 说做完了不算数，检查成了新的主战场</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 堆 agent 的边界</a>
+      <a href="#n2">② 退出码骗人</a>
+      <a href="#n3">③ 协作上桌面</a>
+      <a href="#n4">④ 真机量 agent</a>
+      <a href="#n5">⑤ 代工交账本</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>给同一个任务堆 32 个 agent，两小时跑出 18.9 倍加速——但单体最强的模型，团队越大反而越差：多 agent 不是人多力量大</h2>
+      <span class="tag t-code">AI Coding · 多 agent 扩展</span>
+    </div>
+    <div class="src">Replit Frontier《Throwing headcount at the problem》（11 月 19 日）· AI Impact Hub 11 月 21 日简报 · DEV Community 交叉整理；18.9 倍为厂商自测的特定负载</div>
+    <div class="body">
+      <p>11 月 19 日，Replit 发布一项性能工程实测：在 NumPy 相关任务上，<strong>32 个 Claude Opus 5.5 agent 用两小时把工作负载的加速比推到 18.9 倍</strong>；而只用 1 个 agent、给更少算力时，加速比是 3.7 倍。结论不是「agent 越多越好」——被点名为单体最强模型的 GPT-6.2 Astra，随着团队规模变大，结果反而在变差。</p>
+      <ul>
+        <li><strong>任务结构决定收益。</strong>性能工程的目标函数清晰、可并行拆分、结果可自动测量，这类工作才吃得住 32 个 agent 同时上；换成需要全局判断的任务，人多反而添乱。</li>
+        <li><strong>用更少算力做对照很关键。</strong>单 agent 那组刻意降了算力，说明 18.9 倍里有一部分来自「总投入更多」，而不全是协作效率；报告没有给出两组等价成本下的直接对比。</li>
+        <li><strong>强模型不等于强团队。</strong>单体最强的 Astra 在团队里表现下滑，指向一个工程问题——多 agent 的瓶颈在协调与分工，不在单个模型的能力上限。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是「编程 agent 从干活变成管人」这条线第一次被量化到「到底堆几个、什么时候开始亏」。11-19 ③ Devin Bots、11-18 ① Devin 交权都还是产品叙事，这次给了一条可复用的判据：只有当任务能拆、能并行、能自动测量时，堆 agent 才划算。</p>
+      <p>第二，它和 10-28 ③ Amazon 那份「token 数与代码行数是深度有缺陷的指标」形成呼应——真正配得上多 agent 的，是性能加速这种有明确目标函数的活，而不是「写了多少行」。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>全部数字来自 Replit 自家研究，未经独立复现；18.9 倍是特定 NumPy 性能负载上的加速比，不能外推到一般软件开发；两组算力不等价，18.9 倍与 3.7 倍不是严格的同成本对照；报告未披露 token 成本与失败重试次数。把「32 个 agent」读成通用推荐会误用。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>评估多 agent 时先问三件事——任务能不能拆成互不依赖的子块、每块有没有可自动判定的指标、协调开销是否随人数超线性增长。性能压测、批量重构、依赖升级这类目标清晰的活可以先试；需要整体架构判断的活别急着堆人。引用 18.9 倍时连「NumPy 性能负载、厂商自测」一起说。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>153 条 agent 自己写的失败笔记里，82% 失败时退出码和测试全绿、进程根本没停——最糟的一组 40 个脚本全部返回 0、全部被判通过，实际每个统计值都是零</h2>
+      <span class="tag t-code">AI Coding · 完成判定失效</span>
+    </div>
+    <div class="src">Clauday《Super User Daily · 2026-11-21》汇总 @ai_chuhai 原帖；日本游戏媒体编辑团队自 6 月起用 Claude Code 构建 Godot 与 Unreal 项目</div>
+    <div class="body">
+      <p>一个日本游戏媒体编辑团队回看了 Claude Code 替他们写项目时留下的全部 153 条失败笔记，发现其中 <strong>125 条（82%）在当时的运行里，退出码和测试都显示没有失败，进程也从未停下</strong>——也就是说，agent 自己事后记下「这里踩坑了」的那一刻，机器给出的完成信号是全绿的。团队从 6 月起用它构建 Godot 与 Unreal 项目，四个 Godot 项目累计 7878 次提交、81% 由 Claude 共同署名。</p>
+      <ul>
+        <li><strong>最糟的一次：</strong>40 个 Godot 统计脚本并行运行，全部返回 0、全部被标记通过，而每一份日志都写着 SCRIPT ERROR——代码调用了 Godot 4 里根本不存在的 String 构造器，导致每个统计值都停在零。</li>
+        <li><strong>修法不是再跑一遍测试，而是多信号联合判定：</strong>同时看日志里的 ERROR 行、预期输出文件是否真的存在、生产渲染器截图的像素、自动对局里逐场的日志；而「手感」和「趣味」这类无法量化的部分，仍然留给人。</li>
+        <li><strong>这条经验是回溯出来的：</strong>不是预设的检查清单，而是 153 个真实翻车现场归纳出的共同特征。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>09-13 的「验收权外移」讲把验收交给 agent 自己跑构建与测试，11-20 ③ Ramp 讲换一个大模型的裁判，这条则给出最底层的坏消息：连退出码这个最基础的完成信号都能全绿却全错。三个信号叠起来看，方向很清楚——单一信号一律不可信，判定必须多源交叉。</p>
+      <p>第二，11-13 速览① 那份 1026 人调查里，76% 说生成快于验证、只有 39% 敢确认提交前一定查过；当时是问卷里的自述，这次是 153 条笔记的逐条回溯，从感受变成了证据。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>样本是一个团队的四个项目、153 条笔记，不是行业普适比例；82% 指「失败笔记中退出码全绿的比例」，不是「所有运行的失败率」，两个分母不同；Godot 4 的 String 构造器是一个具体的版本坑，不能推出「所有测试都不可信」。作者给的多信号判定是经验总结，没有严格的消融对照。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把「退出码为零」从完成判定里降级为必要条件而非充分条件。至少再加两路独立信号——产物是否真实生成、日志里有没有 ERROR 关键字；跑批量并行任务时尤其要防「全绿但全零」，抽查产物内容而不是只看返回码。把无法自动判定的主观质量明确标出来交给人，别假装它能被测试覆盖率代替。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>Vercel 把内部多 agent 的协作方式做成公开产品：一个共享看板让 agent 自己认领任务、发进度、归档结果，公司称内部软件工厂过半合并请求已由它协调完成</h2>
+      <span class="tag t-code">AI Coding · 协调层产品化</span>
+    </div>
+    <div class="src">Vercel 官方博客《Introducing Vercel Board》（11 月 18 日）· AI Impact Hub 11 月 21 日简报；过半合并请求为公司自报</div>
+    <div class="body">
+      <p>11 月 18 日，Vercel 上线一个实验性的共享看板 Board：它本质上是一个消息存储与协调工具，通过命令行或 JavaScript 软件开发工具包访问。agent 可以在上面认领任务、发布进展，并把结果归到不同的频道与线程里，让多 agent 协作留下可追溯的现场。</p>
+      <ul>
+        <li><strong>定位是协调层而非执行层。</strong>Board 不写代码，它解决的是「谁在做什么、做到哪一步、结果放在哪」——这正是多 agent 从演示走向工程时最先暴露的缺口。</li>
+        <li><strong>来自内部实战。</strong>Vercel 称其内部的 v0 软件工厂现在有过半数的合并请求通过这个系统协调。这是把跑通的内部流程对外产品化，而不是先有产品再找场景。</li>
+        <li><strong>与共享记忆互补。</strong>11-18 速览② ClickHouse 开源的 Loom 让 agent 之间共享代码记忆，Board 让它们共享任务状态——一个管「知道什么」，一个管「在干什么」。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>主榜①量出「堆 agent 的收益取决于协调」，本条正好是协调这一层的产品化答案。11-19 ③ Devin Bots 把「经理」做成了产品，Vercel 把「看板」做成了产品——编程 agent 的竞争正在从模型能力转向协作基础设施。</p>
+      <p>第二，它把 09-28 ② 那个发现正式建制化了：当时量出 1228 次人工干预里 59% 是 agent 说「做完了」之后人手工收的尾；看板让「做完了」这件事有了一个公开的、可查的状态，而不是散落在各个会话里。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>Board 仍是实验性产品，接口与形态可能变化；「过半合并请求由它协调」是 Vercel 自报数字，没有外部验证，也没说明协调失败的案例；认领与归档依赖 agent 自觉写入，和主榜②的问题一样，看板上的状态本身也需要被核验，不能假设它等于真实进度。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>跑三个以上 agent 的团队，先别急着优化模型，把「任务认领、进度上报、结果归档」这三件事做成一个共享的、可查的状态层，比多堆几个 agent 更能提高产出。落地时给状态加核验——抽查产物与日志是否与看板一致，避免看板变成一个新的「全绿但全零」。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>让 Claude Code 和 Codex 直接开真机器人：CoRL 工作坊实测显示它 53% 的时间在思考、只有 20% 到 36% 在动，水果和开门满分、放碗却是零分——代码能回滚，机器人没有撤销键</h2>
+      <span class="tag t-emb">具身智能 · agent 驱动真机</span>
+    </div>
+    <div class="src">CoRL 2026 agentic robotics 工作坊报告，共同组织者 @junfanzhu98 分享，Clauday《Super User Daily · 2026-11-21》整理</div>
+    <div class="body">
+      <p>在 CoRL 2026 智能体机器人工作坊上，一场主打实测的报告把编程 agent 直接接到物理本体上：Claude Code（跑 Opus 5.5）与 Codex（跑 GPT-6 Astra）通过 MCP 工具驱动一台轮式双臂机器人，不配物体检测器，任务是水果入篮、碗上架、开门。结果把两类 agent 的老问题原样搬到了真机——<strong>机器人真正移动的时间只占 20% 到 36%，Opus 有 53% 的任务时间花在思考上</strong>。</p>
+      <ul>
+        <li><strong>时间与成本都算出来了：</strong>学会一项技能后，Opus 完成任务约 2.4 到 5.1 分钟、花费 1.2 到 2.0 美元；Astra 约 10 分钟、4 到 7 美元。</li>
+        <li><strong>能力分布极不均匀：</strong>两者在水果和开门上都是 100%，在放碗上都是 0%；给 agent 更多工具没有帮助，先在仿真里预演只把放碗提高到 25%——接触与形变这类活，堆工具和预演都救不了。</li>
+        <li><strong>安全结论很直接：</strong>代码有版本回滚，机器人没有撤销；有一次 agent 在感知到高阻力后 48 秒才发出收回请求，而停止动作必须在毫秒级完成，不能等模型想明白。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>11-13 ④ EFE 第一次给「编码智能体进物理世界」立了评测框架（标准设置 34%、给完整状态 77%），本条是同一命题的真机实测版，而且用的正是开发者手里的 Claude Code 与 Codex——AI Coding 和具身智能在这里合成了一件事。</p>
+      <p>第二，主榜②说 agent 的完成信号会骗人，这里给出了物理世界的版本：思考占比过半、移动不到三分之一，看上去在忙，实际大半时间没动；而「放碗零分」说明泛化这道坎（11-18 ④ 王兴兴的话）在精细操作上依然没过。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>这是工作坊报告而非正式评审论文，样本是一台机器人、三项任务；2.4 到 5.1 分钟是「学会技能之后」的耗时，不含前期探索；100% 和 0% 是这三项特定任务上的结果，不能当成通用能力结论；48 秒才请求收回是单次观察，用来说明「不能等模型」的机制问题，不是普遍时延测量。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>用通用编码 agent 驱动真机时，把「思考占比」和「实际运动占比」当成两个独立指标记录，别只看任务是否完成；急停必须与模型解耦、在毫秒级的硬件层实现；评估工具数量之前先确认失败是不是出在接触与形变上，堆工具解决不了物理问题。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>跨界代工方第一次把账本摊开：东方精工披露人形机器人签约订单约 8300 万元、已确认营收 2666 万元，约 5600 万待结转，量产是真交付还是真故事有了可核对的口径</h2>
+      <span class="tag t-emb">具身智能 · 交付账本</span>
+    </div>
+    <div class="src">红星资本局 11 月 20 日报道 · 人形机器人简报 11 月 21 日 · 上市公司披露口径</div>
+    <div class="body">
+      <p>11 月 20 日，东方精工披露了一组少见的完整数字：控股子公司东方元启已签约人形机器人订单约 <strong>8300 万元，确认营业收入 2666 万元</strong>，承担乐聚夸父系列的本体组装，佛山产线设计年产能为万台级。约 5600 万元待结转，让「批量交付到底是不是真的」第一次有了能按财报口径核对的账本。</p>
+      <ul>
+        <li><strong>订单、确认收入、待结转三个数分开给，是这份披露最值钱的地方</strong>——行业里多数人形消息只报意向订单或框架协议，很少同时说清哪部分已经落到收入。</li>
+        <li><strong>这是代工视角：</strong>东方精工的角色是本体组装，跟 11-20 ⑤ 的整机与零部件出货统计不是一个环节；它证明的是「有人在真金白银地组装」，不等于终端需求已经放量。</li>
+        <li><strong>政策与产能同向发力：</strong>同期工信部与国资委启动实景实训专项行动，目标年底形成万台级落地能力；北京提出 2028 年整机产能 20 万台每年，青岛发布近 2500 台场景需求。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>11-20 ⑤ 把具身账本推到了行业级（灵巧手出货一年翻三倍、101 家公司营收 3531 亿元），本条把同一本账下沉到单一公司——签约、确认、待结转三段口径第一次同时出现，可被季度核对。叙事的重心继续从「发布了什么」移向「确认了多少收入」。</p>
+      <p>第二，10-27 曾记过乐聚自己把 15 台 KUAVO 5-W 送进汽车零部件产线（成功率 98%）；本条的主角是给它做代工组装的东方精工，是同一个生态的不同环节与不同证据——一边是场景侧的运行数据，一边是制造侧的财务数据。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>8300 万是签约订单、2666 万是已确认收入、5600 万是待结转，三个数口径不同不可混用；万台级是产线的设计产能，不是实际产量；代工组装收入远小于整机销售单价乘以台数，不能据此反推出交付台数；待结转的确认时点取决于交付与验收进度，尚未锁定。本条不是 10-27 乐聚那条的重发。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>跟踪具身商业化时，把「签约订单、确认收入、待结转、设计产能」四个口径分列，别用一个数字代替全部；优先看确认收入而非订单公告，它是更难粉饰的一环。代工方的账本能验证「有没有真在造」，但不能替代终端场景的可用性数据，两者要对着看。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>用 agent 写一个能在 2012 年 ThinkPad 上启动的操作系统：约 25000 行 Rust、零外部依赖、229 个单元测试和 326 项整机检查，关键是第一天就定下规矩——系统必须能通过串口以机器可读格式驱动，让 agent 自己读回屏幕、检查自己的工作</h3>
+      <p>一位开发者用 Fable 5.2 通过 Claude Code 写出整套系统，在真实的 2012 年 ThinkPad T430 上启动；它不是 Unix，没有文件概念，核心是写时复制的 B 树数据库，连任务清单都是一张可查询的表。与主榜②是同一个道理的正面样本：把「可被检查」设计进产物本身，而不是事后补测试。真硬件仍给了最后一课——网卡连续五轮只收不发，直到一个寄存器被逐位而非整段写入。</p>
+    </div>
+    <div class="m code">
+      <h3>苹果被曝组建 agent 团队，同日开源 Depth Pro 2 深度模型</h3>
+      <p>彭博社 11 月 20 日消息，苹果正招聘工程师主导构建能跨应用、浏览器、命令行与接口工作的智能体助手，涉及 Siri 与基础模型框架。同日苹果研究团队开源 Depth Pro 2，四个权重规模从 24M 到 872M，支持从普通照片与视频输出米制深度，仅授研究用途。对照 11-20 ② 谷歌已上线的电脑操控，苹果还在组队阶段。</p>
+    </div>
+    <div class="m code">
+      <h3>帕拉网络 45 亿美元全股票收购 Applied Compute，同日交出创纪录财报</h3>
+      <p>11 月 20 日，网络安全公司帕拉网络宣布收购 AI 模型训练与推理初创 Applied Compute，后者由前 OpenAI 研究员创立，提供开放权重模型的训练后优化与推理平台，本月初刚完成 3.5 亿美元融资、估值 32.5 亿美元，年化经常性收入超 1 亿美元。帕拉网络同季营收 34.4 亿美元、同比增 39%。承接 11-19 ② OpenAI 买下工具链地基，这次是安全厂商买进训练后优化与推理平台。</p>
+    </div>
+    <div class="m emb">
+      <h3>开放原子成立人形机器人开源社区工委会，现场开源 QyroSIM 世界模型仿真平台</h3>
+      <p>11 月 20 日至 21 日郑州开放原子开发者大会期间，人形机器人开源社区工委会成立，工信部相关领导出席，启元机器人为首批共建与捐赠单位，现场开源 QyroSIM 世界模型仿真平台并开放运控板与算力板。消费级机器人开始走开源共建路线，公共底座与安全标准由产业联盟而非单一厂商定义。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>① 堆 agent 边界</td>
+      <td>11-19 ③ 一个 Bot 独自管 Android 项目 44 天合并 1134 个 PR，人类只发了 183 条消息；另一家工作室靠约 20 个 Bot 把周产量从 50 个拉到 1900 个</td>
+      <td>同主线不同问：那期讲「agent 当经理管项目」，这次量「堆到 32 个到底快多少、什么时候开始亏」</td>
+    </tr>
+    <tr>
+      <td>① 单体与团队倒挂</td>
+      <td>11-15 ③ 加 37 个技能、派 17 个评审 agent、花 8 倍钱，分数从 31.1 挪到 32.9</td>
+      <td>同题新证：那次量出「堆评审不加分」，这次量出「单体最强的模型团队越大越差」</td>
+    </tr>
+    <tr>
+      <td>① 该被并行的活</td>
+      <td>10-28 ③ Amazon 公开内部备忘录说 token 数与代码行数是「深度有缺陷」的指标</td>
+      <td>同主线两端：那边否定「量活动」，这次指出有明确目标函数的活才配得上多 agent</td>
+    </tr>
+    <tr>
+      <td>② 完成信号失效</td>
+      <td>09-13 ② GitHub Copilot 代码审查升级：审查 agent 开始自己跑构建和测试</td>
+      <td>反向递进：那时把验收交给 agent 自己跑测试，这次发现连退出码都能全绿却全错</td>
+    </tr>
+    <tr>
+      <td>② 换判定口径</td>
+      <td>11-20 ③ 判卷方式换人：Ramp 用 500 个真实上线任务做新基准，让大模型裁判读代码差异而不是跑测试，两个裁判「吵完」一致率从 54.2% 升到 93.6%</td>
+      <td>同主线不同招：那边换大模型裁判，这次要求多信号联合判定</td>
+    </tr>
+    <tr>
+      <td>② 验证速度</td>
+      <td>11-13 速览① 1026 名开发者里，76% 说 AI 生成代码的速度已经超过他们验证的速度，而只有 39% 能完全确认提交前一定检查过</td>
+      <td>从感受到实证：那次是问卷自述，这次是 153 条笔记的逐条回溯</td>
+    </tr>
+    <tr>
+      <td>③ 协调层产品化</td>
+      <td>11-18 速览② ClickHouse 开源 agent 共享记忆工具 Loom</td>
+      <td>同层不同物：那次共享代码记忆，这次共享任务状态</td>
+    </tr>
+    <tr>
+      <td>③ agent 当经理</td>
+      <td>11-19 ③ 编程 agent 从「干活的」变成「管人的」</td>
+      <td>同题不同面：那边把经理做成 Bot，这次把协作看板做成产品</td>
+    </tr>
+    <tr>
+      <td>④ coding 驱动真机</td>
+      <td>11-13 ④ 编码智能体进物理世界的第一考：1,156 个任务、35 个套件、47 种机器人，最强的一个在标准设置下只解决 34%</td>
+      <td>同一命题两阶段：那期是评测框架，这次拿 Claude Code 与 Codex 真机实测</td>
+    </tr>
+    <tr>
+      <td>④ 思考与动作占比</td>
+      <td>11-16 ④ 零条人类演示、零条真机数据，27B 开源模型只在仿真里做强化学习：在一台训练中从未出现过的双臂机器人上，从 30 次成功 0 次变成成功 18 次，推理只要一张 RTX 5090</td>
+      <td>同向不同量：那期量推理成本，这次量「思考 53%、移动 20-36%」的时间分配</td>
+    </tr>
+    <tr>
+      <td>④ 安全无撤销</td>
+      <td>11-15 ③ 同样 60 道 staff 级任务：加 37 个技能、派 17 个评审 agent、花 8 倍钱，分数从 31.1 挪到 32.9</td>
+      <td>同主线两域：数字世界的疏漏能回滚，物理世界没有撤销键</td>
+    </tr>
+    <tr>
+      <td>⑤ 交付账本</td>
+      <td>11-20 ⑤ 101 家产业链公司前三季营收 3531 亿元、77 家盈利，叙事从「跑得快跳得高」转向「能不能稳定交付」</td>
+      <td>从行业到单公司：那次是行业统计，这次是单一代工方的订单与收入对照</td>
+    </tr>
+    <tr>
+      <td>⑤ 乐聚辨析</td>
+      <td>10-27 ④ 乐聚 15 台 KUAVO 5-W 在汽车零部件产线常态化：成功率 98%、连续 1000 小时无故障，月采 4 万条数据回流社区</td>
+      <td>同生态不同环节：那次讲乐聚自己上产线，这次讲东方精工给它做代工组装的财务口径</td>
+    </tr>
+    <tr>
+      <td>速览① 自检设计</td>
+      <td>11-15 速览① Expo 把 iOS 模拟器与 Android 模拟器搬到云上，专门给编码智能体用：一条命令起会话、装包、驱动 App，结束时留下全程录屏、截图与日志当证据</td>
+      <td>同主线不同层：那时在环境侧留下证据，这次把「可被机器读屏自检」写进系统第一天设计</td>
+    </tr>
+    <tr>
+      <td>速览② 苹果 agent</td>
+      <td>11-20 ② 谷歌给 macOS 版 Gemini 上线「电脑操控」，跨应用、读本地文件、填表单</td>
+      <td>同赛道不同玩家：那次谷歌已上线，这次苹果还在组队招聘</td>
+    </tr>
+    <tr>
+      <td>速览③ 基建并购</td>
+      <td>11-19 ② AI 实验室第一次买下编程语言的地基：OpenAI 收走 Python 工具链公司 Astral</td>
+      <td>同主线两种拿法：那边买地基，这次买训练后优化与推理平台</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-21 · 北京时间 10:05</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-20.html">← 2026-11-20</a></div>
+</body>
+</html>
