@@ -184,7 +184,7 @@
 <li><code>CODEBUDDY_HOST_CAPABILITIES='elicitation.form,weixinpay.interception'</code> 由 <code>buildCliEnv</code> 注入 CLI 后端，<code>isClawWorkspaceCwd</code> 时不注入。</li>
 </ul>
 <p>⇒ 强化原判断：宿主<strong>有</strong> form elicitation 与 CUA 审批实现，但绑在 ACP／CLI 后端及特定场景（微信支付、原生 Computer Use 审批）；<code>codex-computer-use-bridge</code> 这个直连 stdio MCP 未接 <code>onElicitationRequest</code>，因此走 decline。<strong>不能据「宿主有审批代码」推断该 MCP 会弹窗</strong>，两条链路不可混为一谈。</p>
-<nav class="post-nav"><a class="post-nav-item" href="/pits/p030-并行子代理429落盘与校验池假绿/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p030-并行子代理429落盘与校验池假绿/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P030 · 并行子代理报 429 仍已落盘 + 校验池部分 glob 静默落空：两种「假信号」叠加</span></a><a class="post-nav-item post-nav-next" href="/pits/p032-ego升级后page变unmanagedpage须adopt/"><span class="post-nav-label">下一篇</span><span class="post-nav-title">P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
       document.querySelector('.theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;
         var next = root.dataset.theme === 'dark' ? 'light' : 'dark';

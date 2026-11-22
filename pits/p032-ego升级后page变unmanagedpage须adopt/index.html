@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt · walker</title><meta name="description" content="日期：2026-11-21。场景：timefill2-ego 填 OA 工时，从 ego lite 0.6.2.8 升到 0.6.3.14 后首个脚本直接挂掉。"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p032-ego%E5%8D%87%E7%BA%A7%E5%90%8Epage%E5%8F%98unmanagedpage%E9%A1%BBadopt/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt · walker"><meta property="og:description" content="日期：2026-11-21。场景：timefill2-ego 填 OA 工时，从 ego lite 0.6.2.8 升到 0.6.3.14 后首个脚本直接挂掉。"><meta property="og:url" content="https://blog.walkerhua.com/pits/p032-ego%E5%8D%87%E7%BA%A7%E5%90%8Epage%E5%8F%98unmanagedpage%E9%A1%BBadopt/"><meta property="og:image" content="https://blog.walkerhua.com/og/p032-ego%E5%8D%87%E7%BA%A7%E5%90%8Epage%E5%8F%98unmanagedpage%E9%A1%BBadopt.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt · walker"><meta name="twitter:description" content="日期：2026-11-21。场景：timefill2-ego 填 OA 工时，从 ego lite 0.6.2.8 升到 0.6.3.14 后首个脚本直接挂掉。"><meta name="twitter:image" content="https://blog.walkerhua.com/og/p032-ego%E5%8D%87%E7%BA%A7%E5%90%8Epage%E5%8F%98unmanagedpage%E9%A1%BBadopt.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt</h1><p>日期：2026-11-21。场景：timefill2-ego 填 OA 工时，从 ego lite 0.6.2.8 升到 0.6.3.14 后首个脚本直接挂掉。</p><div class="hero-meta"><span>踩坑于 2026-11-21</span><span>约 2 分钟</span></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#一句话现象">一句话现象</a><a class="toc-l2" href="#具体表现">具体表现</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#决策树--检查项">决策树 / 检查项</a><a class="toc-l2" href="#关联">关联</a><a class="toc-l2" href="#验证2026-11-21-实测">验证（2026-11-21 实测）</a></aside><article class="card prose"><p>日期：2026-11-21。场景：<code>timefill2-ego</code> 填 OA 工时，从 ego lite 0.6.2.8 升到 0.6.3.14 后首个脚本直接挂掉。</p>
+<h2 id="一句话现象">一句话现象</h2>
+<p>升级前能跑的 ego 脚本，升级后第一行浏览器操作就报 <code>TypeError: page.goto is not a function</code>；拿到的 <code>tab.page</code> 只有 <code>spaceId/targetId/openedBy</code> 三个字段，没有任何 <code>goto</code> / <code>evaluate</code>。</p>
+<h2 id="具体表现">具体表现</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>现象</th>
+<th>实际输出／证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>旧 API 直接失效</td>
+<td><code>taskSpace(1).tabs()</code> → 取 <code>tab.page</code> → <code>page.goto(...)</code> 抛 <code>TypeError: page.goto is not a function</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>page 对象退化成壳</td>
+<td><code>Object.keys(tab.page)</code> = <code>['spaceId','targetId','openedBy']</code>，原型上只有 <code>constructor</code>，<code>constructor.name</code> = <strong><code>UnmanagedPage</code></strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>空间 id 也不见了</td>
+<td><code>listTaskSpaces()</code> 里原先写死的 id 2 已消失（被清理），OA 标签页跑到 id 1，名字还叫别的任务名</td>
+</tr>
+<tr>
+<td>4</td>
+<td>任务已结束的空间无法 takeOver</td>
+<td>对 <code>task ended</code> 的空间调 <code>takeOverTaskSpace</code> 无效，报 “This task space is no longer assigned to the agent”，须改 <code>claimTaskSpace</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<p>0.6.3.x 引入了 <strong>managed / unmanaged 页模型</strong>：</p>
+<ul>
+<li><code>task.tabs()</code> 返回的是<strong>浏览器里的全部标签</strong>，其中用户自己开的标签 <code>label</code> 为空 → 属于用户，agent 只有只读元信息。</li>
+<li>只有 <code>task.pages()</code> 返回的、或经 <code>task.adopt(tab.page)</code> 领养的页，才是带 label（<code>p1</code>、<code>p2</code>…）的 managed page，才具备 <code>goto</code> / <code>evaluate</code> / <code>click</code> 等操作能力。</li>
+<li>同时空间所有权细分为 <code>user</code>（须 claim）、<code>agentDelegatedToUser</code>（控制权在用户，须 takeOver）、其余（<code>taskSpace</code> 直接用），不再能一个 <code>taskSpace(id)</code> 打天下。</li>
+</ul>
+<h2 id="决策树--检查项">决策树 / 检查项</h2>
+<ol>
+<li><strong>ego lite 每次升级后，第一步跑 <code>ego-browser skill &gt; /tmp/guide.md</code> 读新版指南</strong>，不要照旧代码猜 API。指南末尾有 <code>[ego-browser:skill] end of guide vX.Y.Z</code>，缺这行说明输出被截断。</li>
+<li>拿页面的正确姿势（固定模板，别自己拼）：
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> entry</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">await</span><span style="color:#B392F0"> listTaskSpaces</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">s</span><span style="color:#F97583"> =&gt;</span><span style="color:#E1E4E8"> s.id </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> SPACE_ID</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> task</span><span style="color:#F97583"> =</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">entry </span><span style="color:#F97583">?</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> taskSpace</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'goal name'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">  :</span><span style="color:#E1E4E8"> entry.ownership </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'user'</span><span style="color:#F97583"> ?</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> claimTaskSpace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">SPACE_ID</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">  :</span><span style="color:#E1E4E8"> entry.ownership </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'agentDelegatedToUser'</span><span style="color:#F97583"> ?</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> takeOverTaskSpace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">SPACE_ID</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">  :</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> taskSpace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">SPACE_ID</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> tabs</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">tabs</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hit</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> tabs.</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">t</span><span style="color:#F97583"> =&gt;</span><span style="color:#E1E4E8"> (t.url </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> ''</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'目标域名'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> page</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> hit.label </span><span style="color:#F97583">?</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">page</span><span style="color:#E1E4E8">(hit.label) </span><span style="color:#F97583">:</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">adopt</span><span style="color:#E1E4E8">(hit.page);</span></span></code></pre>
+</li>
+<li><strong>别用 <code>if (!page)</code> 判缺失</strong>：<code>task.page(label)</code> 的 handle 永远 truthy，标签不存在也不会返回假值。</li>
+<li>空间 id 一律 <code>listTaskSpaces()</code> 现查，<strong>不硬编码</strong>；判断依据是“哪个空间里有目标域名的标签”。</li>
+<li><code>openedBy: "unknown"</code> 等同用户所有，决定能不能关页时按用户算；<code>release(label)</code> 把页还给用户而不关标签。</li>
+<li>把上面这段封成一个 <code>acquirePage(spaceId)</code> 函数，所有脚本共用 —— 否则每加一个脚本就要重踩一次。</li>
+</ol>
+<h2 id="关联">关联</h2>
+<ul>
+<li><code>timefill2-ego</code> 2.2.0（<code>scripts/ego_fill.mjs</code> 的 <code>acquirePage()</code>），SKILL.md「2.2.0 适配」节。</li>
+<li>P014（DOM 自动化的两类假成功）——同属“回执/对象存在 ≠ 真的可用”。</li>
+<li>ego-browser skill 本体：<code>~/.agents/skills/ego-browser/SKILL.md</code>，升级后重读。</li>
+</ul>
+<h2 id="验证2026-11-21-实测">验证（2026-11-21 实测）</h2>
+<p><code>acquirePage()</code> 落地后：takeover 2.59s 拿到 managed page <code>p1</code>、登录态 <code>user: true</code>；后续 verify 27.43s 全字段回读一致；端到端 1 条真提交 + 批量 + 补填 + 全量复核 10/10 全部通过。</p>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p031-桌面agent交接cua授权被拒与前台抢占/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P031 桌面 Agent 交接：CUA 授权被拒与前台抢占导致按键落错窗口</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
