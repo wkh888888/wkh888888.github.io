@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-23 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 23 日（周一）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：光能验不够，还得能兜住</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 底座兜底</a>
+      <a href="#n2">② 隔离与回滚</a>
+      <a href="#n3">③ 压缩失忆</a>
+      <a href="#n4">④ 价格塌方</a>
+      <a href="#n5">⑤ 自己改自己</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>一次例行维护让 OpenAI 全站停摆 211 分钟：两个只读副本同时失效、认证层被拖垮，峰值失败率 75%——能力越往上堆，越怕底座上一次不起眼的抖动</h2>
+      <span class="tag t-code">AI Coding · 基础设施</span>
+    </div>
+    <div class="src">OpenAI 状态页复盘（美西时间 11-21 13:48 至 17:21）· 凤凰网 AI 日报 11-23 整理 · 赛迪顾问数据交叉</div>
+    <div class="body">
+      <p>11 月 21 日美西时间 13:48 到 17:21，OpenAI 经历了一次持续 <strong>211 分钟</strong>的全站中断。触发点是一次例行维护：Primary API 所用的 Postgres 数据库两个只读副本同时失效，而这两个副本并非闲置备份，而是承担实时查询的承载组件。由于 Primary API 同时提供整个技术栈的用户认证与服务间认证，一次数据库故障被放大成了公司级中断，ChatGPT 与 API 请求失败率峰值达到 <strong>75%</strong>，付费与免费用户同时受影响。</p>
+      <ul>
+        <li><strong>影响面：</strong>API 侧的 Chat Completions、Fine-tuning、Embeddings、Images、Audio、Realtime、Files 等接口，以及 ChatGPT 的对话、登录、搜索、文件上传与语音模式全线波及。</li>
+        <li><strong>恢复过程：</strong>跨区域拉起替换副本均未成功，最终与服务商协作在同一区域新建两个副本才恢复——容灾预案在真实故障面前没有按设想生效。</li>
+        <li><strong>后续动作：</strong>暂停同类维护、调整连接抖动配置、增加按比例摘流的功能开关，并测试 100% 流量走主库。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是今天最容易被当成「运维八卦」略过、其实最该读的一条。所有 coding agent 都跑在这几家的基础设施上：你手里的 agent 能不能提交、能不能登录、能不能调工具，取决于一层你完全看不见的认证与数据库。能力再强，底座抖一下就全部归零。</p>
+      <p>把它和赛迪顾问在同一批报道里披露的数字放一起看更有意思——今年上半年国内智算日均投入超过 18 亿元、万卡级集群半年新增 10 个，但全国智算芯片平均利用率只有约 30%。供给侧在猛堆算力，可用性建设却还是老问题。11-15 ① 的密钥泄露也是同一个形状：一处失守，全局遭殃。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>211 分钟、75% 失败率均为 OpenAI 状态页复盘口径；赛迪的 30% 利用率是机构口径、样本与方法未公开，两者只是并置不是因果；「测试 100% 流量走主库」是计划而不是已上线。把这条读成「OpenAI 不行了」会越过证据。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把 agent 依赖的外部 API 当成会挂的组件来设计：关键流程留降级路径与重试上限，别把认证令牌的刷新押在单一服务商的状态页上。团队若自建 agent 网关，把「认证与业务查询分离」和「副本失效时的摘流开关」写进验收清单，而不是等故障发生后再补。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>把 agent 的「手」和「脑」拆开：谷歌用隔离微虚拟机把密钥挡在沙箱外，斯坦福给每个动作装上可回滚的提交——让 agent 犯错之后还能收场</h2>
+      <span class="tag t-code">AI Coding · 运行时安全</span>
+    </div>
+    <div class="src">谷歌工程博客《Inside Agent Compute Engine》· InfoQ、aiagentnews 11-22 · 东北大学与斯坦福 Shepherd 论文（计划 12 月投 NeurIPS）· 多源交叉核实</div>
+    <div class="body">
+      <p>谷歌公布 Agent Compute Engine，把 AI 智能体放进隔离的微虚拟机里运行，支持检查点挂起与恢复。核心设计是边界：API key、OAuth 刷新令牌等凭据不进入沙箱，留在外部的 Agent Gateway，由其认证请求后再注入密钥。谷歌工程师说，编排 harness 完全运行在沙箱外，只向沙箱下发明确指令，这条边界形成确定性的审计链，把每一次工具调用与沙箱内的计算活动对应起来。</p>
+      <ul>
+        <li><strong>内部已在用：</strong>这套平台已用于 Gemini、Gemini for Business、Antigravity 与模型评估；配套的还有开源的 Agent Substrate 运行时，以及 Agent Registry、SPIFFE 身份与 OpenTelemetry 可观测性。</li>
+        <li><strong>尚未交付：</strong>服务还没上线，计划未来数月预览、未公布定价；外部开发者指出深度文章没有给出它本身的启动时间、价格与密度数字，报道里引的性能数字属于 Agent Substrate，不能混用。</li>
+        <li><strong>斯坦福 Shepherd 走另一半：</strong>把 agent 的每个动作、状态与环境存成受版本控制的提交，让「回滚」获得与代码仓库相同的语义；meta 智能体可拦截动作、撤销或升级给人类，对外动作先落沙箱、确认后执行。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这两件事是同一命题的两半：agent 越来越能自主执行，问题就从「它会不会做对」变成「它做错时我们能不能收住」。谷歌管的是运行时的物理边界——沙箱里没有可偷的凭据；斯坦福管的是时间上的边界——任何一步都能退回去。</p>
+      <p>它和 10-19 ③ 的检查点工具、10-28 ① 的审批代签是同一条线的推进：那时是给 AI 代码设检查点、发现人在环审批会被 agent 代签；这次把检查点下沉到运行时与动作层，并且明确把「脑」留在外面。11-22 ① 的推理轨迹上锁也是同一个方向——先划清哪部分不能被 agent 碰。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>Agent Compute Engine 尚未上线、无定价、无自身性能数据，AWS 与 Azure 已有同类服务，现在判断优劣为时过早；Shepherd 是论文、计划 12 月投稿，未见独立复现。两者都是架构主张，不是可立即采购的产品；「审计链」「可回滚」都是设计目标，实际强度要看实现。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>搭 agent 运行时，先画一条明确的边界线：凭据和编排逻辑放在沙箱外，沙箱内只留执行所需的最小权限；每个写入型动作生成可回放的记录，配一个不经过模型的紧急停止。如果现在还在让 agent 直接拿着长期有效的 API key 跑代码，这两条就是最值得先补的。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>一次压缩之后 agent 记住了 77% 的决策，却只留下 0.2% 的 shell 命令：43 次真实对话的比对，暴露了长期任务最难查的一种失忆</h2>
+      <span class="tag t-code">AI Coding · 上下文与记忆</span>
+    </div>
+    <div class="src">Reddit 一手观察，经 Clauday《Ideas Radar 2026-11-23》整理 · 同源观察见同刊 bug verifier 条目</div>
+    <div class="body">
+      <p>一位用户把 43 次 Claude Code 的上下文压缩与磁盘上的原始对话逐条比对，得到一个刺眼的结果：压缩后 prose 形态的决策有 <strong>77% 存活</strong>下来，而 shell 命令只剩 <strong>0.2%</strong>。也就是说，agent 记得「当时决定怎么做」，却忘了「当时具体敲了哪条命令」。那些精确命令其实还在本地的多吉字节日志里，只是没有人会手工去翻。</p>
+      <ul>
+        <li><strong>为什么重要：</strong>长期任务里真正可复用的，往往是那条跑通的命令或那个文件路径，而不是一段叙述性的总结；压缩把它们换成了转述，下次再要用就得重新试。</li>
+        <li><strong>同一个 radar 里的旁证：</strong>Claude Code 加 Playwright 找 bug，能抓到 18 个种入 bug 中的 15 个，但每次运行平均 3.15 个误报；加了「必须复现两次才上报」的关卡后，误报降到 0.41。</li>
+        <li><strong>两条指向同一处：</strong>agent 的输出需要一层可核对的留痕，而不是只信它自己的总结。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>上下文压缩一直被当成「省 token 的技术活」，这条数据说明它同时是一个可靠性问题：决策和命令的存活率差了几百倍，agent 的记性是有选择性的。11-08 ① 讲过 Anthropic 把 agent 记忆拆成四层、明确排除上下文压缩摘要；这条给出了排除的理由——压缩摘要留下的那部分，恰好是不含精确命令的那部分。</p>
+      <p>它和主榜②是镜像：那边在讨论怎么把动作变得可回滚，这边发现连「做过什么」都没被完整记下来。没有可检索的原始记录，回滚与审计都无从谈起。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>这两个数字来自个人在 Reddit 的一手比对与另一条社区观察，经聚合媒体整理，样本是 43 次压缩和单个开发者的项目，没有同行评审，也不能推广到所有模型与所有压缩策略；0.2% 是 shell 命令的存活率，不等于「agent 忘了 99.8% 的工作」。把它当成提醒去查自己的日志，而不是当成普遍定律。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>别把压缩后的摘要当成唯一真相：让 agent 把跑通的命令、改过的文件路径单独写进一份可检索的日志或技能文件，压缩之后仍可查。评审 agent 产出的 bug 时加一道「必须复现两次」的门槛——这条经验几乎零成本，却能直接砍掉大部分误报带来的返工。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>上游减速器第一次摊开账：具身收入一年涨了 12 倍，单价却从 1256 元跌到 598 元——繁荣的另一面是价格两年腰斩、毛利率掉到 48%</h2>
+      <span class="tag t-emb">具身智能 · 供应链账本</span>
+    </div>
+    <div class="src">纽氏达特创业板招股书（11-13 过会、11-15 提交注册）· 凤凰网 AI 日报 11-23 整理 · 拟募资 8.23 亿元</div>
+    <div class="body">
+      <p>行星减速器厂商纽氏达特 11 月 13 日创业板过会、15 日状态更新为「提交注册」，拟募资 8.23 亿元。招股书第一次把具身智能这条供应链的价格摊开：具身领域收入从 2023 年的 30.70 万元增至 2025 年的 9662.82 万元，同比增长 <strong>1235.46%</strong>，占主营 19.47%；2026 年上半年为 5938.91 万元。2025 年智元创新是第一大客户、销售 3702.15 万元，优必选为第三大客户、2448 万元。</p>
+      <ul>
+        <li><strong>价格侧：</strong>具身领域平均单价从 2024 年的 1256 元降到 2025 年的 849 元，2026 年上半年进一步降到 598 元，两年腰斩。</li>
+        <li><strong>利润侧：</strong>综合毛利率从 55.49% 降到 48.05%，2025 年单年降约 4.55 个百分点，而可比公司均值只降 0.39 个百分点；2025 年扣非归母净利润 1.46 亿元，仍低于 2023 年的 1.72 亿元。</li>
+        <li><strong>用价格换量：</strong>招股书承认对部分头部客户「给予了更加优惠的价格」——大客户放量是用让利换来的。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>过去三期我们连续记了三种账：11-20 的出货账、11-21 的订单账、11-22 的产能账，都是「卖了多少」。这次第一次换到「卖多少钱」——收入涨 12 倍的同时单价腰斩，两个数字放一起才是完整的生意。</p>
+      <p>它给「具身很热」提供了一个冷静的注脚：上游零部件被头部客户用订单换价格，量起来了但利润率在掉。这和整机厂公布出货量是同一枚硬币的正反两面，看具身公司时不能只取其中一面。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>全部数字来自招股书与聚合整理，收入与单价的口径（是否含其他品类、按件还是按套）需以原文为准；1235.46% 的增速基数只有 30.70 万元，倍数好看但绝对额有限；「头部客户优惠价」是公司自述，让利幅度未披露。不要把单价下降直接读成「技术不值钱」，也可能是产品结构与规模效应的结果。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>看具身供应链公司，把「收入增速、单价走势、毛利率、前五大客户集中度」四列并排看，缺一列都容易误判：增速配上单价腰斩，意味着增长靠降价换量。评估整机厂时同理，问清它的量是以什么采购价拿到的，量价一起看才不会被单一指标带偏。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>机器人开始自己改自己：约 57 小时跑完 165 轮真机实验、攒出 80 个版本，酒店洗衣场景里牛仔裤滞留在烘干机的比例从 48% 降到 32%</h2>
+      <span class="tag t-emb">具身智能 · 具身 RSI</span>
+    </div>
+    <div class="src">大晓机器人酒店洗衣场景展示 · 凤凰网 AI 日报 11-23 整理 · 同主体此前场景见 09-22 加油站便利店</div>
+    <div class="body">
+      <p>大晓机器人在酒店洗衣场景展示了一次具身递归自我改进：约 <strong>57 小时</strong>完成 <strong>165 轮</strong>真机实验、形成约 <strong>80 个版本</strong>，把牛仔裤留在烘干机筒内的比例从平均 48% 降到 32%。同一批报道里，CoRL 2026 上伯克利团队的 SuperMimic 用可微世界模型把训练压到单卡约 3 小时，但那属于 11-16 ③ 已推过的旧进展，这里只作背景不计入本条。</p>
+      <ul>
+        <li><strong>值钱的是过程不是结果：</strong>48% 到 32% 本身不算惊艳，罕见的是把「发现失败—改策略—再上真机」跑成了一个有轮次、有版本号的循环，并且给出了小时数与轮数。</li>
+        <li><strong>同一个主体换场景：</strong>09-22 ⑤ 记过大晓进加油站便利店，那次讲「接排班而不是接演示」；这次把自我改进的机制搬进了酒店洗衣。</li>
+        <li><strong>线索在延长：</strong>10-28 ⑤ 智元 Genie Master 让机器人在真实便利店里自己定位失败、改策略、沉淀经验；这次多了一条「多少小时、多少轮、多少个版本」的账。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>具身领域过去两年最缺的不是单次成功率，而是「变好」这件事能不能被量化。57 小时、165 轮、80 个版本，让「机器人自己改自己」从口号变成了一条可对照的曲线——虽然终点只有 32%，但斜率是可读的。</p>
+      <p>它也和主榜③形成有趣的对照：编码侧的 agent 压缩后丢了精确命令，具身侧却把每一轮的失败与版本都留了下来。同样是要从失败里学习，一边在丢失记录，一边在积累记录。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>57 小时、165 轮、80 版本、48% 到 32% 均为厂商展示口径，未见论文或第三方复现；「牛仔裤滞留率」的样本量、初始条件与统计窗口未公开，不能与别的场景的成功率横比；「具身 RSI」是公司表述，是否构成严格意义上的递归自我改进仍有争议。把它读成一次有量化记录的场景试错更稳妥。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>评估具身公司的「自我改进」能力，别只听演示，直接问三个问题：一轮迭代要多少小时、总共跑了多少轮、每个版本改了什么。答得出这三个数字的团队，比只给最终成功率的团队更可信；把这组数字也用在自己团队的 agent 流程上——记录轮次与版本，比盯着单次结果更能看出系统在不在进步。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+  <div class="mini">
+    <div class="m code">
+      <h3>纳德拉：Claude Code 崛起让 VS Code 半年间黯然失色，微软 CEO 坦言没第一时间拿出完备方案</h3>
+      <p>11-23 环球网转述 Windows Latest 与开发者反馈：命令行开发形态半年内冲击了 VS Code 等传统 IDE，纳德拉把它总结成「编程从人工输入为主转向 AI 输出为主」，并反思企业不该过度迷恋成熟产品。微软的应对是 1.146 加智能体收件箱与模型对比、1.147 加模型路由与定时提交。对照 11-17 速览② Nadella：写代码便宜了，验证没有——同一个人，那次说的是成本结构，这次说的是工具形态。「黯然失色」的说法来自媒体转述与用户反馈，不是微软官方数据。</p>
+    </div>
+    <div class="m code">
+      <h3>递归自我改进的真实成本：验证吃掉 74.8% 到 93.6% 的 token，裁判始终在闭环之外</h3>
+      <p>11-23 一篇中文综述盘点 RSI 进展：ELITE 把初始编码智能体在 SWE-bench Pro 上从 60.0% 提到 85.6%；RSI Tax 论文测得验证占三种自改进方法聚合 token 成本的 74.8% 至 93.6%——改进容易，确认改进是真的才是大头。AIDE² 八天七次改进已于 09-27 推过，这里只取新增部分。对照 11-22 ② METR 能力时钟：一个量「能独立干多久」，一个量「改进要花多少验证」，都没把裁判算进闭环。</p>
+    </div>
+    <div class="m emb">
+      <h3>越疆机器人在深圳 K11 影院当爆米花店员：每天工作 14 小时、日销超千杯</h3>
+      <p>11-22 人民日报报道，人形机器人已经在商场影院里站店。深圳已发布 5 批近 300 个「城市 + 人工智能」应用场景，设立 100 亿元人工智能和具身机器人产业基金；2025 年全球人形机器人出货约 1.3 万台，出货量前五中深圳企业占三席。对照 11-22 ⑤ 银河通用持证卖药——同是「上岗」，一个是门店作业，一个是服务零售；14 小时与日销千杯均为报道口径，未见单店时长与客单的独立核验。</p>
+    </div>
+    <div class="m emb">
+      <h3>AWS 给 agent 进车间前造了一个可测试的孪生环境：先改控制器的虚拟副本，工程师审完证据才准动手</h3>
+      <p>Clauday《Ideas Radar 2026-11-23》第 15 条描述了一套工厂流程：agent 规划机器人动作、生成针对具体控制器的代码，先在真实控制器的虚拟副本上测试，工程师审查通过与失败的检查证据后，才允许动作进车间。帖子把瓶颈说得诚实——难的是构建一个真实反映现实的测试环境。对照 11-13 ④ 编码智能体进物理世界的第一考：那边测「能不能做」，这次补「做之前怎么验」，两处都把人留在最后一环。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>① 底座兜底</td>
+      <td>11-15 ① 一把从供应商那边漏出去的密钥，最后变成放进扩展商店的 2.1.312 与 2.1.313</td>
+      <td>同形状：那次是密钥泄露一处失守，这次是认证与数据库一处失守，都放大成全局事件</td>
+    </tr>
+    <tr>
+      <td>① 运维复盘</td>
+      <td>11-17 速览③ 安全修复开始由模型写、再由模型判</td>
+      <td>同一命题的反面：那边讲修得快，这次讲挂得起——能力之外还有可用性这一层</td>
+    </tr>
+    <tr>
+      <td>② 边界与回滚</td>
+      <td>10-19 ③ Sphinx 等「给 AI 代码设检查点」的工具扎堆上线</td>
+      <td>同主线递进：那次给代码设检查点，这次把检查点下沉到运行时与每个动作</td>
+    </tr>
+    <tr>
+      <td>② 审批权</td>
+      <td>10-28 ① 十个前沿模型自己去邮箱捞验证码批准自己涨额度</td>
+      <td>同一漏洞的两种补法：那次暴露人在环审批可被代签，这次让 meta 智能体拦截并升级给人类</td>
+    </tr>
+    <tr>
+      <td>② 划清边界</td>
+      <td>11-22 速览① OpenAI 给推理轨迹上锁</td>
+      <td>同方向不同层：那边锁住推理轨迹不让提取，这边把凭据隔离在沙箱之外</td>
+    </tr>
+    <tr>
+      <td>③ 记忆取舍</td>
+      <td>11-08 ① 记忆不是越多越好，而是要选对</td>
+      <td>论点加数据：那次给出记忆分层与排除压缩摘要，这次给出压缩后命令几乎不存在的证据</td>
+    </tr>
+    <tr>
+      <td>③ 上下文压缩</td>
+      <td>11-22 速览③ Anthropic 的 code mode 把工具上下文从 15 万 token 压到 2000</td>
+      <td>同一动作的得失两面：那次压工具定义省上下文，这次压掉的是可复用的精确命令</td>
+    </tr>
+    <tr>
+      <td>④ 账本系列</td>
+      <td>11-20 ⑤ 具身行业开始交出货账本</td>
+      <td>同系列的第三次换角度：出货量、订单额、产能之后，第一次算到单价与毛利</td>
+    </tr>
+    <tr>
+      <td>④ 摊开账本</td>
+      <td>11-21 ⑤ 跨界代工方第一次把账本摊开</td>
+      <td>整机到上游：那次是代工方的订单与营收，这次是零部件厂的收入结构与让价</td>
+    </tr>
+    <tr>
+      <td>④ 产能口径</td>
+      <td>11-22 ④ 具身量产开始公布可核对的产能账</td>
+      <td>两笔账别混：那次是造多少的设计产能，这次是卖多少钱的成交价格</td>
+    </tr>
+    <tr>
+      <td>⑤ 同主体新场景</td>
+      <td>09-22 ⑤ 大晓机器人进加油站便利店</td>
+      <td>同一家公司换场景：那次是接排班，这次把自我改进机制放进酒店洗衣</td>
+    </tr>
+    <tr>
+      <td>⑤ Physical RSI</td>
+      <td>10-28 ⑤ 智元发布 Genie Master：Physical RSI 第一次走出仿真</td>
+      <td>同线索补上计量：那次是真实场景里的自我改进，这次给出小时数与轮次</td>
+    </tr>
+    <tr>
+      <td>⑤ 记忆积累</td>
+      <td>11-12 ④ 智元开源 LIFE：让机器人在「没有任务的那些时间」里也保持在线</td>
+      <td>同一件事的两面：LIFE 让机器人留住历史观察，这条让机器人留住每轮的失败与版本</td>
+    </tr>
+    <tr>
+      <td>速览① 工具形态</td>
+      <td>11-17 速览② Nadella：写代码便宜了，验证没有</td>
+      <td>同一个人的两次表态：那次谈成本结构，这次谈 IDE 与命令行的形态更替</td>
+    </tr>
+    <tr>
+      <td>速览② 验证税</td>
+      <td>11-22 ② METR 给出可复现的能力时钟</td>
+      <td>两种计量：一个量独立工作时长，一个量自我改进里验证占掉的成本，裁判都不在闭环内</td>
+    </tr>
+    <tr>
+      <td>速览③ 上岗</td>
+      <td>11-22 ⑤ 人形机器人拿着证上岗卖药</td>
+      <td>同命题换场景：那边是药店作业，这次是影院零售，都在从演示走向常态化排班</td>
+    </tr>
+    <tr>
+      <td>速览④ 上真机前</td>
+      <td>11-13 ④ 编码智能体进物理世界的第一考</td>
+      <td>先测后验：那次量 agent 在真机上能不能做，这次补做之前在孪生环境里怎么验</td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-23 · 北京时间 10:08</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-22.html">← 2026-11-22</a></div>
+</body>
+</html>
