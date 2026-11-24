@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-24 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 24 日（周二）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：同一份本事，换个地方还灵不灵</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 循环换深度</a>
+      <a href="#n2">② 国产卡从零训</a>
+      <a href="#n3">③ 活着不等于干完</a>
+      <a href="#n4">④ 换仓库还会做</a>
+      <a href="#n5">⑤ 两种赌法</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>同一组权重多走两遍，750B 模型自称有 2 到 3 万亿参数的智能：智谱把「深度」从堆参数改成循环计算，代码顺手外推到 3D 与仿真</h2>
+      <span class="tag t-code">AI Coding · 架构</span>
+    </div>
+    <div class="src">智谱 GLM-5.4 发布（11-23 晚）· 澎湃新闻、华尔街见闻、界面新闻 11-23/24 报道 · 官方口径为主</div>
+    <div class="body">
+      <p>11 月 23 日晚，智谱发布旗舰模型 <strong>GLM-5.4</strong> 并向 GLM Coding Plan 全量用户开放，同步上线 ZCode、Trae、WorkBuddy、Qoder 等编码平台。它是智谱首款 <strong>Loop Transformer</strong> 架构旗舰：在约 <strong>750B</strong> 基座里让 <strong>28 层共享权重循环推演两轮</strong>，不增加参数，靠「把同一组层多走一遍」换更深推理。</p>
+      <ul>
+        <li><strong>官方给的数：</strong>同等参数对照下训练计算量增幅约 <strong>10%</strong>，平均输出长度下降 <strong>10%</strong> 到 <strong>14%</strong>，100 万 token 上下文；官方称智能水平可比 2 到 3 万亿参数模型。</li>
+        <li><strong>「泛 Coding」的定义被改了：</strong>不再只是写代码，而是把代码当成文本通往物理世界的接口，外推到视频生成、3D 建模与工程仿真，并新增视觉理解。</li>
+        <li><strong>开放节奏：</strong>先给编程套餐用户，API 在安全评估后开放，权重计划开源但要先做安全加固；不到 <strong>1%</strong> 的步骤不走推理，官方视作深度思考的特性。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是「同一份本事换个走法」的最纯粹样本。过去两年旗舰的能力几乎都靠加大权重和显存买，边际成本随规模上升；循环架构反过来在同一组权重上多算几轮，把深度从参数维度挪到计算维度。它和端侧小模型的循环路线是同一个想法在两个极端上的验证。</p>
+      <p>「泛 Coding」把代码定义成驱动物理世界的通用接口，也正好接上 11-13 ④ 那场「编码智能体进物理世界」的考试：一个负责把接口造出来，一个负责验它到底能不能操作本体。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>2 到 3 万亿级智能、训练计算量增幅、输出长度降幅全部是智谱官方口径，权重开源和 API 时间待安全评估，未见第三方独立复现。不到 1% 步骤不走推理意味着时延偏长，官方把它讲成特性，时延敏感的场景得开发者自己验；「可比 2 到 3 万亿参数模型」是能力对标，不是参数相等。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>选型时别只看参数表，把「同一任务走几轮推理」也当成配置项来测：先用编程套餐跑一遍你自己的 agent 任务，记录时延与成本，再决定是否等 API 和开源权重。若做 3D 或仿真生成，现在就可以把代码当接口这条思路接进流水线试，但别在生产者里替代已验证的专用工具链。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>2850 亿参数全程跑在 8192 张昇腾上从零训成：中国电信把权重当日开源、铺到 8 种芯片，可多数测试仍落后于同行的 Flash 版</h2>
+      <span class="tag t-code">AI Coding · 国产算力</span>
+    </div>
+    <div class="src">中国电信星辰 AGI Lab 开源 Xing4.1-Preview（11-23）· arXiv 技术报告 11-17 提交 · 智源社区收录</div>
+    <div class="body">
+      <p>11 月 23 日，中国电信人工智能科技旗下星辰 AGI Lab 发布并开源 <strong>Xing4.1-Preview</strong>（技术报告称「星河 4 号」），权重上 Hugging Face 与 ModelScope，采用 <strong>Apache 2.0</strong> 允许商用。</p>
+      <ul>
+        <li><strong>架构：</strong>总参数 <strong>2850 亿</strong>、每 token 激活约 <strong>170 亿</strong>；45 层中 3 层稠密加 42 层 MoE，256 个路由专家每 token 选 8 个再加 1 个共享专家；注意力把多头潜在注意力与稀疏注意力组合，上下文 <strong>100 万</strong> token（API 口径最多 89.6 万输入、12.8 万输出）。</li>
+        <li><strong>工程证明：</strong>预训练全程使用 <strong>8192 张华为昇腾 910C</strong> 加速卡与 MindSpore 框架，自研分片、优化器执行与内存管理稳住长跑；后训练用自建 TeleGym 平台跑 agent 任务、打分并回灌强化学习，架构围绕训练集群的算力画像从零协同设计。</li>
+        <li><strong>可用性：</strong>BF16 权重约 <strong>521GB</strong>，满精度约需 8 张 80GB 显卡；FlagOS 社区同步提供覆盖英伟达、昇腾、摩尔线程、海光、昆仑芯等 <strong>8 种芯片平台</strong>的 8bit 版本，支持 SGLang、vLLM 插件，天翼云开了兼容接口。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这不是又一个冲榜旗舰，而是一次「国产卡从零训出 285B、当日即多平台可用」的工程证明。在出口管制继续收紧远端算力访问的当口，可商用权重加 8 平台适配的部署价值，可能高于任何单项跑分——架构不是迁移后适配，而是围绕手里的算力画像重新设计。</p>
+      <p>但把它和 11-03 速览① 的 LongCat-2.5 放一起看更清楚：两款都是全程国产算力训出的大型开源模型，一个 1.6 万亿、一个 2850 亿；「能训出来」和「追平第一梯队」始终是两件事。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>在厂商自己的对比表里，它多数测试落后于腾讯 Hy4-flash、智谱 GLM-5.3-Flash 与 DeepSeek V4 Flash，仅在 Claw-Eval 领先 <strong>0.4 分</strong>；Terminal-Bench 跳过了 GPU 沙箱任务，HLE 只跑文本，对手分数又来自各自报告，口径并不一致，Artificial Analysis 也尚未评测。预览版意味着能训出来与追平第一梯队仍是两件事，选型前得用自己的 agent 任务跑一遍。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>如果团队有国产算力或信创部署要求，这条现在就值得拉权重试：先用 8bit 版本在自有平台跑通推理，再拿自家的真实任务集对照现用模型，别信厂商对比表的跨平台分数。521GB 的 BF16 门槛不低，单卡环境下优先看量化版的精度掉落幅度。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>测试通过六成三，整单交付不到百分之八：SWE-CoWork 把 11 个模型放进模拟软件公司，证明「会写代码」和「把活干完」是两件事</h2>
+      <span class="tag t-code">AI Coding · 验收</span>
+    </div>
+    <div class="src">TokenWave AI，arXiv 2611.20218（11-15 提交）· The Decoder 11-22 报道 · 中文圈 11-23 集中解读</div>
+    <div class="body">
+      <p>新基准 <strong>SWE-CoWork</strong> 把编码 agent 当「数字员工」用：把 11 个模型放进模拟软件公司，<strong>101 个任务对应 101 个真实仓库</strong>，覆盖 11 种语言与 12 类应用。每个任务配 <strong>26 位职责各异、信息受限的模拟同事</strong>，约 <strong>82%</strong> 的需求只散落在同事嘴里；agent 从一段含糊的交接说明起步，8 小时窗口、17 个工具，从任务板、文档到聊天记录都得自己查。</p>
+      <ul>
+        <li><strong>结果分裂：</strong>GPT-6 Astra 的 fail-to-pass 测试通过 <strong>62.91%</strong>，但整单完成只有 <strong>7.92%</strong>（8 个）；Claude Opus 5.5 是 <strong>63.84%</strong> 与 <strong>6.93%</strong>（7 个）；其余 9 款模型的整单完成率没有一个超过 <strong>0.99%</strong>。</li>
+        <li><strong>信息拿不齐：</strong>Opus 5.5 首轮提问 <strong>93%</strong> 找对了负责人，却只取回同事掌握需求的 <strong>64%</strong>；押后的问题常常没有下文；它自称完成的需求里 <strong>31%</strong> 没过对应测试。</li>
+        <li><strong>补规格没用：</strong>事先把全套需求直接给出去，测试分能涨约 <strong>16 个百分点</strong>，整单完成率却几乎不动——瓶颈不在信息缺失，而在收集、协调、实现、验证这条端到端交付链。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>「测试通过不等于工作完成」从个例升级成了系统性结论。它和 11-21 ② 那 153 条失败笔记是同一个形状：那边是 agent 自报成功、退出码全绿，这边是测试六成三、整单不到百分之八——两处都在说自报状态与实际交付之间隔着一整条流程。</p>
+      <p>更关键的是「给全量需求也不涨完成率」这一条。它把责任从模型能力挪到了交付流程：补齐规格只解决「知道要做什么」，没解决「确认做对了」。这和 11-20 ③ 换裁判、11-17 ③ 把交接做成可打分流程是同一场仗的不同侧面。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>论文 11-15 提交、11-22 经 The Decoder 报道、11-23 才在中文圈集中解读，不是当日首发；8 小时窗口、26 位模拟同事都是设定，不等于真实公司的协作复杂度；与 11-17 提到的 Stripe Evals（均分 78.1%、全必过项仅 29.4%）是同构证据但不是同一套题，数字不可相减。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>把验收标准在开工前写成清单，最后对着清单由人复核，不要读 agent 的完工总结——这里有三成自报完成没过测试。任务边界划小、负责人写清楚，比换更强的模型更能救完成率；团队自建 agent 流程时，把「需求收齐」和「独立验证」做成两个不可跳过的关卡。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>换一个仓库、换一批没见过的任务，成功率还保住九成：自变量把动作数据前置进预训练，10 小时产线数据就上手新分拣线</h2>
+      <span class="tag t-emb">具身智能 · 零样本泛化</span>
+    </div>
+    <div class="src">自变量机器人 WALL-OSS-1.0 发布（11-23）· 华尔街见闻、IT 之家 11-23 报道</div>
+    <div class="body">
+      <p>11 月 23 日，自变量机器人发布新一代具身基础模型 <strong>WALL-OSS-1.0</strong>，并通过 WALL-API-1.0 向研究者与企业开放调用。它的关键改动是把<strong>操作数据提前到与文字、图像一同进入预训练</strong>，用自研动作分词器把连续动作编码成共享「动作语言」，同一段操作记录可同时用于学动作、理解动作、判断对错和纠错。</p>
+      <ul>
+        <li><strong>成绩：</strong>厂商口径称在 <strong>312 个自选真机任务</strong>上零样本成功率 <strong>55.1%</strong>，另一项标准真机测试比专门微调过的 Pi-0.5 高 <strong>70.8%</strong>；仿真赛道位列单模型第一。</li>
+        <li><strong>产线：</strong>模型已进入国内一家头部物流企业的分拣产线，仅需约 <strong>10 小时产线数据</strong>即可上手，承担包裹翻转、条码对齐与异常件筛选；配套 XR Harness 负责长任务规划，换场地后仍保住约 <strong>90%</strong> 的速度与成功率。</li>
+        <li><strong>数据飞轮：</strong>训练数据含数十万小时、上千万条操作记录，其中占比最大的是操作员用手持 UMI 设备采集、无需机器人参与的数据；执行停滞或失败时由人接管，纠正记录回灌训练，已积累数万小时接管数据。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>它把「零示范迁移」从论文指标往分拣线上推了一步：手持 UMI 绕开了机器人本体采集的数据瓶颈，失败接管则从损耗变成可训练资产，10 小时新产线数据也给出了一个可比的接入成本刻度。换场地还保住九成，正是「同一份本事换个地方还灵不灵」在物理世界的答卷。</p>
+      <p>和 11-16 ④ 的 PEAR 对照着看最清楚：那边证明零人类演示、零真机数据也能纯仿真练出泛化，这边证明把动作数据前置进预训练同样能跨任务；两条路线都在攻同一个「数据从哪来」的死结。和 11-11 ⑤ 的触觉路线则是数据模态上的分工。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>55.1% 与 +70.8% 均为厂商自报，312 个任务由厂商自选，测试集与对手设置未完整公开；「头部物流企业」未具名，10 小时上手也不等于达到产线节拍与合格率。此外 11-02 ② 曾报道自变量双臂分拣 1816 件每小时，那是 8 月直播里的单机效率口径，与这次的模型发布是同主体不同阶段，两组成绩不能混用。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>如果有关节型或轮式分拣线要换品类的场景，这条值得做小规模接入测试：用 10 小时量级的采数看能否达到现有节拍，重点盯异常件与换场地后的成功率衰减，别只看标准任务分数。手持 UMI 采集这条路对没有大量本体的团队尤其现实，可先建采集流程再谈模型。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>同一天两笔超亿美元押注，赌的却是相反的不确定性：至简动力拿已验证的产线效率说话，另一家只押「在模型里练、到真机上验」</h2>
+      <span class="tag t-emb">具身智能 · 资本路线</span>
+    </div>
+    <div class="src">彭博社 11-23 报道 · 科创板日报、华尔街见闻 11-23 转述</div>
+    <div class="body">
+      <p>11 月 23 日两笔大额种子轮同日落地，赌的却是完全不同的不确定性。</p>
+      <ul>
+        <li><strong>至简动力（Simplexity Robotics）：</strong>成立仅一年零四个月，完成 <strong>1 亿美元 Pre-A 轮</strong>，蚂蚁集团领投，阿里、腾讯、红杉中国、蓝驰创投等老股东全部跟投，投后估值 <strong>16 亿美元</strong>。创始班底几乎完整沿袭理想汽车智驾核心架构。第二款人形机器人 iX 为轮式；首款 i7 Pro 今年 7 月已完成首批百台交付，进入工厂产线；与杭叉合作的超市前置仓分拣线 11 月初跑通，单机最高 <strong>450 件每小时</strong>、准确率 <strong>98%</strong> 以上；9 月底已开源多模态时序世界动作模型 SimpleWAM。</li>
+        <li><strong>Embo：</strong>完成 <strong>1.1 亿美元种子轮</strong>，a16z 领投，Khosla Ventures、DST Global 与英伟达 NVentures 等参投，估值未披露。核心团队是 Dreamer 系列作者 Danijar Hafner 与 VideoGPT 作者 Wilson Yan，成员来自 DeepMind、Meta 超级智能实验室与英伟达 Cosmos，自称有跨 <strong>7 万张 GPU</strong> 的训练基础设施。路线是先用互联网视频与文本预训练世界模型，再接真机传感与电机，让 agent 在「想象」中用强化学习练动作和失败恢复。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>资本已经开始为「已验证的交付」与「尚未验证的泛化」分别定价。至简把智驾量产工程平移到具身，手上有台数、工序和效率数字，要盯的是 450 件每小时能否长期稳定、客户是否复购；Embo 押「在模型里练、到真机上验」可随算力规模化，手里是研究与团队积淀，没有交付证据，要盯的是想象训练出的策略能否在陌生场景站住成功率和恢复率。</p>
+      <p>这比又一轮估值抬高更值得记录：同一天、同一赛道、同一量级的钱，买的是两种完全不同的风险。10-28 ④ 那批世界模型资本整合和 11-10 速览④ 的三组融资硬数字，都是这条线的上游注脚。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>两笔均为融资口径，至简的投后估值与 450 件每小时是公司与媒体报道数字，长期稳定性、客户复购未披露；Embo 没有产品时间表、客户或估值披露，7 万卡规模也是自称。世界模型「想象训练再真机验证」的路线在论文里成立，在产线上尚未有公开证据，不宜把融资额当作技术兑现的信号。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>看具身公司时把「交付账本」和「研究资产」分开记账：前者盯台数、节拍、合格率和复购，后者盯团队来历、训练基础设施和论文可复现性。若自家要做场景落地，优先找已有工序数字可核对的伙伴；若要押长期泛化能力，就用小样本真机测试去验对方的想象策略能不能站住。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>AWS 两发：决策小模型 Strands Decider v2 与给 agent 套沙箱的 Box CLI</h3>
+      <p>11-23 同日发布。Decider v2 是 5 个基于 Gemma 4 架构的开放权重「决策模型」，最大 310 亿参数、Apache 2.0，不写长文本，只对预设选项给概率分数；AWS 称在内部最大工单系统替换 Claude Sonnet 4.6 后标注成本降 98%、响应时间降 78%（厂商自述、无第三方基准）。Box CLI 给编码 agent 加命令行沙箱，支持 Claude Code、Codex 与 Kiro，凭据留在沙箱外，策略放行时才注入 key 与 token——把无人值守从一句配置变成可审计的边界。</p>
+    </div>
+    <div class="m code">
+      <h3>记忆张量联合英伟达开源 MemT-1.0-Pro：把历史编码进模型内部记忆</h3>
+      <p>11-23 发布并开源，基于 NVIDIA Nemotron 3 Ultra，总参数 5540 亿、激活 590 亿。思路是把历史信息直接编码进内部记忆，后续回答不必保留原文，在 BEAM-1M 等记忆评测中位居参数化记忆方法第一。与 11-23 ③「压缩后只剩 0.2% 的 shell 命令」是同一命题的两端：那边量压缩丢掉了什么，这次把记忆做成模型本身的一部分。</p>
+    </div>
+    <div class="m emb">
+      <h3>特斯拉把算力配给摊开：AI5 先给 Optimus，汽车继续用 AI4</h3>
+      <p>11-22 马斯克在 X 明确，下一代自研平台 AI5 用于 Optimus 与训练超算，汽车继续用 AI4，称后者足以解决超越人类的驾驶。AI5 相对 AI4 约为 <strong>12 倍算力</strong>（公司口径），已完成流片、计划 2027 年量产，最快同年 4 月装进 Optimus。真正的信息不是倍数而是排序：新增算力先紧着人形。与 10-22 ① 是同主体不同节点，那次讲产线下来与财报，这次讲配给；流片不等于量产，周产数字未公布。</p>
+    </div>
+    <div class="m emb">
+      <h3>智元精灵 G2 并线长电科技芯片封测产线</h3>
+      <p>11-23 智元创新宣布，首批精灵 G2 在上海临港汽车电子工厂并线，进入芯片测试车间承担待测与已测料盘上下料，可无人工介入完成上料、测试流转与下料，适应多品种小批量。这是国产人形首次进入半导体制造核心工序。与 11-22 速览④ 的蓝思科技条目是同主体同机型、不同工序与客户：那边是手机测试，这次是芯片封测；一次通过率未公布。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>主榜① 循环换深度</td>
+      <td>11-22 速览② Thinking Machines 开源 26.4B 循环模型 Inkling 2 Mini</td>
+      <td>同一个「同一组权重多想几遍」的想法：那边是 26.4B 端侧，这次是 750B 旗舰，循环从省显存走到换智能密度</td>
+    </tr>
+    <tr>
+      <td>主榜① 泛 Coding</td>
+      <td>11-13 ④ 编码智能体进物理世界的第一考</td>
+      <td>方向互补：那次考 agent 能不能操作本体，这次把代码定义成通往 3D 与仿真的接口</td>
+    </tr>
+    <tr>
+      <td>主榜② 国产卡从零训</td>
+      <td>11-03 速览① 美团发布 LongCat-2.5</td>
+      <td>同为全程国产算力训出的大型开源模型，一个 1.6 万亿一个 2850 亿，工程口径比跑分更值得比</td>
+    </tr>
+    <tr>
+      <td>主榜② 能训出来不等于追平</td>
+      <td>11-12 ② 美团把 1.6 万亿参数模型以 MIT 全开</td>
+      <td>同是开源大模型的口径问题：那期盯基准版本差 49.9 分，本期盯厂商自比表多数落后、跳过 GPU 沙箱</td>
+    </tr>
+    <tr>
+      <td>主榜③ 活着不等于干完</td>
+      <td>11-21 ② 153 条 agent 自己写的失败笔记里</td>
+      <td>同形状两处证据：那边退出码全绿却在失败，这边测试六成三却整单不到百分之八</td>
+    </tr>
+    <tr>
+      <td>主榜③ 验收口径</td>
+      <td>11-20 ③ 判卷方式换人</td>
+      <td>那期换 LLM 裁判读差异，本期证明再怎么判卷，需求收不齐就交付不了</td>
+    </tr>
+    <tr>
+      <td>主榜③ 交接丢信息</td>
+      <td>11-17 ③ 腾讯把 coding agent 的交接流程开源成 SOP 图</td>
+      <td>同讲交接：那边把交接做成可打分的图，这次量出交接质量直接决定完成率</td>
+    </tr>
+    <tr>
+      <td>主榜④ 零样本换场景</td>
+      <td>11-16 ④ 零条人类演示、零条真机数据</td>
+      <td>两条泛化路线对照：那边纯仿真强化学习，这次把动作数据前置进预训练，都在攻数据从哪来</td>
+    </tr>
+    <tr>
+      <td>主榜④ 数据飞轮</td>
+      <td>11-11 ⑤ 蚂蚁灵波开源 LingBot-Touch</td>
+      <td>同是绕开本体采集瓶颈的数据路线：那期用真实触觉数据补手感，这次用 UMI 手持采集加接管回灌</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 两笔种子轮</td>
+      <td>11-10 速览④ 具身产业同一天给出三组硬数字</td>
+      <td>同为同日多笔融资：那期看产业硬数字，本期看同一赛道两种相反的风险定价</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 世界模型路线</td>
+      <td>10-28 ④ Google DeepMind 发布 Genie 4</td>
+      <td>同一条世界模型线：那边用世界模型生成可训练环境，这次让 agent 在想象里练策略再上真机</td>
+    </tr>
+    <tr>
+      <td>速览① 决策与沙箱</td>
+      <td>11-13 ① AWS 把自家云 API 做成一份能在笔记本上跑的副本</td>
+      <td>同厂不同产物：那边把云搬到本地，这次把决策小模型和沙箱拆给 agent，管住无人值守</td>
+    </tr>
+    <tr>
+      <td>速览② 记忆原生</td>
+      <td>11-23 ③ 一次压缩之后 agent 记住了 77% 的决策</td>
+      <td>同一记忆命题的两端：那期量压缩丢了什么，这次把历史直接编码进模型参数</td>
+    </tr>
+    <tr>
+      <td>速览③ 算力配给</td>
+      <td>10-22 ① 特斯拉 Optimus 真的从产线上下来了</td>
+      <td>同主体不同节点：那次讲产线与财报，这次讲新增算力先给谁——配给比路线图上的形容词诚实</td>
+    </tr>
+    <tr>
+      <td>速览④ 进封测线</td>
+      <td>11-22 速览④ 智元与蓝思科技把数十台精灵 G2 放进手机测试产线</td>
+      <td>同主体同机型、不同工序与客户：手机测试到芯片封测，具身进厂从消费电子走向半导体</td>
+    </tr>
+  </table>
+
+  <p style="font-size:13px;color:#6b7683;margin-top:14px">承 11-23「验完能不能收场」，本期把问题挪到另一半：同一份本事换个地方还灵不灵。循环权重换走法、国产卡换底座、模型换仓库、资本换赌法，四条线其实都在问泛化；只有 SWE-CoWork 泼冷水——换回真实流程，先得把活干完。</p>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-24 · 北京时间 10:08</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-23.html">← 2026-11-23</a></div>
+</body>
+</html>
