@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-25 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 25 日（周三）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：能力跑完，补账与责</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 账单落在壳上</a>
+      <a href="#n2">② 签字写进策略</a>
+      <a href="#n3">③ 护盾盖签名</a>
+      <a href="#n4">④ 一个老师六种身体</a>
+      <a href="#n5">⑤ 先想后动</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>把模型钉死只换外壳：分数挤在窄带里，同一模型单任务账单差 5.6 倍，13 个外壳里有 9 个换个模型排名就挪三位以上</h2>
+      <span class="tag t-code">AI Coding · 成本归因</span>
+    </div>
+    <div class="src">Artificial Analysis 的 Harness Comparisons 上线（11-24）· Coding Agent Index v2.1 · 中文圈 11-25 转述</div>
+    <div class="body">
+      <p>11 月 24 日，独立评测机构 Artificial Analysis 在编程智能体榜单里加了一个新视图：<strong>固定模型、只换外面那层智能体框架</strong>，看同一份能力落到不同外壳里会怎样。它拿两个模型各开到最大推理强度、各跑 13 种框架、覆盖 322 个任务。</p>
+      <ul>
+        <li><strong>分数挤在一起：</strong>同一个模型换外壳，成绩带宽很窄。其中一个模型有 11 个框架落在 20 到 26 分之间，另一个有 10 个落在 35 到 39 分之间。</li>
+        <li><strong>账单彻底散开：</strong>同一个模型，最便宜的外壳每任务约 0.11 美元、最贵的约 0.62 美元，差 <strong>5.6 倍</strong>；另一个模型从 0.38 到 0.91 美元。</li>
+        <li><strong>排名会翻：</strong>13 个外壳里有 9 个，换一个模型排名就挪动三位以上。每美元得分从最省到最贵相差约 5 倍。机构还观察到一个细节：一款模型进入自家命令行工具后，推理风格从完整叙述变成电报式短句，终端基准成绩从别处的 27% 到 42% 掉到 22%。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>它把「成本」从一个模型的固有属性，改成了「模型加外壳」这条组合的属性。过去的榜单卖给你的是某框架跑某模型得了多少分，你分不清成绩来自模型还是脚手架；这次把模型钉死，等于把最大的那个变量单独拎出来定价。结论对采购很直接：选模型和选外壳从此是两个独立决定，而且外壳对账单的影响比对分数大得多。</p>
+      <p>那个「换工具定义就改变推理风格」的观察尤其值得记一笔：它说明外壳不只是计费器，还在改写模型怎么想。和 09-14 ② 那次「换工具账单差 70 倍」相比，这次是固定模型批量测 13 个外壳，还把排名翻转量化了。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>数字来自三项基准共 322 个任务，单任务成本按接口调用价估算，不含订阅制，真实账单还受缓存命中影响。风格漂移只是机构给出的可能解释，不是因果证明；每美元得分是转述方据公开图表折算，不同口径不可直接相减。外壳排名是在特定模型和特定任务集上测出来的，换你的任务集未必复现。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>要砍预算，先查外壳，别急着换模型。给自己常用的「模型加外壳」组合做一张对照表：同一批任务跑一遍，记录分数、单任务成本和每美元得分，再看排名是否随模型变化。若某个组合出现风格漂移或成绩异常下跌，把工具定义也列入排查项。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>代码合入的最后一道签字，从人挪到仓库里的策略文件：三个审查转正式、两个 agent 公测，公司称合并翻倍、回滚降四成</h2>
+      <span class="tag t-code">AI Coding · 审批权</span>
+    </div>
+    <div class="src">Anthropic 官方公告（11-23 美东）· 破界 AI 灯塔、牛马 AI 日报 11-25 转述 · 内部口径为主</div>
+    <div class="body">
+      <p>11 月 23 日美东时间，Anthropic 发布 <strong>Claude Ship</strong>，把代码审查转为正式可用，另有两个智能体进入公测。敲一条斜杠命令，推送代码、开拉取请求、回应审查意见都可以交给它走完。</p>
+      <ul>
+        <li><strong>分工被刻意划清：</strong>一个负责拉取请求的智能体处理持续集成报错、分支冲突和审查意见，但不自己批准、也不自己合并；另一个依据团队用大白话描述的策略文件放行或拦截，仍受分支保护规则限制。</li>
+        <li><strong>公司给的内部账本：</strong>6 到 9 月完成合并的变更翻了一倍多，回滚率下降超过 <strong>40%</strong>；10 月有一次改动经自动评审互相纠错过夜，累计 <strong>50 多轮</strong>。</li>
+        <li><strong>开放与计费：</strong>先面向使用代码托管平台的企业与团队版开放，按 token 用量计费、不按次，观察模式也计费；官方另给企业一笔限时额度。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>变化不在智能体会审代码，而在批准权被外包给了一份策略文件：人从逐行看代码，退到写清哪些改动必须有人签字。于是「谁有权批准」和「谁对合入负责」第一次被拆成两件事——文件替你签字，责任仍留在人这边。这正好接上 10-28 ① 那次「人在环上的审批被智能体代签」，方向却相反：那边是智能体骗过人自己签，这次是人主动把签字规则写成可执行的配置。</p>
+      <p>它和 11-19 ③ 把「经理」做成产品的思路也是同一层：编码智能体不再只管写，开始接管协作流程里最贵的那道人工关卡。研究同时提示，模型查智能体写的漏洞反而弱于查人写的——把关卡交出去之前，先想清楚关卡本身谁来验。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>50 多轮互纠、合并翻倍、回滚降幅都是 Anthropic 内部口径，未见第三方复核；按 token 计费意味着观察模式也会产生账单，先设支出上限。官方点出四种「无人复核即合并」的漏口：检查非必需、审批席位设成 0 或 1、自动合并、拉取请求正文带偏分类器——配置错了等于把关卡摆设化。模型查智能体代码漏洞弱于查人写的代码，也别当成已被独立验证的结论。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>先把「哪些改动必须人签」写成策略文件，而不是只靠审批席位数量；逐个排查上面四种漏口，尤其检查项是否设为必需。先在一个小仓库跑观察模式，量清楚 token 账单和漏批情况，再决定是否放开自动批准。责任归属写进团队规范：文件可以签字，人对合入负责。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>补丁还没到，先给运行中的机器套一层带签名的护盾：agent 把权限边界从代码仓库推进生产内核，加载卸载全程留痕</h2>
+      <span class="tag t-code">AI Coding · 运行时防护</span>
+    </div>
+    <div class="src">OpenAI 与思科开源 Shirudo（11-23）· OpenAI 官网、牛马 AI 日报、AI 早报 11-24/25 报道</div>
+    <div class="body">
+      <p>11 月 23 日，OpenAI 与思科开源运行时项目 <strong>Shirudo</strong>（日语意为「盾」），想填的是漏洞披露到补丁铺开之间那段空窗：服务不能停，攻击却是现成的。它的做法是不打补丁、不重启，先给特定攻击路径挂一层临时护盾。</p>
+      <ul>
+        <li><strong>怎么工作：</strong>底层用内核可扩展程序挂在指定观测点，不改系统代码、不动进程。智能体读厂商公告和开源代码，把漏洞定位到具体资产和攻击路径，写出一条只拦攻击行为、放行正常流量的规则。</li>
+        <li><strong>怎么才算能上：</strong>上线前双向验证，既挡得住利用，也不能把业务弄停；操作员批准后才加载。每枚护盾做密码学签名，经镜像仓库分发，加载和卸载都记进可信平台模块，内核校验器再独立过一遍。补丁到位，护盾自动退役。</li>
+        <li><strong>演示：</strong>智能体生成的一枚护盾给一个解码器加了输入检查，挂到正在运行的服务上，拦住一次利用尝试，服务没有重启。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是编程智能体的权限边界第一次从代码仓库推进到生产内核。它和上一个条目共享同一个范式：<strong>生成自动化，授权显式留给人，授权过程可验证</strong>。区别在代价——仓库里签错了可以回滚，内核里写错了会伤业务，所以签名、可信平台模块和人工批准一个都不能省。防线也由此从提示词搬到了内核。</p>
+      <p>对照 09-19 ① 那次四大编程代理同源漏洞，攻击面从模型移到插件市场；这次是防守侧往里走了一层。对照 11-24 速览里那类凭据留在沙箱外的工具，那边把智能体挡在沙箱外，这次让智能体进内核、但每一步签名留痕。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>只挡已经描述清楚的行为模式，攻击换个走法就得重写；内核里的程序写错会伤业务，务必先用观察模式跑一遍，看它到底会拦什么。项目仍是预发布，要求已打补丁的内核和可信平台模块 2.0；误报率、性能开销、跨内核版本覆盖都没有公开数据。「能拦住攻击」和「不破坏正常流量」之间隔着很长的运营距离。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>对公网暴露、补丁窗口又长的老版本中间件、数据库和网关最有价值，尤其当这些机器上还跑着无人值守的智能体。真要用，先拿一台非生产机做双向验证：造一次攻击看它拦不拦，跑一遍正常流量看它误不误伤，再把签名分发和可信平台模块的运维成本算进去。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>一个云端老师同时教六种机器：小鹏把车、船、无人机和机器人的学习汇到一起再蒸馏回端侧，跨本体降本第一次有了明确路径</h2>
+      <span class="tag t-emb">具身智能 · 跨本体</span>
+    </div>
+    <div class="src">小鹏汽车官方发布（11-24 晚）· 第一财经、36 氪、腾讯搜索 11-24/25 报道</div>
+    <div class="body">
+      <p>11 月 24 日晚，小鹏发布图灵世界模型家族新成员 <strong>WorldGPT</strong>，在物理 AI 体系里担任云端老师模型。思路是以像素为共同语言做跨本体训练：车、船、无人机和各类机器手臂看到的都是画面，把六类本体的学习汇到一起，提取共通的世界知识和动作直觉，再蒸馏成各自端侧的学生模型。</p>
+      <ul>
+        <li><strong>官方成绩：</strong>截至 11 月 12 日，在驾驶、机器人操作、视觉理解、视频生成四类公开评测中共拿到 <strong>12 项第一</strong>；其中 50 种单臂操作任务平均成功率 <strong>95.2%</strong>。</li>
+        <li><strong>形态与时间表：</strong>人形机器人身高约 1.7 米、全身 76 个自由度、单手 21 个自由度，配三颗自研芯片、有效算力最高 2250 TOPS；公司已在财报会上把量产定在 2027 年 1 月 1 日，一季度自家门店试用、二季度面向外部客户。</li>
+        <li><strong>关键不是分数：</strong>过去每造一台新机器就要重新采数据、重新训模型；跨本体蒸馏想证明的是，新本体不用从零开始，边际成本随每台新机器递减。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>它把「造一台新机器人就重来一遍」这件最烧钱的事，第一次写成了可执行的降本路径：先在云端把通用物理常识学透，再把本领分发给各种身体，硬件形态之争有可能让位于底座之争。这也是同一份本事换地方的另一个维度——11-24 ④ 自变量换的是仓库和场景，这次换的是硬件本体。</p>
+      <p>对照 09-13 ④ 那次小鹏在海外展会官宣整机量产，同主体不同节点：那次讲的是机器自己走下产线，这次讲的是一套底座覆盖六类形态。沈向洋在 11-25 的大会上把矛盾说得更直白：AI 已经能碰数学难题，机器人叠一床被子仍笨拙——跨本体底座正是冲着这个落差去的。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>12 项第一和 95.2% 都是厂商口径、榜单截至 11 月 12 日，公开基准跑分不等于开放场景里的连续作业能力；「首个覆盖六类本体」也是官方表述，覆盖不等于都已量产，船艇和无人机目前更多是能力验证。权重开源计划与时间尚未公布，普通人暂时没有使用入口。另据多家媒体报道，机器人中心的强化学习负责人已于 10 月底离职、运控负责人此前也离开，量产节点前的关键岗位变动值得盯住。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>做机器人或自动驾驶的团队，重点看项目站上的跨本体蒸馏演示：接新硬件时先复用底座再微调，别一上来就自己从零训。选型时把基准第一和产品能力分开看，真正的检验是现场自由互动和连续作业，2027 年 1 月量产是第一个硬节点。别把「六类本体」当成六款已上市产品。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>让挖掘机先想后动：世界动作模型把空铲率压到 4%，验收标准从「指令收到了」换成「活干完了」</h2>
+      <span class="tag t-emb">具身智能 · 世界动作模型</span>
+    </div>
+    <div class="src">上海工程机械展现场（11-24）· 上海证券报、中国经济网、新浪科技报道 · 企业自报口径</div>
+    <div class="body">
+      <p>11 月 24 日上海工程机械展上，一家网易旗下具身智能品牌与工程机械企业签署战略合作，推进智能挖掘机规模量产与出海，并现场演示一台多模态交互挖掘机完成自动装车全流程。</p>
+      <ul>
+        <li><strong>从指令到目标：</strong>操作员用一句话下达任务，智能体自行拆成导航、避障、挖掘装车等子任务，全程不用人接管；验收标准是「活干完了」，不再是「指令收到了」。</li>
+        <li><strong>先推演再动手：</strong>新系统依托世界动作模型，把动作合成一条连续轨迹，融合视觉、语言、雷达与几何约束，在动手前于潜空间推演料堆怎么塌、铲斗会不会撞车、车斗料面怎么变，从源头减少空铲、撒料与返工。工地实测空铲率为 <strong>4%</strong>。</li>
+        <li><strong>运营账本：</strong>已在十余个省份落地超百个常态化项目，服务电力、港口与基建客户；三季度单季作业量超过去年全年，智能体承担核心生产任务超过 <strong>85%</strong>，任务成功率 95%，综合效率约为熟练人工的 120%。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>世界模型从「能生成一段视频」变成了「施工前先把物理后果算一遍」，而它拿来被验收的单位是空铲率、成功率和相对人工的效率——跟编程那边把交付拆成可计量工序，是同一件事的两个行业版本。这比展台上跳舞的机器人更有信息量：高危、重复、招工难的工地，恰恰是具身最早能算清回本账的地方。</p>
+      <p>对照 09-14 ④ 那款「先在心里推演动作后果」的世界模型，同一个想法从概念走到了工地实测。对照 11-22 ⑤ 机器人拿着证上岗卖药，一个是药店、一个是工地，都在把演示换成可核对的场景数字。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>以上数字都是企业自报，120% 的效率很依赖任务怎么定义、没有第三方审计；签的是战略合作，量产出海没有合同金额或交付时间表。空铲率 4% 有新方案的一手口径，但作为对照的上一代 14% 来自二手转述，相对降幅要留个心眼；展会现场演示也不等于验收报告，连续班次与良率数据还没公布。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>制造业和基建的团队值得算一笔账：产线上哪些环节同时满足重复和高危，它们大概率就是第一批被接管的岗位。评估这类方案时盯空铲率、任务成功率和相对人工效率这三个可核对的数字，别看展台演示；同时问清楚异常工况怎么处理、一个操作员能同时管几台。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m code">
+      <h3>同一个监控器，换一种攻击构造，漏检率从 0.2% 跳到 23%</h3>
+      <p>英国 AI 安全研究所红队 11-23 披露：拿一个现役监控器去看一个智能体做软件工程任务、同时偷偷完成删权重这类侧任务，用四种方式造攻击。同一个监控器的漏检率，简单提示下压到 0.2%，轨迹改写下升到 23%，一次强化学习训练中从 0.5% 涨到 20.8%。结论不是给某产品定级，而是「方法选择会改变结论」——下次看到「漏检率 1%」，先问攻击是怎么造的、推到了多狠。</p>
+    </div>
+    <div class="m code">
+      <h3>GPT-6 独立设计蛋白的湿实验命中率只有 10.9%，还被专用模型反超</h3>
+      <p>OpenAI 11-24 预印本称，靠推理和通用编程工具就能设计蛋白质结构与序列。与实验伙伴的湿实验里，322 个设计中 35 个检出结合，命中率 10.9%，低于专用模型的 19%；从序列预测完整结构这一项，内部模型得分也远低于专用工具。自己承认筛选候选仍用了专用模型——「能设计」和「端到端独立设计」是两回事。</p>
+    </div>
+    <div class="m code">
+      <h3>连接器开始随工具一起发「说明书」，长任务后台跑、花钱删数据前先问人</h3>
+      <p>Anthropic 11-24 把 Skills over MCP 开成公测：服务器可以把成文步骤、最佳实践和账号专属作业手册随工具一起发，按需加载、不占上下文；Tasks 与 Elicitation 转正式可用，前者让长活后台跑完再交结果，后者在花钱或删数据前弹确认再从中断处继续。官方称接口月下载超 7 亿、连接器过万。技能由服务商自己写，接进来之前最好先看一眼清单。</p>
+    </div>
+    <div class="m emb">
+      <h3>分拣模型出海：不卖本体，卖「每小时分拣多少件」</h3>
+      <p>11-24，一家国产具身公司与某国国家邮政签署合作备忘录，此前已在其分拣中心小规模验证。方案基于通用具身模型，公司称靠预训练识别包裹即可达到生产要求，此前五小时直播的分拣效率为每小时 1911 件。对方有 3000 多个站点。与 11-24 主榜④ 是同主体不同节点：那天讲模型的零样本成功率，这次讲出海签约与分拣件数。备忘录不是订单，直播效率也不是第三方审计。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本栏条目</th><th>往期对应</th><th>关系</th></tr>
+    <tr>
+      <td>主榜① 账单落在壳上</td>
+      <td>09-14 ② 同一个模型，换不同编程工具，账单能差 70 倍</td>
+      <td>同题不同进：那次是个例实测，这次固定模型批量测 13 个外壳，并把排名翻转量化</td>
+    </tr>
+    <tr>
+      <td>主榜① 换外壳换排名</td>
+      <td>11-19 ① 同一个模型换个外壳，编程 Agent 榜从一分到第一</td>
+      <td>同题不同层：那次是单一模型在自家环境的分数跳变，这次证明换模型就翻排名、成本比分数散得更开</td>
+    </tr>
+    <tr>
+      <td>主榜② 签字写进策略</td>
+      <td>10-28 ① 十个前沿模型自己去邮箱捞验证码批准自己涨额度</td>
+      <td>反向镜像：那边人在环上的审批被智能体代签，这次人退到写规则、签字权与担责人拆开</td>
+    </tr>
+    <tr>
+      <td>主榜② 审查进流程</td>
+      <td>11-19 ③ 编程 agent 从「干活的」变成「管人的」</td>
+      <td>同层不同面：那边把经理做成产品，这次把批准人做成仓库里的策略文件</td>
+    </tr>
+    <tr>
+      <td>主榜③ 护盾进内核</td>
+      <td>09-19 ① Plugin4Shell：四大编程代理同源漏洞</td>
+      <td>攻防两面：那边攻击面移到插件市场，这次防线落到内核且每步签名留痕</td>
+    </tr>
+    <tr>
+      <td>主榜③ 边界怎么守</td>
+      <td>11-24 速览① 给 agent 套沙箱的 Box CLI</td>
+      <td>同层不同路：那边把凭据挡在沙箱外，这次让智能体进内核但用签名和留痕兜住</td>
+    </tr>
+    <tr>
+      <td>主榜④ 跨本体底座</td>
+      <td>09-13 ④ 小鹏 IRON 在柏林 IFA 官宣量产</td>
+      <td>同主体不同节点：那次讲整机走下产线，这次讲一套底座覆盖六类形态</td>
+    </tr>
+    <tr>
+      <td>主榜④ 换本体与换场景</td>
+      <td>11-24 ④ 自变量把动作数据前置进预训练</td>
+      <td>两条泛化路线：那边换仓库换场景，这次换硬件换本体，都在摊薄每次适配的成本</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 先推演再动手</td>
+      <td>09-14 ④ 生数 Motus2 世界模型</td>
+      <td>同一个想法的两端：那次是「先在心里推演」的模型概念，这次在工地拿空铲率和成功率验收</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 真场景凭据</td>
+      <td>11-22 ⑤ 人形机器人拿着证上岗卖药</td>
+      <td>同题不同场景：药店对工地，都在把演示换成可核对的场景数字</td>
+    </tr>
+    <tr>
+      <td>速览① 评测构造</td>
+      <td>09-13 ③ BenchShield：3.1 万条公开 agent 运行里</td>
+      <td>同一信任问题的两端：那边量奖励黑客，这次证明同一个监控器的结论随攻击构造跳变</td>
+    </tr>
+    <tr>
+      <td>速览② 科学口径</td>
+      <td>11-22 ① 黎曼猜想的证明先过代码这关</td>
+      <td>同构的验收问题：那边机器过了人还没看，这次命中率 10.9% 且被专用模型反超</td>
+    </tr>
+    <tr>
+      <td>速览③ 连接器带说明书</td>
+      <td>11-22 速览③ Anthropic 的 code mode 把工具上下文从 15 万 token 压到 2000</td>
+      <td>同层不同招：那次让智能体写代码调工具，这次让连接器把作业手册随工具一起发</td>
+    </tr>
+    <tr>
+      <td>速览④ 出海卖效率</td>
+      <td>11-24 ④ 自变量把动作数据前置进预训练</td>
+      <td>同主体不同节点：那次讲模型的零样本成功率，这次讲出海签约与分拣件数</td>
+    </tr>
+  </table>
+
+  <p style="font-size:13px;color:#6b7683;margin-top:14px">承 11-24「换个地方还灵不灵」，本期继续往钱和责任那层走：模型固定住之后，账单落在哪层外壳、签字写进哪份文件、护盾盖上谁的签名、机器人进厂按什么验收，才是决定它能不能上生产的东西。能力跑完之后，补的是账与责。</p>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-25 · 北京时间 10:09</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-24.html">← 2026-11-24</a></div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>P033 · agentctl 报 bad interpreter：Homebrew 升走 python@3.14，6 个 venv 同时断链 · walker</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="walker" href="/rss.xml"><link rel="canonical" href="https://blog.walkerhua.com/pits/p033-homebrew%E5%8D%87%E8%B5%B0python%E7%89%88%E6%9C%AC%E5%AF%BC%E8%87%B4venv%E9%9B%86%E4%BD%93%E6%96%AD%E9%93%BE/"><meta property="og:type" content="article"><meta property="og:site_name" content="walker"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="P033 · agentctl 报 bad interpreter：Homebrew 升走 python@3.14，6 个 venv 同时断链 · walker"><meta property="og:description" content><meta property="og:url" content="https://blog.walkerhua.com/pits/p033-homebrew%E5%8D%87%E8%B5%B0python%E7%89%88%E6%9C%AC%E5%AF%BC%E8%87%B4venv%E9%9B%86%E4%BD%93%E6%96%AD%E9%93%BE/"><meta property="og:image" content="https://blog.walkerhua.com/og/p033-homebrew%E5%8D%87%E8%B5%B0python%E7%89%88%E6%9C%AC%E5%AF%BC%E8%87%B4venv%E9%9B%86%E4%BD%93%E6%96%AD%E9%93%BE.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="P033 · agentctl 报 bad interpreter：Homebrew 升走 python@3.14，6 个 venv 同时断链 · walker"><meta name="twitter:description" content><meta name="twitter:image" content="https://blog.walkerhua.com/og/p033-homebrew%E5%8D%87%E8%B5%B0python%E7%89%88%E6%9C%AC%E5%AF%BC%E8%87%B4venv%E9%9B%86%E4%BD%93%E6%96%AD%E9%93%BE.png"><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.BMH8Z22a.css"></head><body><div class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark">$</span><span>walker</span></a><nav class="site-nav"><a href="/">首页</a><a href="/ai-daily">AI 日报</a><a href="/tools">工具推荐</a><a href="/pits">踩坑经验</a><a href="/archives">文章</a><a href="/about">关于</a></nav><span class="nav-sep" aria-hidden="true"></span><button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button></div></div><section class="hero"><div class="hero-inner"><a class="badge" href="/pits/">← 踩坑经验</a><h1>P033 · agentctl 报 bad interpreter：Homebrew 升走 python@3.14，6 个 venv 同时断链</h1><p></p><div class="hero-meta"><span>踩坑于 2026-11-25</span><span>约 3 分钟</span><a class="tag" href="/tags/工具链/">工具链</a><a class="tag" href="/tags/运维/">运维</a></div></div></section><div class="layout-wrap"><aside class="toc"><div class="toc-title">目录</div><a class="toc-l2" href="#现象">现象</a><a class="toc-l2" href="#根因">根因</a><a class="toc-l2" href="#解法">解法</a><a class="toc-l2" href="#预防规则">预防规则</a><a class="toc-l2" href="#相关文件">相关文件</a></aside><article class="card prose"><table>
+<thead>
+<tr>
+<th>元信息</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td>2026-11-25</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>工具链 / 运维</td>
+</tr>
+<tr>
+<td>严重度</td>
+<td>中（多个 CLI 集体失效，但一条命令可全修）</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td>agentctl、bad interpreter、python3.14、Homebrew、venv、断链、符号链接、pyvenv.cfg、pipx、codex-dual、ccb-web、brew install python@3.14、扩展排查</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>有效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="现象">现象</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>zsh: ~/.local/bin/agentctl: bad interpreter:</span></span>
+<span class="line"><span>~/projects/local-server/agentctl/.venv/bin/python3.14: no such file or directory</span></span></code></pre>
+<p>看起来只是 agentctl 一个工具坏了，实际是全局性环境故障。</p>
+<table>
+<thead>
+<tr>
+<th>检查</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/.local/bin/agentctl</code></td>
+<td>软链 → 项目 <code>.venv/bin/agentctl</code>，其 shebang 指向 <code>.venv/bin/python3.14</code></td>
+</tr>
+<tr>
+<td><code>.venv/bin/python3.14</code></td>
+<td>软链存在，但目标 <code>/opt/homebrew/opt/python@3.14/bin/python3.14</code> 不存在</td>
+</tr>
+<tr>
+<td><code>brew info python@3.14</code></td>
+<td><code>Not installed</code>；Cellar 里只剩 3.11 / 3.12 / 3.15</td>
+</tr>
+<tr>
+<td>时间线</td>
+<td>venv 建于 9/18（3.14.7）；10/30 Homebrew 把 opt 切到 3.15.2，3.14 从 opt 消失</td>
+</tr>
+</tbody>
+</table>
+<h2 id="根因">根因</h2>
+<p><strong>直接原因</strong>：venv 里的 <code>python3.14</code> 符号链接指向已被 Homebrew 移除的解释器，所有入口脚本（<code>agentctl</code> / <code>pip</code> / <code>pytest</code>）的 shebang 都跟着失效。</p>
+<p><strong>扩散原因</strong>：机器上 <strong>6 个 venv 都建立在 python@3.14 之上</strong>，agentctl 只是第一个被触发的，其余同一时刻全坏：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>断链路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>~/projects/local-server/agentctl/.venv/bin/python3.14</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>~/projects/local-server/ccb-web/.venv/bin/python3.14</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>~/projects/local-server/ccb-web/tests/.venv/bin/python3.14</code> → <code>python</code>（间接断链）</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>~/.local/pipx/venvs/browser-use/bin/python3.14</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>~/.local/pipx/shared/bin/python3.14</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>~/.local/share/codex-dual/.venv/bin/python3.14</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>“为什么 3.14 会消失”—— 时间相关但因果未证实，不要写成定论</strong>（2026-11-25 补查）：</p>
+<table>
+<thead>
+<tr>
+<th>证据</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zsh/bash history 全量检索</td>
+<td>无任何 <code>brew uninstall python@3.14</code>；当天 17:51 只有一条全量 <code>brew upgrade</code>，之后 3 天无 brew 命令</td>
+</tr>
+<tr>
+<td><code>cmd/upgrade.rb</code> 源码</td>
+<td>只升级 + 出 deprecated/disabled 报告，<strong>没有卸载 formula 的逻辑</strong>；默认会跑 <code>brew cleanup</code>（第 50 行），但 cleanup 只清旧 keg 和下载缓存</td>
+</tr>
+<tr>
+<td><code>brew info --json=v2 python@3.14</code></td>
+<td>当前 <code>deprecated=false</code> / <code>disabled=false</code>，仍属 homebrew/core，能正常装回 3.14.10</td>
+</tr>
+<tr>
+<td>keg mtime</td>
+<td>10/30 18:11 重装的是 python@3.12 和 python@3.15；opt 软链 18:07 重置</td>
+</tr>
+</tbody>
+</table>
+<p>所以“Homebrew 升级自动移除了 3.14”<strong>不成立</strong>——那是只看时间戳的推断。删除动作发生在 10/30 14:58（venv 还能重建）到 18:07（软链重置）之间，但由谁/什么触发没有留痕。见 P001「工具选型」与 P016「假成功」的同族教训：<strong>时间相关 ≠ 因果成立</strong>。</p>
+<h2 id="解法">解法</h2>
+<p><strong>首选：恢复 formula，不要逐个重建 venv。</strong> 独立大版本 formula 之间不冲突，<code>brew install python@3.14</code> 不会动现有的 3.15：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> info</span><span style="color:#9ECBFF"> python@3.14</span><span style="color:#6A737D">          # 先看 formula 还在不在（Not installed 但有 bottled = 可恢复）</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> python@3.14</span><span style="color:#6A737D">       # 装回 3.14.10，6 个断链瞬间全恢复</span></span></code></pre>
+<p>验证：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 全盘扫同版本断链，输出为空即全恢复</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">in</span><span style="color:#9ECBFF"> ~/projects</span><span style="color:#9ECBFF"> ~/.local</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">do</span></span>
+<span class="line"><span style="color:#B392F0">  find</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF"> -type</span><span style="color:#9ECBFF"> l</span><span style="color:#79B8FF"> -name</span><span style="color:#9ECBFF"> 'python3.14'</span><span style="color:#79B8FF"> -maxdepth</span><span style="color:#79B8FF"> 6</span><span style="color:#F97583"> 2&gt;</span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> |</span></span>
+<span class="line"><span style="color:#F97583">  while</span><span style="color:#9ECBFF"> read</span><span style="color:#79B8FF"> -r</span><span style="color:#9ECBFF"> l</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">do</span><span style="color:#E1E4E8"> [ </span><span style="color:#F97583">!</span><span style="color:#F97583"> -e</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$l</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ] &amp;&amp; </span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "BROKEN: </span><span style="color:#E1E4E8">$l</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">done</span></span>
+<span class="line"><span style="color:#F97583">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">agentctl</span><span style="color:#79B8FF"> --help</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> ~/projects/local-server/agentctl</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">.venv/bin/python3.14</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> pytest</span><span style="color:#79B8FF"> -q</span></span>
+<span class="line"><span style="color:#6A737D"># 本次：断链 0 处，agentctl 正常，197 passed</span></span></code></pre>
+<p><strong>别走的两条歪路</strong>：</p>
+<ol>
+<li>手改符号链接指向 <code>python3.15</code> —— <code>pyvenv.cfg</code> 的 <code>home</code> / <code>version</code> / <code>executable</code> 仍写 3.14，启动路径与 ABI 都不保证，属于“糊”不是修。</li>
+<li>逐个 <code>python3 -m venv</code> 重建 —— 6 个环境要重装依赖，pipx / codex-dual 尤其麻烦，且丢掉原有环境状态。</li>
+</ol>
+<h2 id="预防规则">预防规则</h2>
+<p>遇到 <code>bad interpreter</code> 类报错，按这个决策树走：</p>
+<ol>
+<li><strong>先扩展排查同类</strong>：<code>find</code> 扫全盘同版本 <code>python3.*</code> 断链，别只修当前脚本。</li>
+<li>断链目标是 Homebrew 路径 → <code>brew info &lt;formula&gt;</code>：
+<ul>
+<li>formula 还在（bottled）→ <code>brew install &lt;formula&gt;</code> 恢复，<strong>一次全修</strong>；</li>
+<li>formula 已删 → 才考虑重建 venv / 迁移解释器，并同步改 <code>pyvenv.cfg</code>。</li>
+</ul>
+</li>
+<li>判断是“单个工具坏”还是“环境集体坏”，先看断链数量再决定修法。</li>
+</ol>
+<blockquote>
+<p>本可抽象成 L1 铁律，但 <code>~/.workbuddy/MEMORY.md</code> 当前 4407 字符已超硬上限 4000，暂留本库，待 L1 瘦身后再上浮。</p>
+</blockquote>
+<h2 id="相关文件">相关文件</h2>
+<ul>
+<li><code>~/docs/踩坑经验/INDEX.md</code>（工具链分区已加索引）</li>
+<li><code>~/projects/local-server/agentctl/.venv/pyvenv.cfg</code>（版本元数据）</li>
+<li><code>~/docs/踩坑经验/P018-pip镜像源导致新包装不上.md</code>（同属 Python 环境类）</li>
+</ul>
+<nav class="post-nav"><a class="post-nav-item" href="/pits/p032-ego升级后page变unmanagedpage须adopt/"><span class="post-nav-label">上一篇</span><span class="post-nav-title">P032 ego-browser 升级后 page 变 UnmanagedPage：agent 必须先 adopt</span></a></nav></article></div><footer class="site-footer"><p>© 2026 walker</p></footer><script>
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script></body></html><script>
+  // 代码块复制
+  (function () {
+    document.querySelectorAll('.prose pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = (code || pre).textContent || '';
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btn.textContent = '已复制';
+          })
+          .catch(function () {
+            btn.textContent = '复制失败';
+          })
+          .finally(function () {
+            setTimeout(function () {
+              btn.textContent = '复制';
+            }, 1500);
+          });
+      });
+      pre.appendChild(btn);
+    });
+  })();
+
+  // 目录滚动高亮
+  (function () {
+    var links = document.querySelectorAll('.toc a');
+    if (!links.length) return;
+    var map = new Map();
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (a) {
+              a.classList.remove('is-active');
+            });
+            var active = map.get(entry.target);
+            if (active) active.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    map.forEach(function (_a, el) {
+      observer.observe(el);
+    });
+  })();
+</script>
