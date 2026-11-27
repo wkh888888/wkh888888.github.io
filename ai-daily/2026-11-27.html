@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 日报 · 2026-11-27 · AI Coding / 具身智能</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#f5f6f8;color:#1c2024;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#0f2740 0%,#1b4a6b 55%,#226b6b 100%);
+  color:#fff;padding:38px 0 30px;margin-bottom:26px;
+}
+.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:18px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:4px 13px;font-size:12.5px;
+}
+
+/* Nav */
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(245,246,248,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid #e2e5ea;margin-bottom:24px;
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  color:#3d4752;text-decoration:none;font-size:12.5px;padding:5px 11px;
+  border-radius:6px;background:#fff;border:1px solid #e2e5ea;transition:.15s;
+}
+.nav a:hover{background:#1b4a6b;color:#fff;border-color:#1b4a6b}
+
+/* Section title */
+.sec-title{
+  font-size:13px;font-weight:700;color:#6b7683;letter-spacing:1.2px;
+  margin:30px 0 14px;padding-left:10px;border-left:3px solid #1b4a6b;
+}
+
+/* Card */
+.card{
+  background:#fff;border:1px solid #e4e7eb;border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05);
+}
+.card.coding{border-left:4px solid #2b6cb0}
+.card.embodied{border-left:4px solid #2f855a}
+.card.sec{border-left:4px solid #b03a3a}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.num{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;color:#fff;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.coding .num{background:#2b6cb0}
+.embodied .num{background:#2f855a}
+.sec .num{background:#b03a3a}
+.card h2{font-size:17.5px;font-weight:650;line-height:1.4;flex:1;min-width:220px}
+.tag{
+  font-size:11.5px;padding:3px 9px;border-radius:5px;white-space:nowrap;font-weight:600;
+}
+.tag.t-code{background:#e8f1fb;color:#1a5490}
+.tag.t-sec{background:#fdeaea;color:#a63d3d}
+.tag.t-emb{background:#e6f4ec;color:#276749}
+.src{font-size:12px;color:#8a94a0;margin-bottom:13px;padding-left:34px}
+.body{font-size:14.2px;color:#33404d}
+.body p{margin-bottom:10px}
+.body strong{color:#11181f;font-weight:650}
+.body code{
+  background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03060;
+}
+.body ul{margin:0 0 10px 18px}
+.body li{margin-bottom:5px}
+
+/* Why box */
+.why{
+  background:#f8fafc;border:1px dashed #c3ceda;border-radius:9px;
+  padding:12px 15px;margin-top:12px;font-size:13.5px;color:#33404d;
+}
+.why b{color:#1b4a6b;font-weight:700}
+.why p{margin-bottom:8px}
+.why p:last-child{margin-bottom:0}
+
+/* Caveat box */
+.caveat{
+  background:#fdf7f2;border:1px dashed #d9b382;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.3px;color:#5a4630;
+}
+.caveat b{color:#9c5a1e;font-weight:700}
+.caveat p{margin-bottom:8px}
+.caveat p:last-child{margin-bottom:0}
+
+/* Action box */
+.act{
+  background:#f2f8f4;border:1px dashed #b7ddc4;border-radius:9px;
+  padding:12px 15px;margin-top:10px;font-size:13.4px;color:#24503a;
+}
+.act b{color:#1f6b41;font-weight:700}
+.act p{margin-bottom:8px}
+.act p:last-child{margin-bottom:0}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13.2px;margin:12px 0}
+th,td{border:1px solid #e4e7eb;padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#f0f3f6;font-weight:650;color:#3d4752;white-space:nowrap}
+td strong{color:#11181f}
+
+/* Mini grid */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mini .m{
+  background:#fff;border:1px solid #e4e7eb;border-radius:10px;padding:14px 16px;
+  border-top:3px solid #8896a5;
+}
+.mini .m.code{border-top-color:#2b6cb0}
+.mini .m.emb{border-top-color:#2f855a}
+.mini .m.sec{border-top-color:#b03a3a}
+.mini h3{font-size:14px;font-weight:650;margin-bottom:6px;color:#11181f;line-height:1.45}
+.mini p{font-size:13px;color:#4a545f}
+
+/* Footer */
+.foot{
+  margin-top:36px;padding-top:18px;border-top:1px solid #e2e5ea;
+  font-size:12.3px;color:#8a94a0;text-align:center;line-height:1.8;
+}
+
+@media (max-width:600px){
+  .hero h1{font-size:21px}
+  .card{padding:16px 15px}
+  .src{padding-left:0}
+}
+</style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>AI 日报 · 2026 年 11 月 27 日（周五）</h1>
+      <div class="sub">聚焦 AI Coding 与具身智能 · 5 条主榜 + 4 条速览</div>
+      <div class="hero-meta">
+        <span class="chip">AI Coding ×3</span>
+        <span class="chip">具身智能 ×2</span>
+        <span class="chip">今日主线：账本明码，能力下场</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#n1">① 真实数据成品</a>
+      <a href="#n2">② 复用已算的账</a>
+      <a href="#n3">③ 计费摆上台</a>
+      <a href="#n4">④ 进厂先训两工位</a>
+      <a href="#n5">⑤ 南极不走路</a>
+      <a href="#mini">速览</a>
+      <a href="#thread">对照关系</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+  <div class="sec-title">主榜 · 5 条</div>
+
+  <div class="card coding" id="n1">
+    <div class="card-head">
+      <div class="num">1</div>
+      <h2>让 agent 拿 31 个真实数据源做一张《文明》地图：7 小时写出 4.5 万行代码，最新鲜的样本不是游戏，而是数据对账</h2>
+      <span class="tag t-code">AI Coding · 长程产出</span>
+    </div>
+    <div class="src">Karpathy 博客与 X（@karpathy）· karpathy.ai/usaciv · newfacedesign、AIstify 转述 · 本人自述口径</div>
+    <div class="body">
+      <p>11 月 25 日美东晚间，Karpathy 放出一个可以点开玩的网页：<strong>USACiv</strong>——把真实美国套进《文明》的策略游戏界面。他用 Claude Code 桌面版、Opus 5.5 开 ultracode，耗时约 <strong>7 小时</strong>、产出约 <strong>4.5 万行代码</strong>，宣传片也是 Claude 做的。</p>
+      <ul>
+        <li><strong>数据源是真的：</strong>模型下载并解析了 31 个公开来源，含人口普查局、BEA、BLS、EIA、NOAA、USGS、国防部、国家公园管理局、FAA、FEMA 与 CDC；海拔、土地覆盖、GDP、就业、电厂、矿山、港口、机场、军事基地、货运流与灾害史，统一对账到 <strong>25 公里六边形网格</strong>上。</li>
+        <li><strong>游戏语言只是壳：</strong>黄金对应 GDP、区域对应当地产业专长、公民对应真实劳动力、奇观按游客量和研发经费选出国家公园与大学。他说圣何塞约四分之一的劳动者是工程师、程序员或科学家，全国是十四分之一。</li>
+        <li><strong>规模：</strong>19 个观察图层、524 个都市 City View、9 个主题顾问，Explorer 可把 3100 多个县的任意一列拉成表格与散点图。代码 MIT 许可，数据与运行说明一并公开，发布一天浏览超 200 万、收藏约 1.3 万。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是本周最具体的一份「agent 长程产出到底能交付什么」实物。它的难点不在写代码，而在把 <strong>31 套口径各异的公共数据对账到同一套网格</strong>，再翻成自洽的游戏语义——数据整理、可视化与界面设计一次跑通。对照 11-21 速览① 那个 2.5 万行 Rust 操作系统，同样是把大代码量压进一个会话，这次多了一层真实数据的约束。</p>
+      <p>也接得上 11-22 ② 那笔反直觉的账：那边说用 agent 的开发者写代码多 25.5 倍、发布只多 30%。Karpathy 这次交出的是能直接点开、带数据的成品，而不是提交数。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>这是可视化器，不是完整游戏，Karpathy 自己说可以继续扩成游戏；他也承认 Claude「决定跳过几个州和地区」。7 小时、4.5 万行是个人自述，不是可复现的通用基准，且他开的是 ultracode、用掉了大半周额度。数据各有条款，宗教图层需单独署名。把它当「一天能做出什么样的数据产品」的上限样本，别当成「七小时就能替代一个数据团队」。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>想让 agent 交付真实数据产品，先把对账规则写清楚：数据源清单、统一坐标或主键、缺失值是留空还是置零。Karpathy 这份里最值得抄的一条是——缺失或抑制的数据标成不可用，而不是填成零。给 agent 明确的数据契约，比事后检查图表好看得多。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n2">
+    <div class="card-head">
+      <div class="num">2</div>
+      <h2>不换模型、不改输出，把长文与 Agent 的吐字速度最高拉快 4.2 倍：草稿模型直接复用主模型已经算好的缓存</h2>
+      <span class="tag t-code">AI Coding · 推理效率</span>
+    </div>
+    <div class="src">腾讯混元官方公告与开源仓库 · arXiv:2611.34776 · GitHub Tencent/AngelSpec · 11-26 发布 · 官方自测口径</div>
+    <div class="body">
+      <p>11 月 26 日，腾讯混元开源新一代投机采样草稿模型 <strong>DFly2</strong>。它不是新大模型，也不替换 Hy4 flash，更像挂在旁边的加速器：主模型权重不变、输出逐字一致，变的只是把原本串行的多次前向压成一次批量验证。</p>
+      <ul>
+        <li><strong>关键做法：</strong>草稿层的每个 KV 直接读配对稀疏层的缓存（KV Share），并只看该层 indexer 选出的至多 <strong>2048 个位置</strong>（Index Share）。于是草稿 token 最多关注约 2K 个 key，注意力开销与上下文长度脱钩，零额外 KV 显存；不参与 prefill，P 到 D 只多传一个末层隐状态。</li>
+        <li><strong>成绩：</strong>19 个公开评测集上，单项最高 <strong>4.2 倍</strong>（AgentLongBench 64K、A12B），长上下文约 3.2 倍、Agentic 四项平均约 3.2 倍，比旧方案 DSpark 高约 25% 到 30%；Agentic 场景接收长度最高提升 68.5%，在 WorkBuddy 真实任务上领先 DSpark 10.4%。</li>
+        <li><strong>工程账更值钱：</strong>128K 上下文、FP8 MLA 配置下，比单层 MTP 少传 98.5 MiB（约历史缓存载荷的 1.44%），两端各少存 98.5 MiB；32K 输入、512 输出、512 并发时，端到端输出吞吐比 MTP 高 <strong>26%</strong>。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>长上下文这两年先解决「塞不塞得下」，现在开始解决「塞进去之后跑不跑得动」。DFly2 的思路不是再造一个聪明的小模型，而是把主模型<strong>已经算过、已经付过算力的 KV、稀疏索引、权重和末层隐状态</strong>挨个拿回来用。这跟 09-08 ① Spotify 的 shunt 是同一个命题的两半：那次在输入侧把读文件交给便宜模型，这次在解码侧不新增任何缓存。</p>
+      <p>更关键的是它已在 DeepSeek-V4.1-Flash、GLM-5.3-Flash 和 Hy4 flash 三种稀疏实现上验证过，属于方法级开源，不是某一家的专属补丁。对把整个代码库、几十轮 agent 轨迹一次塞进模型的团队，这可能比再堆一倍参数更划算。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>4.2 倍是 AgentLongBench 单项峰值，官方给出的长上下文均值约 3.2 倍；短文相对 DSpark 的接收长度提升只有约 4%，别指望日常短聊有感知。它依赖目标模型现成的稀疏 KV 与 indexer，稠密注意力模型无法直接受益；模型卡明确写着 vLLM 投机解码支持仍在进行中。所有数字来自官方评测，第三方复测与生产环境表现尚未公布。无损指的是输出一致，不是零成本——草稿层本身仍在算。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>如果你的 agent 工作流卡在长文档或整库代码上，先量两件事：单次请求的上下文长度分布、以及每 token 的输出耗时。若 p90 上下文已过 32K 且输出等待占大头，可以拿 DFly2 在你自己的任务集上测接收长度与端到端吞吐，别只看峰值加速比；短上下文占比高的场景，优先级应该排在提示词与缓存命中之后。</p>
+    </div>
+  </div>
+
+  <div class="card coding" id="n3">
+    <div class="card-head">
+      <div class="num">3</div>
+      <h2>OpenAI 承认 GPT-6.2 上线初期按折扣价计费：同样工作量 Astra 额度消耗快 40%，同日 DeepSeek 把单轮成本摆上账单</h2>
+      <span class="tag t-code">AI Coding · 成本账本</span>
+    </div>
+    <div class="src">IT之家引 OpenAI Codex 与 ChatGPT 负责人 Sottiaux 表态，及 DeepSeek 网页端灰度页面 · 11-27 · 厂商口径</div>
+    <div class="body">
+      <p>11 月 27 日两件小事凑成了同一条线。其一，针对用户抱怨「额度突然不耐用」，OpenAI 的 Sottiaux 承认 <strong>GPT-6.2 上线初期按折扣价计费</strong>；修复后完成同样的工作量，会消耗更多额度——<strong>Astra 触及使用上限的速度快 40%，Sol 快 25%</strong>。</p>
+      <ul>
+        <li>OpenAI 表示不追溯扣费，向 Go、Plus、Pro、Business 各提供一次额度重置；12 月 31 日前 Business 用户可免费使用 Fast Mode。</li>
+        <li>其二，DeepSeek 在网页端与 App 灰度「本轮消耗额度」详情：按输入缓存命中（0.02 元／百万 tokens）、缓存未命中（1 元）、输出（4 元）三档展示用量与折合金额，价格与 API 持平，个人对话仍免费；页面底部同时显示上下文占用进度。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>成本正从黑箱变成明账。一边是被迫纠偏的折扣计费——用起来「变贵」其实是回到原价；一边是主动把单轮 token 用量和金额摊给用户，连上下文占用进度一起显示。接 11-25 ① 那笔「同一模型单任务账单差 5.6 倍」，那次是第三方量出不同外壳的成本差，这次是厂商直接把账单放到使用界面上。</p>
+      <p>对用 agent 跑长任务的人，这件事的实用价值很高：当长对话的成本和容量上限变得可见，你才有数据决定该压缩上下文、换缓存策略，还是干脆换个模型。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>消耗加快不等于涨价，是折扣口径恢复到原价，且 OpenAI 的补偿与口径都是自述、没有第三方核验。DeepSeek 的详情页仍在灰度，个人对话此刻免费，展示金额是「按 API 计价折算」的估算，不等于真扣钱。另外「额度重置」这个说法在 09-22 那期也出现过——那是另一家公司因仓库百科异常上传而做的补偿，同词不同事，别混为一谈。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>今天就去你的主力工具里找「用量／消耗」页面，记一周真实账：每个任务吃掉多少额度、长对话里缓存命中占多少。如果工具不显示，就自己按输入、缓存命中、输出三档粗算。发现额度消耗异常时，先确认是不是折扣期结束，再决定要不要迁移工作流——这一次 OpenAI 的情况就是计费口径变了，不是模型偷懒。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n4">
+    <div class="card-head">
+      <div class="num">4</div>
+      <h2>首批人形机器人运进汽车工厂，但先只干两个工位的活：沃尔沃让 Aeon 用模仿学习练取放，2027 年才谈真实工况上岗</h2>
+      <span class="tag t-emb">具身智能 · 工厂验证</span>
+    </div>
+    <div class="src">IT之家、The Next Web · 11-26 · Hexagon 提供本体 · 厂商计划口径</div>
+    <div class="body">
+      <p>沃尔沃已把首批 <strong>Aeon</strong> 人形机器人运进比利时根特工厂，目前用模仿学习训练它们完成零件的高精度取放，计划自 <strong>2027 年上半年</strong>起在真实工况下逐步上岗。</p>
+      <ul>
+        <li><strong>本体参数：</strong>由 Hexagon 提供，高约 1.6 米、重 60 公斤、最高时速 8.6 公里，靠轮子移动，最大搬运 10 公斤。</li>
+        <li><strong>训练路径：</strong>从两个固定工位起步，逐步增加零件数量、扩大移动范围，并与工厂现有自动化系统交互。</li>
+        <li><strong>公司口径：</strong>沃尔沃首席制造官 Nilsson 说，人形设计让它可以直接融入现有生产流程，目标是承担体力消耗最大的工作。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>汽车工厂仍是人形机器人最现实的验证场——工位标准、安全体系完备、人工成本明确，比家庭场景更早能算出账。这条的价值不在机器人会走，而在它<strong>从两个固定工位起步、先模仿学习再谈上岗</strong>的节奏：把「进厂」拆成训练、试点、正式部署三段，而不是发布会一次演示到位。对照 11-22 速览④ 精灵 G2 进手机测试产线，那边是 3C 工序，这次是汽车零件取放，同样是拿具体工位当考卷。</p>
+      <p>它也接得上 11-23 速览④ 那条逻辑：agent 进车间前先在虚拟副本里改、工程师审完证据才准动手。这边是机器人在现场里先学，但同样没有跳过验证。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>当前只是训练和验证，不是生产线正式部署；2027 年上半年（另一家外媒写「2027 年中期」）是计划节点，不是承诺交付。关于 Hexagon AEON 我们此前提过一次——10-04 那期专门澄清过「莱比锡工厂的 AEON 试点为 2026 年 3 月宣布」，那是 1.65 米／60 公斤／24 传感器、测试高压电池装配的旧节点；这次是<strong>比利时根特工厂、首批运入、模仿学习、新的试点时间表</strong>，属同一机器人平台的不同阶段，不是那条旧闻的重复。厂方没有披露机器人数量、训练周期与验收指标。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>以后看到「某某机器人进厂」的新闻，先分清三件事：在训练、在试点、还是正式上岗；具体几个工位、做什么工序；有没有可核对的验收指标。这三问能过滤掉大部分演示叙事。真要跟踪这条线，接下来该盯的是根特工厂是否公布工位数量、训练周期与 2027 年试点验收标准。</p>
+    </div>
+  </div>
+
+  <div class="card embodied" id="n5">
+    <div class="card-head">
+      <div class="num">5</div>
+      <h2>南极不需要会走路的机器人：韩国把底盘做成轮履可切换，目标一次补给跑 200 公里、机械臂搬 100 公斤</h2>
+      <span class="tag t-emb">具身智能 · 极端环境</span>
+    </div>
+    <div class="src">韩国机器人融合技术研究院（KIRO）项目公告 · 硅基纵横、今日头条 11-27 转述 · 研发目标口径</div>
+    <div class="body">
+      <p>韩国机器人融合技术研究院启动极端环境作业机器人平台 <strong>KAREX-M</strong> 研发。它的思路很反潮流：不追求双足人形，而是采用<strong>轮式、履带式可切换底盘</strong>，配液压机械臂与双臂操作系统，面向南极等极端环境做设备运输、安装和维护。</p>
+      <ul>
+        <li><strong>项目周期：</strong>2026 年至 2030 年 12 月，获政府 60 亿韩元资金支持。</li>
+        <li><strong>硬指标：</strong>单次补给后在 100 公里半径内实现 <strong>200 公里移动</strong>；机械臂在 3 米作业范围内操作总重 <strong>100 公斤</strong>的物体。</li>
+        <li><strong>不是从零开始：</strong>建立在第一代 KAREX 的南极实测之上——2024 年曾在南极单次自主行驶 54 公里，30 天累计 267.74 公里。</li>
+      </ul>
+    </div>
+    <div class="why">
+      <p><b>为什么值得关注：</b>这是对「具身智能＝人形机器人」的一个有用反例。南极真正需要的是可靠的长距离移动、运输和安装，不是像人一样走路；轮履可切换加液压臂，恰好对准这些约束。它有上一代机器人在南极跑出来的里程数据打底，不是纯概念。接 11-20 ⑤ 那句「叙事从跑得快跳得高转向能不能稳定交付」，这边直接给的是公里数和公斤数。</p>
+      <p>跟 11-25 ⑤ 灵掘 2.0 也是同一个方向的两面：那边用空铲率量化「活干完没」，这边用移动半径和负载量化「能不能在这种地方干活」。场景定义能力，而不是能力去找场景。</p>
+    </div>
+    <div class="caveat">
+      <p><b>需要留意：</b>这是研发项目启动，200 公里移动与 100 公斤负载是 2030 年的目标值，不是已经实现的成绩；目前可核对的只有第一代 2024 年的 54 公里单次与 267.74 公里累计。南极环境对可靠性要求极高，实验室或平原跑通的数据不能直接外推。项目也不面向商业出货，别把它当成一条量产或融资新闻来读。</p>
+    </div>
+    <div class="act">
+      <p><b>可以怎么用：</b>做具身选型或评估时，先写清楚环境的硬约束：地形、温度、续航补给半径、要搬多重的东西，再决定本体形态。如果任务不需要人际交互与通用操作，专用底盘加专用机械臂往往比通用人形更早能交付。跟踪 KAREX-M 的合理指标，是它能否在 2030 年前把那两个目标值在南极真实环境里跑出来。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="mini">速览 · 4 条</div>
+
+  <div class="mini">
+    <div class="m sec">
+      <h3>瑞士首次确认 AI 智能体参与网络攻击：5 起里 4 起得手，电力、供水、通信都被碰过</h3>
+      <p>瑞士联邦网络安全局 11-26 通报，攻击者用「智能体化攻击框架」，由 AI 自主搜漏洞、挑工具、评估结果并规划下一步，定位利用漏洞的时间只需人类一小部分；网上可获取的攻击智能体自 10 月以来接近翻倍。官方未披露幕后主体与智能体在链条中的分工。这是官方层面首次明确确认以 AI 智能体为工具、命中民生关键系统的真实案例——但通报也很克制，没说造成停摆。对照 09-11 ② PaperCut：那边 agent 是被利用的工具，这次是官方盖章的现实入侵。</p>
+    </div>
+    <div class="m code">
+      <h3>llama.cpp 1.1.0：量化不用再手挑档位，给个体积预算就行</h3>
+      <p>11-26 发布的跨版本大更新，把量化参数改成「目标每权重比特数」或「目标文件体积」，逐张量自动分配位宽；同时补上 Inkling 2 全系、Hy4 flash 以及一批语音与音乐模型，网页聊天界面重做。注意旧接口 llama_batch 已废弃，自动化脚本要改成 llama_batch_ext，否则编不过。对照 09-28 速览那条 llama.cpp 给对冲词加 -2 logit bias：同一个引擎，一个改采样，一个改量化分配。</p>
+    </div>
+    <div class="m code">
+      <h3>VS Code 1.148：智能体干活时阻止电脑休眠，还能一键建隔离容器</h3>
+      <p>微软 11-27 更新，预览版支持在智能体运行期间阻止主机因空闲休眠（可选仅插电时生效），可直接创建预配置 Ubuntu 开发容器来跑智能体，不必手写 devcontainer.json；另外新增按远程主机区分的沙盒权限配置与远程主机闲置工作树清理。接 11-23 速览① 纳德拉坦言 Claude Code 崛起让 VS Code 黯然失色——这是继续加码的下一幕，方向是把 agent 的运行环境做成默认能力。</p>
+    </div>
+    <div class="m emb">
+      <h3>吉翼智能发布三大具身模型，机器人「多能家」首秀做全流程无人质检</h3>
+      <p>11-26 高交会，吉翼智能发布面向产线的工业动作模型「双子星」Zanymede 与 Zio，以及面向商业与家庭场景的情感交互模型 ZEMO。Zanymede 走「示教—语言—动作」，Zio 走「示教—动作」，都从操作示范中学工序，主打更少数据、更快部署。现场第三款机器人「多能家」与「质检家」协同完成汽车线束从取料到检后挂料的全流程无人质检，并演示 24 小时无人药房。对照 11-24 ④ 自变量 10 小时产线数据上手新分拣线：同是「少数据适配新工序」，这次拆成两条产品线。</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="thread">对照关系 · 与往期同一条线走到哪</div>
+
+  <table>
+    <tr><th>本期条目</th><th>历史条目</th><th>关系</th></tr>
+    <tr>
+      <td>主榜① 真实数据成品</td>
+      <td>11-21 速览① 用 agent 写一个能在 2012 年 ThinkPad 上启动的操作系统：约 25000 行 Rust</td>
+      <td>同是 agent 长程产出实物：那个造系统并自测，这个把 31 套公共数据对账成可点开的产品</td>
+    </tr>
+    <tr>
+      <td>主榜① 产出与发布</td>
+      <td>11-22 ② MIT 追踪三大应用商店后给出反直觉的一笔账：用自主 agent 的开发者写代码多 25.5 倍</td>
+      <td>同一命题的正反两面：那边产出多但发布只多 30%，这次交出的是带数据的完整成品</td>
+    </tr>
+    <tr>
+      <td>主榜② 省推理成本</td>
+      <td>09-08 ① Spotify 用 shunt 插件把 Claude Code 的 Token 消耗砍掉 90%</td>
+      <td>同一目标两层解法：那次在输入侧换便宜模型代读，这次在解码侧复用主模型已算好的 KV</td>
+    </tr>
+    <tr>
+      <td>主榜② 拿来就用</td>
+      <td>11-22 速览③ Anthropic 的 code mode 把工具上下文从 15 万 token 压到 2000</td>
+      <td>同一思路不同层：那边复用已有工具定义、让 agent 写代码调用，这次复用已有缓存与稀疏索引</td>
+    </tr>
+    <tr>
+      <td>主榜③ 账本明码</td>
+      <td>11-25 ① 把模型钉死只换外壳：分数挤在窄带里，同一模型单任务账单差 5.6 倍</td>
+      <td>递进：那次是第三方量出不同外壳的账单差，这次厂商把额度消耗与单轮金额直接摆在使用界面</td>
+    </tr>
+    <tr>
+      <td>主榜③ 竞争面</td>
+      <td>11-19 ② AI 实验室第一次买下编程语言的地基：OpenAI 收走 Python 工具链公司 Astral</td>
+      <td>同层不同件：那次买下开发者每天用的工具链，这次调整开发者每天付的计费口径</td>
+    </tr>
+    <tr>
+      <td>主榜④ 进厂验证</td>
+      <td>11-22 速览④ 智元与蓝思科技把数十台精灵 G2 放进手机测试产线</td>
+      <td>同一方法论不同工位：那边是 3C 测试工序，这次是汽车零件取放，都拿具体工位当考卷</td>
+    </tr>
+    <tr>
+      <td>主榜④ 先验再上</td>
+      <td>11-23 速览④ AWS 给 agent 进车间前造了一个可测试的孪生环境</td>
+      <td>同一逻辑两种形态：那边先在虚拟副本改、审证据才动手，这次先在现场训练、2027 才试点</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 场景定义能力</td>
+      <td>11-25 ⑤ 让挖掘机先想后动：世界动作模型把空铲率压到 4%</td>
+      <td>同题不同指标：那边用空铲率量化活干完没，这次用移动里程与负载公斤数量化能不能干活</td>
+    </tr>
+    <tr>
+      <td>主榜⑤ 交付账本</td>
+      <td>11-20 ⑤ 具身行业开始交出货账本：灵巧手全行业出货量一年从约 2 万台冲到预计 6 到 7 万台</td>
+      <td>同向不同阶段：那边是产业出货口径，这次是单个研发项目的极端环境目标值</td>
+    </tr>
+    <tr>
+      <td>速览① 智能体攻击</td>
+      <td>09-11 ② PaperCut 被数百个 AI Agent 协同攻陷：48 国 395 家组织、440 台服务器</td>
+      <td>攻防两端：那边 agent 是被利用的工具打企业网络，这次官方确认 agent 打进电力供水通信</td>
+    </tr>
+    <tr>
+      <td>速览② 量化调参</td>
+      <td>09-28 速览① llama.cpp 给「对冲词」加 -2 logit bias：MATH-500 74%→84%</td>
+      <td>同工具不同功能：那次改采样偏差提分，这次把量化档位变成按体积预算自动求解</td>
+    </tr>
+    <tr>
+      <td>速览③ 工具加码</td>
+      <td>11-23 速览① 纳德拉：Claude Code 崛起让 VS Code 半年间黯然失色</td>
+      <td>同一条线的下一幕：那边是微软承认落后，这次 1.148 把 agent 运行环境做成默认能力</td>
+    </tr>
+    <tr>
+      <td>速览④ 少数据部署</td>
+      <td>11-24 ④ 换一个仓库、换一批没见过的任务，成功率还保住九成：自变量把动作数据前置进预训练</td>
+      <td>同题不同进路：那边把动作数据前置进预训练，这次把示教路线拆成语言—动作与动作两条产品线</td>
+    </tr>
+  </table>
+
+  <p style="font-size:13px;color:#6b7683;margin-top:14px">承 11-26「验证从跑分长进现场」，本期换一个切面：验证之外，成本也正在被摊开。11-25 问的是谁来验收，11-26 问的是验证长在哪一层，今天问的是这笔账谁来看得见——计费口径被公开纠正、单轮消耗被摆上界面、推理侧把已付过的算力复用到底。能力同时在往下走：进两个工位的汽车工厂，去不追求人形的南极。账本明码，能力下场。</p>
+
+  <div class="foot">
+    <div>AI 日报 · 2026-11-27 · 北京时间 10:09</div>
+  </div>
+</div>
+<style>
+.wb-daily-nav{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:8px;align-items:center;
+background:rgba(15,39,64,.92);color:#fff;border-radius:999px;padding:7px 15px;font-size:13px;line-height:1.4;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+box-shadow:0 6px 18px rgba(15,39,64,.28);backdrop-filter:blur(6px)}
+.wb-daily-nav a{color:#fff;text-decoration:none;opacity:.85}
+.wb-daily-nav a:hover{opacity:1;text-decoration:underline}
+.wb-daily-nav .wb-sep{opacity:.3}
+@media (max-width:640px){.wb-daily-nav{left:10px;bottom:10px;padding:6px 12px;font-size:12px}}
+</style>
+<div class="wb-daily-nav"><a href="/ai-daily/">← AI 日报</a><span class="wb-sep">|</span><a href="/ai-daily/2026-11-26.html">← 2026-11-26</a></div>
+</body>
+</html>
